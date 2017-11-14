@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="LLTextView">
+        <attr name="topLeftName" format="string" />
+        <attr name="topRightName" format="string" />
+        <attr name="bottomName" format="string" />
+    </declare-styleable>
+</resources>
