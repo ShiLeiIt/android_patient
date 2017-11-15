@@ -11,6 +11,7 @@ import cn.qiyu.magicalcrue_patient.R;
 
 /**
  * Created by Administrator on 2017/11/13.
+ * 消息界面
  */
 
 public class InformationFragment extends Fragment {

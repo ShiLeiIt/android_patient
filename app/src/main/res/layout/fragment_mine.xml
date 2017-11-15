@@ -1,15 +1,118 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             android:background="#C6C6C6"
+             android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="30sp"
-        android:textColor="#333333"
-        android:textStyle="bold"
-        android:layout_gravity="center"
-        android:text="我的" />
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:background="#C6C6">
+
+            <ImageView
+                android:id="@+id/iv_mine_setting"
+                android:layout_width="23dp"
+                android:layout_height="22dp"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="16dp"
+                android:layout_marginTop="16dp"
+                android:src="@drawable/mine_setting"/>
+
+            <ImageView
+                android:id="@+id/iv_mine_icon"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:layout_below="@id/iv_mine_setting"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="3dp"
+                android:src="@drawable/home_doctor_head"/>
+
+            <TextView
+                android:id="@+id/tv_mine_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/iv_mine_setting"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="3dp"
+                android:layout_toRightOf="@id/iv_mine_icon"
+                android:text="钱宝宝"
+                android:textSize="14dp"/>
+
+            <TextView
+                android:id="@+id/tv_mine_phone_num"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tv_mine_name"
+                android:layout_marginLeft="17dp"
+                android:layout_marginTop="8dp"
+                android:layout_toRightOf="@id/iv_mine_icon"
+                android:text="136****6666"
+                android:textSize="12dp"/>
+
+            <TextView
+                android:id="@+id/tv_nametag"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tv_mine_phone_num"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="9dp"
+                android:layout_toRightOf="@id/iv_mine_icon"
+                android:text="普通用户"/>
+
+            <ImageView
+                android:id="@+id/iv_arrows"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:src="@drawable/mine_arrows"/>
+        </RelativeLayout>
+
+        <include
+            android:id="@+id/il_patient"
+            layout="@layout/mine_list_item"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="#C6C6C6"/>
+
+        <include
+            android:id="@+id/il_case_history"
+            layout="@layout/mine_list_item"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="16dp"
+            android:background="#C6C6C6"/>
+
+        <include
+            android:id="@+id/il_order"
+            layout="@layout/mine_list_item"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="#C6C6C6"/>
+
+        <include
+            android:id="@+id/il_collect"
+            layout="@layout/mine_list_item"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="#C6C6C6"/>
+
+        <include
+            android:id="@+id/il_service"
+            layout="@layout/mine_list_item"/>
+
+    </LinearLayout>
 </FrameLayout>

@@ -4,7 +4,9 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.widget.ListView;
 
-
+/**
+ * 解决listView与ScrollView冲突问题
+ */
 
 public class ListViewForScrollView extends ListView {
 

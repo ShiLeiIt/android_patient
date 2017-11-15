@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -35,7 +36,7 @@ public class LLImageView extends LinearLayout {
         }
         for (int i = 0; i < array.length; i++) {
             ImageView imageView = new ImageView(mContext);
-            LayoutParams lp = new LayoutParams(80, 90);//图片的宽高
+            LayoutParams lp = new LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);//图片的宽高
             lp.setMargins(10,5,0,0);
             imageView.setLayoutParams(lp);  //设置图片宽高
             imageView.setImageResource(R.drawable.home_doctor_head); //图片资源

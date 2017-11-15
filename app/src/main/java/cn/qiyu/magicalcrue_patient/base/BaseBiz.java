@@ -9,13 +9,12 @@ import retrofit2.converter.gson.GsonConverterFactory;
  */
 
 public class BaseBiz {
-    protected ApiService mApiService;
+    public ApiService mApiService;
     public BaseBiz() {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(ApiService.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
-
         mApiService = retrofit.create(ApiService.class);
     }
 }

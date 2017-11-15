@@ -1,4 +1,5 @@
 package cn.qiyu.magicalcrue_patient.Api;
+import cn.qiyu.magicalcrue_patient.model.HomeNumBean;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.DELETE;
@@ -17,7 +18,7 @@ public interface ApiService {
     /**
      * 每一个 api 地址都以 / 结尾
      */
-    String BASE_URL = "http://192.168.3.200:8081/book/";
+    String BASE_URL = "http://api2.mircalcure.com/";
 
     String IMAGE_URL = BASE_URL + "image/";
 
@@ -26,6 +27,7 @@ public interface ApiService {
     String API_BOOK = "api/book/";
 
     String API_LOGIN = "api/login/";
+    String API_HOME_NUM = "zlapi/patientInfo/getUserMessageInfo";
 
 
     /**
@@ -80,8 +82,8 @@ public interface ApiService {
 //    @FormUrlEncoded
 //    Call<ResultModel> login(@Field("name") String name, @Field("pwd") String password);
 //
-//    @POST(API_BOOK)
-//    @FormUrlEncoded
-//    Call<ResultModel> save(@Field("name") String name,
-//                           @Field("author") String author, @Field("price") double price);
+    @POST(API_HOME_NUM)
+    @FormUrlEncoded
+    Call<HomeNumBean> getUserMessageInfo(@Field("patientId") String patientId );
+
 }

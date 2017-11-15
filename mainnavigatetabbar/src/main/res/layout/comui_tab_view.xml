@@ -2,7 +2,7 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="50dp"
     android:gravity="center"
     android:orientation="vertical">
 
@@ -16,11 +16,12 @@
 
     <TextView
         android:id="@+id/tab_title"
+
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="4dip"
-        android:textColor="@color/tab_text_normal"
-        android:textSize="9.0sp"/>
+        android:textColor="#353535"
+        android:textSize="10dp"/>
 
 
 </LinearLayout>
