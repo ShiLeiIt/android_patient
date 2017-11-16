@@ -215,6 +215,7 @@
                     android:drawableTop="@drawable/home_course"
                     android:gravity="center"
                     android:text="患教课程"
+                    android:textColor="#666666"
                     android:textSize="10dp"/>
 
                 <TextView
@@ -225,6 +226,7 @@
                     android:drawableTop="@drawable/home_medical"
                     android:gravity="center"
                     android:text="医疗机构"
+                    android:textColor="#666666"
                     android:textSize="10dp"/>
 
                 <TextView
@@ -236,11 +238,13 @@
                     android:drawableTop="@drawable/home_offline"
                     android:gravity="center"
                     android:text="线下沙龙"
+                    android:textColor="#666666"
                     android:textSize="10dp"/>
 
                 <TextView
                     android:id="@+id/ll_tv_coupe"
                     android:layout_width="50dp"
+                    android:textColor="#666666"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:drawableTop="@drawable/home_coupe"
@@ -253,6 +257,7 @@
                     android:layout_width="50dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:textColor="#666666"
                     android:drawableTop="@drawable/home_all_serve"
                     android:gravity="center"
                     android:text="全部服务"
@@ -266,7 +271,8 @@
                 android:layout_marginTop="10dp"
                 android:background="#f7f7f7"
                 android:gravity="center_vertical"
-                android:paddingLeft="13dp"
+                android:paddingLeft="12dp"
+                android:textColor="#666666"
                 android:text="更多活动"/>
 
             <cn.qiyu.magicalcrue_patient.view.ListViewForScrollView

@@ -2,6 +2,7 @@ package cn.qiyu.magicalcrue_patient.home;
 
 import cn.qiyu.magicalcrue_patient.base.BaseBiz;
 import cn.qiyu.magicalcrue_patient.biz.HomeBiz;
+import cn.qiyu.magicalcrue_patient.model.HomeDoctorBean;
 import cn.qiyu.magicalcrue_patient.model.HomeNumBean;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -30,6 +31,11 @@ public class HomeBizImpl extends BaseBiz implements HomeBiz{
             onLoginListener.onFailure(throwable.getMessage());
         }
     });
+    }
+
+    @Override
+    public void getDoctorInfo(String userId, final OnLoginListener onLoginListener) {
+
     }
 
 }

@@ -9,6 +9,5 @@ import cn.qiyu.magicalcrue_patient.model.HomeNumBean;
 
 public interface HomeNumView extends BaseView {
      String  getUserId();
-
     void LoadDate(HomeNumBean numBean);
 }

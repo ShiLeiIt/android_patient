@@ -1,5 +1,8 @@
 package cn.qiyu.magicalcrue_patient.Api;
+import cn.qiyu.magicalcrue_patient.model.HomeDoctorBean;
 import cn.qiyu.magicalcrue_patient.model.HomeNumBean;
+import cn.qiyu.magicalcrue_patient.model.RegisterLoginBean;
+import cn.qiyu.magicalcrue_patient.model.ResultModel;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.DELETE;
@@ -18,17 +21,21 @@ public interface ApiService {
     /**
      * 每一个 api 地址都以 / 结尾
      */
-    String BASE_URL = "http://api2.mircalcure.com/";
+    String BASE_URL = "http://api2.mircalcure.com/zlapi/";
 
     String IMAGE_URL = BASE_URL + "image/";
-
     String API_INDEX = "api/index/";
-
-    String API_BOOK = "api/book/";
-
     String API_LOGIN = "api/login/";
-    String API_HOME_NUM = "zlapi/patientInfo/getUserMessageInfo";
+    //首页数目获取
+    String API_HOME_NUM = "patientInfo/getUserMessageInfo";
+    String API_HOME_DOCTOR = "doctorinfoTeam/getDoctorTeamUserListByPatientId";
 
+
+
+    /**
+     * 注册，登录验证码发送
+     */
+    String IMPLEMENTATION_NOTES = "login/verificationCode";
 
     /**
      * 发起一个 get 请求
@@ -41,18 +48,6 @@ public interface ApiService {
      */
     @GET(API_INDEX)
     Call<ResponseBody> test(@Query("name") String a);
-
-    /**
-     * 传递 RESTful 风格api 的参数 使用 @Path
-     *
-     * @param i
-     * @return
-     */
-    @GET(API_BOOK + "{position}")
-    Call<ResponseBody> getBook(@Path("position") int i);
-
-//    @GET(API_BOOK + "{position}")
-//    Call<ResultModel<Book>> getBook2(@Path("position") int i);
 
     /**
      * 获取所有的书籍信息
@@ -82,8 +77,29 @@ public interface ApiService {
 //    @FormUrlEncoded
 //    Call<ResultModel> login(@Field("name") String name, @Field("pwd") String password);
 //
+
+    /**
+     *
+     * @param patientId
+     * @return
+     * 首页数字信息
+     */
     @POST(API_HOME_NUM)
     @FormUrlEncoded
     Call<HomeNumBean> getUserMessageInfo(@Field("patientId") String patientId );
+
+    @POST(API_HOME_DOCTOR)
+    @FormUrlEncoded
+    Call<HomeDoctorBean> getDoctorInfo(@Field("patientId") String patientId );
+
+    /**
+     * 验证码
+     * @param account
+     * @return
+     */
+    @POST(IMPLEMENTATION_NOTES)
+    @FormUrlEncoded
+    Call<ResultModel<RegisterLoginBean>> getVerifyInformation(@Field("account") String account);
+
 
 }

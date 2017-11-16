@@ -16,6 +16,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="125"
+            android:maxLines="1"
             android:textColor="#4BC27E"
             android:textSize="18dp" />
 

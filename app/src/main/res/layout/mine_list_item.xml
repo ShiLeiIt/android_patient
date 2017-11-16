@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
-              android:layout_height="51dp"
+                android:layout_width="match_parent"
+                android:layout_height="51dp"
                 android:background="#fff"
-              >
+    >
 
     <ImageView
         android:id="@+id/iv_list_item"
@@ -16,19 +16,21 @@
     <TextView
         android:id="@+id/tv_list_item"
         android:layout_width="wrap_content"
-        android:layout_toRightOf="@id/iv_list_item"
         android:layout_height="wrap_content"
-       android:layout_centerVertical="true"
-        android:textSize="14dp"
+        android:layout_centerVertical="true"
+        android:textColor="#666666"
         android:layout_marginLeft="14dp"
-        android:text="患者基本资料"/>
+        android:layout_toRightOf="@id/iv_list_item"
+        android:text="患者基本资料"
+        android:textSize="14dp"/>
+
     <ImageView
         android:id="@+id/iv_list_item_arrows"
 
-        android:src="@drawable/mine_arrows"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
-        android:layout_width="30dp"
-        android:layout_height="30dp"/>
+        android:src="@drawable/mine_arrows"/>
 
 </RelativeLayout>

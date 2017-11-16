@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/register_bg"
+    tools:context="cn.qiyu.magicalcrue_patient.activity.RegisterActivity">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="40dp"
+        android:src="@drawable/register_logo"/>
+
+    <ImageView
+        android:id="@+id/iv_register_del"
+        android:layout_width="15dp"
+        android:layout_height="15dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="15dp"
+        android:src="@drawable/register_delete"/>
+
+    <EditText
+        android:id="@+id/edit_phone"
+        android:layout_width="281dp"
+        android:layout_height="45dp"
+        android:layout_alignStart="@+id/et_password"
+        android:layout_centerVertical="true"
+        android:background="@drawable/edit_bg"
+        android:digits="0123456789"
+        android:drawableLeft="@drawable/register_phone"
+        android:drawablePadding="5dp"
+        android:inputType="phone"
+        android:lines="1"
+        android:maxLength="11"
+        android:paddingLeft="26dp"
+        android:textColor="#999999"/>
+
+    <EditText
+        android:id="@+id/et_password"
+        android:layout_width="281dp"
+        android:layout_height="45dp"
+        android:layout_alignStart="@+id/rl_forget_password"
+        android:layout_below="@+id/edit_phone"
+        android:layout_marginTop="22dp"
+        android:background="@drawable/edit_bg"
+        android:drawableLeft="@drawable/register_password"
+        android:inputType="phone"
+        android:paddingLeft="26dp"
+        android:text=""
+        android:visibility="invisible"/>
+
+    <RelativeLayout
+        android:id="@+id/rl_forget_password"
+        android:layout_width="281dp"
+        android:layout_height="14dp"
+        android:layout_below="@id/et_password"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="16dp"
+        android:visibility="invisible">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_gravity="center"
+            android:layout_marginLeft="30dp"
+            android:src="@drawable/register_jzmm"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_gravity="center"
+            android:layout_marginLeft="50dp"
+            android:text="记住密码"
+            android:textSize="12dp"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_weight="1"
+            android:text="忘记密码？"
+            android:textSize="12dp"
+            />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rl_register_auth"
+        android:layout_width="281dp"
+        android:layout_height="46dp"
+        android:layout_below="@id/edit_phone"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="22dp"
+        android:background="@drawable/edit_bg"
+        android:visibility="visible"
+        >
+
+        <EditText
+            android:id="@+id/edit_auth_code"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="26dp"
+            android:enabled="false"
+            android:background="@null"
+            android:digits="0123456789"
+            android:drawableLeft="@drawable/register_auth"
+            android:drawablePadding="5dp"
+            android:lines="1"
+            android:maxLength="6"
+            android:textColor="#999999"/>
+
+        <TextView
+            android:id="@+id/tv_send_auth_code"
+            android:layout_width="101dp"
+            android:layout_height="46dp"
+            android:layout_alignParentRight="true"
+            android:background="@drawable/register_auth_code"
+            android:gravity="center"
+            android:text="发送验证码"
+            android:textColor="#fff"
+            android:textSize="14dp"
+            />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rl_register_deal"
+        android:layout_width="281dp"
+        android:layout_height="46dp"
+        android:layout_below="@id/rl_register_auth"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="15dp"
+        android:visibility="visible">
+
+        <ImageView
+            android:id="@+id/iv_register_auth"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_gravity="center"
+            android:layout_marginLeft="30dp"
+            android:src="@drawable/register_jzmm"/>
+
+        <TextView
+            android:id="@+id/tv_wo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="10dp"
+            android:layout_toEndOf="@id/iv_register_auth"
+            android:text="我已阅读,并同意《"
+            android:textColor="#999999"/>
+
+        <TextView
+            android:id="@+id/tv_deal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toEndOf="@id/tv_wo"
+            android:text="用户注册协议"
+            android:textColor="#319CFF"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toEndOf="@id/tv_deal"
+            android:text="》"
+            android:textColor="#999999"/>
+    </RelativeLayout>
+
+    <ImageView
+        android:id="@+id/iv_register"
+        android:layout_width="216dp"
+        android:layout_height="46dp"
+        android:layout_below="@id/rl_register_deal"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:src="@drawable/register_button"
+        android:visibility="visible"
+        />
+
+    <ImageView
+        android:id="@+id/iv_login"
+        android:layout_width="216dp"
+        android:layout_height="46dp"
+        android:layout_below="@id/rl_forget_password"
+        android:layout_centerHorizontal="true"
+        android:layout_marginLeft="80dp"
+        android:layout_marginRight="80dp"
+        android:layout_marginTop="20dp"
+        android:src="@drawable/login_button"
+        android:visibility="invisible"
+        />
+
+</RelativeLayout>

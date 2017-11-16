@@ -1,4 +1,4 @@
-package cn.qiyu.magicalcrue_patient.login;
+package cn.qiyu.magicalcrue_patient.activity;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
