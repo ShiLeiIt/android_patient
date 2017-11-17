@@ -40,6 +40,7 @@ public class HomePageFragment extends Fragment {
     private TextView mTv_newReport;
     private TextView mTv_course;
     private TextView mTv_unScra;
+    private TextView mTv_doctor_name;
 
     @Nullable
     @Override
@@ -47,18 +48,11 @@ public class HomePageFragment extends Fragment {
                              @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_homepage, container, false);
         LLImageView viewById = (LLImageView) view.findViewById(R.id.iv_doctor_icon);
+        mTv_doctor_name = (TextView) view.findViewById(R.id.tv_mydocter);
+//
 
-//        String[] array = new String[4];
-//        viewById.setDatas(array);
-//        mLv_sv = (ListViewForScrollView) view.findViewById(R.id.lv_home_image);
-//        ArrayList<String> strings = new ArrayList<>();
-//        strings.add("1");
-//        strings.add("1");
-//        strings.add("1");
-//        strings.add("1");
-//        strings.add("1");
-//        MyAdapter myAdapter = new MyAdapter(getActivity(), strings, R.layout.adpter_home_more);
-//        mLv_sv.setAdapter(myAdapter);
+
+
 
 
 
@@ -93,6 +87,11 @@ public class HomePageFragment extends Fragment {
             }
 
             @Override
+            public String getPatientId() {
+                return "5d9976d752c541c5a4608bc2758c54d7";
+            }
+
+            @Override
             public void LoadDate(HomeNumBean numBean) {
 
                 if (numBean.getData() != null) {
@@ -106,7 +105,7 @@ public class HomePageFragment extends Fragment {
                     mTv_newReport.setText(String.valueOf(numBean.getData().getNewFollowUpCount()));
                     mTv_course.setText(String.valueOf(numBean.getData().getCourseCount()));
                     mTv_unScra.setText(String.valueOf(numBean.getData().getPendingPaymentCount()));
-
+//                    mTv_doctor_name.setText(numBean.getDoctorName());
 
                 } else {
                     Toast.makeText(getActivity(), "1111", Toast.LENGTH_SHORT).show();
@@ -114,6 +113,7 @@ public class HomePageFragment extends Fragment {
 
 
             }
+
 
             @Override
             public void showProgress() {
@@ -132,6 +132,7 @@ public class HomePageFragment extends Fragment {
         });
 
         homePresenter.HomeLoadNumData();
+        homePresenter.HomeDoctorData();
 
 
         return view;

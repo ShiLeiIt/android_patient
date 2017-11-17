@@ -18,10 +18,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
-        android:textColor="#666666"
         android:layout_marginLeft="14dp"
         android:layout_toRightOf="@id/iv_list_item"
         android:text="患者基本资料"
+        android:textColor="#666666"
         android:textSize="14dp"/>
 
     <ImageView

@@ -6,4 +6,7 @@
     <color name="comui_tab_text_color">#ff333333</color>
     <color name="app_gray">#999999</color>
     <color name="app_white">#ffffff</color>
+    <color name="app_userInfor">#353535</color>
+    <color name="wheel_timebtn_nor">#54a3fa</color>
+    <color name="wheel_timebtn_pre">#CCCCCC</color>
 </resources>

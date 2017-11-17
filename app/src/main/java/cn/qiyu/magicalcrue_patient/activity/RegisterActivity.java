@@ -110,7 +110,7 @@ public class RegisterActivity extends AppCompatActivity {
                     Toast.makeText(this, "请同意注册协议", Toast.LENGTH_SHORT).show();
                 } else {
                     Toast.makeText(this, "注册成功", Toast.LENGTH_SHORT).show();
-                    startActivity(new Intent(RegisterActivity.this,MainActivity.class));
+                    startActivity(new Intent(RegisterActivity.this,UserInforActivity.class));
                 }
                 break;
         }

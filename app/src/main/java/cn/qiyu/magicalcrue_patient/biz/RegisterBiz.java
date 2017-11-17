@@ -1,6 +1,6 @@
 package cn.qiyu.magicalcrue_patient.biz;
 
-import cn.qiyu.magicalcrue_patient.model.RegisterLoginBean;
+import cn.qiyu.magicalcrue_patient.model.RegisterLoginVerBean;
 import cn.qiyu.magicalcrue_patient.model.ResultModel;
 
 /**
@@ -15,7 +15,7 @@ public interface RegisterBiz {
          *
          * @param model
          */
-        void onResponse(ResultModel model);
+        void onResponse(ResultModel<RegisterLoginVerBean> model);
 
         /**
          * 服务器未响应

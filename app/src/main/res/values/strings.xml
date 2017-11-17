@@ -3,5 +3,28 @@
     <string name="home_title">首页</string>
     <string name="visit_title">随访</string>
     <string name="information_title">消息</string>
+    <string name="birth_date">出生日期</string>
+    <string name="please_select">请选择</string>
+    <string name="gender">性别</string>
+    <string name="location_citiy">所在城市</string>
+    <string name="user_icon">用户头像</string>
+    <string name="real_name">真实用户</string>
+    <string name="girl">女士</string>
+    <string name="boy">男士</string>
+    <string name="save">保存</string>
+    <string name="remember_password">记住密码</string>
+    <string name="forget_password">忘记密码？</string>
+    <string name="send_ver_code">发送验证码</string>
+    <string name="read_agree">我已阅读,并同意《</string>
+    <string name="register_deal">用户注册协议</string>
+
+    <string name="course">患教课程</string>
+    <string name="medical">医疗机构</string>
+    <string name="offline">线下沙龙</string>
+    <string name="coupe">科普咨询</string>
+    <string name="all_serve">全部服务</string>
+
+    <string name="cancel">取消</string>
+    <string name="pwSubmit">确定</string>
 
 </resources>

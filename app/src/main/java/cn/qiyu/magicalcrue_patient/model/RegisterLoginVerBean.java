@@ -4,7 +4,7 @@ package cn.qiyu.magicalcrue_patient.model;
  * Created by Administrator on 2017/11/16.
  */
 
-public class RegisterLoginBean {
+public class RegisterLoginVerBean {
 
     /**
      * verCode : 1acf03791efad10dfba0ee94d1431e73

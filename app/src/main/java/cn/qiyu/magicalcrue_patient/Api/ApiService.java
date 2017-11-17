@@ -1,17 +1,13 @@
 package cn.qiyu.magicalcrue_patient.Api;
-import cn.qiyu.magicalcrue_patient.model.HomeDoctorBean;
 import cn.qiyu.magicalcrue_patient.model.HomeNumBean;
-import cn.qiyu.magicalcrue_patient.model.RegisterLoginBean;
+import cn.qiyu.magicalcrue_patient.model.RegisterLoginVerBean;
 import cn.qiyu.magicalcrue_patient.model.ResultModel;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
-import retrofit2.http.DELETE;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
-import retrofit2.http.PUT;
-import retrofit2.http.Path;
 import retrofit2.http.Query;
 /**
  * Created by Administrator on 2017/11/13.
@@ -86,12 +82,11 @@ public interface ApiService {
      */
     @POST(API_HOME_NUM)
     @FormUrlEncoded
-    Call<HomeNumBean> getUserMessageInfo(@Field("patientId") String patientId );
+    Call<ResultModel<HomeNumBean>> getUserMessageInfo(@Field("patientId") String patientId );
 
     @POST(API_HOME_DOCTOR)
     @FormUrlEncoded
-    Call<HomeDoctorBean> getDoctorInfo(@Field("patientId") String patientId );
-
+    Call<ResultModel<HomeNumBean>> getDoctorInfo(@Field("patientId") String patientId );
     /**
      * 验证码
      * @param account
@@ -99,7 +94,7 @@ public interface ApiService {
      */
     @POST(IMPLEMENTATION_NOTES)
     @FormUrlEncoded
-    Call<ResultModel<RegisterLoginBean>> getVerifyInformation(@Field("account") String account);
+    Call<ResultModel<RegisterLoginVerBean>> getVerifyInformation(@Field("account") String account);
 
 
 }

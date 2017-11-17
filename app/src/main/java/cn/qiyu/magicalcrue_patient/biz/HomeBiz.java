@@ -1,6 +1,7 @@
 package cn.qiyu.magicalcrue_patient.biz;
 
 import cn.qiyu.magicalcrue_patient.model.HomeNumBean;
+import cn.qiyu.magicalcrue_patient.model.ResultModel;
 
 /**
  * Created by ShiLei on 2017/11/15.
@@ -18,7 +19,7 @@ public interface HomeBiz {
          *
          * @param model
          */
-        void onResponse(HomeNumBean model);
+        void onResponse(ResultModel<HomeNumBean> model);
 
         /**
          * 服务器未响应

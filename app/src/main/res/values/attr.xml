@@ -5,4 +5,5 @@
         <attr name="topRightName" format="string" />
         <attr name="bottomName" format="string" />
     </declare-styleable>
+
 </resources>

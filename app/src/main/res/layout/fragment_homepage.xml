@@ -63,7 +63,8 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="11dp"
                         android:layout_toRightOf="@+id/iv_box"
-                        android:text="我的医生"/>
+                        android:text="我的医生"
+                        android:textColor="#666666"/>
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -214,7 +215,7 @@
                     android:layout_weight="1"
                     android:drawableTop="@drawable/home_course"
                     android:gravity="center"
-                    android:text="患教课程"
+                    android:text="@string/course"
                     android:textColor="#666666"
                     android:textSize="10dp"/>
 
@@ -225,9 +226,9 @@
                     android:layout_weight="1"
                     android:drawableTop="@drawable/home_medical"
                     android:gravity="center"
-                    android:text="医疗机构"
+                    android:text="@string/medical"
                     android:textColor="#666666"
-                    android:textSize="10dp"/>
+                    android:textSize="10sp"/>
 
                 <TextView
 
@@ -237,19 +238,19 @@
                     android:layout_weight="1"
                     android:drawableTop="@drawable/home_offline"
                     android:gravity="center"
-                    android:text="线下沙龙"
+                    android:text="@string/offline"
                     android:textColor="#666666"
                     android:textSize="10dp"/>
 
                 <TextView
                     android:id="@+id/ll_tv_coupe"
                     android:layout_width="50dp"
-                    android:textColor="#666666"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:drawableTop="@drawable/home_coupe"
                     android:gravity="center"
-                    android:text="科普咨询"
+                    android:text="@string/coupe"
+                    android:textColor="#666666"
                     android:textSize="10dp"/>
 
                 <TextView
@@ -257,11 +258,11 @@
                     android:layout_width="50dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:textColor="#666666"
                     android:drawableTop="@drawable/home_all_serve"
                     android:gravity="center"
-                    android:text="全部服务"
-                    android:textSize="10dp"/>
+                    android:text="@string/all_serve"
+                    android:textColor="#666666"
+                    android:textSize="10sp"/>
 
             </LinearLayout>
 
@@ -272,8 +273,8 @@
                 android:background="#f7f7f7"
                 android:gravity="center_vertical"
                 android:paddingLeft="12dp"
-                android:textColor="#666666"
-                android:text="更多活动"/>
+                android:text="更多活动"
+                android:textColor="#666666"/>
 
             <cn.qiyu.magicalcrue_patient.view.ListViewForScrollView
                 android:id="@+id/lv_home_image"
@@ -281,7 +282,6 @@
                 android:layout_height="match_parent"
                 android:divider="#00000000"
                 android:dividerHeight="10dp"/>
-
             <View
                 android:layout_width="match_parent"
                 android:layout_height="50dp"/>
