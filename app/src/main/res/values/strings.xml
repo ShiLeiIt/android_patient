@@ -26,5 +26,16 @@
 
     <string name="cancel">取消</string>
     <string name="pwSubmit">确定</string>
+    <string name="patientData">患者资料</string>
+    <string name="identityCard">身份证号</string>
+    <string name="eighteen">18位身份证号</string>
+    <string name="phone">手机号</string>
+    <string name="flowers">11位手机号</string>
+    <string name="actionsDoctorName">主诊医生姓名</string>
+    <string name="firstVisitTime">首诊时间</string>
+    <string name="diseases">疾病种类</string>
+    <string name="platformPlan">治疗方案</string>
+    <string name="patientRelation">与患者关系</string>
+
 
 </resources>

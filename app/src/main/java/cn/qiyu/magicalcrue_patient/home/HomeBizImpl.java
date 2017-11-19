@@ -39,23 +39,23 @@ public class HomeBizImpl extends BaseBiz implements HomeBiz {
 
     }
 
-    @Override
-    public void getDoctorInfo(String userId, final OnLoginListener onLoginListener) {
-        mApiService.getDoctorInfo(userId).enqueue(new Callback<ResultModel<HomeNumBean>>() {
-            @Override
-            public void onResponse(Call<ResultModel<HomeNumBean>> call, Response<ResultModel<HomeNumBean>> response) {
-                if (response.isSuccessful()) {
-                    onLoginListener.onResponse(response.body());
-                } else
-                    onLoginListener.onFailure(response.message());
-            }
-
-            @Override
-            public void onFailure(Call<ResultModel<HomeNumBean>> call, Throwable throwable) {
-                onLoginListener.onFailure(throwable.getMessage());
-            }
-        });
-    }
+//    @Override
+//    public void getDoctorInfo(String userId, final OnLoginListener onLoginListener) {
+//        mApiService.getDoctorInfo(userId).enqueue(new Callback<ResultModel<HomeNumBean>>() {
+//            @Override
+//            public void onResponse(Call<ResultModel<HomeNumBean>> call, Response<ResultModel<HomeNumBean>> response) {
+//                if (response.isSuccessful()) {
+//                    onLoginListener.onResponse(response.body());
+//                } else
+//                    onLoginListener.onFailure(response.message());
+//            }
+//
+//            @Override
+//            public void onFailure(Call<ResultModel<HomeNumBean>> call, Throwable throwable) {
+//                onLoginListener.onFailure(throwable.getMessage());
+//            }
+//        });
+//    }
 
 
 }

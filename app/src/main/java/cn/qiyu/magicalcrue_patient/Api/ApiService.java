@@ -1,5 +1,8 @@
 package cn.qiyu.magicalcrue_patient.Api;
+import java.util.List;
+
 import cn.qiyu.magicalcrue_patient.model.HomeNumBean;
+import cn.qiyu.magicalcrue_patient.model.PatientRelationBean;
 import cn.qiyu.magicalcrue_patient.model.RegisterLoginVerBean;
 import cn.qiyu.magicalcrue_patient.model.ResultModel;
 import okhttp3.ResponseBody;
@@ -25,7 +28,8 @@ public interface ApiService {
     //首页数目获取
     String API_HOME_NUM = "patientInfo/getUserMessageInfo";
     String API_HOME_DOCTOR = "doctorinfoTeam/getDoctorTeamUserListByPatientId";
-
+    //患者关系
+    String API_PATIENT_RELATION = "dictionaries/getDictionariesList";
 
 
     /**
@@ -95,6 +99,13 @@ public interface ApiService {
     @POST(IMPLEMENTATION_NOTES)
     @FormUrlEncoded
     Call<ResultModel<RegisterLoginVerBean>> getVerifyInformation(@Field("account") String account);
+
+    /**
+     * 患者关系
+     */
+    @POST(API_PATIENT_RELATION)
+    @FormUrlEncoded
+    Call<ResultModel<List<PatientRelationBean>>> getPatientRelation(@Field("bianma") String bianma,@Field("type") String type);
 
 
 }

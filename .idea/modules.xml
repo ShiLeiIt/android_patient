@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/MagicalCrue_patient.iml" filepath="$PROJECT_DIR$/MagicalCrue_patient.iml" />
+      <module fileurl="file://$PROJECT_DIR$/android-pickers/android-pickers.iml" filepath="$PROJECT_DIR$/android-pickers/android-pickers.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/mainnavigatetabbar/mainnavigatetabbar.iml" filepath="$PROJECT_DIR$/mainnavigatetabbar/mainnavigatetabbar.iml" />
     </modules>

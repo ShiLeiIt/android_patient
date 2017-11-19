@@ -1,5 +1,6 @@
 package cn.qiyu.magicalcrue_patient.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentActivity;
@@ -30,17 +31,25 @@ public class MainActivity extends FragmentActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         mNavigateTabBar = (MainNavigateTabBar) findViewById(R.id.mainTabBar);
         mNavigateTabBar.onRestoreInstanceState(savedInstanceState);
         mNavigateTabBar.addTab(HomePageFragment.class, new MainNavigateTabBar.TabParam(R.drawable.tab_home_normal, R.drawable.tab_home_select, TAG_PAGE_HOME));
         mNavigateTabBar.setCurrentSelectedTab(R.drawable.tab_home_select);
+
         mNavigateTabBar.addTab(VisitFragment.class, new MainNavigateTabBar.TabParam(R.drawable.tab_visit_normal, R.drawable.tab_visit_select, TAG_PAGE_VISIT));
         mNavigateTabBar.setCurrentSelectedTab(R.drawable.tab_visit_select);
+
         mNavigateTabBar.addTab(null, new MainNavigateTabBar.TabParam(0, 0, TAG_PAGE_ADD));
+
         mNavigateTabBar.addTab(InformationFragment.class, new MainNavigateTabBar.TabParam(R.drawable.tab_information_normal, R.drawable.tab_information_select, TAG_PAGE_INFORMATION));
         mNavigateTabBar.setCurrentSelectedTab(R.drawable.tab_information_select);
+
+        mNavigateTabBar.addTab(MineFragment.class, new MainNavigateTabBar.TabParam(R.drawable.tab_mine_normal, R.drawable.tab_mine_select, TAG_PAGE_PERSON));
+
         mNavigateTabBar.addTab(MineFragment.class, new MainNavigateTabBar.TabParam(R.drawable.tab_mine_normal, R.drawable.tab_mine_select, TAG_PAGE_PERSON));
         mNavigateTabBar.setCurrentSelectedTab(R.drawable.tab_mine_select);
+
     }
 
     @Override

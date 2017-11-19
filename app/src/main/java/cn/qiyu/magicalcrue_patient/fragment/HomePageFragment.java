@@ -132,7 +132,7 @@ public class HomePageFragment extends Fragment {
         });
 
         homePresenter.HomeLoadNumData();
-        homePresenter.HomeDoctorData();
+//        homePresenter.HomeDoctorData();
 
 
         return view;

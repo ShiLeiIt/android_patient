@@ -2,6 +2,7 @@ package cn.qiyu.magicalcrue_patient.utils;
 
 
 import android.content.Context;
+import android.view.View;
 
 /**
  * Created by ShiLei on 2017/11/16.
@@ -28,4 +29,7 @@ public class Utils {
             scale = context.getResources().getDisplayMetrics().density;
         return (int) (pxValue / scale + 0.5f);
     }
+
+
+
 }

@@ -1,6 +1,10 @@
 package cn.qiyu.magicalcrue_patient.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.MediaStore;
+import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Gravity;
 import android.view.View;
@@ -8,21 +12,19 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.ArrayList;
-
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.addapp.pickers.entity.City;
+import cn.addapp.pickers.entity.County;
+import cn.addapp.pickers.entity.Province;
+import cn.addapp.pickers.picker.DatePicker;
 import cn.qiyu.magicalcrue_patient.R;
-import cn.qiyu.magicalcrue_patient.view.OptionsPopupWindow;
+import cn.qiyu.magicalcrue_patient.fragment.MineFragment;
+import cn.qiyu.magicalcrue_patient.view.SelectPicPopupWindow;
+import de.hdodenhof.circleimageview.CircleImageView;
 
-public class UserInforActivity extends AppCompatActivity implements OptionsPopupWindow.OnOptionsSelectListener {
+public class UserInforActivity extends FragmentActivity implements View.OnClickListener {
 
     @Bind(R.id.iv_userinfor_back)
     ImageView mIvUserinforBack;
@@ -52,107 +54,138 @@ public class UserInforActivity extends AppCompatActivity implements OptionsPopup
     TextView mTvDate;
     @Bind(R.id.tv_select_Date)
     TextView mTvSelectDate;
-    // 城区数组
-    ArrayList<String> ProvinceList = new ArrayList<String>();
-    ArrayList<ArrayList<String>> CityList = new ArrayList<ArrayList<String>>();
-    ArrayList<ArrayList<ArrayList<String>>> CountyList = new ArrayList<ArrayList<ArrayList<String>>>();
+    @Bind(R.id.civ_head)
+    CircleImageView mCivHead;
+    private SelectPicPopupWindow mPicPopupWindow;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_infor);
         ButterKnife.bind(this);
+
+        mPicPopupWindow = new SelectPicPopupWindow(UserInforActivity.this,this );
     }
 
-    @OnClick({R.id.iv_userinfor_back, R.id.tv_save_userinfor, R.id.iv_head_arrows, R.id.iv_name_arrows, R.id.tv_select_citiy, R.id.iv_girl, R.id.iv_boy, R.id.tv_select_Date})
+    private void showToast(String msg) {
+        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
+
+    }
+
+    @OnClick({R.id.iv_userinfor_back, R.id.tv_save_userinfor, R.id.iv_head_arrows, R.id.iv_name_arrows,
+            R.id.tv_select_citiy, R.id.iv_girl, R.id.iv_boy, R.id.tv_select_Date, R.id.civ_head})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.iv_userinfor_back:
                 break;
             case R.id.tv_save_userinfor:
+//                Intent intent = new Intent(UserInforActivity.this, MainActivity.class);
+//                intent.putExtra("id", 4);
+//
+//                startActivity(intent);
+
                 break;
             case R.id.iv_head_arrows:
                 break;
             case R.id.iv_name_arrows:
                 break;
             case R.id.tv_select_citiy:
-                getWheelList();
-                OptionsPopupWindow popupWindow = new OptionsPopupWindow(UserInforActivity.this);
-                popupWindow.showAtLocation(mTvSelectCitiy, Gravity.BOTTOM, 0, 0);//textView
-                popupWindow.setPicker(ProvinceList, CityList, CountyList, true);
-                popupWindow.setOnoptionsSelectListener(this);
-                popupWindow.setCyclic(false);
-
+                tvSelectCity();
                 break;
             case R.id.iv_girl:
+                mIvGirl.setImageResource(R.drawable.check_box_select);
+                mIvBoy.setImageResource(R.drawable.check_box_normal);
                 break;
             case R.id.iv_boy:
+                mIvBoy.setImageResource(R.drawable.check_box_select);
+                mIvGirl.setImageResource(R.drawable.check_box_normal);
                 break;
             case R.id.tv_select_Date:
+                tvSelectDate();
+                break;
+            case R.id.civ_head:
+                        View inflate = getLayoutInflater().inflate(R.layout.activity_user_infor, null);
+                mPicPopupWindow. showAtLocation(inflate, Gravity.BOTTOM|Gravity.CENTER_HORIZONTAL,0,0);
                 break;
         }
     }
 
-    @Override
-    public void onOptionsSelect(int options1, int option2, int options3) {
-        mTvSelectCitiy.setText(ProvinceList.get(options1) + CityList.get(options1).get(option2) + CountyList.get(options1).get(option2).get(options3));
-        Toast.makeText(UserInforActivity.this, "" + mTvSelectCitiy.getText().toString(), Toast.LENGTH_SHORT).show();
-    }
-    private void getWheelList() {
-        try {
-            // 获取json文件输入流
-            InputStream is = getResources().getAssets().open("china_address.json");
 
-            // 将json文件读入为一个字符串
-            byte[] bytearray = new byte[is.available()];
-            is.read(bytearray);
-            String address_json = new String(bytearray, "UTF-8");
-
-            // 将json转化为JSONArray对象,这是所有省的JSONArray
-            JSONArray jsonArraySheng = new JSONArray(address_json);
-
-            // 遍历这个JSONArray对象
-            for (int i = 0; i < jsonArraySheng.length(); i++) {
-                // 取出第i个省对象，并将其转化为JSONObject对象
-                JSONObject jsonObjectSheng = jsonArraySheng.getJSONObject(i);
-                // 将省的名字存入一维数组
-                StringBuffer provincename = new StringBuffer(jsonObjectSheng.getString("areaName"));
-                ProvinceList.add(provincename.toString());
-                // 存储第i个省的城市名的数组
-                ArrayList<String> tempj = new ArrayList<String>();
-                // 存储第i个省的所有城市的城区名的二维数组
-                ArrayList<ArrayList<String>> tempk = new ArrayList<ArrayList<String>>();
-                // 取出第i个省对象中的城市数组，并将其转化为JSONArray对象
-                JSONArray jsonArrayShi = jsonObjectSheng.getJSONArray("cities");
-                // 遍历第i个省的城市JSONArray
-                for (int j = 0; j < jsonArrayShi.length(); j++) {
-                    // 取出第i个省的第j个市，并将其转化为JSONObject对象
-                    JSONObject jsonObjectShi = jsonArrayShi.getJSONObject(j);
-                    // 将市的名字存入第i个省的城市名数组
-                    StringBuffer cityname = new StringBuffer(jsonObjectShi.getString("areaName"));
-                    tempj.add(cityname.toString());
-                    // 存储第i个省第j个市的城区名的数组
-                    ArrayList<String> tempkk = new ArrayList<String>();
-                    // 取出第i个省第j个市中的城区数组，并将其转化为JSONArray对象
-                    JSONArray jsonArrayQu = jsonObjectShi.getJSONArray("counties");
-                    // 遍历第i个省第j个市的城区JSONArray
-                    for (int k = 0; k < jsonArrayQu.length(); k++) {
-                        // 第i个省第j个市第k个区
-                        JSONObject jsonObjectQu = jsonArrayQu.getJSONObject(k);
-                        // 名字存入数组
-                        StringBuffer countyname = new StringBuffer(jsonObjectQu.getString("areaName"));
-                        tempkk.add(countyname.toString());
-                    }
-                    // 第i个省第j个市的城区名的数组添加到第i个省的所有城市的城区名的二维数组
-                    tempk.add(tempkk);
-                }
-                CityList.add(tempj);
-                CountyList.add(tempk);
+    //城市的选择
+    private void tvSelectCity() {
+        AddressPickTask task = new AddressPickTask(this);
+        task.setHideProvince(false);
+        task.setHideCounty(false);
+        task.setCallback(new AddressPickTask.Callback() {
+            @Override
+            public void onAddressInitFailed() {
+                showToast("数据初始化失败");
             }
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
-            e.printStackTrace();
+
+            @Override
+            public void onAddressPicked(Province province, City city, County county) {
+                if (county == null) {
+                    mTvSelectCitiy.setText(province.getAreaName() + "-" + city.getAreaName());
+//                    showToast(province.getAreaName() + "-" + city.getAreaName());
+                } else {
+                    mTvSelectCitiy.setText(province.getAreaName() + "-" + city.getAreaName() + "-" + county.getAreaName());
+//                    showToast(province.getAreaName() + "-" + city.getAreaName() + "-" + county.getAreaName());
+                }
+            }
+        });
+        task.execute("北京市", "北京市", "东城区");
+    }
+
+    //日期的选择
+    private void tvSelectDate() {
+        final DatePicker picker = new DatePicker(this);
+        picker.setCanLoop(false);
+        picker.setWheelModeEnable(true);
+        picker.setTopPadding(15);
+        picker.setRangeStart(1950, 1, 1);
+        picker.setRangeEnd(2050, 1, 11);
+        picker.setSelectedItem(2017, 10, 14);
+        picker.setWeightEnable(true);
+        picker.setOnDatePickListener(new DatePicker.OnYearMonthDayPickListener() {
+            @Override
+            public void onDatePicked(String year, String month, String day) {
+//                        showToast(year + "-" + month + "-" + day);
+                mTvSelectDate.setText(year + "-" + month + "-" + day);
+            }
+        });
+        picker.setOnWheelListener(new DatePicker.OnWheelListener() {
+            @Override
+            public void onYearWheeled(int index, String year) {
+                picker.setTitleText(year + "-" + picker.getSelectedMonth() + "-" + picker.getSelectedDay());
+            }
+
+            @Override
+            public void onMonthWheeled(int index, String month) {
+                picker.setTitleText(picker.getSelectedYear() + "-" + month + "-" + picker.getSelectedDay());
+            }
+
+            @Override
+            public void onDayWheeled(int index, String day) {
+                picker.setTitleText(picker.getSelectedYear() + "-" + picker.getSelectedMonth() + "-" + day);
+            }
+        });
+        picker.show();
+    }
+
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.tv_photo:
+                //拍照
+                Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                startActivity(intent);
+                break;
+            case R.id.tv_local_photo:
+                Intent intent1 = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                startActivity(intent1);
+                break;
         }
     }
 }
