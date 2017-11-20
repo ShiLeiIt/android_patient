@@ -2,6 +2,7 @@ package cn.qiyu.magicalcrue_patient.model;
 
 /**
  * Created by Administrator on 2017/11/16.
+ * 注册验证码
  */
 
 public class RegisterLoginVerBean {

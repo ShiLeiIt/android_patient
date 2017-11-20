@@ -5,6 +5,7 @@ import cn.qiyu.magicalcrue_patient.model.ResultModel;
 
 /**
  * Created by ShiLei on 2017/11/15.
+ * 首页
  */
 
 public interface HomeBiz {

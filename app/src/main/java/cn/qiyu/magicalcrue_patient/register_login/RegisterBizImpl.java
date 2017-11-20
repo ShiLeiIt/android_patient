@@ -3,6 +3,7 @@ package cn.qiyu.magicalcrue_patient.register_login;
 
 import cn.qiyu.magicalcrue_patient.base.BaseBiz;
 import cn.qiyu.magicalcrue_patient.biz.RegisterBiz;
+import cn.qiyu.magicalcrue_patient.model.RegisterLoginBean;
 import cn.qiyu.magicalcrue_patient.model.RegisterLoginVerBean;
 import cn.qiyu.magicalcrue_patient.model.ResultModel;
 import retrofit2.Call;
@@ -30,6 +31,25 @@ public class RegisterBizImpl extends BaseBiz implements RegisterBiz {
             @Override
             public void onFailure(Call<ResultModel<RegisterLoginVerBean>> call, Throwable throwable) {
 
+            }
+        });
+    }
+
+    @Override
+    public void getRegisterLogin(String account, String verCode, String jpushId, final RegisterBiz.OnLoginListener onLoginListener) {
+        mApiService.getRegisterLogin(account,verCode,jpushId).enqueue(new Callback<ResultModel<RegisterLoginBean>>() {
+            @Override
+            public void onResponse(Call<ResultModel<RegisterLoginBean>> call, Response<ResultModel<RegisterLoginBean>> response) {
+                if(response.isSuccessful())
+                    onLoginListener.onResponse(response.body());
+                else
+                    onLoginListener.onFailure(response.body().getMessage());
+
+            }
+
+            @Override
+            public void onFailure(Call<ResultModel<RegisterLoginBean>> call, Throwable throwable) {
+                onLoginListener.onFailure(throwable.getMessage());
             }
         });
     }

@@ -108,7 +108,7 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginLeft="26dp"
-            android:enabled="false"
+
             android:background="@null"
             android:digits="0123456789"
             android:drawableLeft="@drawable/register_auth"

@@ -7,6 +7,7 @@ import cn.qiyu.magicalcrue_patient.model.ResultModel;
 
 /**
  * Created by ShiLei on 2017/11/19.
+ * 患者关系
  */
 
 public interface PatientInfoBiz  {

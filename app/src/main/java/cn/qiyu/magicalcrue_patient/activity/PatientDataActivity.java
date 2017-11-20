@@ -18,6 +18,9 @@ import cn.addapp.pickers.entity.Province;
 import cn.addapp.pickers.picker.DatePicker;
 import cn.qiyu.magicalcrue_patient.R;
 
+/**
+ * 患者资料信息页面
+ */
 public class PatientDataActivity extends AppCompatActivity {
 
     @Bind(R.id.iv_patient_back)

@@ -19,6 +19,7 @@ import cn.qiyu.magicalcrue_patient.adapter.ViewHolder;
 import cn.qiyu.magicalcrue_patient.home.HomeNumView;
 import cn.qiyu.magicalcrue_patient.home.HomePresenter;
 import cn.qiyu.magicalcrue_patient.model.HomeNumBean;
+import cn.qiyu.magicalcrue_patient.model.ResultModel;
 import cn.qiyu.magicalcrue_patient.view.LLImageView;
 import cn.qiyu.magicalcrue_patient.view.LLTextView;
 import cn.qiyu.magicalcrue_patient.view.LLTextViewNew;
@@ -122,6 +123,11 @@ public class HomePageFragment extends Fragment {
 
             @Override
             public void hideProgress() {
+
+            }
+
+            @Override
+            public void onViewFailure(ResultModel model) {
 
             }
 

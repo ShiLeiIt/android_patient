@@ -2,15 +2,15 @@ package cn.qiyu.magicalcrue_patient.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v4.app.FragmentActivity;
-import android.support.v7.app.AppCompatActivity;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -20,10 +20,16 @@ import cn.addapp.pickers.entity.County;
 import cn.addapp.pickers.entity.Province;
 import cn.addapp.pickers.picker.DatePicker;
 import cn.qiyu.magicalcrue_patient.R;
-import cn.qiyu.magicalcrue_patient.fragment.MineFragment;
+import cn.qiyu.magicalcrue_patient.model.CityBean;
+import cn.qiyu.magicalcrue_patient.model.ResultModel;
+import cn.qiyu.magicalcrue_patient.userinfor.UserInforEdtPresenter;
+import cn.qiyu.magicalcrue_patient.userinfor.UserInforEdtView;
 import cn.qiyu.magicalcrue_patient.view.SelectPicPopupWindow;
 import de.hdodenhof.circleimageview.CircleImageView;
 
+/**
+ * 用户信息界面
+ */
 public class UserInforActivity extends FragmentActivity implements View.OnClickListener {
 
     @Bind(R.id.iv_userinfor_back)
@@ -72,6 +78,72 @@ public class UserInforActivity extends FragmentActivity implements View.OnClickL
         Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
 
     }
+    UserInforEdtPresenter mUserInforEdtPresenter=  new UserInforEdtPresenter(new UserInforEdtView() {
+        @Override
+        public String getUuId() {
+            return "178";
+        }
+
+        @Override
+        public String getPhotoPath() {
+            return "12345678";
+        }
+
+        @Override
+        public String getUser_name() {
+            return mTvRealName.getText().toString();
+        }
+
+        @Override
+        public String getBirthday() {
+            return mTvSelectDate.getText().toString();
+        }
+
+        @Override
+        public String getSex() {
+            if (((Integer)(mIvGirl.getTag()))==1) {
+                return "1";
+            }
+            return "0";
+        }
+
+        @Override
+        public String getNative_place_cd() {
+            return "260000,260100,260103";
+        }
+
+        @Override
+        public void getUserInforEdt(ResultModel rlBean) {
+            Intent intent = new Intent(UserInforActivity.this, PatientDataActivity.class);
+            startActivity(intent);
+        }
+
+        @Override
+        public void getCityInfor(ResultModel<List<CityBean>> ctBean) {
+//            List<CityBean> data = ctBean.getData();
+
+        }
+
+        @Override
+        public void showProgress() {
+
+        }
+
+        @Override
+        public void hideProgress() {
+
+        }
+
+        @Override
+        public void onViewFailure(ResultModel model) {
+            Toast.makeText(UserInforActivity.this, ""+model.getMessage(), Toast.LENGTH_SHORT).show();
+        }
+
+        @Override
+        public void onServerFailure(String e) {
+            Toast.makeText(UserInforActivity.this, ""+e, Toast.LENGTH_SHORT).show();
+        }
+    });
 
     @OnClick({R.id.iv_userinfor_back, R.id.tv_save_userinfor, R.id.iv_head_arrows, R.id.iv_name_arrows,
             R.id.tv_select_citiy, R.id.iv_girl, R.id.iv_boy, R.id.tv_select_Date, R.id.civ_head})
@@ -80,10 +152,8 @@ public class UserInforActivity extends FragmentActivity implements View.OnClickL
             case R.id.iv_userinfor_back:
                 break;
             case R.id.tv_save_userinfor:
-//                Intent intent = new Intent(UserInforActivity.this, MainActivity.class);
-//                intent.putExtra("id", 4);
-//
-//                startActivity(intent);
+                mUserInforEdtPresenter.getUserInforEdt();
+
 
                 break;
             case R.id.iv_head_arrows:
@@ -94,12 +164,19 @@ public class UserInforActivity extends FragmentActivity implements View.OnClickL
                 tvSelectCity();
                 break;
             case R.id.iv_girl:
-                mIvGirl.setImageResource(R.drawable.check_box_select);
-                mIvBoy.setImageResource(R.drawable.check_box_normal);
+                mIvGirl.setTag(1);
+                mIvBoy.setTag(0);
+                    mIvGirl.setImageResource(R.drawable.check_box_select);
+                    mIvBoy.setImageResource(R.drawable.check_box_normal);
+                Toast.makeText(this, ""+ ((Integer)(mIvGirl.getTag())), Toast.LENGTH_SHORT).show();
                 break;
             case R.id.iv_boy:
-                mIvBoy.setImageResource(R.drawable.check_box_select);
-                mIvGirl.setImageResource(R.drawable.check_box_normal);
+                mIvBoy.setTag(1);
+                mIvGirl.setTag(0);
+                    mIvBoy.setImageResource(R.drawable.check_box_select);
+                    mIvGirl.setImageResource(R.drawable.check_box_normal);
+                Toast.makeText(this, ""+ ((Integer)(mIvBoy.getTag())), Toast.LENGTH_SHORT).show();
+
                 break;
             case R.id.tv_select_Date:
                 tvSelectDate();

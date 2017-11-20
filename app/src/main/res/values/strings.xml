@@ -7,7 +7,7 @@
     <string name="please_select">请选择</string>
     <string name="gender">性别</string>
     <string name="location_citiy">所在城市</string>
-    <string name="user_icon">用户头像</string>
+    <string name="user_icon">用户信息</string>
     <string name="real_name">真实用户</string>
     <string name="girl">女士</string>
     <string name="boy">男士</string>

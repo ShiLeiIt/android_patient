@@ -14,7 +14,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.NoActionBar">
-        <activity android:name=".activity.PatientRelationListActivity">
+        <activity android:name=".activity.UserInforActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
@@ -22,10 +22,9 @@
             </intent-filter>
         </activity>
         <activity android:name=".activity.MainActivity"/>
-        <activity android:name=".activity.UserInforActivity">
-        </activity>
+       <activity android:name=".activity.RegisterActivity"/>
         <activity android:name=".activity.LoginActivity"/>
-        <activity android:name=".activity.RegisterActivity"/>
+        <activity android:name=".activity.PatientRelationListActivity"/>
         <activity android:name=".activity.PatientDataActivity"/>
 
     </application>

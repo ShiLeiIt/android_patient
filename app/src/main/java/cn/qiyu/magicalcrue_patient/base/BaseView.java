@@ -1,5 +1,7 @@
 package cn.qiyu.magicalcrue_patient.base;
 
+import cn.qiyu.magicalcrue_patient.model.ResultModel;
+
 /**
  * Created by Administrator on 2017/11/13.
  */
@@ -17,7 +19,7 @@ public interface BaseView {
      *
      * @param model
      */
-//    void onViewFailure(ResultModel model);
+  void onViewFailure(ResultModel model);
 
     /**
      * 服务断开

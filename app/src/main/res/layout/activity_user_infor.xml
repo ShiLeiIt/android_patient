@@ -194,6 +194,7 @@
             android:textSize="14sp"/>
 
         <ImageView
+
             android:id="@+id/iv_girl"
             android:layout_width="20dp"
             android:layout_height="20dp"

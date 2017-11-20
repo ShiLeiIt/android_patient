@@ -7,6 +7,7 @@ import cn.qiyu.magicalcrue_patient.model.ResultModel;
 
 /**
  * Created by ShiLei on 2017/11/15.
+ * 患者关系
  */
 
 public class PatientInfoPresenter {
@@ -33,21 +34,5 @@ public class PatientInfoPresenter {
          }
      });
  }
-//    public void HomeDoctorData(){
-//        mHomeBiz.getDoctorInfo(mNumView.getPatientId(), new HomeBiz.OnLoginListener() {
-//            @Override
-//            public void onResponse(ResultModel<HomeNumBean> model) {
-//                if (model.getResult() == 0) {
-//                    mNumView.LoadDate(model.getData());
-//                } else {
-//                    mNumView.onServerFailure(model.getMessage());
-//                }
-//            }
-//
-//            @Override
-//            public void onFailure(String e) {
-//
-//            }
-//        });
-//    }
+
 }

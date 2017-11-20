@@ -16,10 +16,14 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.qiyu.magicalcrue_patient.R;
+import cn.qiyu.magicalcrue_patient.model.RegisterLoginBean;
 import cn.qiyu.magicalcrue_patient.model.ResultModel;
 import cn.qiyu.magicalcrue_patient.register_login.RegisterPresenter;
 import cn.qiyu.magicalcrue_patient.register_login.RegisterVmView;
 
+/**
+ * 注册登录页面
+ */
 public class RegisterActivity extends AppCompatActivity {
 
     @Bind(R.id.iv_register_del)
@@ -50,12 +54,33 @@ public class RegisterActivity extends AppCompatActivity {
         mRegisterPresenter = new RegisterPresenter(new RegisterVmView() {
             @Override
             public String getAccount() {
+                Toast.makeText(RegisterActivity.this, "22222222", Toast.LENGTH_SHORT).show();
                 return mEditPhone.getText().toString();
             }
 
             @Override
             public void getVerifyMessage(ResultModel rlBean) {
                 Toast.makeText(RegisterActivity.this, rlBean.getMessage(), Toast.LENGTH_SHORT).show();
+
+            }
+
+            @Override
+            public String getVerCode() {
+                return mEditAuthCode.getText().toString();
+            }
+
+            @Override
+            public String getJpushId() {
+                return "";
+            }
+
+            @Override
+            public void getRegisterLogin(ResultModel<RegisterLoginBean> model) {
+                if (model.getData().getUserPerfect() == 1) {
+                    startActivity(new Intent(RegisterActivity.this, UserInforActivity.class));
+                } else {
+                    Toast.makeText(RegisterActivity.this, "首页", Toast.LENGTH_SHORT).show();
+                }
             }
 
             @Override
@@ -66,6 +91,11 @@ public class RegisterActivity extends AppCompatActivity {
             @Override
             public void hideProgress() {
 
+            }
+
+            @Override
+            public void onViewFailure(ResultModel model) {
+                Toast.makeText(RegisterActivity.this, "" + model.getMessage(), Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -87,7 +117,7 @@ public class RegisterActivity extends AppCompatActivity {
                 mTimeCount.start();
                 mTvSendAuthCode.setBackgroundResource(R.drawable.register_auth_code_show);
                 mTvSendAuthCode.setTextColor(getResources().getColor(R.color.app_white));
-                mEditAuthCode.setEnabled(true);
+//                mEditAuthCode.setEnabled(true);
                 mRegisterPresenter.RegisterLoadMesData();
                 break;
             case R.id.iv_register_auth:
@@ -110,7 +140,8 @@ public class RegisterActivity extends AppCompatActivity {
                     Toast.makeText(this, "请同意注册协议", Toast.LENGTH_SHORT).show();
                 } else {
                     Toast.makeText(this, "注册成功", Toast.LENGTH_SHORT).show();
-                    startActivity(new Intent(RegisterActivity.this,UserInforActivity.class));
+                    mRegisterPresenter.RegisterLogin();
+
                 }
                 break;
         }
