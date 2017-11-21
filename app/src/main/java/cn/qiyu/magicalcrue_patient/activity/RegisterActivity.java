@@ -40,6 +40,8 @@ public class RegisterActivity extends AppCompatActivity {
     ImageView mIvRegister;
     @Bind(R.id.edit_auth_code)
     EditText mEditAuthCode;
+    @Bind(R.id.iv_login)
+    ImageView mIv_login;
     private TimeCount mTimeCount;
     public boolean tag = true;
     private RegisterPresenter mRegisterPresenter;
@@ -76,10 +78,17 @@ public class RegisterActivity extends AppCompatActivity {
 
             @Override
             public void getRegisterLogin(ResultModel<RegisterLoginBean> model) {
+                //"1"是注册页面 ，"2" 是登录页面
                 if (model.getData().getUserPerfect() == 1) {
-                    startActivity(new Intent(RegisterActivity.this, UserInforActivity.class));
+                    Intent intent = new Intent(RegisterActivity.this, UserInforActivity.class);
+                    intent.putExtra("id", model.getData().getId());
+                    startActivity(intent);
                 } else {
-                    Toast.makeText(RegisterActivity.this, "首页", Toast.LENGTH_SHORT).show();
+                    mIv_login.setVisibility(View.VISIBLE);
+                    Intent intent = new Intent(RegisterActivity.this, UserInforActivity.class);
+                    intent.putExtra("id", String.valueOf(model.getData().getId()));
+                    startActivity(intent);
+
                 }
             }
 

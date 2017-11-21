@@ -8,6 +8,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -89,7 +90,13 @@ public class PatientDataActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_patient_da);
         ButterKnife.bind(this);
-        mTvRelationName.setText(getIntent().getStringExtra("name"));
+        init();
+    }
+
+    private void init() {
+        Intent intent = getIntent();
+        String name = intent.getStringExtra("name");
+        mTvRelationName.setText(name);
 
     }
 
@@ -209,5 +216,6 @@ public class PatientDataActivity extends AppCompatActivity {
 
     @OnClick(R.id.tv_relation_name)
     public void onViewClicked() {
+
     }
 }

@@ -40,4 +40,6 @@ dependencies {
     testCompile 'junit:junit:4.12'
     compile files('libs/butterknife-7.0.1.jar')
     compile 'com.android.support:recyclerview-v7:25.3.1'
+    compile 'cn.yipianfengye.android:zxing-library:2.2'
+    compile 'pub.devrel:easypermissions:0.2.0'
 }

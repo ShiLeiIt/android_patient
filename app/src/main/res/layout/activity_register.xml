@@ -27,7 +27,7 @@
         android:id="@+id/edit_phone"
         android:layout_width="281dp"
         android:layout_height="45dp"
-        android:layout_alignStart="@+id/et_password"
+        android:layout_alignStart="@+id/rl_register_auth"
         android:layout_centerVertical="true"
         android:background="@drawable/edit_bg"
         android:digits="0123456789"
@@ -38,58 +38,6 @@
         android:maxLength="11"
         android:paddingLeft="26dp"
         android:textColor="#999999"/>
-
-    <EditText
-        android:id="@+id/et_password"
-        android:layout_width="281dp"
-        android:layout_height="45dp"
-        android:layout_alignStart="@+id/rl_forget_password"
-        android:layout_below="@+id/edit_phone"
-        android:layout_marginTop="22dp"
-        android:background="@drawable/edit_bg"
-        android:drawableLeft="@drawable/register_password"
-        android:inputType="phone"
-        android:paddingLeft="26dp"
-        android:text=""
-        android:visibility="invisible"/>
-
-    <RelativeLayout
-        android:id="@+id/rl_forget_password"
-        android:layout_width="281dp"
-        android:layout_height="14dp"
-        android:layout_below="@id/et_password"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="16dp"
-        android:visibility="invisible">
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_gravity="center"
-            android:layout_marginLeft="30dp"
-            android:src="@drawable/register_jzmm"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_gravity="center"
-            android:layout_marginLeft="50dp"
-            android:text="@string/remember_password"
-            android:textSize="12sp"
-            />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_weight="1"
-            android:text="@string/forget_password"
-            android:textSize="12sp"
-            />
-    </RelativeLayout>
 
     <RelativeLayout
         android:id="@+id/rl_register_auth"
@@ -191,7 +139,7 @@
         android:id="@+id/iv_login"
         android:layout_width="216dp"
         android:layout_height="46dp"
-        android:layout_below="@id/rl_forget_password"
+        android:layout_below="@id/rl_register_deal"
         android:layout_centerHorizontal="true"
         android:layout_marginLeft="80dp"
         android:layout_marginRight="80dp"

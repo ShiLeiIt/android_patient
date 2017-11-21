@@ -29,7 +29,7 @@
 
     </RelativeLayout>
     <View
-        android:background="@color/app_gray"
+        android:background="#f7f7f7"
         android:layout_width="match_parent"
         android:layout_height="20dp"/>
 

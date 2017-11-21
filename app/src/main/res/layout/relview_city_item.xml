@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@color/app_white">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="41dp">
+
+        <TextView
+            android:id="@+id/tv_city_district"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginLeft="15dp"
+            android:text="广东省"
+            android:textColor="#000"/>
+
+        <ImageView
+            android:id="@+id/iv_city_district_arrows"
+            android:layout_width="23dp"
+            android:layout_height="23dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="15dp"
+            android:src="@drawable/mine_arrows"
+            android:visibility="visible"/>
+    </RelativeLayout>
+</RelativeLayout>

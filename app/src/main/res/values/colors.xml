@@ -8,6 +8,8 @@
     <color name="app_white">#ffffff</color>
     <color name="app_black">#000000</color>
     <color name="app_userInfor">#353535</color>
+    <color name="app_relation_tv">#63AE39</color>
     <color name="wheel_timebtn_nor">#54a3fa</color>
     <color name="wheel_timebtn_pre">#CCCCCC</color>
+    <color name="view_bg">#f7f7f7</color>
 </resources>

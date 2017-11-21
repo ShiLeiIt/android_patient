@@ -39,7 +39,7 @@ public interface ApiService {
     //用户基本信息修改
     String API_USER_INFOR_EDITOR = "patientInfo/uplodeUserInfo";
     //城市
-    String API_CITIY ="post /common/getNativeList";
+    String API_CITIY ="common/getNativeList";
 
 
 
@@ -93,6 +93,6 @@ public interface ApiService {
      */
     @POST(API_CITIY)
     @FormUrlEncoded
-    Call<ResultModel<CityBean>> getCitiyInfor(@Field("parent_code") String parent_code, @Field("levelId") String levelId);
+    Call<ResultModel<List<CityBean>>> getCitiyInfor(@Field("parent_code") String parent_code, @Field("levelId") String levelId);
 
 }

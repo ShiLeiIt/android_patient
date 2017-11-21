@@ -26,6 +26,5 @@ public interface UserInforEdtView extends BaseView {
 
     void getUserInforEdt(ResultModel rlBean);
 
-    void getCityInfor(ResultModel<List<CityBean>> ctBean);
 
 }

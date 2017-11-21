@@ -22,6 +22,7 @@ import cn.qiyu.magicalcrue_patient.home.PatientInfoPresenter;
 import cn.qiyu.magicalcrue_patient.home.PatientInfoView;
 import cn.qiyu.magicalcrue_patient.model.PatientRelationBean;
 import cn.qiyu.magicalcrue_patient.model.ResultModel;
+import cn.qiyu.magicalcrue_patient.view.RecycleViewDivider;
 
 /**
  * Created by ShiLei on 2017/11/19.
@@ -32,10 +33,9 @@ public class PatientRelationListActivity extends Activity {
 
     @Bind(R.id.iv_patient_relation_back)
     ImageView mIvBack;
-
     private RecyclerView mRl_relation;
     private String mRelationName;
-    private int mSelectPositon;
+    private RecyclerAdpter mAdpter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,9 +43,15 @@ public class PatientRelationListActivity extends Activity {
         setContentView(R.layout.activity_patient_relation);
         ButterKnife.bind(this);
         mRl_relation = (RecyclerView) findViewById(R.id.rlv_patient_relation);
+        init();
         mPatientInfoPresenter.LoadPatientRelation();
+
+
     }
 
+    private void init() {
+        mRl_relation.addItemDecoration(new RecycleViewDivider(PatientRelationListActivity.this, LinearLayoutManager.HORIZONTAL,R.drawable.relation_bg));
+    }
 
     PatientInfoPresenter mPatientInfoPresenter = new PatientInfoPresenter(new PatientInfoView() {
         @Override
@@ -57,14 +63,12 @@ public class PatientRelationListActivity extends Activity {
         public String getType() {
             return "1";
         }
-
         @Override
         public void LoadPatientRelation(ResultModel<List<PatientRelationBean>> model) {
             Toast.makeText(PatientRelationListActivity.this, "" + model.getData().size(), Toast.LENGTH_SHORT).show();
-            mRl_relation.setAdapter(new RecyclerAdpter(model.getData()));
+            mAdpter = new RecyclerAdpter(model.getData());
+            mRl_relation.setAdapter(mAdpter);
             mRl_relation.setLayoutManager(new LinearLayoutManager(PatientRelationListActivity.this));
-
-
         }
 
         @Override
@@ -87,7 +91,6 @@ public class PatientRelationListActivity extends Activity {
             Toast.makeText(PatientRelationListActivity.this, e, Toast.LENGTH_SHORT).show();
         }
     });
-
     @OnClick(R.id.iv_patient_relation_back)
     public void onViewClicked() {
         Intent intent = new Intent(PatientRelationListActivity.this, PatientDataActivity.class);
@@ -95,41 +98,32 @@ public class PatientRelationListActivity extends Activity {
         startActivity(intent);
         finish();
     }
-
-
     class ViewHolder extends RecyclerView.ViewHolder {
-
         PatientRelationBean mModel;
         private final TextView mTv_relation;
         private final ImageView mIv_seclect;
-
 
         public ViewHolder(final View itemView) {
             super(itemView);
             mTv_relation = (TextView) itemView.findViewById(R.id.tv_relation);
             mIv_seclect = (ImageView) itemView.findViewById(R.id.iv_select);
-
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    mIv_seclect.setVisibility(View.VISIBLE);
-
-                }
-            });
-
         }
-
 
         void setItem(PatientRelationBean item) {
             this.mModel = item;
 
         }
-
         //刷新
         void refreshView() {
             mTv_relation.setText(mModel.getNAME());
+            if (mModel.isSelect()){
+                mIv_seclect.setVisibility(View.VISIBLE);
+                mTv_relation.setTextColor(getResources().getColor(R.color.app_relation_tv));
+            }else {
+                mIv_seclect.setVisibility(View.INVISIBLE);
+                mTv_relation.setTextColor(getResources().getColor(R.color.app_userInfor));
+            }
         }
-
     }
 
     public class RecyclerAdpter extends RecyclerView.Adapter<ViewHolder> {
@@ -146,20 +140,26 @@ public class PatientRelationListActivity extends Activity {
 
         }
 
-
         @Override
         public void onBindViewHolder(final ViewHolder holder, final int position) {
             holder.setItem(mlist.get(position));
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Toast.makeText(PatientRelationListActivity.this, "position"+position, Toast.LENGTH_SHORT).show();
-
+//                    Toast.makeText(PatientRelationListActivity.this, "position"+position, Toast.LENGTH_SHORT).show();
+                    mRelationName = mlist.get(position).getNAME();
+                    for (int i = 0; i < mlist.size(); i++) {
+                        if (i == position){
+                            mlist.get(i).setSelect(true);
+                        }else {
+                            mlist.get(i).setSelect(false);
+                        }
+                    }
+                    mAdpter.notifyDataSetChanged();
                 }
             });
             holder.refreshView();
         }
-
         @Override
         public int getItemCount() {
             return mlist.size();
@@ -167,9 +167,6 @@ public class PatientRelationListActivity extends Activity {
 
     }
 
-    void setIm(List<PatientRelationBean> mlist){
-        for (int i = 0; i <mlist.size() ; i++) {
 
-        }
-    }
+
 }

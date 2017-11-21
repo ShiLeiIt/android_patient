@@ -40,22 +40,5 @@ public class UserInforEdtPresenter {
 
         );
     }
-    public  void getCity(){
-        mUserInforEdtBiz.getCityInfor("1", "0", new UserInforEdtBiz.OnLoginListener() {
-            @Override
-            public void onResponse(ResultModel model) {
-                if (model.getResult() == 0) {
-                    mUserInforEdtView.getUserInforEdt(model);
-                } else {
-                    mUserInforEdtView.onViewFailure(model);
-                }
-            }
-
-            @Override
-            public void onFailure(String e) {
-                mUserInforEdtView.onServerFailure(e);
-            }
-        });
-    }
 
 }

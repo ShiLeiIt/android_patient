@@ -24,6 +24,16 @@ public class PatientRelationBean {
     private String NAME;
     private String PARENT_ID;
 
+    public boolean isSelect() {
+        return isSelect;
+    }
+
+    public void setSelect(boolean select) {
+        isSelect = select;
+    }
+
+    private boolean isSelect;
+
     public int getORDER_BY() {
         return ORDER_BY;
     }

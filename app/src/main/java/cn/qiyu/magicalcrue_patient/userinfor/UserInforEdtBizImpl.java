@@ -34,22 +34,4 @@ public class UserInforEdtBizImpl extends BaseBiz implements UserInforEdtBiz {
         });
     }
 
-    @Override
-    public void getCityInfor(String parent_code, String levelId, final OnLoginListener onLoginListener) {
-        mApiService.getCitiyInfor(parent_code,levelId).enqueue(new Callback<ResultModel<CityBean>>() {
-            @Override
-            public void onResponse(Call<ResultModel<CityBean>> call, Response<ResultModel<CityBean>> response) {
-                if (response.isSuccessful()) {
-                    onLoginListener.onResponse(response.body());
-                } else {
-                    onLoginListener.onFailure(response.body().getMessage());
-                }
-            }
-
-            @Override
-            public void onFailure(Call<ResultModel<CityBean>> call, Throwable throwable) {
-                onLoginListener.onFailure(throwable.getMessage());
-            }
-        });
-    }
 }
