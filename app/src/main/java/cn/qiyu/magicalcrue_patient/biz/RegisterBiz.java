@@ -1,5 +1,7 @@
 package cn.qiyu.magicalcrue_patient.biz;
 
+import java.io.File;
+
 import cn.qiyu.magicalcrue_patient.model.RegisterLoginVerBean;
 import cn.qiyu.magicalcrue_patient.model.ResultModel;
 

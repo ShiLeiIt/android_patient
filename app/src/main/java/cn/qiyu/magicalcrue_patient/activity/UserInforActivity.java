@@ -2,13 +2,22 @@ package cn.qiyu.magicalcrue_patient.activity;
 
 import android.Manifest;
 import android.app.Activity;
+import android.content.ContentResolver;
 import android.content.Intent;
+import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.content.FileProvider;
+import android.text.TextUtils;
+import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
@@ -18,7 +27,15 @@ import android.widget.Toast;
 
 import com.uuzuche.lib_zxing.activity.CodeUtils;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -27,14 +44,21 @@ import cn.addapp.pickers.entity.City;
 import cn.addapp.pickers.entity.County;
 import cn.addapp.pickers.entity.Province;
 import cn.addapp.pickers.picker.DatePicker;
+import cn.qiyu.magicalcrue_patient.BuildConfig;
 import cn.qiyu.magicalcrue_patient.R;
+import cn.qiyu.magicalcrue_patient.image.ImageUpLoadPresenter;
+import cn.qiyu.magicalcrue_patient.image.ImageUpLoadView;
 import cn.qiyu.magicalcrue_patient.model.CityBean;
+import cn.qiyu.magicalcrue_patient.model.ImageUpLoadBean;
 import cn.qiyu.magicalcrue_patient.model.ResultModel;
 import cn.qiyu.magicalcrue_patient.userinfor.UserInforEdtPresenter;
 import cn.qiyu.magicalcrue_patient.userinfor.UserInforEdtView;
 import cn.qiyu.magicalcrue_patient.utils.Utils;
 import cn.qiyu.magicalcrue_patient.view.SelectPicPopupWindow;
 import de.hdodenhof.circleimageview.CircleImageView;
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import pub.devrel.easypermissions.AfterPermissionGranted;
 import pub.devrel.easypermissions.AppSettingsDialog;
 import pub.devrel.easypermissions.EasyPermissions;
@@ -83,7 +107,17 @@ public class UserInforActivity extends FragmentActivity implements View.OnClickL
      * 请求CAMERA权限码
      */
     public static final int REQUEST_CAMERA_PERM = 101;
+    public static final String PHOTO_PATH = "photo_path";
     private String mId;
+    private FileOutputStream mFileOutputStream;
+    private File mFileName;
+    private String mAbsolutePath;
+    private Uri uritempFile;
+    private final int REQUEST_SELECT_PHOTO = 0;
+    private final int CAMERA = 200;
+    private RequestBody mRequestFile;
+    private String mFilePath;
+    private String mAddresscode;
 
 
     @Override
@@ -97,25 +131,66 @@ public class UserInforActivity extends FragmentActivity implements View.OnClickL
     }
 
     private void init() {
+        uritempFile = Uri.parse("file://" + "/" + Environment.getExternalStorageDirectory().getPath() + "/" + "small.jpg");
         mTvSelectCitiy.setText(getIntent().getStringExtra("addressname"));
         mId = getIntent().getStringExtra("id");
+
+        mIvGirl.setTag(0);
     }
 
     private void showToast(String msg) {
         Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
 
     }
+
+    //图片上传服务器
+    ImageUpLoadPresenter mImageUpLoadPresenter = new ImageUpLoadPresenter(new ImageUpLoadView() {
+        @Override
+        public RequestBody getImageUpLoadFile() {
+            if (mRequestFile!=null) {
+                mRequestFile = RequestBody.create(MediaType.parse("multipart/form-data"), mFileName);
+            }
+            return mRequestFile;
+        }
+
+
+        @Override
+        public void getImageUpLoad(ImageUpLoadBean imageUpLoadBean) {
+           mFilePath = imageUpLoadBean.getFilePath();
+            mUserInforEdtPresenter.getUserInforEdt();
+        }
+
+        @Override
+        public void showProgress() {
+
+        }
+
+        @Override
+        public void hideProgress() {
+
+        }
+
+        @Override
+        public void onViewFailure(ImageUpLoadBean model) {
+
+        }
+
+        @Override
+        public void onServerFailure(String e) {
+
+        }
+    });
+
+    //数据保存
     UserInforEdtPresenter mUserInforEdtPresenter = new UserInforEdtPresenter(new UserInforEdtView() {
         @Override
         public String getUuId() {
-//            Toast.makeText(UserInforActivity.this, getIntent().getStringExtra("id"), Toast.LENGTH_SHORT).show();
-
-            return  mId;
+            return mId;
         }
 
         @Override
         public String getPhotoPath() {
-            return "12345678";
+            return mFilePath;
         }
 
         @Override
@@ -135,13 +210,15 @@ public class UserInforActivity extends FragmentActivity implements View.OnClickL
             }
             return "0";
         }
+
         @Override
         public String getNative_place_cd() {
-            return getIntent().getStringExtra("addresscode");
+            return mAddresscode;
         }
 
         @Override
         public void getUserInforEdt(ResultModel rlBean) {
+
             Intent intent = new Intent(UserInforActivity.this, PatientDataActivity.class);
             startActivity(intent);
         }
@@ -174,7 +251,17 @@ public class UserInforActivity extends FragmentActivity implements View.OnClickL
             case R.id.iv_userinfor_back:
                 break;
             case R.id.tv_save_userinfor:
-                mUserInforEdtPresenter.getUserInforEdt();
+
+                if ( TextUtils.isEmpty(mFilePath)||TextUtils.isEmpty(mTvRealName.getText().toString())
+                        || TextUtils.isEmpty(mTvSelectDate.getText().toString())
+                         ||TextUtils.isEmpty(mAddresscode)   ) {
+                    Toast.makeText(this, "信息填写不完整", Toast.LENGTH_SHORT).show();
+
+
+                } else {
+                    mImageUpLoadPresenter.getImage();
+                }
+
 
 
                 break;
@@ -183,7 +270,7 @@ public class UserInforActivity extends FragmentActivity implements View.OnClickL
             case R.id.iv_name_arrows:
                 break;
             case R.id.tv_select_citiy:
-                startActivityForResult(new Intent(UserInforActivity.this,SeclectCityActivity.class),0x001);
+                startActivityForResult(new Intent(UserInforActivity.this, SeclectCityActivity.class), 0x001);
                 break;
             case R.id.iv_girl:
                 mIvGirl.setTag(1);
@@ -197,7 +284,6 @@ public class UserInforActivity extends FragmentActivity implements View.OnClickL
                 mIvGirl.setTag(0);
                 mIvBoy.setImageResource(R.drawable.check_box_select);
                 mIvGirl.setImageResource(R.drawable.check_box_normal);
-                Toast.makeText(this, "" + ((Integer) (mIvBoy.getTag())), Toast.LENGTH_SHORT).show();
 
                 break;
             case R.id.tv_select_Date:
@@ -209,8 +295,6 @@ public class UserInforActivity extends FragmentActivity implements View.OnClickL
                 break;
         }
     }
-
-
 
 
     //日期的选择
@@ -260,7 +344,30 @@ public class UserInforActivity extends FragmentActivity implements View.OnClickL
             //是否登录
             //调用相机
             Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-            startActivity(intent);
+
+            File filePath = new File(Environment.getExternalStorageDirectory(), "myCamera");
+            if (!filePath.exists()) {
+                filePath.mkdirs();
+                Log.e("isExists", "=" + filePath.mkdirs());
+            }
+            mFileName = new File(filePath, System.currentTimeMillis() + ".jpg");
+            try {
+                if (!mFileName.exists()) {
+                    mFileName.createNewFile();
+                    mAbsolutePath = mFileName.getAbsolutePath();
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                Uri uriForFile = FileProvider.getUriForFile(UserInforActivity.this, "cn.qiyu.magicalcrue_patient.fileprovider", mFileName);
+                intent.putExtra(MediaStore.EXTRA_OUTPUT, uriForFile);
+            } else {
+                // 将系统Camera的拍摄结果写入到文件
+                intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(mFileName));
+            }
+            // 启动intent对应的Activity，返回默认消息
+            startActivityForResult(intent, CAMERA);
         } else {
             //申请权限
             ActivityCompat.requestPermissions(this, permissions, 100);
@@ -269,40 +376,44 @@ public class UserInforActivity extends FragmentActivity implements View.OnClickL
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        /**
-         * 处理二维码扫描结果
-         */
-        if (resultCode == RESULT_OK){
-            if (requestCode == 0x001){
-                if (data!=null) {
+
+        if (resultCode == RESULT_OK) {
+            if (requestCode == 0x001) {
+                if (data != null) {
                     String addressname = data.getStringExtra("addressname");
-//                    String addresscode = data.getStringExtra("addresscode");
+                    mAddresscode = data.getStringExtra("addresscode");
                     mTvSelectCitiy.setText(addressname);
                     Toast.makeText(this, addressname, Toast.LENGTH_SHORT).show();
                 }
+            } else if (requestCode == CAMERA) { //拍照
+                //照相返回的
+                Bitmap bitmap = Utils.getLoacalBitmap(mAbsolutePath);
+                mCivHead.setImageBitmap(bitmap);
+            } else if (requestCode == REQUEST_SELECT_PHOTO) {
+                //相册返回的
+                // 外界的程序访问ContentProvider所提供数据 可以通过ContentResolver接口
+                ContentResolver resolver = getContentResolver();
+                Uri originalUri = data.getData(); // 获得图片的uri
 
+                //以下是将相册uri转成file
+                String[] proj = { MediaStore.Images.Media.DATA };
+                Cursor actualimagecursor = managedQuery(originalUri,proj,null,null,null);
+                int actual_image_column_index = actualimagecursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+                actualimagecursor.moveToFirst();
+                String img_path = actualimagecursor.getString(actual_image_column_index);
+                mFileName = new File(img_path);
+                try {
+                    Bitmap bitmap = MediaStore.Images.Media.getBitmap(resolver, originalUri);
+                    mCivHead.setImageBitmap(bitmap);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         }
-        if (requestCode == REQUEST_CODE) {
-            //处理扫描结果（在界面上显示）
-            if (null != data) {
-//                Bundle bundle = data.getExtras();
-//                if (bundle == null) {
-//                    return;
-//                }
-//                if (bundle.getInt(CodeUtils.RESULT_TYPE) == CodeUtils.RESULT_SUCCESS) {
-//                    String result = bundle.getString(CodeUtils.RESULT_STRING);
-//                    Toast.makeText(this, "解析结果:" + result, Toast.LENGTH_LONG).show();
-//                } else if (bundle.getInt(CodeUtils.RESULT_TYPE) == CodeUtils.RESULT_FAILED) {
-//                    Toast.makeText(UserInforActivity.this, "解析二维码失败", Toast.LENGTH_LONG).show();
-//                }
-            }
-        } else if (requestCode == REQUEST_CAMERA_PERM) {
+        if (requestCode == REQUEST_CAMERA_PERM) {
             Toast.makeText(this, "从设置页面返回...", Toast.LENGTH_SHORT)
                     .show();
         }
-
-
         super.onActivityResult(requestCode, resultCode, data);
     }
 
@@ -328,9 +439,18 @@ public class UserInforActivity extends FragmentActivity implements View.OnClickL
                 initPermission();
                 break;
             case R.id.tv_local_photo:
-                //手机相册调用
-                Intent intent1 = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                startActivity(intent1);
+                String[] permissions = Utils.checkPermission(this);
+                if (permissions.length == 0) {
+                    //手机相册调用
+                    Intent intentFromGallery = new Intent();
+                    // 设置文件类型
+                    intentFromGallery.setType("image/*");
+                    intentFromGallery.setAction(Intent.ACTION_GET_CONTENT);
+                    startActivityForResult(intentFromGallery, REQUEST_SELECT_PHOTO);
+                }else {
+                    //申请权限
+                    ActivityCompat.requestPermissions(this, permissions, 100);
+                }
                 break;
         }
     }

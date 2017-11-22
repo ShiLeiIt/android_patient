@@ -1,8 +1,11 @@
 package cn.qiyu.magicalcrue_patient.register_login;
 
 
+import java.io.File;
+
 import cn.qiyu.magicalcrue_patient.base.BaseBiz;
 import cn.qiyu.magicalcrue_patient.biz.RegisterBiz;
+import cn.qiyu.magicalcrue_patient.model.ImageUpLoadBean;
 import cn.qiyu.magicalcrue_patient.model.RegisterLoginBean;
 import cn.qiyu.magicalcrue_patient.model.RegisterLoginVerBean;
 import cn.qiyu.magicalcrue_patient.model.ResultModel;
@@ -53,4 +56,6 @@ public class RegisterBizImpl extends BaseBiz implements RegisterBiz {
             }
         });
     }
+
+
 }

@@ -29,7 +29,19 @@
             android:theme="@style/Theme.AppCompat.Dialog"
             />
         <activity android:name=".activity.UserInforActivity"/>
-
+        <provider
+            android:name="android.support.v4.content.FileProvider"
+            android:authorities="cn.qiyu.magicalcrue_patient.fileprovider"
+            android:grantUriPermissions="true"
+            android:exported="false"
+            >
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
     </application>
+
+
+
 
 </manifest>

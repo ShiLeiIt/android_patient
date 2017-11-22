@@ -222,7 +222,7 @@
             android:layout_centerVertical="true"
             android:layout_marginLeft="40dp"
             android:layout_toRightOf="@id/tv_girl_s"
-            android:src="@drawable/check_box_normal"/>
+            android:src="@drawable/check_box_select"/>
 
         <TextView
             android:layout_width="wrap_content"

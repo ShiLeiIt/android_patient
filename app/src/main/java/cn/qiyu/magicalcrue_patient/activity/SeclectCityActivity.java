@@ -89,6 +89,7 @@ public class SeclectCityActivity extends Activity {
     public void onViewClicked() {
         Intent intent=new Intent();
         intent.putExtra("addresscode",addresscode.toString());
+        Toast.makeText(this, "code"+addresscode.toString(), Toast.LENGTH_SHORT).show();
         intent.putExtra("addressname",addressname.toString());
         setResult(RESULT_OK,intent);
         finish();

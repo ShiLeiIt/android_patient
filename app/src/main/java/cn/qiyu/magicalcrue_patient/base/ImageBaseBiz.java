@@ -5,17 +5,16 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
- * Created by Administrator on 2017/11/13.
+ * Created by ShiLei on 2017/11/22.
  */
 
-public class BaseBiz {
+public class ImageBaseBiz {
     public ApiService mApiService;
-    public BaseBiz() {
+    public ImageBaseBiz() {
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(ApiService.BASE_URL)
+                .baseUrl(ApiService.IMAGE_BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         mApiService = retrofit.create(ApiService.class);
     }
-
 }
