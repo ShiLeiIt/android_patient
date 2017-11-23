@@ -2,6 +2,7 @@ package cn.qiyu.magicalcrue_patient.model;
 
 /**
  * Created by ShiLei on 2017/11/20.
+ * 用户信息保存Bean
  */
 
 public class UserInforEdt {

@@ -22,15 +22,15 @@ public class HomePresenter {
             @Override
             public void onResponse(ResultModel<HomeNumBean> model) {
                 if (model.getResult() == 0) {
-                    mNumView.LoadDate(model.getData());
+                    mNumView.LoadDate(model);
                 } else {
-                    mNumView.onServerFailure(model.getMessage());
+                    mNumView.onViewFailure(model);
                 }
             }
 
             @Override
             public void onFailure(String e) {
-
+            mNumView.onServerFailure(e);
             }
         });
     }

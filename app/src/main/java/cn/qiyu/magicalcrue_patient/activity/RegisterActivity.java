@@ -20,6 +20,7 @@ import cn.qiyu.magicalcrue_patient.model.RegisterLoginBean;
 import cn.qiyu.magicalcrue_patient.model.ResultModel;
 import cn.qiyu.magicalcrue_patient.register_login.RegisterPresenter;
 import cn.qiyu.magicalcrue_patient.register_login.RegisterVmView;
+import cn.qiyu.magicalcrue_patient.utils.PreUtils;
 
 /**
  * 注册登录页面
@@ -56,7 +57,7 @@ public class RegisterActivity extends AppCompatActivity {
         mRegisterPresenter = new RegisterPresenter(new RegisterVmView() {
             @Override
             public String getAccount() {
-                Toast.makeText(RegisterActivity.this, "22222222", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(RegisterActivity.this, "22222222", Toast.LENGTH_SHORT).show();
                 return mEditPhone.getText().toString();
             }
 
@@ -78,15 +79,21 @@ public class RegisterActivity extends AppCompatActivity {
 
             @Override
             public void getRegisterLogin(ResultModel<RegisterLoginBean> model) {
+                PreUtils.setParam(RegisterActivity.this,"uuid",model.getData().getUuid());
+                PreUtils.setParam(RegisterActivity.this,"userperfect",model.getData().getUserPerfect());
+                PreUtils.setParam(RegisterActivity.this,"token",model.getData().getToken());
                 //"1"是注册页面 ，"2" 是登录页面
                 if (model.getData().getUserPerfect() == 1) {
                     Intent intent = new Intent(RegisterActivity.this, UserInforActivity.class);
-                    intent.putExtra("id", model.getData().getId());
+                    intent.putExtra("userid", model.getData().getId());
+                    intent.putExtra("uuid", model.getData().getUuid());
                     startActivity(intent);
                 } else {
                     mIv_login.setVisibility(View.VISIBLE);
-                    Intent intent = new Intent(RegisterActivity.this, UserInforActivity.class);
-                    intent.putExtra("id", String.valueOf(model.getData().getId()));
+                    Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
+                    intent.putExtra("userid", String.valueOf(model.getData().getId()));
+                    intent.putExtra("uuid", model.getData().getUuid());
+//                    intent.putExtra("patient_uuid",model.getData().get)
                     startActivity(intent);
 
                 }

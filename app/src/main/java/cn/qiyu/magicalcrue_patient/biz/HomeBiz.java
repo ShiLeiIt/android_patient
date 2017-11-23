@@ -12,7 +12,6 @@ public interface HomeBiz {
     void getUserMessageInfo(String userId, OnLoginListener onLoginListener);
 //    void getDoctorInfo(String userId, OnLoginListener onLoginListener);
 
-
     interface OnLoginListener {
 
         /**

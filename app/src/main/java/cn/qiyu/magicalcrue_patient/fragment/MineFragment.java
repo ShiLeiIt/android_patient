@@ -1,5 +1,6 @@
 package cn.qiyu.magicalcrue_patient.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.app.Fragment;;
@@ -11,6 +12,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import cn.qiyu.magicalcrue_patient.R;
+import cn.qiyu.magicalcrue_patient.activity.PatientDataActivity;
 
 /**
  * Created by Administrator on 2017/11/13.
@@ -18,6 +20,13 @@ import cn.qiyu.magicalcrue_patient.R;
  */
 
 public class MineFragment extends Fragment {
+
+    private ImageView mIv_patient_back;
+    private ImageView mIv_case_history_back;
+    private ImageView mIv_order_back;
+    private ImageView mIv_collect_back;
+    private ImageView mIv_service_back;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater,
@@ -37,6 +46,7 @@ public class MineFragment extends Fragment {
         RelativeLayout view_service = (RelativeLayout) getActivity().findViewById(R.id.il_service);
         TextView tv_list_patient = (TextView) view_patient.findViewById(R.id.tv_list_item);
         ImageView iv_list_patient = (ImageView) view_patient.findViewById(R.id.iv_list_item);
+
         tv_list_patient.setText("患者基本资料");
         iv_list_patient.setImageResource(R.drawable.mine_patient);
         TextView tv_list_case = (TextView) view_case.findViewById(R.id.tv_list_item);
@@ -57,5 +67,50 @@ public class MineFragment extends Fragment {
         tv_list_service.setText("客服");
         iv_list_service.setImageResource(R.drawable.mine_service);
 
+
+        mIv_patient_back = (ImageView) view_patient.findViewById(R.id.iv_list_item_arrows);
+        mIv_case_history_back = (ImageView) view_case.findViewById(R.id.iv_list_item_arrows);
+        mIv_order_back = (ImageView) view_order.findViewById(R.id.iv_list_item_arrows);
+        mIv_collect_back = (ImageView) view_collect.findViewById(R.id.iv_list_item_arrows);
+        mIv_service_back = (ImageView) view_service.findViewById(R.id.iv_list_item_arrows);
+
+
+
+
+        mIv_patient_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getActivity(), PatientDataActivity.class));
+            }
+        });
+        mIv_case_history_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+        mIv_order_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+        mIv_collect_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+        mIv_service_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+
+
     }
+
+
 }

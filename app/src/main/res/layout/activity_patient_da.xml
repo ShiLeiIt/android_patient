@@ -155,7 +155,7 @@
             android:layout_centerVertical="true"
             android:layout_marginLeft="40dp"
             android:layout_toRightOf="@id/tv_girl_s"
-            android:src="@drawable/check_box_normal"/>
+            android:src="@drawable/check_box_select"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -341,9 +341,9 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
+        android:layout_height="50dp"
         android:focusable="true"
-        android:focusableInTouchMode="true"
-        android:layout_height="50dp">
+        android:focusableInTouchMode="true">
 
         <TextView
             android:id="@+id/tv_actions"
@@ -367,19 +367,20 @@
 
         <EditText
             android:id="@+id/et_actions_name"
-            android:hint="李依琳"
-            android:gravity="right|center_vertical"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:maxLines="1"
+            android:layout_toLeftOf="@id/iv_doctor_name_arrows"
             android:background="@null"
             android:focusable="true"
-            android:textSize="12sp"
-            android:layout_toLeftOf="@id/iv_doctor_name_arrows"
+            android:gravity="right|center_vertical"
+            android:hint="李依琳"
+            android:maxLines="1"
+            android:textColor="@color/app_gray"
             android:textColorHint="@color/app_gray"
-            android:textColor="@color/app_gray"/>
+            android:textSize="12sp"/>
     </RelativeLayout>
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:focusable="true"

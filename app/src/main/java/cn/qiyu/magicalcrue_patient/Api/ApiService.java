@@ -4,8 +4,10 @@ import java.io.File;
 import java.util.List;
 
 import cn.qiyu.magicalcrue_patient.model.CityBean;
+import cn.qiyu.magicalcrue_patient.model.DiseasesBean;
 import cn.qiyu.magicalcrue_patient.model.HomeNumBean;
 import cn.qiyu.magicalcrue_patient.model.ImageUpLoadBean;
+import cn.qiyu.magicalcrue_patient.model.PatientInforSaveBean;
 import cn.qiyu.magicalcrue_patient.model.PatientRelationBean;
 import cn.qiyu.magicalcrue_patient.model.RegisterLoginBean;
 import cn.qiyu.magicalcrue_patient.model.RegisterLoginVerBean;
@@ -45,11 +47,15 @@ public interface ApiService {
     String IMPLEMENTATION_NOTES = "login/verificationCode";
     //用户基本信息修改
     String API_USER_INFOR_EDITOR = "patientInfo/uplodeUserInfo";
-    //城市
+    //城市列表
     String API_CITIY = "common/getNativeList";
 
     //单张图片
     String API_SINGLE_IMAGE_UP_LOAD = "fileUpload/singleUpload";
+    //患者基本信息修改
+    String API_PATIENT_INFOR_EDITOR = "healthFile/medicalRecordInfo";
+    //疾病种类列表
+    String API_DISEASES = "disease/diseaseList";
 
 
 
@@ -110,5 +116,33 @@ public interface ApiService {
     @POST(API_SINGLE_IMAGE_UP_LOAD)
     @Multipart
     Call<ImageUpLoadBean> getUpSingleImage(@Part("myfile\"; filename=\"test.jpg\"") RequestBody myIconFile);
+
+    /**
+     * 患者信息修改
+     */
+    @POST(API_PATIENT_INFOR_EDITOR)
+    @FormUrlEncoded
+    Call<ResultModel<PatientInforSaveBean>> getPatientInfor(@Field("userId") String userId,
+                                                            @Field("name") String name,
+                                                            @Field("sex") String sex,
+                                                            @Field("birthday") String birthday,
+                                                            @Field("IDcardNo") String idCardNo,
+                                                            @Field("mobile") String mobile,
+                                                            @Field("native_place_cd") String native_place_cd,
+                                                            @Field("attending_doctor") String attending_doctor,
+                                                            @Field("firstVisitTime") String firstVisitTime,
+                                                            @Field("relationship") String relationship,
+                                                            @Field("disease_id") String disease_id,
+                                                            @Field("appFirstVisitTime") String appFirstVisitTime);
+
+
+
+    /**
+     * 疾病种类
+     */
+    @POST(API_DISEASES)
+    @FormUrlEncoded
+    Call<ResultModel<List<DiseasesBean>>> getDiseasesList(@Field("") String post);
+
 
 }

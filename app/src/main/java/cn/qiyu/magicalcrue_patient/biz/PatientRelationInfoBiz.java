@@ -7,13 +7,14 @@ import cn.qiyu.magicalcrue_patient.model.ResultModel;
 
 /**
  * Created by ShiLei on 2017/11/19.
- * 患者关系
+ * 患者关系和疾病种类列表
  */
 
-public interface PatientInfoBiz  {
-    void getPatientRelation(String bianma,String type, OnLoginListener onLoginListener);
-
-
+public interface PatientRelationInfoBiz {
+    //获取患者关系列表
+    void getPatientRelation(String bianma, String type, OnLoginListener onLoginListener);
+    //获取疾病种类列表
+    void getDieasesList(OnLoginListener onLoginListener);
 
     interface OnLoginListener<T> {
 

@@ -250,6 +250,7 @@
                     android:drawableTop="@drawable/home_coupe"
                     android:gravity="center"
                     android:text="@string/coupe"
+                    android:visibility="gone"
                     android:textColor="#666666"
                     android:textSize="10dp"/>
 

@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -26,6 +27,7 @@ public class MainActivity extends FragmentActivity {
     private static final String TAG_PAGE_INFORMATION = "消息";
     private static final String TAG_PAGE_PERSON = "我的";
     private MainNavigateTabBar mNavigateTabBar;
+    private String mUuid;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -46,11 +48,14 @@ public class MainActivity extends FragmentActivity {
         mNavigateTabBar.setCurrentSelectedTab(R.drawable.tab_information_select);
 
         mNavigateTabBar.addTab(MineFragment.class, new MainNavigateTabBar.TabParam(R.drawable.tab_mine_normal, R.drawable.tab_mine_select, TAG_PAGE_PERSON));
-
-        mNavigateTabBar.addTab(MineFragment.class, new MainNavigateTabBar.TabParam(R.drawable.tab_mine_normal, R.drawable.tab_mine_select, TAG_PAGE_PERSON));
         mNavigateTabBar.setCurrentSelectedTab(R.drawable.tab_mine_select);
+        Log.i("patient====", getIntent().getStringExtra("patientuuid"));
+        Log.i("uuid====", getIntent().getStringExtra("uuid"));
+//        Log.i("userid====", getIntent().getStringExtra("userid"));
 
     }
+
+
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {

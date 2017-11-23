@@ -17,31 +17,37 @@
         <activity android:name=".activity.RegisterActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
+
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
         <activity android:name=".activity.MainActivity"/>
-
         <activity android:name=".activity.LoginActivity"/>
         <activity android:name=".activity.PatientRelationListActivity"/>
         <activity android:name=".activity.PatientDataActivity"/>
-        <activity android:name=".activity.SeclectCityActivity"
-            android:theme="@style/Theme.AppCompat.Dialog"
-            />
+        <activity
+            android:name=".activity.SeclectCityActivity"
+            android:theme="@style/Theme.AppCompat.Dialog"/>
         <activity android:name=".activity.UserInforActivity"/>
+
         <provider
             android:name="android.support.v4.content.FileProvider"
             android:authorities="cn.qiyu.magicalcrue_patient.fileprovider"
-            android:grantUriPermissions="true"
             android:exported="false"
-            >
+            android:grantUriPermissions="true">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/file_paths" />
+                android:resource="@xml/file_paths"/>
         </provider>
+
+        <activity android:name=".activity.CourseActivity">
+        </activity>
+        <activity android:name=".activity.MedicalActivity">
+        </activity>
+        <activity android:name=".activity.OffLineActivity">
+        </activity>
+        <activity android:name=".activity.AllServeActivity">
+        </activity>
     </application>
-
-
-
 
 </manifest>

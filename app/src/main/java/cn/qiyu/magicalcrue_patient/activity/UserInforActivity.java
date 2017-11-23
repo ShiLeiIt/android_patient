@@ -53,6 +53,7 @@ import cn.qiyu.magicalcrue_patient.model.ImageUpLoadBean;
 import cn.qiyu.magicalcrue_patient.model.ResultModel;
 import cn.qiyu.magicalcrue_patient.userinfor.UserInforEdtPresenter;
 import cn.qiyu.magicalcrue_patient.userinfor.UserInforEdtView;
+import cn.qiyu.magicalcrue_patient.utils.PreUtils;
 import cn.qiyu.magicalcrue_patient.utils.Utils;
 import cn.qiyu.magicalcrue_patient.view.SelectPicPopupWindow;
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -112,12 +113,14 @@ public class UserInforActivity extends FragmentActivity implements View.OnClickL
     private FileOutputStream mFileOutputStream;
     private File mFileName;
     private String mAbsolutePath;
-    private Uri uritempFile;
+
     private final int REQUEST_SELECT_PHOTO = 0;
     private final int CAMERA = 200;
     private RequestBody mRequestFile;
     private String mFilePath;
     private String mAddresscode;
+    private String mAddressname;
+    private String mUuid;
 
 
     @Override
@@ -125,16 +128,16 @@ public class UserInforActivity extends FragmentActivity implements View.OnClickL
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_infor);
         ButterKnife.bind(this);
-
         init();
-        mPicPopupWindow = new SelectPicPopupWindow(UserInforActivity.this, this);
+
     }
 
     private void init() {
-        uritempFile = Uri.parse("file://" + "/" + Environment.getExternalStorageDirectory().getPath() + "/" + "small.jpg");
+        mPicPopupWindow = new SelectPicPopupWindow(UserInforActivity.this, this);
         mTvSelectCitiy.setText(getIntent().getStringExtra("addressname"));
-        mId = getIntent().getStringExtra("id");
-
+        mId = getIntent().getStringExtra("userid");
+        mUuid = getIntent().getStringExtra("uuid");
+        PreUtils.setParam(UserInforActivity.this,"uuid",mUuid);
         mIvGirl.setTag(0);
     }
 
@@ -147,8 +150,10 @@ public class UserInforActivity extends FragmentActivity implements View.OnClickL
     ImageUpLoadPresenter mImageUpLoadPresenter = new ImageUpLoadPresenter(new ImageUpLoadView() {
         @Override
         public RequestBody getImageUpLoadFile() {
-            if (mRequestFile!=null) {
+            if (mFileName != null) {
                 mRequestFile = RequestBody.create(MediaType.parse("multipart/form-data"), mFileName);
+            } else {
+                Toast.makeText(UserInforActivity.this, "请选择头像", Toast.LENGTH_SHORT).show();
             }
             return mRequestFile;
         }
@@ -157,7 +162,9 @@ public class UserInforActivity extends FragmentActivity implements View.OnClickL
         @Override
         public void getImageUpLoad(ImageUpLoadBean imageUpLoadBean) {
            mFilePath = imageUpLoadBean.getFilePath();
+            //进行用户信息保存到服务器
             mUserInforEdtPresenter.getUserInforEdt();
+
         }
 
         @Override
@@ -185,7 +192,7 @@ public class UserInforActivity extends FragmentActivity implements View.OnClickL
     UserInforEdtPresenter mUserInforEdtPresenter = new UserInforEdtPresenter(new UserInforEdtView() {
         @Override
         public String getUuId() {
-            return mId;
+            return "178";
         }
 
         @Override
@@ -220,6 +227,9 @@ public class UserInforActivity extends FragmentActivity implements View.OnClickL
         public void getUserInforEdt(ResultModel rlBean) {
 
             Intent intent = new Intent(UserInforActivity.this, PatientDataActivity.class);
+            intent.putExtra("userid", mId);
+            intent.putExtra("uuid", mUuid);
+//            Toast.makeText(UserInforActivity.this, ""+mId, Toast.LENGTH_SHORT).show();
             startActivity(intent);
         }
 
@@ -252,16 +262,19 @@ public class UserInforActivity extends FragmentActivity implements View.OnClickL
                 break;
             case R.id.tv_save_userinfor:
 
-                if ( TextUtils.isEmpty(mFilePath)||TextUtils.isEmpty(mTvRealName.getText().toString())
-                        || TextUtils.isEmpty(mTvSelectDate.getText().toString())
-                         ||TextUtils.isEmpty(mAddresscode)   ) {
+                if ( TextUtils.isEmpty(mTvRealName.getText().toString())
+                        || mTvSelectDate.getText().toString().equals("请选择")
+                         ||TextUtils.isEmpty(mAddressname)) {
+//                    Toast.makeText(this, "path"+mFilePath, Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(this, "mTvRealName"+mTvRealName.getText(), Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(this, "mTvSelectDate"+mTvSelectDate.getText(), Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(this, "mAddressname"+mAddressname, Toast.LENGTH_SHORT).show();
                     Toast.makeText(this, "信息填写不完整", Toast.LENGTH_SHORT).show();
 
 
                 } else {
                     mImageUpLoadPresenter.getImage();
                 }
-
 
 
                 break;
@@ -380,10 +393,10 @@ public class UserInforActivity extends FragmentActivity implements View.OnClickL
         if (resultCode == RESULT_OK) {
             if (requestCode == 0x001) {
                 if (data != null) {
-                    String addressname = data.getStringExtra("addressname");
+                    mAddressname = data.getStringExtra("addressname");
                     mAddresscode = data.getStringExtra("addresscode");
-                    mTvSelectCitiy.setText(addressname);
-                    Toast.makeText(this, addressname, Toast.LENGTH_SHORT).show();
+                    mTvSelectCitiy.setText(mAddressname);
+                    Toast.makeText(this, mAddressname, Toast.LENGTH_SHORT).show();
                 }
             } else if (requestCode == CAMERA) { //拍照
                 //照相返回的

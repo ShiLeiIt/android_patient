@@ -18,8 +18,9 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.qiyu.magicalcrue_patient.R;
-import cn.qiyu.magicalcrue_patient.home.PatientInfoPresenter;
-import cn.qiyu.magicalcrue_patient.home.PatientInfoView;
+import cn.qiyu.magicalcrue_patient.home.PatientInfoRelationPresenter;
+import cn.qiyu.magicalcrue_patient.home.PatientRelationInfoView;
+import cn.qiyu.magicalcrue_patient.model.DiseasesBean;
 import cn.qiyu.magicalcrue_patient.model.PatientRelationBean;
 import cn.qiyu.magicalcrue_patient.model.ResultModel;
 import cn.qiyu.magicalcrue_patient.view.RecycleViewDivider;
@@ -36,6 +37,10 @@ public class PatientRelationListActivity extends Activity {
     private RecyclerView mRl_relation;
     private String mRelationName;
     private RecyclerAdpter mAdpter;
+    private String mIsrelation;
+    private RecyclerDiseaseAdpter mDiseaseAdpter;
+    private String mCancerName;
+    private String mBianma;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,21 +49,25 @@ public class PatientRelationListActivity extends Activity {
         ButterKnife.bind(this);
         mRl_relation = (RecyclerView) findViewById(R.id.rlv_patient_relation);
         init();
-        mPatientInfoPresenter.LoadPatientRelation();
-
-
+        if (mIsrelation.equals("0")) {
+            //进去患者关系列表
+            mPatientInfoRelationPresenter.LoadPatientRelation();
+        } else {
+            //进入疾病种类列表
+            mPatientInfoRelationPresenter.LoadDiseasesList();
+        }
     }
 
     private void init() {
         mRl_relation.addItemDecoration(new RecycleViewDivider(PatientRelationListActivity.this, LinearLayoutManager.HORIZONTAL,R.drawable.relation_bg));
+        mIsrelation = getIntent().getStringExtra("isreleation");
     }
 
-    PatientInfoPresenter mPatientInfoPresenter = new PatientInfoPresenter(new PatientInfoView() {
+    PatientInfoRelationPresenter mPatientInfoRelationPresenter = new PatientInfoRelationPresenter(new PatientRelationInfoView() {
         @Override
         public String getBianMa() {
             return "relationshipCode";
         }
-
         @Override
         public String getType() {
             return "1";
@@ -68,6 +77,13 @@ public class PatientRelationListActivity extends Activity {
             Toast.makeText(PatientRelationListActivity.this, "" + model.getData().size(), Toast.LENGTH_SHORT).show();
             mAdpter = new RecyclerAdpter(model.getData());
             mRl_relation.setAdapter(mAdpter);
+            mRl_relation.setLayoutManager(new LinearLayoutManager(PatientRelationListActivity.this));
+        }
+
+        @Override
+        public void LoadDiseases(ResultModel<List<DiseasesBean>> model) {
+            mDiseaseAdpter = new RecyclerDiseaseAdpter(model.getData());
+            mRl_relation.setAdapter(mDiseaseAdpter);
             mRl_relation.setLayoutManager(new LinearLayoutManager(PatientRelationListActivity.this));
         }
 
@@ -83,7 +99,6 @@ public class PatientRelationListActivity extends Activity {
 
         @Override
         public void onViewFailure(ResultModel model) {
-
         }
 
         @Override
@@ -94,8 +109,10 @@ public class PatientRelationListActivity extends Activity {
     @OnClick(R.id.iv_patient_relation_back)
     public void onViewClicked() {
         Intent intent = new Intent(PatientRelationListActivity.this, PatientDataActivity.class);
-        intent.putExtra("name", mRelationName);
-        startActivity(intent);
+        intent.putExtra("relationName", mRelationName);
+        intent.putExtra("relationNameBianma", mBianma);
+        intent.putExtra("DiseaseName", mCancerName);
+        setResult(RESULT_OK,intent);
         finish();
     }
     class ViewHolder extends RecyclerView.ViewHolder {
@@ -128,16 +145,12 @@ public class PatientRelationListActivity extends Activity {
 
     public class RecyclerAdpter extends RecyclerView.Adapter<ViewHolder> {
         private List<PatientRelationBean> mlist;
-
         public RecyclerAdpter(List<PatientRelationBean> mlist) {
             this.mlist = mlist;
         }
-
         @Override
         public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-
             return new ViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.listview_patient_relation_item, null));
-
         }
 
         @Override
@@ -148,6 +161,7 @@ public class PatientRelationListActivity extends Activity {
                 public void onClick(View v) {
 //                    Toast.makeText(PatientRelationListActivity.this, "position"+position, Toast.LENGTH_SHORT).show();
                     mRelationName = mlist.get(position).getNAME();
+                    mBianma = mlist.get(position).getBIANMA();
                     for (int i = 0; i < mlist.size(); i++) {
                         if (i == position){
                             mlist.get(i).setSelect(true);
@@ -156,6 +170,76 @@ public class PatientRelationListActivity extends Activity {
                         }
                     }
                     mAdpter.notifyDataSetChanged();
+                }
+            });
+            holder.refreshView();
+        }
+        @Override
+        public int getItemCount() {
+            return mlist.size();
+        }
+
+    }
+
+    //疾病种类适配器
+
+    class ViewHolderDis extends RecyclerView.ViewHolder {
+        DiseasesBean mModel;
+        private final TextView mTv_relation;
+        private final ImageView mIv_seclect;
+
+        public ViewHolderDis(final View itemView) {
+            super(itemView);
+            mTv_relation = (TextView) itemView.findViewById(R.id.tv_relation);
+            mIv_seclect = (ImageView) itemView.findViewById(R.id.iv_select);
+        }
+
+        void setItem(DiseasesBean item) {
+            this.mModel = item;
+
+        }
+        //刷新
+        void refreshView() {
+            mTv_relation.setText(mModel.getCancerName());
+            if (mModel.isSelect()){
+                mIv_seclect.setVisibility(View.VISIBLE);
+                mTv_relation.setTextColor(getResources().getColor(R.color.app_relation_tv));
+            }else {
+                mIv_seclect.setVisibility(View.INVISIBLE);
+                mTv_relation.setTextColor(getResources().getColor(R.color.app_userInfor));
+            }
+        }
+    }
+
+    public class RecyclerDiseaseAdpter extends RecyclerView.Adapter<ViewHolderDis> {
+        private List<DiseasesBean> mlist;
+
+        public RecyclerDiseaseAdpter(List<DiseasesBean> mlist) {
+            this.mlist = mlist;
+        }
+
+        @Override
+        public ViewHolderDis onCreateViewHolder(ViewGroup parent, int viewType) {
+
+            return new ViewHolderDis(LayoutInflater.from(parent.getContext()).inflate(R.layout.listview_patient_relation_item, null));
+
+        }
+        @Override
+        public void onBindViewHolder(final ViewHolderDis holder, final int position) {
+            holder.setItem(mlist.get(position));
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+//                    Toast.makeText(PatientRelationListActivity.this, "position"+position, Toast.LENGTH_SHORT).show();
+                    mCancerName = mlist.get(position).getCancerName();
+                    for (int i = 0; i < mlist.size(); i++) {
+                        if (i == position){
+                            mlist.get(i).setSelect(true);
+                        }else {
+                            mlist.get(i).setSelect(false);
+                        }
+                    }
+                    mDiseaseAdpter.notifyDataSetChanged();
                 }
             });
             holder.refreshView();

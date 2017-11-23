@@ -13,35 +13,7 @@ public class HomeNumBean {
      * data : {"followDay":56,"constructionCount":6,"followUpCount":0,"statusRecord":0,"newDialogueCount":12,"nwePaperCount":0,"newFollowUpCount":0,"courseCount":10,"pendingPaymentCount":0}
      */
 
-    private int result;
-    private String message;
-    private NumDataBean data;
 
-    public int getResult() {
-        return result;
-    }
-
-    public void setResult(int result) {
-        this.result = result;
-    }
-
-    public String getMessage() {
-        return message;
-    }
-
-    public void setMessage(String message) {
-        this.message = message;
-    }
-
-    public NumDataBean getData() {
-        return data;
-    }
-
-    public void setData(NumDataBean data) {
-        this.data = data;
-    }
-
-    public static class NumDataBean {
         /**
          * followDay : 56
          * constructionCount : 6
@@ -135,5 +107,5 @@ public class HomeNumBean {
         public void setPendingPaymentCount(int pendingPaymentCount) {
             this.pendingPaymentCount = pendingPaymentCount;
         }
-    }
+
 }
