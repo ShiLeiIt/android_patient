@@ -5,6 +5,8 @@ import java.util.List;
 
 import cn.qiyu.magicalcrue_patient.model.CityBean;
 import cn.qiyu.magicalcrue_patient.model.DiseasesBean;
+import cn.qiyu.magicalcrue_patient.model.DoctorInfoBean;
+import cn.qiyu.magicalcrue_patient.model.DoctorTeamBean;
 import cn.qiyu.magicalcrue_patient.model.HomeNumBean;
 import cn.qiyu.magicalcrue_patient.model.ImageUpLoadBean;
 import cn.qiyu.magicalcrue_patient.model.PatientInforSaveBean;
@@ -56,6 +58,10 @@ public interface ApiService {
     String API_PATIENT_INFOR_EDITOR = "healthFile/medicalRecordInfo";
     //疾病种类列表
     String API_DISEASES = "disease/diseaseList";
+    //扫描医生
+    String API_DOCTOR_QRCODE = "healthFile/bindingFollowDoctor";
+    //医生团队的成员
+    String API_DOCTOR_TEAM ="doctorinfoTeam/getDoctorTeamUserListByPatientId";
 
 
 
@@ -143,6 +149,18 @@ public interface ApiService {
     @POST(API_DISEASES)
     @FormUrlEncoded
     Call<ResultModel<List<DiseasesBean>>> getDiseasesList(@Field("") String post);
+    /**
+     * 扫描医生二维码
+     */
 
+    @POST(API_DOCTOR_QRCODE)
+    @FormUrlEncoded
+    Call<ResultModel> getDoctorQRcode(@Field("uuid") String patientUuid,@Field("follow_doctor") String DoctorUuid);
 
+    /**
+     * 医生团队
+     */
+    @POST(API_DOCTOR_TEAM)
+    @FormUrlEncoded
+    Call<ResultModel<DoctorTeamBean>> getDoctorTeamInfor(@Field("patientId") String patientId);
 }

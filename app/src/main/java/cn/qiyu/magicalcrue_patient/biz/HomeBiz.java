@@ -1,6 +1,5 @@
 package cn.qiyu.magicalcrue_patient.biz;
 
-import cn.qiyu.magicalcrue_patient.model.HomeNumBean;
 import cn.qiyu.magicalcrue_patient.model.ResultModel;
 
 /**
@@ -10,16 +9,20 @@ import cn.qiyu.magicalcrue_patient.model.ResultModel;
 
 public interface HomeBiz {
     void getUserMessageInfo(String userId, OnLoginListener onLoginListener);
-//    void getDoctorInfo(String userId, OnLoginListener onLoginListener);
 
-    interface OnLoginListener {
+    void getDoctorQRcode(String patientUuid,String DoctorUuid,OnLoginListener onLoginListener);
+
+
+    void getDoctorTeamInfor(String patientId,OnLoginListener onLoginListener);
+
+    interface OnLoginListener<T> {
 
         /**
          * 服务器响应
          *
          * @param model
          */
-        void onResponse(ResultModel<HomeNumBean> model);
+        void onResponse(ResultModel<T> model);
 
         /**
          * 服务器未响应

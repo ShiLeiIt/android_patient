@@ -67,6 +67,8 @@
                         android:textColor="#666666"/>
 
                     <TextView
+                        android:id="@+id/tv_mydocter_team"
+                        android:textColor="#666666"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="2dp"
@@ -74,14 +76,47 @@
                         android:textSize="12dp"/>
                 </LinearLayout>
 
-                <cn.qiyu.magicalcrue_patient.view.LLImageView
-                    android:id="@+id/iv_doctor_icon"
-                    android:layout_width="wrap_content"
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/iv_doctor_icon_one"
+                    android:layout_width="30dp"
                     android:layout_height="30dp"
                     android:layout_below="@id/ll_mydocter"
-                    android:layout_marginLeft="11dp"
+                    android:layout_marginLeft="4dp"
                     android:layout_marginTop="1dp"
                     android:layout_toRightOf="@+id/iv_box"/>
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/iv_doctor_icon_two"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_below="@id/ll_mydocter"
+                    android:layout_marginLeft="4dp"
+                    android:layout_marginTop="1dp"
+                    android:layout_toRightOf="@+id/iv_doctor_icon_one"/>
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/iv_doctor_icon_three"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_below="@id/ll_mydocter"
+                    android:layout_marginLeft="4dp"
+                    android:layout_marginTop="1dp"
+                    android:layout_toRightOf="@+id/iv_doctor_icon_two"/>
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/iv_doctor_icon_four"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_below="@id/ll_mydocter"
+                    android:layout_marginLeft="4dp"
+                    android:layout_marginTop="1dp"
+                    android:layout_toRightOf="@+id/iv_doctor_icon_three"/>
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/iv_doctor_icon_five"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_below="@id/ll_mydocter"
+                    android:layout_marginLeft="4dp"
+                    android:layout_marginTop="1dp"
+                    android:layout_toRightOf="@+id/iv_doctor_icon_four"/>
+
             </RelativeLayout>
 
             <LinearLayout
@@ -250,9 +285,9 @@
                     android:drawableTop="@drawable/home_coupe"
                     android:gravity="center"
                     android:text="@string/coupe"
-                    android:visibility="gone"
                     android:textColor="#666666"
-                    android:textSize="10dp"/>
+                    android:textSize="10dp"
+                    android:visibility="gone"/>
 
                 <TextView
                     android:id="@+id/ll_tv_all_serve"
@@ -277,12 +312,13 @@
                 android:text="更多活动"
                 android:textColor="#666666"/>
 
-            <cn.qiyu.magicalcrue_patient.view.ListViewForScrollView
+            <ListView
                 android:id="@+id/lv_home_image"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:divider="#00000000"
                 android:dividerHeight="10dp"/>
+
             <View
                 android:layout_width="match_parent"
                 android:layout_height="50dp"/>
