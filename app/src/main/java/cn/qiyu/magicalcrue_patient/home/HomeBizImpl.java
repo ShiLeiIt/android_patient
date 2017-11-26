@@ -1,10 +1,14 @@
 package cn.qiyu.magicalcrue_patient.home;
 
+import android.util.Log;
+import android.widget.Toast;
+
 import java.util.ArrayList;
 
 import cn.qiyu.magicalcrue_patient.Api.ApiService;
 import cn.qiyu.magicalcrue_patient.base.BaseBiz;
 import cn.qiyu.magicalcrue_patient.biz.HomeBiz;
+import cn.qiyu.magicalcrue_patient.fragment.HomePageFragment;
 import cn.qiyu.magicalcrue_patient.model.DoctorTeamBean;
 import cn.qiyu.magicalcrue_patient.model.HomeDoctorBean;
 import cn.qiyu.magicalcrue_patient.model.HomeNumBean;
@@ -59,13 +63,16 @@ public class HomeBizImpl extends BaseBiz implements HomeBiz {
             }
         });
     }
-
+    //获取医生团队信息
     @Override
     public void getDoctorTeamInfor(String patientId, final OnLoginListener onLoginListener) {
+
+//        Log.i("patientId", patientId);
         mApiService.getDoctorTeamInfor(patientId).enqueue(new Callback<ResultModel<DoctorTeamBean>>() {
             @Override
             public void onResponse(Call<ResultModel<DoctorTeamBean>> call, Response<ResultModel<DoctorTeamBean>> response) {
                 if (response.isSuccessful()) {
+//                    Log.i("doctorTeamName", response.body().getData().getTeam_name());
                     onLoginListener.onResponse(response.body());
                 } else {
                     onLoginListener.onFailure(response.body().getMessage());
@@ -80,7 +87,7 @@ public class HomeBizImpl extends BaseBiz implements HomeBiz {
     }
 
 
-    //获取医生团队信息
+
 
 
 

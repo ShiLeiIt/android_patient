@@ -21,6 +21,7 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import cn.qiyu.magicalcrue_patient.Api.ApiService;
 import cn.qiyu.magicalcrue_patient.R;
 import cn.qiyu.magicalcrue_patient.activity.AllServeActivity;
 import cn.qiyu.magicalcrue_patient.activity.CourseActivity;
@@ -32,12 +33,14 @@ import cn.qiyu.magicalcrue_patient.home.HomePresenter;
 import cn.qiyu.magicalcrue_patient.model.DoctorTeamBean;
 import cn.qiyu.magicalcrue_patient.model.HomeNumBean;
 import cn.qiyu.magicalcrue_patient.model.ResultModel;
+import cn.qiyu.magicalcrue_patient.utils.DisplayHelper;
 import cn.qiyu.magicalcrue_patient.utils.ListViewUtility;
 import cn.qiyu.magicalcrue_patient.utils.Utils;
 import cn.qiyu.magicalcrue_patient.view.LLImageView;
 import cn.qiyu.magicalcrue_patient.view.LLTextView;
 import cn.qiyu.magicalcrue_patient.view.LLTextViewNew;
 import cn.qiyu.magicalcrue_patient.zxing.activity.CaptureActivity;
+import de.hdodenhof.circleimageview.CircleImageView;
 import pub.devrel.easypermissions.AppSettingsDialog;
 import pub.devrel.easypermissions.EasyPermissions;
 
@@ -51,6 +54,9 @@ public class HomePageFragment extends Fragment implements View.OnClickListener, 
     TextView mTvMydocter;
     @Bind(R.id.tv_mydocter_team)
     TextView mTvMydocterTeam;
+    @Bind({R.id.iv_doctor_icon_one,R.id.iv_doctor_icon_two,R.id.iv_doctor_icon_three,R.id.iv_doctor_icon_four,R.id.iv_doctor_icon_five})
+    CircleImageView[] civ;
+
     //打开扫描界面请求码
     private int REQUEST_CODE = 0x01;
     //扫描成功返回码
@@ -74,7 +80,6 @@ public class HomePageFragment extends Fragment implements View.OnClickListener, 
     private ImageView mIv_richsan;
     private String mDoctorUuid;
     private String mPatientuuid;
-
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater,
@@ -261,12 +266,39 @@ public class HomePageFragment extends Fragment implements View.OnClickListener, 
 
         @Override
         public void LoadDoctorTeamInfor(ResultModel<DoctorTeamBean> model) {
-            Toast.makeText(getActivity(), ""+model.getData().getDoctor_name(), Toast.LENGTH_SHORT).show();
-
-        }
-
-
-
+            String DcotorName = model.getData().getDoctor_name();
+            String TeamName = model.getData().getTeam_name();
+            //医生名字与团队
+            mTvMydocter.setText(DcotorName);
+            mTvMydocterTeam.setText(TeamName);
+            //头像图片的显示
+            int DoctorIcon = 0;
+            switch (model.getData().getDoctorTeamList().size()) {
+                case 1:
+                    DoctorIcon = 1;
+                    break;
+                case 2:
+                    DoctorIcon = 2;
+                    break;
+                case 3:
+                    DoctorIcon = 3;
+                    break;
+                case 4:
+                    DoctorIcon = 4;
+                    break;
+                case 5:
+                default:
+                    DoctorIcon = 5;
+                    break;
+            }
+            for (int i = 0; i < DoctorIcon; i++) {
+                String path = "";
+                if (null == model.getData().getDoctorTeamList().get(i).getPhoto_path())
+                    path = "";
+                else path = ApiService.GET_IMAGE_ICON + model.getData().getDoctorTeamList().get(i).getPhoto_path();
+                DisplayHelper.loadGlide(getActivity(), path, civ[i]);
+            }
+            }
     });
 
 

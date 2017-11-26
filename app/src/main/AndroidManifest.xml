@@ -51,6 +51,7 @@
         <activity android:name=".activity.AllServeActivity">
         </activity>
         <activity android:name=".zxing.activity.CaptureActivity"/>
+        <activity android:name=".activity.DoctorListActivity"/>
     </application>
 
 </manifest>

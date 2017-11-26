@@ -62,6 +62,8 @@ public interface ApiService {
     String API_DOCTOR_QRCODE = "healthFile/bindingFollowDoctor";
     //医生团队的成员
     String API_DOCTOR_TEAM ="doctorinfoTeam/getDoctorTeamUserListByPatientId";
+    //头像加载
+    String GET_IMAGE_ICON="http://upload.mircalcure.com/tumourfile/sysfile/getImage/3/";
 
 
 

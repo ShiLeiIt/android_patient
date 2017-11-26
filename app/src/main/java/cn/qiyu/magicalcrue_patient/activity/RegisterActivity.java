@@ -95,6 +95,7 @@ public class RegisterActivity extends AppCompatActivity {
                     intent.putExtra("userid", String.valueOf(model.getData().getId()));
                     intent.putExtra("uuid", model.getData().getUuid());
                     intent.putExtra("patientUuid", model.getData().getMedical_record_uuid());
+                    intent.putExtra("patientName", model.getData().getUser_name_jp());
                     Log.i("patientUUid====", model.getData().getMedical_record_uuid());
 //                    intent.putExtra("patient_uuid",model.getData().get)
                     startActivity(intent);
