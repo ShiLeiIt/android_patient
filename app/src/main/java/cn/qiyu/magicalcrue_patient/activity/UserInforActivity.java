@@ -25,15 +25,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.uuzuche.lib_zxing.activity.CodeUtils;
+
 
 import java.io.File;
-import java.io.FileNotFoundException;
+
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.util.Calendar;
+
 import java.util.List;
 import java.util.Locale;
 
@@ -192,7 +190,7 @@ public class UserInforActivity extends FragmentActivity implements View.OnClickL
     UserInforEdtPresenter mUserInforEdtPresenter = new UserInforEdtPresenter(new UserInforEdtView() {
         @Override
         public String getUuId() {
-            return "178";
+            return mId;
         }
 
         @Override

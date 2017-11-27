@@ -188,6 +188,8 @@ public class PatientDataActivity extends AppCompatActivity {
             intent.putExtra("uuid", mUuid);
             intent.putExtra("userId", mUserId);
             intent.putExtra("patientuuid", rlBean.getData().getUuid());
+            intent.putExtra("patientName", rlBean.getData().getName());
+
             startActivityForResult(intent,888);
             Log.i("Patientuuid------",rlBean.getData().getUuid()) ;
             Log.i("Useruuid------",mUuid) ;

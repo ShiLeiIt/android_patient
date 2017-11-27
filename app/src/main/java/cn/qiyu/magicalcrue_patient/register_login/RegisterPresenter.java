@@ -31,7 +31,6 @@ public class RegisterPresenter {
         mRegisterBiz.getVerifyInformation(mVmView.getAccount(), new RegisterBiz.OnLoginListener() {
             @Override
             public void onResponse(ResultModel model) {
-                Log.i("register", "232323232323");
                 if (model.getResult() == 0) {
 
                     mVmView.getVerifyMessage(model);
@@ -50,7 +49,6 @@ public class RegisterPresenter {
        mRegisterBiz.getRegisterLogin(mVmView.getAccount(), mVmView.getVerCode(), mVmView.getJpushId(), new RegisterBiz.OnLoginListener() {
            @Override
            public void onResponse(ResultModel model) {
-               Log.i("register", "1111111111111111111111111111111");
                if (model.getResult() == 0) {
                    mVmView.getRegisterLogin(model);
                } else {

@@ -4,7 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentActivity;
-import android.util.Log;
+
 import android.view.View;
 import android.widget.Toast;
 
@@ -49,8 +49,9 @@ public class MainActivity extends FragmentActivity {
 
         mNavigateTabBar.addTab(MineFragment.class, new MainNavigateTabBar.TabParam(R.drawable.tab_mine_normal, R.drawable.tab_mine_select, TAG_PAGE_PERSON));
         mNavigateTabBar.setCurrentSelectedTab(R.drawable.tab_mine_select);
-        Log.i("patient====", getIntent().getStringExtra("patientuuid"));
-        Log.i("uuid====", getIntent().getStringExtra("uuid"));
+
+//        Log.i("patient====", getIntent().getStringExtra("patientuuid"));
+//        Log.i("uuid====", getIntent().getStringExtra("uuid"));
 //        Log.i("userid====", getIntent().getStringExtra("userid"));
 
     }

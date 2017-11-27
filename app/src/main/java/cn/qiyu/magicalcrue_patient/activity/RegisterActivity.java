@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
@@ -93,6 +94,9 @@ public class RegisterActivity extends AppCompatActivity {
                     Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
                     intent.putExtra("userid", String.valueOf(model.getData().getId()));
                     intent.putExtra("uuid", model.getData().getUuid());
+                    intent.putExtra("patientUuid", model.getData().getMedical_record_uuid());
+                    intent.putExtra("patientName", model.getData().getUser_name_jp());
+                    Log.i("patientUUid====", model.getData().getMedical_record_uuid());
 //                    intent.putExtra("patient_uuid",model.getData().get)
                     startActivity(intent);
 

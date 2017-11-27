@@ -1,10 +1,15 @@
 package cn.qiyu.magicalcrue_patient.home;
 
+import android.util.Log;
+import android.widget.Toast;
+
 import java.util.ArrayList;
 
 import cn.qiyu.magicalcrue_patient.Api.ApiService;
 import cn.qiyu.magicalcrue_patient.base.BaseBiz;
 import cn.qiyu.magicalcrue_patient.biz.HomeBiz;
+import cn.qiyu.magicalcrue_patient.fragment.HomePageFragment;
+import cn.qiyu.magicalcrue_patient.model.DoctorTeamBean;
 import cn.qiyu.magicalcrue_patient.model.HomeDoctorBean;
 import cn.qiyu.magicalcrue_patient.model.HomeNumBean;
 import cn.qiyu.magicalcrue_patient.model.ResultModel;
@@ -26,7 +31,7 @@ public class HomeBizImpl extends BaseBiz implements HomeBiz {
                 if (response.isSuccessful()) {
                     onLoginListener.onResponse(response.body());
                 } else
-                    onLoginListener.onFailure(response.message());
+                    onLoginListener.onFailure(response.body().getMessage());
             }
 
 
@@ -39,23 +44,53 @@ public class HomeBizImpl extends BaseBiz implements HomeBiz {
 
     }
 
-//    @Override
-//    public void getDoctorInfo(String userId, final OnLoginListener onLoginListener) {
-//        mApiService.getDoctorInfo(userId).enqueue(new Callback<ResultModel<HomeNumBean>>() {
-//            @Override
-//            public void onResponse(Call<ResultModel<HomeNumBean>> call, Response<ResultModel<HomeNumBean>> response) {
-//                if (response.isSuccessful()) {
-//                    onLoginListener.onResponse(response.body());
-//                } else
-//                    onLoginListener.onFailure(response.message());
-//            }
-//
-//            @Override
-//            public void onFailure(Call<ResultModel<HomeNumBean>> call, Throwable throwable) {
-//                onLoginListener.onFailure(throwable.getMessage());
-//            }
-//        });
-//    }
+    @Override
+    public void getDoctorQRcode(String patientUuid, String DoctorUuid, final OnLoginListener onLoginListener) {
+        mApiService.getDoctorQRcode(patientUuid,DoctorUuid).enqueue(new Callback<ResultModel>() {
+            @Override
+            public void onResponse(Call<ResultModel> call, Response<ResultModel> response) {
+                if (response.isSuccessful()) {
+                    onLoginListener.onResponse(response.body());
+                } else {
+                    onLoginListener.onFailure(response.body().getMessage());
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<ResultModel> call, Throwable throwable) {
+            onLoginListener.onFailure(throwable.getMessage());
+            }
+        });
+    }
+    //获取医生团队信息
+    @Override
+    public void getDoctorTeamInfor(String patientId, final OnLoginListener onLoginListener) {
+
+//        Log.i("patientId", patientId);
+        mApiService.getDoctorTeamInfor(patientId).enqueue(new Callback<ResultModel<DoctorTeamBean>>() {
+            @Override
+            public void onResponse(Call<ResultModel<DoctorTeamBean>> call, Response<ResultModel<DoctorTeamBean>> response) {
+                if (response.isSuccessful()) {
+//                    Log.i("doctorTeamName", response.body().getData().getTeam_name());
+                    onLoginListener.onResponse(response.body());
+                } else {
+                    onLoginListener.onFailure(response.body().getMessage());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResultModel<DoctorTeamBean>> call, Throwable throwable) {
+                onLoginListener.onFailure(throwable.getMessage());
+            }
+        });
+    }
+
+
+
+
+
+
 
 
 }
