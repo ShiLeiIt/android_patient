@@ -9,11 +9,13 @@ import cn.qiyu.magicalcrue_patient.model.DoctorInfoBean;
 import cn.qiyu.magicalcrue_patient.model.DoctorTeamBean;
 import cn.qiyu.magicalcrue_patient.model.HomeNumBean;
 import cn.qiyu.magicalcrue_patient.model.ImageUpLoadBean;
+import cn.qiyu.magicalcrue_patient.model.PatientInfor;
 import cn.qiyu.magicalcrue_patient.model.PatientInforSaveBean;
 import cn.qiyu.magicalcrue_patient.model.PatientRelationBean;
 import cn.qiyu.magicalcrue_patient.model.RegisterLoginBean;
 import cn.qiyu.magicalcrue_patient.model.RegisterLoginVerBean;
 import cn.qiyu.magicalcrue_patient.model.ResultModel;
+import cn.qiyu.magicalcrue_patient.model.UserInfor;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import retrofit2.Call;
@@ -53,7 +55,8 @@ public interface ApiService {
     String API_CITIY = "common/getNativeList";
 
     //单张图片
-    String API_SINGLE_IMAGE_UP_LOAD = "fileUpload/singleUpload";
+    String API_SINGLE_IMAGE_UP_LOAD = "sysfile/singleUpload";
+
     //患者基本信息修改
     String API_PATIENT_INFOR_EDITOR = "healthFile/medicalRecordInfo";
     //疾病种类列表
@@ -64,7 +67,10 @@ public interface ApiService {
     String API_DOCTOR_TEAM ="doctorinfoTeam/getDoctorTeamUserListByPatientId";
     //头像加载
     String GET_IMAGE_ICON="http://upload.mircalcure.com/tumourfile/sysfile/getImage/3/";
-
+    //获取用户基本信息
+    String API_USERINFOR = "patientInfo/getUserInfo";
+    //获取患者基本信息
+    String API_PATIENT_INFOR = "healthFile/getPatientInfo";
 
 
     /**
@@ -123,7 +129,7 @@ public interface ApiService {
      */
     @POST(API_SINGLE_IMAGE_UP_LOAD)
     @Multipart
-    Call<ImageUpLoadBean> getUpSingleImage(@Part("myfile\"; filename=\"test.jpg\"") RequestBody myIconFile);
+    Call<ImageUpLoadBean> getUpSingleImage(@Part("myfile\"; filename=\"test.jpg\"") RequestBody imgs);
 
     /**
      * 患者信息修改
@@ -165,4 +171,17 @@ public interface ApiService {
     @POST(API_DOCTOR_TEAM)
     @FormUrlEncoded
     Call<ResultModel<DoctorTeamBean>> getDoctorTeamInfor(@Field("patientId") String patientId);
+    /**
+     * 获取用户基本信息
+     */
+    @POST(API_USERINFOR)
+    @FormUrlEncoded
+    Call<ResultModel<UserInfor>> getUserInfor(@Field("uuid") String userUuid);
+
+    /**
+     * 获取患者基本信息
+     */
+    @POST(API_PATIENT_INFOR)
+    @FormUrlEncoded
+    Call<ResultModel<PatientInfor>> getPatientBasicInfor(@Field("uuid") String patientUuid);
 }

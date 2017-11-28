@@ -22,7 +22,7 @@ public class ImageUpLoadPresenter {
         mImageUpLoadView = imageUpLoadView;
     }
    public  void getImage(){
-       mImageUpLoadBiz.getImageUpLoad(mImageUpLoadView.getImageUpLoadFile(), new ImageUpLoadBiz.OnLoginListener() {
+       mImageUpLoadBiz.getImageUpLoad(mImageUpLoadView.getImageUpLoadFileId(), new ImageUpLoadBiz.OnLoginListener() {
            @Override
            public void onResponse(ImageUpLoadBean model) {
                if (model.getResult() == 0) {

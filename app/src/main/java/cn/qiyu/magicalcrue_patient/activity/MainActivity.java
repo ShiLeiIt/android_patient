@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentActivity;
 
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -15,6 +16,7 @@ import cn.qiyu.magicalcrue_patient.fragment.HomePageFragment;
 import cn.qiyu.magicalcrue_patient.fragment.InformationFragment;
 import cn.qiyu.magicalcrue_patient.fragment.MineFragment;
 import cn.qiyu.magicalcrue_patient.fragment.VisitFragment;
+import cn.qiyu.magicalcrue_patient.utils.PreUtils;
 
 /**
  * Created by Administrator on 2017/11/13.
@@ -50,13 +52,14 @@ public class MainActivity extends FragmentActivity {
         mNavigateTabBar.addTab(MineFragment.class, new MainNavigateTabBar.TabParam(R.drawable.tab_mine_normal, R.drawable.tab_mine_select, TAG_PAGE_PERSON));
         mNavigateTabBar.setCurrentSelectedTab(R.drawable.tab_mine_select);
 
-//        Log.i("patient====", getIntent().getStringExtra("patientuuid"));
-//        Log.i("uuid====", getIntent().getStringExtra("uuid"));
-//        Log.i("userid====", getIntent().getStringExtra("userid"));
 
     }
 
 
+
+    public void changFragment(String title) {
+        mNavigateTabBar.showFragment(title,4);
+    }
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
@@ -67,6 +70,7 @@ public class MainActivity extends FragmentActivity {
     public void onClickPublish(View v) {
         Toast.makeText(this, "Add", Toast.LENGTH_LONG).show();
     }
+
 
 
 }

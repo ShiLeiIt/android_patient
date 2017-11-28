@@ -107,7 +107,7 @@ public class UserInforActivity extends FragmentActivity implements View.OnClickL
      */
     public static final int REQUEST_CAMERA_PERM = 101;
     public static final String PHOTO_PATH = "photo_path";
-    private String mId;
+
     private FileOutputStream mFileOutputStream;
     private File mFileName;
     private String mAbsolutePath;
@@ -115,10 +115,10 @@ public class UserInforActivity extends FragmentActivity implements View.OnClickL
     private final int REQUEST_SELECT_PHOTO = 0;
     private final int CAMERA = 200;
     private RequestBody mRequestFile;
-    private String mFilePath;
+    private String mFileId;
     private String mAddresscode;
     private String mAddressname;
-    private String mUuid;
+
 
 
     @Override
@@ -133,9 +133,8 @@ public class UserInforActivity extends FragmentActivity implements View.OnClickL
     private void init() {
         mPicPopupWindow = new SelectPicPopupWindow(UserInforActivity.this, this);
         mTvSelectCitiy.setText(getIntent().getStringExtra("addressname"));
-        mId = getIntent().getStringExtra("userid");
-        mUuid = getIntent().getStringExtra("uuid");
-        PreUtils.setParam(UserInforActivity.this,"uuid",mUuid);
+
+//        PreUtils.setParam(UserInforActivity.this,"uuid",mUuid);
         mIvGirl.setTag(0);
     }
 
@@ -147,9 +146,10 @@ public class UserInforActivity extends FragmentActivity implements View.OnClickL
     //图片上传服务器
     ImageUpLoadPresenter mImageUpLoadPresenter = new ImageUpLoadPresenter(new ImageUpLoadView() {
         @Override
-        public RequestBody getImageUpLoadFile() {
+        public RequestBody getImageUpLoadFileId() {
             if (mFileName != null) {
-                mRequestFile = RequestBody.create(MediaType.parse("multipart/form-data"), mFileName);
+                mRequestFile = RequestBody.create(MediaType.parse("image/jpg"), mFileName);
+                Log.i("mFileName======", mFileName+"");
             } else {
                 Toast.makeText(UserInforActivity.this, "请选择头像", Toast.LENGTH_SHORT).show();
             }
@@ -159,7 +159,9 @@ public class UserInforActivity extends FragmentActivity implements View.OnClickL
 
         @Override
         public void getImageUpLoad(ImageUpLoadBean imageUpLoadBean) {
-           mFilePath = imageUpLoadBean.getFilePath();
+            //
+            Log.i("picid==", imageUpLoadBean.getFileId());
+            mFileId = imageUpLoadBean.getFileId();
             //进行用户信息保存到服务器
             mUserInforEdtPresenter.getUserInforEdt();
 
@@ -190,12 +192,12 @@ public class UserInforActivity extends FragmentActivity implements View.OnClickL
     UserInforEdtPresenter mUserInforEdtPresenter = new UserInforEdtPresenter(new UserInforEdtView() {
         @Override
         public String getUuId() {
-            return mId;
+            return (String) PreUtils.getParam(UserInforActivity.this,"userid","0");
         }
 
         @Override
         public String getPhotoPath() {
-            return mFilePath;
+            return mFileId;
         }
 
         @Override
@@ -223,12 +225,18 @@ public class UserInforActivity extends FragmentActivity implements View.OnClickL
 
         @Override
         public void getUserInforEdt(ResultModel rlBean) {
+//
+          PreUtils.setParam(UserInforActivity.this, "userperfect", "2");
 
-            Intent intent = new Intent(UserInforActivity.this, PatientDataActivity.class);
-            intent.putExtra("userid", mId);
-            intent.putExtra("uuid", mUuid);
-//            Toast.makeText(UserInforActivity.this, ""+mId, Toast.LENGTH_SHORT).show();
-            startActivity(intent);
+                Intent intent = new Intent(UserInforActivity.this, PatientDataActivity.class);
+                startActivity(intent);
+//            PreUtils.setParam(UserInforActivity.this, "username", mTvRealName.getText().toString());
+//            PreUtils.setParam(UserInforActivity.this, "photopath", mFilePath);
+//            PreUtils.setParam(UserInforActivity.this, "birthday", mTvSelectDate.getText().toString());
+//            PreUtils.setParam(UserInforActivity.this, "photopath", mFilePath);
+//            Toast.makeText(UserInforActivity.this, "photopath-=-="+mFilePath, Toast.LENGTH_SHORT).show();
+
+
         }
 
         @Override
@@ -269,11 +277,9 @@ public class UserInforActivity extends FragmentActivity implements View.OnClickL
 //                    Toast.makeText(this, "mAddressname"+mAddressname, Toast.LENGTH_SHORT).show();
                     Toast.makeText(this, "信息填写不完整", Toast.LENGTH_SHORT).show();
 
-
                 } else {
                     mImageUpLoadPresenter.getImage();
                 }
-
 
                 break;
             case R.id.iv_head_arrows:

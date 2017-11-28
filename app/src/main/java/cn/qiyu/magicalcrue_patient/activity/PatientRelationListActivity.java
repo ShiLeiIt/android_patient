@@ -41,6 +41,7 @@ public class PatientRelationListActivity extends Activity {
     private RecyclerDiseaseAdpter mDiseaseAdpter;
     private String mCancerName;
     private String mBianma;
+    private int mCancerId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -112,6 +113,7 @@ public class PatientRelationListActivity extends Activity {
         intent.putExtra("relationName", mRelationName);
         intent.putExtra("relationNameBianma", mBianma);
         intent.putExtra("DiseaseName", mCancerName);
+        intent.putExtra("DiseaseId", mCancerId);
         setResult(RESULT_OK,intent);
         finish();
     }
@@ -232,6 +234,7 @@ public class PatientRelationListActivity extends Activity {
                 public void onClick(View v) {
 //                    Toast.makeText(PatientRelationListActivity.this, "position"+position, Toast.LENGTH_SHORT).show();
                     mCancerName = mlist.get(position).getCancerName();
+                    mCancerId = mlist.get(position).getCancerId();
                     for (int i = 0; i < mlist.size(); i++) {
                         if (i == position){
                             mlist.get(i).setSelect(true);

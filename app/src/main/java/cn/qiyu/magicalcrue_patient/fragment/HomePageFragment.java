@@ -1,5 +1,6 @@
 package cn.qiyu.magicalcrue_patient.fragment;
 
+import android.app.Activity;
 import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
@@ -16,6 +17,7 @@ import android.widget.Toast;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.List;
 
@@ -25,6 +27,7 @@ import cn.qiyu.magicalcrue_patient.Api.ApiService;
 import cn.qiyu.magicalcrue_patient.R;
 import cn.qiyu.magicalcrue_patient.activity.AllServeActivity;
 import cn.qiyu.magicalcrue_patient.activity.CourseActivity;
+import cn.qiyu.magicalcrue_patient.activity.MainActivity;
 import cn.qiyu.magicalcrue_patient.activity.MedicalActivity;
 import cn.qiyu.magicalcrue_patient.activity.OffLineActivity;
 import cn.qiyu.magicalcrue_patient.adapter.AppAdapter;
@@ -35,6 +38,7 @@ import cn.qiyu.magicalcrue_patient.model.HomeNumBean;
 import cn.qiyu.magicalcrue_patient.model.ResultModel;
 import cn.qiyu.magicalcrue_patient.utils.DisplayHelper;
 import cn.qiyu.magicalcrue_patient.utils.ListViewUtility;
+import cn.qiyu.magicalcrue_patient.utils.PreUtils;
 import cn.qiyu.magicalcrue_patient.utils.Utils;
 import cn.qiyu.magicalcrue_patient.view.LLImageView;
 import cn.qiyu.magicalcrue_patient.view.LLTextView;
@@ -80,12 +84,15 @@ public class HomePageFragment extends Fragment implements View.OnClickListener, 
     private ImageView mIv_richsan;
     private String mDoctorUuid;
     private String mPatientuuid;
+    private String mErrorCode;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater,
                              @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_homepage, container, false);
+
         //注册EventBus，在开始的位置 ok
         EventBus.getDefault().register(this);
 //        LLImageView viewById = (LLImageView) view.findViewById(R.id.iv_doctor_icon);
@@ -131,13 +138,16 @@ public class HomePageFragment extends Fragment implements View.OnClickListener, 
         mLv_sv = (ListView) view.findViewById(R.id.lv_home_image);
         mLv_sv.setAdapter((new AppAdapter(view.getContext(), ADVERTISING)));
         ListViewUtility.setListViewHeightBasedOnChildren(mLv_sv);
-        mPatientuuid = getActivity().getIntent().getStringExtra("patientUuid");
-        Log.i("mPatientuuid-----", mPatientuuid);
+        //通过本地获取患者uuid
 
         homePresenter.HomeLoadNumData();
       homePresenter.getDoctorTeamInfo();
 
         ButterKnife.bind(this, view);
+        //这里设置fragment 点击事件就是我给你发的Demo
+
+
+
         return view;
     }
 
@@ -146,9 +156,11 @@ public class HomePageFragment extends Fragment implements View.OnClickListener, 
         super.onDestroy();
         //注册过的界面必须反注册，可能内存泄漏
         EventBus.getDefault().unregister(this);
+
     }
 
-    @Subscribe
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEvent(String event) {
         //已经好了，你发的什么，这里接收的就是什么，类型要一致
         String doctorUuidUrl = event;
@@ -164,10 +176,6 @@ public class HomePageFragment extends Fragment implements View.OnClickListener, 
             Toast.makeText(getActivity(), "非医生随访二维码", Toast.LENGTH_SHORT).show();
         }
 
-
-        Log.i("doctorUuid-----------", mDoctorUuid);
-        Log.i("doctorUuid11-----------", doctorUuidUrl);
-        Log.i("doctorUuidqian-------", split[0]);
     }
 
     @Override
@@ -205,19 +213,26 @@ public class HomePageFragment extends Fragment implements View.OnClickListener, 
 
         @Override
         public void onViewFailure(ResultModel model) {
-
+            //通过这mErrorCode来判断是否绑定医生
+            mErrorCode = model.getErrorCode();
+            PreUtils.setParam(getActivity(),"errorCode",mErrorCode);
+            //通过EventBus传值到VisitFragment中
+            //现在需要将 model.getErrorCode() 传到VisitFragment
+//            Toast.makeText(getActivity(), "ErrorCode==="+model.getErrorCode(), Toast.LENGTH_SHORT).show();
+//            EventBus.getDefault().post(mErrorCode);
+//            MainActivity activity = (MainActivity) getActivity();
+//            activity.changFragment("我的");
         }
 
         @Override
         public void onServerFailure(String e) {
 
         }
-
         @Override
         public String getUserId() {
 //                return "5d9976d752c541c5a4608bc2758c54d7";
             //用户uuid
-            return getActivity().getIntent().getStringExtra("uuid");
+            return (String) PreUtils.getParam(getActivity(),"uuid","0");
         }
 
         @Override
@@ -244,8 +259,8 @@ public class HomePageFragment extends Fragment implements View.OnClickListener, 
 
         @Override
         public String patientUuid() {
-            Log.i("patientuuid------", mPatientuuid);
-            return mPatientuuid;
+            Log.i("patientuuid------", (String) PreUtils.getParam(getActivity(), "patientUuid", "0"));
+            return (String) PreUtils.getParam(getActivity(), "patientUuid", "0");
         }
 
         @Override
@@ -256,12 +271,12 @@ public class HomePageFragment extends Fragment implements View.OnClickListener, 
 
         @Override
         public void getDoctorQRcode(ResultModel model) {
-//            Toast.makeText(getActivity(), "" + model.getMessage(), Toast.LENGTH_SHORT).show();
+//            Toast.makeText(getActivity(), "" + model.getErrorCode(), Toast.LENGTH_SHORT).show();
         }
 
         @Override
         public String patientId() {
-            return mPatientuuid;
+            return (String) PreUtils.getParam(getActivity(), "patientUuid", "0");
         }
 
         @Override

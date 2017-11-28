@@ -17,8 +17,8 @@ import retrofit2.Response;
 public class ImageUpLoadBizImpl extends ImageBaseBiz implements ImageUpLoadBiz {
 
     @Override
-    public void getImageUpLoad(RequestBody myIconFile, final OnLoginListener onLoginListener) {
-       mApiService.getUpSingleImage(myIconFile).enqueue(new Callback<ImageUpLoadBean>() {
+    public void getImageUpLoad(RequestBody imgs, final OnLoginListener onLoginListener) {
+       mApiService.getUpSingleImage(imgs).enqueue(new Callback<ImageUpLoadBean>() {
            @Override
            public void onResponse(Call<ImageUpLoadBean> call, Response<ImageUpLoadBean> response) {
                if (response.isSuccessful()) {

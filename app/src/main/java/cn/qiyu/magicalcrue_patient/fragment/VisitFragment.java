@@ -4,6 +4,7 @@ import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +14,10 @@ import android.widget.ImageView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -24,7 +29,11 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.qiyu.magicalcrue_patient.Api.ApiService;
 import cn.qiyu.magicalcrue_patient.R;
+import cn.qiyu.magicalcrue_patient.activity.CourseActivity;
 import cn.qiyu.magicalcrue_patient.activity.DoctorListActivity;
+import cn.qiyu.magicalcrue_patient.activity.MainActivity;
+import cn.qiyu.magicalcrue_patient.activity.PatientDataActivity;
+import cn.qiyu.magicalcrue_patient.activity.UserInforActivity;
 import cn.qiyu.magicalcrue_patient.home.HomeNumView;
 import cn.qiyu.magicalcrue_patient.home.HomePresenter;
 import cn.qiyu.magicalcrue_patient.model.DoctorInfoBean;
@@ -32,8 +41,12 @@ import cn.qiyu.magicalcrue_patient.model.DoctorTeamBean;
 import cn.qiyu.magicalcrue_patient.model.HomeNumBean;
 import cn.qiyu.magicalcrue_patient.model.ResultModel;
 import cn.qiyu.magicalcrue_patient.utils.DisplayHelper;
+import cn.qiyu.magicalcrue_patient.utils.PreUtils;
+import cn.qiyu.magicalcrue_patient.utils.Utils;
 import cn.qiyu.magicalcrue_patient.view.LLTextView;
+import cn.qiyu.magicalcrue_patient.view.MoreWindow;
 import cn.qiyu.magicalcrue_patient.view.MyGridView;
+import cn.qiyu.magicalcrue_patient.zxing.activity.CaptureActivity;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
@@ -64,6 +77,9 @@ public class VisitFragment extends Fragment implements View.OnClickListener {
     private CircleImageView[] civ;
     private ImageView mIv_visit_arrows;
     private List<DoctorInfoBean> mDoctorTeamList;
+    private TextView mTv_mere_updata;
+    private MoreWindow mMoreWindow;
+    private String mErrorCode;
 
 
     @Nullable
@@ -72,6 +88,9 @@ public class VisitFragment extends Fragment implements View.OnClickListener {
                              @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_visit, container, false);
+        //注册EventBus，在开始的位置 ok
+//        EventBus.getDefault().register(this);
+
         mGridView = (MyGridView) view.findViewById(R.id.gridview);
         LLTextView llTvVisit = (LLTextView) view.findViewById(R.id.ll_tv_visit);//加入随访
         LLTextView llTvInquiry = (LLTextView) view.findViewById(R.id.ll_inquiry);//在线问诊
@@ -83,6 +102,9 @@ public class VisitFragment extends Fragment implements View.OnClickListener {
 
         mTv_patient_name.setText(patientName);
         mIv_visit_arrows = (ImageView) view.findViewById(R.id.iv_visit_arrows);
+        mTv_mere_updata = (TextView) view.findViewById(R.id.tv_mere_update);
+
+        mTv_mere_updata.setOnClickListener(this);
         mIv_visit_arrows.setOnClickListener(this);
 
         CircleImageView mCiv_one = (CircleImageView) view.findViewById(R.id.iv_doctor_icon_one);
@@ -99,15 +121,37 @@ public class VisitFragment extends Fragment implements View.OnClickListener {
         mTv_topleft_record = (TextView) llTvRecord.findViewById(R.id.tv_top_left);
 
         setGridView();
+
+
         homePresenter.HomeLoadNumData();
         homePresenter.getDoctorTeamInfo();
+        mErrorCode=(String) PreUtils.getParam(getActivity(), "errorCode", "0");
+        if (mErrorCode.equals("1001")) {
+            Toast.makeText(getActivity(), "您还未加入任何随访,请扫描医生二维码", Toast.LENGTH_SHORT).show();
+            initPermission();
 
+        } else if (mErrorCode.equals("1002")) {
+            Toast.makeText(getActivity(), "您已经加入随访了，请等待您的主治医生审核", Toast.LENGTH_SHORT).show();
+
+        } else {
+            String userperfect = (String) PreUtils.getParam(getActivity(), "userperfect", "0");
+            if (userperfect.equals("1")) {
+                startActivity(new Intent(getActivity(), UserInforActivity.class));
+
+            } else if (userperfect.equals("2")) {
+                startActivity(new Intent(getActivity(), PatientDataActivity.class));
+            } else {
+
+            }
+        }
+        Toast.makeText(getActivity(), "errorcde"+PreUtils.getParam(getActivity(),"errorCode","0"), Toast.LENGTH_SHORT).show();
+        Log.i("errorCode", (String) PreUtils.getParam(getActivity(), "errorCode", "0"));
         return view;
     }
     HomePresenter homePresenter = new HomePresenter(new HomeNumView() {
         @Override
         public String getUserId() {
-            return getActivity().getIntent().getStringExtra("uuid");
+            return (String) PreUtils.getParam(getActivity(),"uuid","0");
         }
 
         @Override
@@ -124,7 +168,7 @@ public class VisitFragment extends Fragment implements View.OnClickListener {
 
         @Override
         public String patientUuid() {
-            return getActivity().getIntent().getStringExtra("patientUuid");
+            return (String) PreUtils.getParam(getActivity(), "patientUuid", "0");
         }
 
         @Override
@@ -135,12 +179,11 @@ public class VisitFragment extends Fragment implements View.OnClickListener {
         @Override
         public void getDoctorQRcode(ResultModel model) {
 
-
         }
 
         @Override
         public String patientId() {
-            return getActivity().getIntent().getStringExtra("patientUuid");
+            return (String) PreUtils.getParam(getActivity(), "patientUuid", "0");
         }
 
         @Override
@@ -214,7 +257,10 @@ public class VisitFragment extends Fragment implements View.OnClickListener {
                 new int[]{R.id.ItemImage, R.id.ItemText});  //对应R的Id
 //添加Item到网格中
         mGridView.setAdapter(saMenuItem);
-        mGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        mGridView.setOnItemClickListener(
+
+
+                new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 switch (position) {
@@ -233,7 +279,20 @@ public class VisitFragment extends Fragment implements View.OnClickListener {
             }
         });
     }
-
+    /**
+     * 初始化权限事件
+     */
+    private void initPermission() {
+        //检查权限
+        String[] permissions = Utils.checkPermission(getActivity());
+        if (permissions.length == 0) {
+            //权限都申请了,是否登录
+            startActivity(new Intent(getActivity(), CaptureActivity.class));
+        } else {
+            //申请权限
+            ActivityCompat.requestPermissions(getActivity(), permissions, 100);
+        }
+    }
     @Override
     public void onDestroyView() {
         super.onDestroyView();
@@ -256,10 +315,39 @@ public class VisitFragment extends Fragment implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
-        Intent intent = new Intent(getActivity(), DoctorListActivity.class);
-        Bundle bundle = new Bundle();
-        bundle.putSerializable("list", (Serializable) mDoctorTeamList);
-        intent.putExtras(bundle);
-        startActivity(intent);
+        switch (v.getId()) {
+            case R.id.iv_visit_arrows:
+                Intent intent = new Intent(getActivity(), DoctorListActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("list", (Serializable) mDoctorTeamList);
+                intent.putExtras(bundle);
+                startActivity(intent);
+                break;
+            case R.id.tv_mere_update:
+                showMoreWindow(v);
+                break;
+
+        }
+
     }
+    private void showMoreWindow(View view){
+        if (null == mMoreWindow) {
+            mMoreWindow = new MoreWindow(getActivity());
+            mMoreWindow.init();
+        }
+        mMoreWindow.showMoreWindow(view,100);
+
+    }
+//    @Override
+//    public void onDestroy() {
+//        super.onDestroy();
+////        注册过的界面必须反注册，可能内存泄漏
+//        EventBus.getDefault().unregister(this);
+//    }
+//    @Subscribe()
+//    public void onEventCode(String event) {
+//      String  mErrorCode = event;
+//        Log.i("mErrorCode===", event);
+//
+//    }
 }

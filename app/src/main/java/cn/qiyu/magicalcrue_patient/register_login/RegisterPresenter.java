@@ -26,6 +26,7 @@ public class RegisterPresenter {
         mRegisterBiz = new RegisterBizImpl();
         mVmView = vmView;
     }
+    //获取验证信息
     public void RegisterLoadMesData(){
 
         mRegisterBiz.getVerifyInformation(mVmView.getAccount(), new RegisterBiz.OnLoginListener() {
@@ -45,6 +46,7 @@ public class RegisterPresenter {
             }
         });
     }
+    //登录成功
     public void  RegisterLogin(){
        mRegisterBiz.getRegisterLogin(mVmView.getAccount(), mVmView.getVerCode(), mVmView.getJpushId(), new RegisterBiz.OnLoginListener() {
            @Override

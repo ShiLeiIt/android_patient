@@ -10,7 +10,7 @@ import okhttp3.RequestBody;
  */
 
 public interface ImageUpLoadBiz {
-    void getImageUpLoad(RequestBody myIconFile, OnLoginListener  onLoginListener);
+    void getImageUpLoad(RequestBody imgs, OnLoginListener  onLoginListener);
     interface OnLoginListener {
         /**
          * 服务器响应

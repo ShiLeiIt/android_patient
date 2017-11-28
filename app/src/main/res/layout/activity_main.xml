@@ -41,7 +41,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
             android:onClick="onClickPublish"
-            android:src="@mipmap/comui_tab_post"/>
+            android:src="@drawable/tab_post"/>
     </LinearLayout>
 
 </RelativeLayout>

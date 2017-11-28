@@ -9,14 +9,15 @@ import java.util.List;
 public class ImageUpLoadBean
 {
 
+
     /**
      * result : 0
      * message : 上传成功！
-     * filePath : uploadFiles/uploadImgs
-     * fileNewName : 5c5d53772a0848519f8a245b2dbf1acb.jpg
-     * fileId : null
+     * filePath : 20171128/6138e57b36ab453ca75a351df9c1594c.svg
+     * fileNewName : null
+     * fileId : 6138e57b36ab453ca75a351df9c1594c
      * fileIds : null
-     * fileList : [{"fileOldName":"奇愈记-登录-患者2.jpg","fileNewName":"5c5d53772a0848519f8a245b2dbf1acb.jpg"}]
+     * fileList : []
      * varList : []
      * filePath1 : null
      * filePath2 : null
@@ -26,13 +27,14 @@ public class ImageUpLoadBean
     private int result;
     private String message;
     private String filePath;
-    private String fileNewName;
+    private Object fileNewName;
     private String fileId;
-    private String fileIds;
-    private String filePath1;
-    private String filePath2;
-    private String filePath3;
-    private List<ImageInforBean> varList;
+    private Object fileIds;
+    private Object filePath1;
+    private Object filePath2;
+    private Object filePath3;
+    private List<?> fileList;
+    private List<?> varList;
 
     public int getResult() {
         return result;
@@ -58,11 +60,11 @@ public class ImageUpLoadBean
         this.filePath = filePath;
     }
 
-    public String getFileNewName() {
+    public Object getFileNewName() {
         return fileNewName;
     }
 
-    public void setFileNewName(String fileNewName) {
+    public void setFileNewName(Object fileNewName) {
         this.fileNewName = fileNewName;
     }
 
@@ -74,43 +76,51 @@ public class ImageUpLoadBean
         this.fileId = fileId;
     }
 
-    public String getFileIds() {
+    public Object getFileIds() {
         return fileIds;
     }
 
-    public void setFileIds(String fileIds) {
+    public void setFileIds(Object fileIds) {
         this.fileIds = fileIds;
     }
 
-    public String getFilePath1() {
+    public Object getFilePath1() {
         return filePath1;
     }
 
-    public void setFilePath1(String filePath1) {
+    public void setFilePath1(Object filePath1) {
         this.filePath1 = filePath1;
     }
 
-    public String getFilePath2() {
+    public Object getFilePath2() {
         return filePath2;
     }
 
-    public void setFilePath2(String filePath2) {
+    public void setFilePath2(Object filePath2) {
         this.filePath2 = filePath2;
     }
 
-    public String getFilePath3() {
+    public Object getFilePath3() {
         return filePath3;
     }
 
-    public void setFilePath3(String filePath3) {
+    public void setFilePath3(Object filePath3) {
         this.filePath3 = filePath3;
     }
 
-    public List<ImageInforBean> getVarList() {
+    public List<?> getFileList() {
+        return fileList;
+    }
+
+    public void setFileList(List<?> fileList) {
+        this.fileList = fileList;
+    }
+
+    public List<?> getVarList() {
         return varList;
     }
 
-    public void setVarList(List<ImageInforBean> varList) {
+    public void setVarList(List<?> varList) {
         this.varList = varList;
     }
 }

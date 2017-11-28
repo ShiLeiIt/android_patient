@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">MagicalCrue_patient</string>
+    <string name="app_name">奇愈记</string>
     <string name="home_title">首页</string>
     <string name="visit_title">随访</string>
     <string name="information_title">消息</string>

@@ -53,6 +53,24 @@ public class RegisterActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
         ButterKnife.bind(this);
+        String uuid = (String) PreUtils.getParam(RegisterActivity.this, "uuid", "0");
+        if (!uuid.equals("0")) {
+            switch ((String)PreUtils.getParam(RegisterActivity.this,"userperfect","0")) {
+                case "1":
+                    Intent intentUser = new Intent(RegisterActivity.this, UserInforActivity.class);
+                    startActivity(intentUser);
+                    break;
+                case "2":
+                    Intent intentPatient = new Intent(RegisterActivity.this, PatientDataActivity.class);
+                    startActivity(intentPatient);
+                    break;
+                default:
+                    Intent intentMain = new Intent(RegisterActivity.this, MainActivity.class);
+                    startActivity(intentMain);
+                    break;
+            }
+        }
+
         //构造CountDownTimer对象
         mTimeCount = new TimeCount(60000, 1000);
         mRegisterPresenter = new RegisterPresenter(new RegisterVmView() {
@@ -80,37 +98,35 @@ public class RegisterActivity extends AppCompatActivity {
 
             @Override
             public void getRegisterLogin(ResultModel<RegisterLoginBean> model) {
-                PreUtils.setParam(RegisterActivity.this,"uuid",model.getData().getUuid());
-                PreUtils.setParam(RegisterActivity.this,"userperfect",model.getData().getUserPerfect());
-                PreUtils.setParam(RegisterActivity.this,"token",model.getData().getToken());
-                //"1"是注册页面 ，"2" 是登录页面
-                if (model.getData().getUserPerfect() == 1) {
-                    Intent intent = new Intent(RegisterActivity.this, UserInforActivity.class);
-                    intent.putExtra("userid", model.getData().getId());
-                    intent.putExtra("uuid", model.getData().getUuid());
-                    startActivity(intent);
-                } else {
-                    mIv_login.setVisibility(View.VISIBLE);
-                    Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
-                    intent.putExtra("userid", String.valueOf(model.getData().getId()));
-                    intent.putExtra("uuid", model.getData().getUuid());
-                    intent.putExtra("patientUuid", model.getData().getMedical_record_uuid());
-                    intent.putExtra("patientName", model.getData().getUser_name_jp());
-                    Log.i("patientUUid====", model.getData().getMedical_record_uuid());
-//                    intent.putExtra("patient_uuid",model.getData().get)
-                    startActivity(intent);
+                int userPerfect = model.getData().getUserPerfect();
+                if (userPerfect==1) {
+                    PreUtils.setParam(RegisterActivity.this, "uuid", model.getData().getUuid());
+                    PreUtils.setParam(RegisterActivity.this, "userperfect", String.valueOf(model.getData().getUserPerfect()));
+//                        Toast.makeText(RegisterActivity.this, "用户信息界面", Toast.LENGTH_SHORT).show();
+                    Intent intentUser = new Intent(RegisterActivity.this, UserInforActivity.class);
+                    startActivity(intentUser);
+                } else if (userPerfect == 2) {
+                    PreUtils.setParam(RegisterActivity.this, "uuid", model.getData().getUuid());
+                    PreUtils.setParam(RegisterActivity.this, "userperfect", String.valueOf(model.getData().getUserPerfect()));
+                    PreUtils.setParam(RegisterActivity.this, "token", model.getData().getToken());
+                    PreUtils.setParam(RegisterActivity.this, "userid", String.valueOf(model.getData().getId()));
+//                        Toast.makeText(RegisterActivity.this, "患者信息界面", Toast.LENGTH_SHORT).show();
+                    Intent intentPatient = new Intent(RegisterActivity.this, PatientDataActivity.class);
+                    startActivity(intentPatient);
 
+                } else {
+                    PreUtils.setParam(RegisterActivity.this, "uuid", model.getData().getUuid());
+                    Intent intentPatient = new Intent(RegisterActivity.this, MainActivity.class);
+                    startActivity(intentPatient);
                 }
             }
 
             @Override
             public void showProgress() {
-
             }
 
             @Override
             public void hideProgress() {
-
             }
 
             @Override

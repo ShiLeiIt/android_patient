@@ -23,6 +23,7 @@ import cn.qiyu.magicalcrue_patient.model.PatientInforSaveBean;
 import cn.qiyu.magicalcrue_patient.model.ResultModel;
 import cn.qiyu.magicalcrue_patient.patientinfor.PatientInforPresenter;
 import cn.qiyu.magicalcrue_patient.patientinfor.PatientInforView;
+import cn.qiyu.magicalcrue_patient.utils.PreUtils;
 
 /**
  * 患者资料信息页面
@@ -96,6 +97,7 @@ public class PatientDataActivity extends AppCompatActivity {
     private String mDiseaseName;
     private String mRelationNameBianma;
     private String mUuid;
+    private String mDiseaseId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -109,9 +111,11 @@ public class PatientDataActivity extends AppCompatActivity {
         Intent intent = getIntent();
         String name = intent.getStringExtra("name");
         //mUserId 用户id
-        mUserId = intent.getStringExtra("userid");
+        mUserId = (String) PreUtils.getParam(PatientDataActivity.this, "userid", "0");
         //mUuid 是用户 uuid
-        mUuid = intent.getStringExtra("uuid");
+        mUuid = (String) PreUtils.getParam(PatientDataActivity.this, "uuid", "0");
+        Log.i("mUuid---", mUuid);
+        Log.i("mUserId---", mUserId);
         mTvRelationName.setText(name);
         mIvGirl.setTag(0);
 
@@ -119,7 +123,8 @@ public class PatientDataActivity extends AppCompatActivity {
     PatientInforPresenter mPatientInforPresenter = new PatientInforPresenter(new PatientInforView() {
         @Override
         public String getUserId() {
-            return mUuid;
+            Toast.makeText(PatientDataActivity.this, "usrid"+mUserId, Toast.LENGTH_SHORT).show();
+            return mUserId;
         }
 
         @Override
@@ -172,7 +177,7 @@ public class PatientDataActivity extends AppCompatActivity {
 
         @Override
         public String getDisease_id() {
-            return  mDiseaseName;
+            return  mDiseaseId;
         }
 
         @Override
@@ -182,15 +187,13 @@ public class PatientDataActivity extends AppCompatActivity {
 
         @Override
         public void getPatientInfor(ResultModel<PatientInforSaveBean> rlBean) {
+            PreUtils.setParam(PatientDataActivity.this,"patientUuid",rlBean.getData().getUuid());
+            PreUtils.setParam(PatientDataActivity.this,"patientName",rlBean.getData().getName());
 //            Toast.makeText(PatientDataActivity.this, "跳到首页"+ rlBean.getMessage(), Toast.LENGTH_SHORT).show();
+            PreUtils.setParam(PatientDataActivity.this,"userperfect","3");
             Intent intent = new Intent(PatientDataActivity.this, MainActivity.class);
 //            rlBean.getData().getUuid(); 患者uuid
-            intent.putExtra("uuid", mUuid);
-            intent.putExtra("userId", mUserId);
-            intent.putExtra("patientuuid", rlBean.getData().getUuid());
-            intent.putExtra("patientName", rlBean.getData().getName());
-
-            startActivityForResult(intent,888);
+            startActivity(intent);
             Log.i("Patientuuid------",rlBean.getData().getUuid()) ;
             Log.i("Useruuid------",mUuid) ;
         }
@@ -227,6 +230,8 @@ public class PatientDataActivity extends AppCompatActivity {
             case R.id.iv_patient_back:
                 break;
             case R.id.tv_save_userinfor:
+
+
                 mPatientInforPresenter.getPatientInforCom();
 
                 break;
@@ -299,6 +304,7 @@ public class PatientDataActivity extends AppCompatActivity {
             } else if (requestCode==0x003) {
                 //疾病种类返回的名字
                 mDiseaseName = data.getStringExtra("DiseaseName");
+                mDiseaseId = data.getStringExtra("DiseaseId");
                 mTvDiseases.setText(mDiseaseName);
             }
         }

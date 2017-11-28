@@ -3,6 +3,7 @@
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="activity_pading_leftRight">10dp</dimen>
+    <dimen name="more_window_item_margin">12dp</dimen>
 
     <!-- 选择圆角 -->
     <dimen name="biground_size">7dp</dimen>

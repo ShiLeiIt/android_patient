@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.List;
 
@@ -45,8 +46,14 @@ public class DoctorListActivity extends Activity {
 
     private void init() {
         List<DoctorInfoBean> list = (List<DoctorInfoBean>) getIntent().getSerializableExtra("list");
-        mRlvOdctorTeam.setAdapter(new RecyclerAdpter(list));
-        mRlvOdctorTeam.setLayoutManager(new LinearLayoutManager(DoctorListActivity.this));
+        if (list != null) {
+            mRlvOdctorTeam.setAdapter(new RecyclerAdpter(list));
+            mRlvOdctorTeam.setLayoutManager(new LinearLayoutManager(DoctorListActivity.this));
+        } else {
+            Toast.makeText(this, "请关联医生", Toast.LENGTH_SHORT).show();
+        }
+
+
 
     }
 
@@ -123,7 +130,10 @@ public class DoctorListActivity extends Activity {
 
             @Override
             public int getItemCount() {
-                return mlist.size();
+
+                    return mlist.size();
+
+
             }
         }
 

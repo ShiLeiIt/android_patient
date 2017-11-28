@@ -20,7 +20,8 @@ public class PreUtils {
 		SharedPreferences.Editor editor = sp.edit();
 		editor.putString("uuid", "");
 		editor.putString("token","");
-		editor.putString("phone","");
+		editor.putString("userperfect","");
+		editor.putString("userid","");
 		editor.commit();
 
 	}
