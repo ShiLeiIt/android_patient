@@ -19,6 +19,7 @@ import cn.addapp.pickers.entity.County;
 import cn.addapp.pickers.entity.Province;
 import cn.addapp.pickers.picker.DatePicker;
 import cn.qiyu.magicalcrue_patient.R;
+import cn.qiyu.magicalcrue_patient.model.PatientInfor;
 import cn.qiyu.magicalcrue_patient.model.PatientInforSaveBean;
 import cn.qiyu.magicalcrue_patient.model.ResultModel;
 import cn.qiyu.magicalcrue_patient.patientinfor.PatientInforPresenter;
@@ -98,6 +99,7 @@ public class PatientDataActivity extends AppCompatActivity {
     private String mRelationNameBianma;
     private String mUuid;
     private String mDiseaseId;
+    private PatientInfor mPatientInfor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -105,18 +107,41 @@ public class PatientDataActivity extends AppCompatActivity {
         setContentView(R.layout.activity_patient_da);
         ButterKnife.bind(this);
         init();
+
+
     }
 
     private void init() {
-        Intent intent = getIntent();
-        String name = intent.getStringExtra("name");
+        Intent intent=getIntent();
+        //从随访页面进来
+        mPatientInfor = (PatientInfor) intent.getSerializableExtra("patientInfor");
+        String visitFragment = intent.getStringExtra("visitFragment");
+        //患者名字
+        mTvRealName.setText(mPatientInfor.getName());
+        //性别
+        String sex = mPatientInfor.getSex();
+        if (sex.equals("0")) {
+            mIvBoy.setImageResource(R.drawable.check_box_select);
+            mIvGirl.setImageResource(R.drawable.check_box_normal);
+        } else {
+            mIvGirl.setImageResource(R.drawable.check_box_select);
+            mIvBoy.setImageResource(R.drawable.check_box_normal);
+        }
+        //出生日期
+        mTvSelectDate.setText(mPatientInfor.getBirthday());
+
+        
+
+
+
+
         //mUserId 用户id
         mUserId = (String) PreUtils.getParam(PatientDataActivity.this, "userid", "0");
         //mUuid 是用户 uuid
         mUuid = (String) PreUtils.getParam(PatientDataActivity.this, "uuid", "0");
         Log.i("mUuid---", mUuid);
         Log.i("mUserId---", mUserId);
-        mTvRelationName.setText(name);
+//        mTvRelationName.setText(name);
         mIvGirl.setTag(0);
 
     }
@@ -187,8 +212,9 @@ public class PatientDataActivity extends AppCompatActivity {
 
         @Override
         public void getPatientInfor(ResultModel<PatientInforSaveBean> rlBean) {
-            PreUtils.setParam(PatientDataActivity.this,"patientUuid",rlBean.getData().getUuid());
+            PreUtils.setParam(PatientDataActivity.this,"patientuuid",rlBean.getData().getUuid());
             PreUtils.setParam(PatientDataActivity.this,"patientName",rlBean.getData().getName());
+            PreUtils.setParam(PatientDataActivity.this,"patientMobile",rlBean.getData().getMobile());
 //            Toast.makeText(PatientDataActivity.this, "跳到首页"+ rlBean.getMessage(), Toast.LENGTH_SHORT).show();
             PreUtils.setParam(PatientDataActivity.this,"userperfect","3");
             Intent intent = new Intent(PatientDataActivity.this, MainActivity.class);

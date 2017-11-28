@@ -226,7 +226,7 @@ public class UserInforActivity extends FragmentActivity implements View.OnClickL
         @Override
         public void getUserInforEdt(ResultModel rlBean) {
 //
-          PreUtils.setParam(UserInforActivity.this, "userperfect", "2");
+          PreUtils.setParam(UserInforActivity.this, "userperfect", 2);
 
                 Intent intent = new Intent(UserInforActivity.this, PatientDataActivity.class);
                 startActivity(intent);

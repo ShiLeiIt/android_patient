@@ -56,7 +56,7 @@ public class HomePresenter {
     }
     //获取医生团队信息
  public void getDoctorTeamInfo(){
-     mHomeBiz.getDoctorTeamInfor(mNumView.patientId(), new HomeBiz.OnLoginListener() {
+     mHomeBiz.getDoctorTeamInfor(mNumView.patientUuid(), new HomeBiz.OnLoginListener() {
          @Override
          public void onResponse(ResultModel model) {
              if (model.getResult() == 0) {

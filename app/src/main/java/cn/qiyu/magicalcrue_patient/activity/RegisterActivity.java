@@ -116,6 +116,8 @@ public class RegisterActivity extends AppCompatActivity {
 
                 } else {
                     PreUtils.setParam(RegisterActivity.this, "uuid", model.getData().getUuid());
+                    PreUtils.setParam(RegisterActivity.this, "patientuuid", model.getData().getMedical_record_uuid());
+                    PreUtils.setParam(RegisterActivity.this, "patientuuid", model.getData().getMedical_record_uuid());
                     Intent intentPatient = new Intent(RegisterActivity.this, MainActivity.class);
                     startActivity(intentPatient);
                 }

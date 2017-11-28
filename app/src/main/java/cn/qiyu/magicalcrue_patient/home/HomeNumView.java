@@ -19,7 +19,7 @@ public interface HomeNumView extends BaseView {
     void getDoctorQRcode(ResultModel model);
 
     //获取医生团队信息
-    String patientId();
+
     void LoadDoctorTeamInfor(ResultModel<DoctorTeamBean> model);
 
 }

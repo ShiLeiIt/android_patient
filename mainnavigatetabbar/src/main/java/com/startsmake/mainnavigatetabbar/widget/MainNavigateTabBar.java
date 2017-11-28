@@ -205,6 +205,9 @@ public class MainNavigateTabBar extends LinearLayout implements View.OnClickList
         } else {
             transaction.show(fragment);
         }
+        if (holder.tag.equals("随访")){
+            fragment.setUserVisibleHint(true);
+        }
         transaction.commit();
         mCurrentSelectedTab = holder.tabIndex;
     }

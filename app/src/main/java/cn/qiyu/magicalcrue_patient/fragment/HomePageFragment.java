@@ -6,12 +6,14 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.view.ScrollingView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -43,6 +45,7 @@ import cn.qiyu.magicalcrue_patient.utils.Utils;
 import cn.qiyu.magicalcrue_patient.view.LLImageView;
 import cn.qiyu.magicalcrue_patient.view.LLTextView;
 import cn.qiyu.magicalcrue_patient.view.LLTextViewNew;
+import cn.qiyu.magicalcrue_patient.view.ListViewForScrollView;
 import cn.qiyu.magicalcrue_patient.zxing.activity.CaptureActivity;
 import de.hdodenhof.circleimageview.CircleImageView;
 import pub.devrel.easypermissions.AppSettingsDialog;
@@ -146,7 +149,7 @@ public class HomePageFragment extends Fragment implements View.OnClickListener, 
         ButterKnife.bind(this, view);
         //这里设置fragment 点击事件就是我给你发的Demo
 
-
+        Log.i("patientuuid---", (String) PreUtils.getParam(getActivity(), "patientuuid", "0"));
 
         return view;
     }
@@ -171,7 +174,7 @@ public class HomePageFragment extends Fragment implements View.OnClickListener, 
         if (doctorUuidUrl.contains("http://www.mircalcure.com/index.html?doctorId")) {
             mDoctorUuid = split[1].trim();
             homePresenter.getDoctorQRcode();
-            Toast.makeText(getActivity(), "医生随访二维码", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), "医生随访二维码，等待医生审核", Toast.LENGTH_SHORT).show();
         } else {
             Toast.makeText(getActivity(), "非医生随访二维码", Toast.LENGTH_SHORT).show();
         }
@@ -213,9 +216,10 @@ public class HomePageFragment extends Fragment implements View.OnClickListener, 
 
         @Override
         public void onViewFailure(ResultModel model) {
-            //通过这mErrorCode来判断是否绑定医生
-            mErrorCode = model.getErrorCode();
-            PreUtils.setParam(getActivity(),"errorCode",mErrorCode);
+//            //通过这mErrorCode来判断是否绑定医生
+//            mErrorCode = model.getErrorCode();
+//
+//            Toast.makeText(getActivity(), "ccccode"+ model.getErrorCode(), Toast.LENGTH_SHORT).show();
             //通过EventBus传值到VisitFragment中
             //现在需要将 model.getErrorCode() 传到VisitFragment
 //            Toast.makeText(getActivity(), "ErrorCode==="+model.getErrorCode(), Toast.LENGTH_SHORT).show();
@@ -230,9 +234,11 @@ public class HomePageFragment extends Fragment implements View.OnClickListener, 
         }
         @Override
         public String getUserId() {
+            Log.i("userUuid", (String) PreUtils.getParam(getActivity(), "uuid", "0"));
 //                return "5d9976d752c541c5a4608bc2758c54d7";
             //用户uuid
             return (String) PreUtils.getParam(getActivity(),"uuid","0");
+
         }
 
         @Override
@@ -259,8 +265,9 @@ public class HomePageFragment extends Fragment implements View.OnClickListener, 
 
         @Override
         public String patientUuid() {
-            Log.i("patientuuid------", (String) PreUtils.getParam(getActivity(), "patientUuid", "0"));
-            return (String) PreUtils.getParam(getActivity(), "patientUuid", "0");
+            Log.i("patientuuid------", (String) PreUtils.getParam(getActivity(), "patientuuid", "0"));
+            return (String) PreUtils.getParam(getActivity(), "patientuuid", "0");
+//            return "29bbe608070b4fd5aadda5999d46f9d7";
         }
 
         @Override
@@ -275,12 +282,9 @@ public class HomePageFragment extends Fragment implements View.OnClickListener, 
         }
 
         @Override
-        public String patientId() {
-            return (String) PreUtils.getParam(getActivity(), "patientUuid", "0");
-        }
-
-        @Override
         public void LoadDoctorTeamInfor(ResultModel<DoctorTeamBean> model) {
+
+//            model.getErrorCode();
             String DcotorName = model.getData().getDoctor_name();
             String TeamName = model.getData().getTeam_name();
             //医生名字与团队

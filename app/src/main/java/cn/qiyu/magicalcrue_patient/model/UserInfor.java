@@ -7,23 +7,29 @@ package cn.qiyu.magicalcrue_patient.model;
 
 public class UserInfor {
 
+
     /**
      * birthday : 2017-10-14
-     * nativeName : 内蒙古自治区-呼和浩特市-新城区
-     * native_place_cd : 150000,150100,150101,
+     * nativeName : 山西省-阳泉市-郊区
+     * native_place_cd : 140000,140300,140303,
      * create_time : 2017-11-27 15:36:24
-     * photoPath : uploadFiles/uploadImgs
-     * user_name : 西十里铺
+     * photoPath : 72698dc3e2da4952aef65fea140b810d
+     * medical_record_id : 715
+     * user_name : 实惠
      * sex : 0
+     * modify_time : 2017-11-28 14:12:13
      * mobile : 15925926265
      * uuid : 14cbff3d59d249528dcb9fd1c0aa318b
      * register_id : e76dfb82917d4fba93fb9d5402fa77bd
      * is_delete : 0
-     * user_name_pinyin : xishilipu
-     * user_name_jp : XSLP
+     * user_name_pinyin : shihui
+     * user_name_jp : SH
      * jpush_id : ""
      * sexName : 男
+     * name : 石磊
      * id : 180
+     * relationship : self
+     * medical_record_uuid : 29bbe608070b4fd5aadda5999d46f9d7
      * status : 0
      */
 
@@ -32,8 +38,10 @@ public class UserInfor {
     private String native_place_cd;
     private String create_time;
     private String photoPath;
+    private int medical_record_id;
     private String user_name;
     private int sex;
+    private String modify_time;
     private String mobile;
     private String uuid;
     private String register_id;
@@ -42,7 +50,10 @@ public class UserInfor {
     private String user_name_jp;
     private String jpush_id;
     private String sexName;
+    private String name;
     private int id;
+    private String relationship;
+    private String medical_record_uuid;
     private int status;
 
     public String getBirthday() {
@@ -85,6 +96,14 @@ public class UserInfor {
         this.photoPath = photoPath;
     }
 
+    public int getMedical_record_id() {
+        return medical_record_id;
+    }
+
+    public void setMedical_record_id(int medical_record_id) {
+        this.medical_record_id = medical_record_id;
+    }
+
     public String getUser_name() {
         return user_name;
     }
@@ -99,6 +118,14 @@ public class UserInfor {
 
     public void setSex(int sex) {
         this.sex = sex;
+    }
+
+    public String getModify_time() {
+        return modify_time;
+    }
+
+    public void setModify_time(String modify_time) {
+        this.modify_time = modify_time;
     }
 
     public String getMobile() {
@@ -165,12 +192,36 @@ public class UserInfor {
         this.sexName = sexName;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public int getId() {
         return id;
     }
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public String getRelationship() {
+        return relationship;
+    }
+
+    public void setRelationship(String relationship) {
+        this.relationship = relationship;
+    }
+
+    public String getMedical_record_uuid() {
+        return medical_record_uuid;
+    }
+
+    public void setMedical_record_uuid(String medical_record_uuid) {
+        this.medical_record_uuid = medical_record_uuid;
     }
 
     public int getStatus() {

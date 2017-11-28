@@ -157,12 +157,13 @@ public class MineFragment extends Fragment {
     MinePresenter mMinePresenter=  new MinePresenter(new MineInforView() {
         @Override
         public String getUserUuid() {
+            Log.i("useruuid=====", (String) PreUtils.getParam(getActivity(), "uuid", ""));
             return (String) PreUtils.getParam(getActivity(),"uuid","");
         }
 
         @Override
         public String getPatientBasicUuid() {
-            return (String) PreUtils.getParam(getActivity(),"patientUuid","");
+            return (String) PreUtils.getParam(getActivity(),"patientuuid","");
         }
 
 
@@ -174,7 +175,7 @@ public class MineFragment extends Fragment {
 //            mMobile = userInforResultModel.getData().getMobile();
             mPhotoPath = userInforResultModel.getData().getPhotoPath();
             mTv_mine_username.setText(mUserName);
-            String path = ApiService.GET_IMAGE_ICON + "a0be753bd1994538ba01acb91aebed7d";
+            String path = ApiService.GET_IMAGE_ICON + mPhotoPath;
             DisplayHelper.loadGlide(getActivity(),path,mIv_mine_icon);
             Log.i("username", mUserName);
             Log.i("path", ApiService.GET_IMAGE_ICON + mPhotoPath);
@@ -185,6 +186,7 @@ public class MineFragment extends Fragment {
 
         @Override
         public void getPatientBasicInfor(ResultModel<PatientInfor> patientInforResultModel) {
+
 
         }
 

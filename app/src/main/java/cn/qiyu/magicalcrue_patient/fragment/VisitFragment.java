@@ -36,10 +36,14 @@ import cn.qiyu.magicalcrue_patient.activity.PatientDataActivity;
 import cn.qiyu.magicalcrue_patient.activity.UserInforActivity;
 import cn.qiyu.magicalcrue_patient.home.HomeNumView;
 import cn.qiyu.magicalcrue_patient.home.HomePresenter;
+import cn.qiyu.magicalcrue_patient.mine.MineInforView;
+import cn.qiyu.magicalcrue_patient.mine.MinePresenter;
 import cn.qiyu.magicalcrue_patient.model.DoctorInfoBean;
 import cn.qiyu.magicalcrue_patient.model.DoctorTeamBean;
 import cn.qiyu.magicalcrue_patient.model.HomeNumBean;
+import cn.qiyu.magicalcrue_patient.model.PatientInfor;
 import cn.qiyu.magicalcrue_patient.model.ResultModel;
+import cn.qiyu.magicalcrue_patient.model.UserInfor;
 import cn.qiyu.magicalcrue_patient.utils.DisplayHelper;
 import cn.qiyu.magicalcrue_patient.utils.PreUtils;
 import cn.qiyu.magicalcrue_patient.utils.Utils;
@@ -80,6 +84,8 @@ public class VisitFragment extends Fragment implements View.OnClickListener {
     private TextView mTv_mere_updata;
     private MoreWindow mMoreWindow;
     private String mErrorCode;
+    private ImageView mIv_patientInfor;
+    private String mNamewe="";
 
 
     @Nullable
@@ -98,14 +104,18 @@ public class VisitFragment extends Fragment implements View.OnClickListener {
         LLTextView llTvRecord = (LLTextView) view.findViewById(R.id.ll_tv_record);//病情记录
         mTv_doc_tem_name = (TextView) view.findViewById(R.id.tv_doc_team);
         mTv_patient_name = (TextView) view.findViewById(R.id.tv_patient_name);
-        String patientName = getActivity().getIntent().getStringExtra("patientName");
 
-        mTv_patient_name.setText(patientName);
+        //跳医生列表
         mIv_visit_arrows = (ImageView) view.findViewById(R.id.iv_visit_arrows);
+        //病历更新
         mTv_mere_updata = (TextView) view.findViewById(R.id.tv_mere_update);
+        //患者界面
+        mIv_patientInfor = (ImageView) view.findViewById(R.id.iv_patient_arrows);
+
 
         mTv_mere_updata.setOnClickListener(this);
         mIv_visit_arrows.setOnClickListener(this);
+        mIv_patientInfor.setOnClickListener(this);
 
         CircleImageView mCiv_one = (CircleImageView) view.findViewById(R.id.iv_doctor_icon_one);
         CircleImageView civ_two = (CircleImageView) view.findViewById(R.id.iv_doctor_icon_two);
@@ -125,33 +135,69 @@ public class VisitFragment extends Fragment implements View.OnClickListener {
 
         homePresenter.HomeLoadNumData();
         homePresenter.getDoctorTeamInfo();
-        mErrorCode=(String) PreUtils.getParam(getActivity(), "errorCode", "0");
-        if (mErrorCode.equals("1001")) {
-            Toast.makeText(getActivity(), "您还未加入任何随访,请扫描医生二维码", Toast.LENGTH_SHORT).show();
-            initPermission();
+        mMinePresenter.getPatientBasicInfor();
 
-        } else if (mErrorCode.equals("1002")) {
-            Toast.makeText(getActivity(), "您已经加入随访了，请等待您的主治医生审核", Toast.LENGTH_SHORT).show();
 
-        } else {
-            String userperfect = (String) PreUtils.getParam(getActivity(), "userperfect", "0");
-            if (userperfect.equals("1")) {
-                startActivity(new Intent(getActivity(), UserInforActivity.class));
-
-            } else if (userperfect.equals("2")) {
-                startActivity(new Intent(getActivity(), PatientDataActivity.class));
-            } else {
-
-            }
-        }
-        Toast.makeText(getActivity(), "errorcde"+PreUtils.getParam(getActivity(),"errorCode","0"), Toast.LENGTH_SHORT).show();
-        Log.i("errorCode", (String) PreUtils.getParam(getActivity(), "errorCode", "0"));
         return view;
     }
+
+
+    MinePresenter mMinePresenter = new MinePresenter(new MineInforView() {
+        @Override
+        public String getUserUuid() {
+            return (String) PreUtils.getParam(getActivity(), "uuid", "0");
+        }
+
+        @Override
+        public String getPatientBasicUuid() {
+            return (String) PreUtils.getParam(getActivity(), "patientuuid", "0");
+        }
+
+        @Override
+        public void getUserBasicInfor(ResultModel<UserInfor> userInforResultModel) {
+
+        }
+
+        @Override
+        public void getPatientBasicInfor(ResultModel<PatientInfor> patientInforResultModel) {
+            String patient_user_name = patientInforResultModel.getData().getName();
+            Log.i("patient_user_name", patient_user_name);
+            mTv_patient_name.setText(patient_user_name);
+
+            if(mNamewe.equals("123")) {
+                Intent intent = new Intent(getActivity(), PatientDataActivity.class);
+                intent.putExtra("patientInfor", patientInforResultModel.getData());
+                intent.putExtra("visitFragment", "visitFragment");
+                startActivity(intent);
+            }
+        }
+
+        @Override
+        public void showProgress() {
+
+        }
+
+        @Override
+        public void hideProgress() {
+
+        }
+
+        @Override
+        public void onViewFailure(ResultModel model) {
+
+        }
+
+        @Override
+        public void onServerFailure(String e) {
+
+        }
+    });
+
+
     HomePresenter homePresenter = new HomePresenter(new HomeNumView() {
         @Override
         public String getUserId() {
-            return (String) PreUtils.getParam(getActivity(),"uuid","0");
+            return (String) PreUtils.getParam(getActivity(), "uuid", "0");
         }
 
         @Override
@@ -168,7 +214,8 @@ public class VisitFragment extends Fragment implements View.OnClickListener {
 
         @Override
         public String patientUuid() {
-            return (String) PreUtils.getParam(getActivity(), "patientUuid", "0");
+            Log.i("patientuuid-=-=-=-=-", (String) PreUtils.getParam(getActivity(), "patientuuid", "0"));
+            return (String) PreUtils.getParam(getActivity(), "patientuuid", "0");
         }
 
         @Override
@@ -181,10 +228,6 @@ public class VisitFragment extends Fragment implements View.OnClickListener {
 
         }
 
-        @Override
-        public String patientId() {
-            return (String) PreUtils.getParam(getActivity(), "patientUuid", "0");
-        }
 
         @Override
         public void LoadDoctorTeamInfor(ResultModel<DoctorTeamBean> model) {
@@ -215,7 +258,8 @@ public class VisitFragment extends Fragment implements View.OnClickListener {
                 String path = "";
                 if (null == model.getData().getDoctorTeamList().get(i).getPhoto_path())
                     path = "";
-                else path = ApiService.GET_IMAGE_ICON + model.getData().getDoctorTeamList().get(i).getPhoto_path();
+                else
+                    path = ApiService.GET_IMAGE_ICON + model.getData().getDoctorTeamList().get(i).getPhoto_path();
                 DisplayHelper.loadGlide(getActivity(), path, civ[i]);
             }
         }
@@ -232,6 +276,33 @@ public class VisitFragment extends Fragment implements View.OnClickListener {
 
         @Override
         public void onViewFailure(ResultModel model) {
+            mErrorCode = model.getErrorCode();
+            if (mErrorCode.equals("1001")) {
+                Toast.makeText(getActivity(), "您还未加入任何随访,请扫描医生二维码", Toast.LENGTH_SHORT).show();
+                String[] permissions = Utils.checkPermission(getActivity());
+                if (permissions.length == 0) {
+
+                    startActivity(new Intent(getActivity(), CaptureActivity.class));
+                } else {
+                    //申请权限
+                    ActivityCompat.requestPermissions(getActivity(), permissions, 100);
+                }
+//                initPermission();
+
+
+            } else if (mErrorCode.equals("1002")) {
+                Toast.makeText(getActivity(), "您已经加入随访了，请等待您的主治医生审核", Toast.LENGTH_SHORT).show();
+
+            } else {
+                String userperfect = (String) PreUtils.getParam(getActivity(), "userperfect", "0");
+                if (userperfect.equals("1")) {
+                    startActivity(new Intent(getActivity(), UserInforActivity.class));
+
+                } else if (userperfect.equals("2")) {
+                    startActivity(new Intent(getActivity(), PatientDataActivity.class));
+                }
+            }
+            Toast.makeText(getActivity(), "code======" + mErrorCode, Toast.LENGTH_SHORT).show();
 
         }
 
@@ -255,30 +326,42 @@ public class VisitFragment extends Fragment implements View.OnClickListener {
                 R.layout.meunitem, //xml实现
                 new String[]{"ItemImage", "ItemText"}, //对应map的Key
                 new int[]{R.id.ItemImage, R.id.ItemText});  //对应R的Id
-//添加Item到网格中
+        //添加Item到网格中
         mGridView.setAdapter(saMenuItem);
         mGridView.setOnItemClickListener(
 
 
                 new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                switch (position) {
-                    case 0:
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        switch (position) {
+                            case 0:
 //                        Intent intent = new Intent(getActivity(), WorkGroupActivity.class);
 //                        intent.putExtra("by_doctor_uuid", "desk");
 //                        startActivity(intent);
-                        break;
-                    case 1:
+                                break;
+                            case 1:
 //                        Toast.makeText(getActivity(), "量表", Toast.LENGTH_SHORT).show();
-                        break;
-                    case 2:
+                                break;
+                            case 2:
 //                        Toast.makeText(getActivity(), "随访报告", Toast.LENGTH_SHORT).show();
-                        break;
-                }
-            }
-        });
+                                break;
+                        }
+                    }
+                });
     }
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (isVisibleToUser) {
+            //写你每次进入这个fragment需要调用的代码
+//            homePresenter.getDoctorTeamInfo();
+//            homePresenter.HomeLoadNumData();
+            Log.i("=======123", "进入visit");
+        }
+    }
+
     /**
      * 初始化权限事件
      */
@@ -287,31 +370,20 @@ public class VisitFragment extends Fragment implements View.OnClickListener {
         String[] permissions = Utils.checkPermission(getActivity());
         if (permissions.length == 0) {
             //权限都申请了,是否登录
-            startActivity(new Intent(getActivity(), CaptureActivity.class));
+
         } else {
             //申请权限
             ActivityCompat.requestPermissions(getActivity(), permissions, 100);
+
         }
     }
+
     @Override
     public void onDestroyView() {
         super.onDestroyView();
         ButterKnife.unbind(this);
     }
 
-    @OnClick({R.id.iv_course_back, R.id.tv_mere_update, R.id.iv_visit_arrows, R.id.gridview})
-    public void onViewClicked(View view) {
-        switch (view.getId()) {
-            case R.id.iv_course_back:
-                break;
-            case R.id.tv_mere_update:
-                break;
-            case R.id.iv_visit_arrows:
-                break;
-            case R.id.gridview:
-                break;
-        }
-    }
 
     @Override
     public void onClick(View v) {
@@ -326,16 +398,20 @@ public class VisitFragment extends Fragment implements View.OnClickListener {
             case R.id.tv_mere_update:
                 showMoreWindow(v);
                 break;
-
+            case R.id.iv_patient_arrows:
+            mNamewe="123";
+                mMinePresenter.getPatientBasicInfor();
+                break;
         }
 
     }
-    private void showMoreWindow(View view){
+
+    private void showMoreWindow(View view) {
         if (null == mMoreWindow) {
             mMoreWindow = new MoreWindow(getActivity());
             mMoreWindow.init();
         }
-        mMoreWindow.showMoreWindow(view,100);
+        mMoreWindow.showMoreWindow(view, 100);
 
     }
 //    @Override
