@@ -55,12 +55,12 @@ public class RegisterActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         String uuid = (String) PreUtils.getParam(RegisterActivity.this, "uuid", "0");
         if (!uuid.equals("0")) {
-            switch ((String)PreUtils.getParam(RegisterActivity.this,"userperfect","0")) {
-                case "1":
+            switch ((Integer) PreUtils.getParam(RegisterActivity.this,"userperfect",0)) {
+                case 1:
                     Intent intentUser = new Intent(RegisterActivity.this, UserInforActivity.class);
                     startActivity(intentUser);
                     break;
-                case "2":
+                case 2:
                     Intent intentPatient = new Intent(RegisterActivity.this, PatientDataActivity.class);
                     startActivity(intentPatient);
                     break;
@@ -101,13 +101,14 @@ public class RegisterActivity extends AppCompatActivity {
                 int userPerfect = model.getData().getUserPerfect();
                 if (userPerfect==1) {
                     PreUtils.setParam(RegisterActivity.this, "uuid", model.getData().getUuid());
-                    PreUtils.setParam(RegisterActivity.this, "userperfect", String.valueOf(model.getData().getUserPerfect()));
+                    PreUtils.setParam(RegisterActivity.this, "userperfect", model.getData().getUserPerfect());
+                    PreUtils.setParam(RegisterActivity.this, "userid", String.valueOf(model.getData().getId()));
 //                        Toast.makeText(RegisterActivity.this, "用户信息界面", Toast.LENGTH_SHORT).show();
                     Intent intentUser = new Intent(RegisterActivity.this, UserInforActivity.class);
                     startActivity(intentUser);
                 } else if (userPerfect == 2) {
                     PreUtils.setParam(RegisterActivity.this, "uuid", model.getData().getUuid());
-                    PreUtils.setParam(RegisterActivity.this, "userperfect", String.valueOf(model.getData().getUserPerfect()));
+                    PreUtils.setParam(RegisterActivity.this, "userperfect", model.getData().getUserPerfect());
                     PreUtils.setParam(RegisterActivity.this, "token", model.getData().getToken());
                     PreUtils.setParam(RegisterActivity.this, "userid", String.valueOf(model.getData().getId()));
 //                        Toast.makeText(RegisterActivity.this, "患者信息界面", Toast.LENGTH_SHORT).show();

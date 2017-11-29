@@ -177,9 +177,9 @@ public class MineFragment extends Fragment {
             mTv_mine_username.setText(mUserName);
             String path = ApiService.GET_IMAGE_ICON + mPhotoPath;
             DisplayHelper.loadGlide(getActivity(),path,mIv_mine_icon);
-            Log.i("username", mUserName);
-            Log.i("path", ApiService.GET_IMAGE_ICON + mPhotoPath);
-            Log.i("mPhotoPath", userInforResultModel.getData().getPhotoPath());
+//            Log.i("username", mUserName);
+//            Log.i("path", ApiService.GET_IMAGE_ICON + mPhotoPath);
+//            Log.i("mPhotoPath", userInforResultModel.getData().getPhotoPath());
 
 
         }

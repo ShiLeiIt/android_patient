@@ -107,9 +107,19 @@ public class PatientDataActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_patient_da);
         ButterKnife.bind(this);
-        init();
+//        init();
 
+        initTo();
+    }
 
+    private void initTo() {
+        mIvGirl.setTag(0);
+        //mUserId 用户id
+        mUserId = (String) PreUtils.getParam(PatientDataActivity.this, "userid", "0");
+        //mUuid 是用户 uuid
+        mUuid = (String) PreUtils.getParam(PatientDataActivity.this, "uuid", "0");
+        Log.i("mUuid---", mUuid);
+        Log.i("mUserId---", mUserId);
     }
 
     private void init() {
@@ -143,14 +153,6 @@ public class PatientDataActivity extends AppCompatActivity {
             mTvDiseases.setText(mPatientInfor.getRelationship());
         }
 
-        //mUserId 用户id
-        mUserId = (String) PreUtils.getParam(PatientDataActivity.this, "userid", "0");
-        //mUuid 是用户 uuid
-        mUuid = (String) PreUtils.getParam(PatientDataActivity.this, "uuid", "0");
-        Log.i("mUuid---", mUuid);
-        Log.i("mUserId---", mUserId);
-//        mTvRelationName.setText(name);
-        mIvGirl.setTag(0);
 
     }
 
@@ -227,12 +229,12 @@ public class PatientDataActivity extends AppCompatActivity {
             PreUtils.setParam(PatientDataActivity.this, "patientMobile", rlBean.getData().getMobile());
 //            Toast.makeText(PatientDataActivity.this, "跳到首页"+ rlBean.getMessage(), Toast.LENGTH_SHORT).show();
             PreUtils.setParam(PatientDataActivity.this, "userperfect", "3");
-            if (mVisitFragment.equals("visitFragment")) {
-                finish();
-            } else {
+//            if (mVisitFragment.equals("visitFragment")) {
+//                finish();
+//            } else {
                 Intent intent = new Intent(PatientDataActivity.this, MainActivity.class);
                 startActivity(intent);
-            }
+//            }
 
             Log.i("Patientuuid------", rlBean.getData().getUuid());
             Log.i("Useruuid------", mUuid);
@@ -268,6 +270,7 @@ public class PatientDataActivity extends AppCompatActivity {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.iv_patient_back:
+                onBackPressed();
                 break;
             case R.id.tv_save_userinfor:
 
@@ -279,10 +282,14 @@ public class PatientDataActivity extends AppCompatActivity {
             case R.id.tv_real_name:
                 break;
             case R.id.iv_girl:
+                mIvGirl.setTag(1);
+                mIvBoy.setTag(0);
                 mIvGirl.setImageResource(R.drawable.check_box_select);
                 mIvBoy.setImageResource(R.drawable.check_box_normal);
                 break;
             case R.id.iv_boy:
+                mIvBoy.setTag(1);
+                mIvGirl.setTag(0);
                 mIvBoy.setImageResource(R.drawable.check_box_select);
                 mIvGirl.setImageResource(R.drawable.check_box_normal);
                 break;
