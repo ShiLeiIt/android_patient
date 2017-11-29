@@ -13,6 +13,8 @@ import android.view.View;
 import java.io.FileInputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Created by ShiLei on 2017/11/16.
@@ -308,5 +310,13 @@ public class Utils {
         return (bitmap);
     }
 
+    //判断是否是手机号码
+    public static  boolean isMobile(String mobiles){
+        Pattern p = Pattern
+                .compile("^(13\\d|14[57]|15[012356789]|18\\d|17[013678])\\d{8}$");
+        Matcher m = p.matcher(mobiles);
+        return m.matches();
 
+
+    }
 }

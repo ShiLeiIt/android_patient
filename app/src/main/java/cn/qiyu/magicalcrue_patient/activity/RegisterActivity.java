@@ -24,6 +24,7 @@ import cn.qiyu.magicalcrue_patient.model.ResultModel;
 import cn.qiyu.magicalcrue_patient.register_login.RegisterPresenter;
 import cn.qiyu.magicalcrue_patient.register_login.RegisterVmView;
 import cn.qiyu.magicalcrue_patient.utils.PreUtils;
+import cn.qiyu.magicalcrue_patient.utils.Utils;
 
 /**
  * 注册登录页面
@@ -86,7 +87,10 @@ public class RegisterActivity extends AppCompatActivity {
             @Override
             public String getAccount() {
 //                Toast.makeText(RegisterActivity.this, "22222222", Toast.LENGTH_SHORT).show();
-                return mEditPhone.getText().toString();
+
+                    return mEditPhone.getText().toString();
+
+
             }
 
             @Override
@@ -168,11 +172,16 @@ public class RegisterActivity extends AppCompatActivity {
             case R.id.edit_phone:
                 break;
             case R.id.tv_send_auth_code:
+                if (Utils.isMobile(mEditPhone.getText().toString())) {
                 mTimeCount.start();
                 mTvSendAuthCode.setBackgroundResource(R.drawable.register_auth_code_show);
                 mTvSendAuthCode.setTextColor(getResources().getColor(R.color.app_white));
 //                mEditAuthCode.setEnabled(true);
-                mRegisterPresenter.RegisterLoadMesData();
+
+                    mRegisterPresenter.RegisterLoadMesData();
+                } else {
+                    Toast.makeText(RegisterActivity.this, "请输入正确的手机号码", Toast.LENGTH_SHORT).show();
+                }
                 break;
             case R.id.iv_register_auth:
                 if (tag) {
@@ -194,7 +203,10 @@ public class RegisterActivity extends AppCompatActivity {
                     Toast.makeText(this, "请同意注册协议", Toast.LENGTH_SHORT).show();
                 } else {
                     Toast.makeText(this, "注册成功", Toast.LENGTH_SHORT).show();
-                    mRegisterPresenter.RegisterLogin();
+
+                        mRegisterPresenter.RegisterLogin();
+
+
 
                 }
                 break;

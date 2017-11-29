@@ -48,6 +48,7 @@ public class MineFragment extends Fragment {
     private String mMobile;
     private String mPhotoPath;
     private String tagName = "";
+    private TextView mTv_phoneNume;
 
 
     @Nullable
@@ -67,10 +68,8 @@ public class MineFragment extends Fragment {
         mIv_mine_icon = (CircleImageView) view.findViewById(R.id.iv_mine_icon);
 
 
-//        TextView tv_phoneNume = (TextView) view.findViewById(R.id.tv_mine_phone_num);
-//        String one=mMobile.substring(1,4);
-//        String two=mMobile.substring(7,11);
-//        tv_phoneNume.setText(one+"****"+two);
+        mTv_phoneNume = (TextView) view.findViewById(R.id.tv_mine_phone_num);
+
 
         //用户名字
         mTv_mine_username = (TextView) view.findViewById(R.id.tv_mine_username);
@@ -183,7 +182,7 @@ public class MineFragment extends Fragment {
         public void getUserBasicInfor(ResultModel<UserInfor> userInforResultModel) {
 
             mUserName = userInforResultModel.getData().getUser_name();
-//            mMobile = userInforResultModel.getData().getMobile();
+
             mPhotoPath = userInforResultModel.getData().getPhotoPath();
             mTv_mine_username.setText(mUserName);
             String path = ApiService.GET_IMAGE_ICON + mPhotoPath;
@@ -202,6 +201,10 @@ public class MineFragment extends Fragment {
 
         @Override
         public void getPatientBasicInfor(ResultModel<PatientInfor> patientInforResultModel) {
+            mMobile=  patientInforResultModel.getData().getMobile();
+            String one=mMobile.substring(1,4);
+            String two=mMobile.substring(7,11);
+            mTv_phoneNume.setText(one+"****"+two);
             if(tagName.equals("2")) {
                 Intent intent = new Intent(getActivity(), MinePatientDataActivity.class);
                 intent.putExtra("patientInfor", patientInforResultModel.getData());
