@@ -115,10 +115,10 @@ public class PatientDataActivity extends AppCompatActivity {
     private void init() {
         Intent intent = getIntent();
         //从随访页面进来
-        mPatientInfor = (PatientInfor) intent.getSerializableExtra("patientInfor");
-        mVisitFragment = intent.getStringExtra("visitFragment");
-        if (mVisitFragment.equals("visitFragment")) {
 
+        if (mVisitFragment.equals("visitFragment")) {
+            mPatientInfor = (PatientInfor) intent.getSerializableExtra("patientInfor");
+            mVisitFragment = intent.getStringExtra("visitFragment");
             //患者名字
             mTvRealName.setText(mPatientInfor.getName());
             //性别
