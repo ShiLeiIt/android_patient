@@ -18,6 +18,7 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.qiyu.magicalcrue_patient.MyApplication;
 import cn.qiyu.magicalcrue_patient.R;
 import cn.qiyu.magicalcrue_patient.home.PatientInfoRelationPresenter;
 import cn.qiyu.magicalcrue_patient.home.PatientRelationInfoView;
@@ -50,6 +51,7 @@ public class PatientRelationListActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_patient_relation);
+        MyApplication.getInstance().addActivity(this);
         ButterKnife.bind(this);
         mRl_relation = (RecyclerView) findViewById(R.id.rlv_patient_relation);
         mTv_title = (TextView) findViewById(R.id.tv_title);
@@ -57,7 +59,7 @@ public class PatientRelationListActivity extends Activity {
         if (mIsrelation.equals("0")) {
             //进去患者关系列表
             mPatientInfoRelationPresenter.LoadPatientRelation();
-        } else {
+        } else if(mIsrelation.equals("1")){
             //进入疾病种类列表
             mTv_title.setText("疾病种类");
             mPatientInfoRelationPresenter.LoadDiseasesList();
@@ -73,6 +75,7 @@ public class PatientRelationListActivity extends Activity {
         @Override
         public String getBianMa() {
             return "relationshipCode";
+
         }
 
         @Override

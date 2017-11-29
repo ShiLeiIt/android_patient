@@ -7,6 +7,7 @@ import android.widget.ImageView;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.qiyu.magicalcrue_patient.MyApplication;
 import cn.qiyu.magicalcrue_patient.R;
 
 /**
@@ -22,6 +23,7 @@ public class OffLineActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_off_line);
+        MyApplication.getInstance().addActivity(this);
         ButterKnife.bind(this);
     }
 

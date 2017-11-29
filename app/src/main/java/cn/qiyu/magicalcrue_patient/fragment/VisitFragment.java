@@ -15,23 +15,14 @@ import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
-import org.greenrobot.eventbus.ThreadMode;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-
-import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 import cn.qiyu.magicalcrue_patient.Api.ApiService;
 import cn.qiyu.magicalcrue_patient.R;
-import cn.qiyu.magicalcrue_patient.activity.CourseActivity;
 import cn.qiyu.magicalcrue_patient.activity.DoctorListActivity;
-import cn.qiyu.magicalcrue_patient.activity.MainActivity;
 import cn.qiyu.magicalcrue_patient.activity.PatientDataActivity;
 import cn.qiyu.magicalcrue_patient.activity.UserInforActivity;
 import cn.qiyu.magicalcrue_patient.home.HomeNumView;
@@ -167,7 +158,7 @@ public class VisitFragment extends Fragment implements View.OnClickListener {
             if(mNamewe.equals("123")) {
                 Intent intent = new Intent(getActivity(), PatientDataActivity.class);
                 intent.putExtra("patientInfor", patientInforResultModel.getData());
-                intent.putExtra("visitFragment", "visitFragment");
+                intent.putExtra("visitFragment", "1");
                 startActivity(intent);
             }
         }
@@ -302,7 +293,7 @@ public class VisitFragment extends Fragment implements View.OnClickListener {
                     startActivity(new Intent(getActivity(), PatientDataActivity.class));
                 }
             }
-            Toast.makeText(getActivity(), "code======" + mErrorCode, Toast.LENGTH_SHORT).show();
+//            Toast.makeText(getActivity(), "code======" + mErrorCode, Toast.LENGTH_SHORT).show();
 
         }
 

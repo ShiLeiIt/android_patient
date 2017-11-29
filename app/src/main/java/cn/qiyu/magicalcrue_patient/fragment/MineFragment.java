@@ -15,6 +15,8 @@ import android.widget.Toast;
 
 import cn.qiyu.magicalcrue_patient.Api.ApiService;
 import cn.qiyu.magicalcrue_patient.R;
+import cn.qiyu.magicalcrue_patient.activity.MinePatientDataActivity;
+import cn.qiyu.magicalcrue_patient.activity.MineUserInforActivity;
 import cn.qiyu.magicalcrue_patient.activity.PatientDataActivity;
 import cn.qiyu.magicalcrue_patient.activity.UserInforActivity;
 import cn.qiyu.magicalcrue_patient.mine.MineInforView;
@@ -45,6 +47,8 @@ public class MineFragment extends Fragment {
     private String mUserName;
     private String mMobile;
     private String mPhotoPath;
+    private String tagName = "";
+
 
     @Nullable
     @Override
@@ -72,13 +76,14 @@ public class MineFragment extends Fragment {
         mTv_mine_username = (TextView) view.findViewById(R.id.tv_mine_username);
 
 
-
         //用户界面
         mIv_arrows = (ImageView) view.findViewById(R.id.iv_arrows);
         mIv_arrows.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getActivity(), UserInforActivity.class));
+                tagName = "1";
+                mMinePresenter.getUserBasicInfor();
+
             }
         });
 
@@ -118,12 +123,20 @@ public class MineFragment extends Fragment {
             }
         });
 
+
+
+        mMinePresenter.getUserBasicInfor();
+        mMinePresenter.getPatientBasicInfor();
+        //跳转患者信息界面
         mIv_patient_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getActivity(), PatientDataActivity.class));
+                tagName = "2";
+                mMinePresenter.getPatientBasicInfor();
+
             }
         });
+
         mIv_case_history_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -148,22 +161,20 @@ public class MineFragment extends Fragment {
 
             }
         });
-
-        mMinePresenter.getUserBasicInfor();
-        mMinePresenter.getPatientBasicInfor();
         return view;
 
     }
-    MinePresenter mMinePresenter=  new MinePresenter(new MineInforView() {
+
+    MinePresenter mMinePresenter = new MinePresenter(new MineInforView() {
         @Override
         public String getUserUuid() {
             Log.i("useruuid=====", (String) PreUtils.getParam(getActivity(), "uuid", ""));
-            return (String) PreUtils.getParam(getActivity(),"uuid","");
+            return (String) PreUtils.getParam(getActivity(), "uuid", "");
         }
 
         @Override
         public String getPatientBasicUuid() {
-            return (String) PreUtils.getParam(getActivity(),"patientuuid","");
+            return (String) PreUtils.getParam(getActivity(), "patientuuid", "");
         }
 
 
@@ -176,7 +187,12 @@ public class MineFragment extends Fragment {
             mPhotoPath = userInforResultModel.getData().getPhotoPath();
             mTv_mine_username.setText(mUserName);
             String path = ApiService.GET_IMAGE_ICON + mPhotoPath;
-            DisplayHelper.loadGlide(getActivity(),path,mIv_mine_icon);
+            DisplayHelper.loadGlide(getActivity(), path, mIv_mine_icon);
+            if(tagName.equals("1")) {
+                Intent intent = new Intent(getActivity(), MineUserInforActivity.class);
+                intent.putExtra("userInfor", userInforResultModel.getData());
+                startActivity(intent);
+            }
 //            Log.i("username", mUserName);
 //            Log.i("path", ApiService.GET_IMAGE_ICON + mPhotoPath);
 //            Log.i("mPhotoPath", userInforResultModel.getData().getPhotoPath());
@@ -186,7 +202,11 @@ public class MineFragment extends Fragment {
 
         @Override
         public void getPatientBasicInfor(ResultModel<PatientInfor> patientInforResultModel) {
-
+            if(tagName.equals("2")) {
+                Intent intent = new Intent(getActivity(), MinePatientDataActivity.class);
+                intent.putExtra("patientInfor", patientInforResultModel.getData());
+                startActivity(intent);
+            }
 
         }
 
@@ -210,8 +230,6 @@ public class MineFragment extends Fragment {
 
         }
     });
-
-
 
 
 }

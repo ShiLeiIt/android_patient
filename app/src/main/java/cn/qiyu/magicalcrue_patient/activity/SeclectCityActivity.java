@@ -18,6 +18,7 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.qiyu.magicalcrue_patient.MyApplication;
 import cn.qiyu.magicalcrue_patient.R;
 import cn.qiyu.magicalcrue_patient.city.CityDistrictPresenter;
 import cn.qiyu.magicalcrue_patient.city.CityDistrictView;
@@ -43,6 +44,7 @@ public class SeclectCityActivity extends Activity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_select_city);
+        MyApplication.getInstance().addActivity(this);
         ButterKnife.bind(this);
         mCityDistrictPresenter.getCity("1", "0");
     }
@@ -89,7 +91,7 @@ public class SeclectCityActivity extends Activity {
     public void onViewClicked() {
         Intent intent=new Intent();
         intent.putExtra("addresscode",addresscode.toString());
-        Toast.makeText(this, "code"+addresscode.toString(), Toast.LENGTH_SHORT).show();
+//        Toast.makeText(this, "code"+addresscode.toString(), Toast.LENGTH_SHORT).show();
         intent.putExtra("addressname",addressname.toString());
         setResult(RESULT_OK,intent);
         finish();

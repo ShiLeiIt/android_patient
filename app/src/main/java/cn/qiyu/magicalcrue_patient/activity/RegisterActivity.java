@@ -6,6 +6,7 @@ import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
@@ -16,6 +17,7 @@ import android.widget.Toast;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.qiyu.magicalcrue_patient.MyApplication;
 import cn.qiyu.magicalcrue_patient.R;
 import cn.qiyu.magicalcrue_patient.model.RegisterLoginBean;
 import cn.qiyu.magicalcrue_patient.model.ResultModel;
@@ -47,20 +49,25 @@ public class RegisterActivity extends AppCompatActivity {
     private TimeCount mTimeCount;
     public boolean tag = true;
     private RegisterPresenter mRegisterPresenter;
+    private long mExitTime;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
+        MyApplication.getInstance().addActivity(this);
         ButterKnife.bind(this);
         String uuid = (String) PreUtils.getParam(RegisterActivity.this, "uuid", "0");
+//        Log.i("userperfect-=", (String) PreUtils.getParam(RegisterActivity.this, "userperfect", "0"));
+    if(null!=uuid){
         if (!uuid.equals("0")) {
-            switch ((Integer) PreUtils.getParam(RegisterActivity.this,"userperfect",0)) {
-                case 1:
+            switch ((String) PreUtils.getParam(RegisterActivity.this, "userperfect", "0")) {
+
+                case "1":
                     Intent intentUser = new Intent(RegisterActivity.this, UserInforActivity.class);
                     startActivity(intentUser);
                     break;
-                case 2:
+                case "2":
                     Intent intentPatient = new Intent(RegisterActivity.this, PatientDataActivity.class);
                     startActivity(intentPatient);
                     break;
@@ -70,6 +77,8 @@ public class RegisterActivity extends AppCompatActivity {
                     break;
             }
         }
+
+    }
 
         //构造CountDownTimer对象
         mTimeCount = new TimeCount(60000, 1000);
@@ -99,10 +108,11 @@ public class RegisterActivity extends AppCompatActivity {
             @Override
             public void getRegisterLogin(ResultModel<RegisterLoginBean> model) {
                 int userPerfect = model.getData().getUserPerfect();
-                if (userPerfect==1) {
+                if (userPerfect == 1) {
                     PreUtils.setParam(RegisterActivity.this, "uuid", model.getData().getUuid());
                     PreUtils.setParam(RegisterActivity.this, "userperfect", model.getData().getUserPerfect());
                     PreUtils.setParam(RegisterActivity.this, "userid", String.valueOf(model.getData().getId()));
+                    PreUtils.setParam(RegisterActivity.this, "token", model.getData().getToken());
 //                        Toast.makeText(RegisterActivity.this, "用户信息界面", Toast.LENGTH_SHORT).show();
                     Intent intentUser = new Intent(RegisterActivity.this, UserInforActivity.class);
                     startActivity(intentUser);
@@ -116,12 +126,16 @@ public class RegisterActivity extends AppCompatActivity {
                     startActivity(intentPatient);
 
                 } else {
+                    PreUtils.setParam(RegisterActivity.this, "userid", String.valueOf(model.getData().getId()));
+                    PreUtils.setParam(RegisterActivity.this, "userperfect", "0");
                     PreUtils.setParam(RegisterActivity.this, "uuid", model.getData().getUuid());
                     PreUtils.setParam(RegisterActivity.this, "patientuuid", model.getData().getMedical_record_uuid());
-                    PreUtils.setParam(RegisterActivity.this, "patientuuid", model.getData().getMedical_record_uuid());
+                    PreUtils.setParam(RegisterActivity.this, "token", model.getData().getToken());
+//                    PreUtils.setParam(RegisterActivity.this, "userid", String.valueOf(model.getData().getId()));
                     Intent intentPatient = new Intent(RegisterActivity.this, MainActivity.class);
                     startActivity(intentPatient);
                 }
+
             }
 
             @Override
@@ -144,6 +158,7 @@ public class RegisterActivity extends AppCompatActivity {
         });
 
     }
+
 
     @OnClick({R.id.iv_register_del, R.id.edit_phone, R.id.tv_send_auth_code, R.id.iv_register_auth, R.id.tv_deal, R.id.iv_register})
     public void onViewClicked(View view) {
@@ -205,6 +220,26 @@ public class RegisterActivity extends AppCompatActivity {
             mTvSendAuthCode.setText(millisUntilFinished / 1000 + "秒");
         }
     }
+
+//    @Override
+//    public boolean onKeyDown(int keyCode, KeyEvent event) {
+//        switch (keyCode) {
+//            case KeyEvent.KEYCODE_BACK:
+//                if ((System.currentTimeMillis() - mExitTime) > 2000) {
+//                    Toast.makeText(RegisterActivity.this, "再按一次退出程序", Toast.LENGTH_SHORT).show();
+//                    mExitTime = System.currentTimeMillis();
+//                } else {
+//                    MyApplication.getInstance().exit();
+//                    finish();
+//                }
+//                break;
+//            default:
+//                return super.onKeyDown(keyCode, event);
+//        }
+//        return true;
+//
+//    }
+
 }
 
 

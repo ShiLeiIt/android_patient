@@ -1,7 +1,5 @@
 package cn.qiyu.magicalcrue_patient.activity;
 
-import android.Manifest;
-import android.app.Activity;
 import android.content.ContentResolver;
 import android.content.Intent;
 import android.database.Cursor;
@@ -11,13 +9,11 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
-import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.FileProvider;
 import android.text.TextUtils;
-import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
@@ -25,30 +21,21 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-
 import java.io.File;
-
 import java.io.FileOutputStream;
 import java.io.IOException;
-
+import java.io.Serializable;
 import java.util.List;
-import java.util.Locale;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import cn.addapp.pickers.entity.City;
-import cn.addapp.pickers.entity.County;
-import cn.addapp.pickers.entity.Province;
 import cn.addapp.pickers.picker.DatePicker;
-import cn.qiyu.magicalcrue_patient.BuildConfig;
 import cn.qiyu.magicalcrue_patient.MyApplication;
 import cn.qiyu.magicalcrue_patient.R;
 import cn.qiyu.magicalcrue_patient.image.ImageUpLoadPresenter;
 import cn.qiyu.magicalcrue_patient.image.ImageUpLoadView;
-import cn.qiyu.magicalcrue_patient.model.CityBean;
 import cn.qiyu.magicalcrue_patient.model.ImageUpLoadBean;
-import cn.qiyu.magicalcrue_patient.model.PatientInfor;
 import cn.qiyu.magicalcrue_patient.model.ResultModel;
 import cn.qiyu.magicalcrue_patient.model.UserInfor;
 import cn.qiyu.magicalcrue_patient.userinfor.UserInforEdtPresenter;
@@ -58,16 +45,14 @@ import cn.qiyu.magicalcrue_patient.utils.Utils;
 import cn.qiyu.magicalcrue_patient.view.SelectPicPopupWindow;
 import de.hdodenhof.circleimageview.CircleImageView;
 import okhttp3.MediaType;
-import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
-import pub.devrel.easypermissions.AfterPermissionGranted;
 import pub.devrel.easypermissions.AppSettingsDialog;
 import pub.devrel.easypermissions.EasyPermissions;
 
 /**
  * 用户信息界面
  */
-public class UserInforActivity extends FragmentActivity implements View.OnClickListener, EasyPermissions.PermissionCallbacks {
+public class MineUserInforActivity extends FragmentActivity implements View.OnClickListener, EasyPermissions.PermissionCallbacks {
 
     @Bind(R.id.iv_userinfor_back)
     ImageView mIvUserinforBack;
@@ -120,8 +105,10 @@ public class UserInforActivity extends FragmentActivity implements View.OnClickL
     private String mFileId;
     private String mAddresscode;
     private String mAddressname;
-    private Intent mIntent;
+
     private UserInfor mUserInfor;
+    private Intent mIntent;
+
 
 
     @Override
@@ -131,33 +118,31 @@ public class UserInforActivity extends FragmentActivity implements View.OnClickL
         MyApplication.getInstance().addActivity(this);
         ButterKnife.bind(this);
 
-            initTo();
+        init();
 
     }
 
-    private void initTo() {
+
+
+    private void init() {
+        mIntent = getIntent();
+        mUserInfor = (UserInfor)mIntent.getSerializableExtra("userInfor");
+        mPicPopupWindow = new SelectPicPopupWindow(MineUserInforActivity.this, this);
+
         mIvGirl.setTag(0);
-        mPicPopupWindow = new SelectPicPopupWindow(UserInforActivity.this, this);
-
+        mTvRealName.setText(mUserInfor.getUser_name());
+        mTvSelectCitiy.setText(mUserInfor.getNativeName());
+        //性别
+        String sex = mUserInfor.getSex();
+        if (sex.equals("0")) {
+            mIvBoy.setImageResource(R.drawable.check_box_select);
+            mIvGirl.setImageResource(R.drawable.check_box_normal);
+        } else {
+            mIvGirl.setImageResource(R.drawable.check_box_select);
+            mIvBoy.setImageResource(R.drawable.check_box_normal);
+        }
+        mTvSelectDate.setText(mUserInfor.getBirthday());
     }
-
-//    private void init() {
-//        mPicPopupWindow = new SelectPicPopupWindow(UserInforActivity.this, this);
-//
-//        mIvGirl.setTag(0);
-//        mTvRealName.setText(mUserInfor.getName());
-//        mTvSelectCitiy.setText(mUserInfor.getNativeName());
-//        //性别
-//        String sex = mUserInfor.getSex();
-//        if (sex.equals("0")) {
-//            mIvBoy.setImageResource(R.drawable.check_box_select);
-//            mIvGirl.setImageResource(R.drawable.check_box_normal);
-//        } else {
-//            mIvGirl.setImageResource(R.drawable.check_box_select);
-//            mIvBoy.setImageResource(R.drawable.check_box_normal);
-//        }
-//        mTvSelectDate.setText(mUserInfor.getBirthday());
-//    }
 
     private void showToast(String msg) {
         Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
@@ -172,7 +157,7 @@ public class UserInforActivity extends FragmentActivity implements View.OnClickL
                 mRequestFile = RequestBody.create(MediaType.parse("image/*"), mFileName);
                 Log.i("mFileName======", mFileName + "");
             } else {
-                Toast.makeText(UserInforActivity.this, "请选择头像", Toast.LENGTH_SHORT).show();
+                Toast.makeText(MineUserInforActivity.this, "请选择头像", Toast.LENGTH_SHORT).show();
             }
             return mRequestFile;
         }
@@ -213,7 +198,7 @@ public class UserInforActivity extends FragmentActivity implements View.OnClickL
     UserInforEdtPresenter mUserInforEdtPresenter = new UserInforEdtPresenter(new UserInforEdtView() {
         @Override
         public String getUuId() {
-            return (String) PreUtils.getParam(UserInforActivity.this, "userid", "0");
+            return (String) PreUtils.getParam(MineUserInforActivity.this, "userid", "0");
         }
 
         @Override
@@ -241,6 +226,9 @@ public class UserInforActivity extends FragmentActivity implements View.OnClickL
 
         @Override
         public String getNative_place_cd() {
+            if (null==mAddresscode) {
+                return mUserInfor.getNative_place_cd();
+            }
 
             return mAddresscode;
         }
@@ -248,11 +236,12 @@ public class UserInforActivity extends FragmentActivity implements View.OnClickL
         @Override
         public void getUserInforEdt(ResultModel rlBean) {
 //
-            PreUtils.setParam(UserInforActivity.this, "userperfect", 2);
+//            PreUtils.setParam(MineUserInforActivity.this, "userperfect", 2);
             mTvSelectCitiy.setText(getIntent().getStringExtra("addressname"));
+            finish();
 
-            Intent intent = new Intent(UserInforActivity.this, PatientDataActivity.class);
-            startActivity(intent);
+//            Intent intent = new Intent(MineUserInforActivity.this, PatientDataActivity.class);
+//            startActivity(intent);
 
 
         }
@@ -269,12 +258,12 @@ public class UserInforActivity extends FragmentActivity implements View.OnClickL
 
         @Override
         public void onViewFailure(ResultModel model) {
-            Toast.makeText(UserInforActivity.this, "" + model.getMessage(), Toast.LENGTH_SHORT).show();
+            Toast.makeText(MineUserInforActivity.this, "" + model.getMessage(), Toast.LENGTH_SHORT).show();
         }
 
         @Override
         public void onServerFailure(String e) {
-            Toast.makeText(UserInforActivity.this, "" + e, Toast.LENGTH_SHORT).show();
+            Toast.makeText(MineUserInforActivity.this, "" + e, Toast.LENGTH_SHORT).show();
         }
     });
 
@@ -283,12 +272,13 @@ public class UserInforActivity extends FragmentActivity implements View.OnClickL
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.iv_userinfor_back:
+                finish();
                 break;
             case R.id.tv_save_userinfor:
 
                 if (TextUtils.isEmpty(mTvRealName.getText().toString())
                         || mTvSelectDate.getText().toString().equals("请选择")
-                        || TextUtils.isEmpty(mAddressname)) {
+                        || TextUtils.isEmpty(mUserInfor.getNative_place_cd())) {
 //                    Toast.makeText(this, "path"+mFilePath, Toast.LENGTH_SHORT).show();
 //                    Toast.makeText(this, "mTvRealName"+mTvRealName.getText(), Toast.LENGTH_SHORT).show();
 //                    Toast.makeText(this, "mTvSelectDate"+mTvSelectDate.getText(), Toast.LENGTH_SHORT).show();
@@ -305,7 +295,7 @@ public class UserInforActivity extends FragmentActivity implements View.OnClickL
             case R.id.iv_name_arrows:
                 break;
             case R.id.tv_select_citiy:
-                startActivityForResult(new Intent(UserInforActivity.this, SeclectCityActivity.class), 0x001);
+                startActivityForResult(new Intent(MineUserInforActivity.this, SeclectCityActivity.class), 0x001);
                 break;
             case R.id.iv_girl:
                 mIvGirl.setTag(1);
@@ -395,7 +385,7 @@ public class UserInforActivity extends FragmentActivity implements View.OnClickL
                 e.printStackTrace();
             }
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                Uri uriForFile = FileProvider.getUriForFile(UserInforActivity.this, "cn.qiyu.magicalcrue_patient.fileprovider", mFileName);
+                Uri uriForFile = FileProvider.getUriForFile(MineUserInforActivity.this, "cn.qiyu.magicalcrue_patient.fileprovider", mFileName);
                 intent.putExtra(MediaStore.EXTRA_OUTPUT, uriForFile);
             } else {
                 // 将系统Camera的拍摄结果写入到文件

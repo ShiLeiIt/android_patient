@@ -1,11 +1,13 @@
 package cn.qiyu.magicalcrue_patient.model;
 
+import java.io.Serializable;
+
 /**
  * Created by ShiLei on 2017/11/27.
  * 用户基本信息
  */
 
-public class UserInfor {
+public class UserInfor implements Serializable {
 
 
     /**
@@ -40,7 +42,7 @@ public class UserInfor {
     private String photoPath;
     private int medical_record_id;
     private String user_name;
-    private int sex;
+    private String sex;
     private String modify_time;
     private String mobile;
     private String uuid;
@@ -112,11 +114,11 @@ public class UserInfor {
         this.user_name = user_name;
     }
 
-    public int getSex() {
+    public String getSex() {
         return sex;
     }
 
-    public void setSex(int sex) {
+    public void setSex(String sex) {
         this.sex = sex;
     }
 

@@ -14,9 +14,6 @@ import android.widget.Toast;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import cn.addapp.pickers.entity.City;
-import cn.addapp.pickers.entity.County;
-import cn.addapp.pickers.entity.Province;
 import cn.addapp.pickers.picker.DatePicker;
 import cn.qiyu.magicalcrue_patient.MyApplication;
 import cn.qiyu.magicalcrue_patient.R;
@@ -30,7 +27,7 @@ import cn.qiyu.magicalcrue_patient.utils.PreUtils;
 /**
  * 患者资料信息页面
  */
-public class PatientDataActivity extends AppCompatActivity {
+public class MinePatientDataActivity extends AppCompatActivity {
 
     @Bind(R.id.iv_patient_back)
     ImageView mIvPatientBack;
@@ -111,33 +108,20 @@ public class PatientDataActivity extends AppCompatActivity {
         MyApplication.getInstance().addActivity(this);
         ButterKnife.bind(this);
 
-        mIntent = getIntent();
-        //从随访页面进来
 
+        init();
 
-        if (null != mIntent.getStringExtra("visitFragment")) {
-            mPatientInfor = (PatientInfor) mIntent.getSerializableExtra("patientInfor");
-            init();
-        } else {
-            initTo();
-        }
     }
 
-    private void initTo() {
-        mIvGirl.setTag(0);
-        //mUserId 用户id
-        mUserId = (String) PreUtils.getParam(PatientDataActivity.this, "userid", "0");
-        //mUuid 是用户 uuid
-        mUuid = (String) PreUtils.getParam(PatientDataActivity.this, "uuid", "0");
-        Log.i("mUuid---", mUuid);
-        Log.i("mUserId---", mUserId);
-    }
 
     private void init() {
         mIvGirl.setTag(0);
-        mUserId = (String) PreUtils.getParam(PatientDataActivity.this, "userid", "0");
+        mIntent = getIntent();
+        //从随访页面进来
+        mPatientInfor = (PatientInfor) mIntent.getSerializableExtra("patientInfor");
+        mUserId = (String) PreUtils.getParam(MinePatientDataActivity.this, "userid", "0");
         //mUuid 是用户 uuid
-        mUuid = (String) PreUtils.getParam(PatientDataActivity.this, "uuid", "0");
+        mUuid = (String) PreUtils.getParam(MinePatientDataActivity.this, "uuid", "0");
         //患者名字
         mTvRealName.setText(mPatientInfor.getName());
         //性别
@@ -234,16 +218,13 @@ public class PatientDataActivity extends AppCompatActivity {
 
         @Override
         public void getPatientInfor(ResultModel<PatientInforSaveBean> rlBean) {
-            PreUtils.setParam(PatientDataActivity.this, "patientuuid", rlBean.getData().getUuid());
-            PreUtils.setParam(PatientDataActivity.this, "patientName", rlBean.getData().getName());
-            PreUtils.setParam(PatientDataActivity.this, "patientMobile", rlBean.getData().getMobile());
-            PreUtils.setParam(PatientDataActivity.this, "userperfect", "3");
-            if (null != mIntent.getStringExtra("visitFragment")) {
+            PreUtils.setParam(MinePatientDataActivity.this, "patientuuid", rlBean.getData().getUuid());
+            PreUtils.setParam(MinePatientDataActivity.this, "patientName", rlBean.getData().getName());
+            PreUtils.setParam(MinePatientDataActivity.this, "patientMobile", rlBean.getData().getMobile());
+            PreUtils.setParam(MinePatientDataActivity.this, "userperfect", "3");
+
                 finish();
-            } else {
-                Intent intent = new Intent(PatientDataActivity.this, MainActivity.class);
-                startActivity(intent);
-            }
+
 
             Log.i("Patientuuid------", rlBean.getData().getUuid());
             Log.i("Useruuid------", mUuid);
@@ -306,7 +287,7 @@ public class PatientDataActivity extends AppCompatActivity {
                 tvSelectDate(mTvSelectDate);
                 break;
             case R.id.iv_relation_arrows:
-                Intent intent = new Intent(PatientDataActivity.this, PatientRelationListActivity.class);
+                Intent intent = new Intent(MinePatientDataActivity.this, PatientRelationListActivity.class);
                 intent.putExtra("isreleation", "0");
                 startActivityForResult(intent, 0x002);
                 break;
@@ -315,7 +296,7 @@ public class PatientDataActivity extends AppCompatActivity {
             case R.id.tv_flowers:
                 break;
             case R.id.tv_select_citiy:
-                startActivityForResult(new Intent(PatientDataActivity.this, SeclectCityActivity.class), 0x001);
+                startActivityForResult(new Intent(MinePatientDataActivity.this, SeclectCityActivity.class), 0x001);
                 break;
             case R.id.iv_doctor_name_arrows:
                 break;
@@ -327,7 +308,7 @@ public class PatientDataActivity extends AppCompatActivity {
                 tvSelectDate(mTvFirstVisitTime);
                 break;
             case R.id.iv_diseases_arrows:
-                Intent intent1 = new Intent(PatientDataActivity.this, PatientRelationListActivity.class);
+                Intent intent1 = new Intent(MinePatientDataActivity.this, PatientRelationListActivity.class);
                 intent1.putExtra("isreleation", "1");
                 startActivityForResult(intent1, 0x003);
                 break;

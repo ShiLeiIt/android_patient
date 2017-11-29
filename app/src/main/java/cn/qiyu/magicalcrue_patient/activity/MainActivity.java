@@ -6,11 +6,13 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentActivity;
 
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Toast;
 
 import com.startsmake.mainnavigatetabbar.widget.MainNavigateTabBar;
 
+import cn.qiyu.magicalcrue_patient.MyApplication;
 import cn.qiyu.magicalcrue_patient.R;
 import cn.qiyu.magicalcrue_patient.fragment.HomePageFragment;
 import cn.qiyu.magicalcrue_patient.fragment.InformationFragment;
@@ -30,11 +32,13 @@ public class MainActivity extends FragmentActivity {
     private static final String TAG_PAGE_PERSON = "我的";
     private MainNavigateTabBar mNavigateTabBar;
     private String mUuid;
+    private long mExitTime;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        MyApplication.getInstance().addActivity(this);
 
         mNavigateTabBar = (MainNavigateTabBar) findViewById(R.id.mainTabBar);
         mNavigateTabBar.onRestoreInstanceState(savedInstanceState);
@@ -66,6 +70,25 @@ public class MainActivity extends FragmentActivity {
         super.onSaveInstanceState(outState);
         mNavigateTabBar.onSaveInstanceState(outState);
     }
+
+//    @Override
+//    public boolean onKeyDown(int keyCode, KeyEvent event) {
+//        switch (keyCode) {
+//            case KeyEvent.KEYCODE_BACK:
+//                if ((System.currentTimeMillis() - mExitTime) > 2000) {
+//                    Toast.makeText(MainActivity.this, "再按一次退出程序", Toast.LENGTH_SHORT).show();
+//                    mExitTime = System.currentTimeMillis();
+//                } else {
+//                    MyApplication.getInstance().exit();
+//                    finish();
+//                }
+//                break;
+//            default:
+//                return super.onKeyDown(keyCode, event);
+//        }
+//        return true;
+//
+//    }
 
     public void onClickPublish(View v) {
         Toast.makeText(this, "Add", Toast.LENGTH_LONG).show();
