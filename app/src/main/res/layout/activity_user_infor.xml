@@ -169,7 +169,7 @@
             android:layout_marginLeft="10dp"
             android:layout_toRightOf="@id/tv_citiy"
             android:text="@string/please_select"
-            android:textColor="@color/app_userInfor"/>
+            android:textColor="@color/app_gray"/>
 
     </RelativeLayout>
 

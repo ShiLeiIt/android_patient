@@ -130,7 +130,7 @@ public class UserInforActivity extends FragmentActivity implements View.OnClickL
 
     private void init() {
         mPicPopupWindow = new SelectPicPopupWindow(UserInforActivity.this, this);
-        mTvSelectCitiy.setText(getIntent().getStringExtra("addressname"));
+
 
 //        PreUtils.setParam(UserInforActivity.this,"uuid",mUuid);
         mIvGirl.setTag(0);
@@ -225,7 +225,7 @@ public class UserInforActivity extends FragmentActivity implements View.OnClickL
         public void getUserInforEdt(ResultModel rlBean) {
 //
             PreUtils.setParam(UserInforActivity.this, "userperfect", 2);
-
+            mTvSelectCitiy.setText(getIntent().getStringExtra("addressname"));
             Intent intent = new Intent(UserInforActivity.this, PatientDataActivity.class);
             startActivity(intent);
 //            PreUtils.setParam(UserInforActivity.this, "username", mTvRealName.getText().toString());
@@ -421,10 +421,10 @@ public class UserInforActivity extends FragmentActivity implements View.OnClickL
                     Log.i("img_path", img_path);
                     mFileName = new File(img_path);
                 } else {
+                    //修复6.0相册调用为空
                     String img_path = originalUri.getPath();
                     mFileName = new File(img_path);
                 }
-                
                 try {
                     Bitmap bitmap = MediaStore.Images.Media.getBitmap(resolver, originalUri);
                     mCivHead.setImageBitmap(bitmap);
