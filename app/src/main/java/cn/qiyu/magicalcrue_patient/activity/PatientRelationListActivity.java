@@ -42,6 +42,7 @@ public class PatientRelationListActivity extends Activity {
     private String mCancerName;
     private String mBianma;
     private int mCancerId;
+    private String mUuid;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -113,7 +114,7 @@ public class PatientRelationListActivity extends Activity {
         intent.putExtra("relationName", mRelationName);
         intent.putExtra("relationNameBianma", mBianma);
         intent.putExtra("DiseaseName", mCancerName);
-        intent.putExtra("DiseaseId", mCancerId);
+        intent.putExtra("uuid", mUuid);
         setResult(RESULT_OK,intent);
         finish();
     }
@@ -234,7 +235,7 @@ public class PatientRelationListActivity extends Activity {
                 public void onClick(View v) {
 //                    Toast.makeText(PatientRelationListActivity.this, "position"+position, Toast.LENGTH_SHORT).show();
                     mCancerName = mlist.get(position).getCancerName();
-                    mCancerId = mlist.get(position).getCancerId();
+                    mUuid = mlist.get(position).getUuid();
                     for (int i = 0; i < mlist.size(); i++) {
                         if (i == position){
                             mlist.get(i).setSelect(true);

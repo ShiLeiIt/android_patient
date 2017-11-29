@@ -26,7 +26,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
-
 import java.io.File;
 
 import java.io.FileOutputStream;
@@ -120,7 +119,6 @@ public class UserInforActivity extends FragmentActivity implements View.OnClickL
     private String mAddressname;
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -149,7 +147,7 @@ public class UserInforActivity extends FragmentActivity implements View.OnClickL
         public RequestBody getImageUpLoadFileId() {
             if (mFileName != null) {
                 mRequestFile = RequestBody.create(MediaType.parse("image/jpg"), mFileName);
-                Log.i("mFileName======", mFileName+"");
+                Log.i("mFileName======", mFileName + "");
             } else {
                 Toast.makeText(UserInforActivity.this, "请选择头像", Toast.LENGTH_SHORT).show();
             }
@@ -192,7 +190,7 @@ public class UserInforActivity extends FragmentActivity implements View.OnClickL
     UserInforEdtPresenter mUserInforEdtPresenter = new UserInforEdtPresenter(new UserInforEdtView() {
         @Override
         public String getUuId() {
-            return (String) PreUtils.getParam(UserInforActivity.this,"userid","0");
+            return (String) PreUtils.getParam(UserInforActivity.this, "userid", "0");
         }
 
         @Override
@@ -226,10 +224,10 @@ public class UserInforActivity extends FragmentActivity implements View.OnClickL
         @Override
         public void getUserInforEdt(ResultModel rlBean) {
 //
-          PreUtils.setParam(UserInforActivity.this, "userperfect", 2);
+            PreUtils.setParam(UserInforActivity.this, "userperfect", 2);
 
-                Intent intent = new Intent(UserInforActivity.this, PatientDataActivity.class);
-                startActivity(intent);
+            Intent intent = new Intent(UserInforActivity.this, PatientDataActivity.class);
+            startActivity(intent);
 //            PreUtils.setParam(UserInforActivity.this, "username", mTvRealName.getText().toString());
 //            PreUtils.setParam(UserInforActivity.this, "photopath", mFilePath);
 //            PreUtils.setParam(UserInforActivity.this, "birthday", mTvSelectDate.getText().toString());
@@ -268,9 +266,9 @@ public class UserInforActivity extends FragmentActivity implements View.OnClickL
                 break;
             case R.id.tv_save_userinfor:
 
-                if ( TextUtils.isEmpty(mTvRealName.getText().toString())
+                if (TextUtils.isEmpty(mTvRealName.getText().toString())
                         || mTvSelectDate.getText().toString().equals("请选择")
-                         ||TextUtils.isEmpty(mAddressname)) {
+                        || TextUtils.isEmpty(mAddressname)) {
 //                    Toast.makeText(this, "path"+mFilePath, Toast.LENGTH_SHORT).show();
 //                    Toast.makeText(this, "mTvRealName"+mTvRealName.getText(), Toast.LENGTH_SHORT).show();
 //                    Toast.makeText(this, "mTvSelectDate"+mTvSelectDate.getText(), Toast.LENGTH_SHORT).show();
@@ -376,7 +374,7 @@ public class UserInforActivity extends FragmentActivity implements View.OnClickL
             } catch (Exception e) {
                 e.printStackTrace();
             }
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 Uri uriForFile = FileProvider.getUriForFile(UserInforActivity.this, "cn.qiyu.magicalcrue_patient.fileprovider", mFileName);
                 intent.putExtra(MediaStore.EXTRA_OUTPUT, uriForFile);
             } else {
@@ -413,12 +411,20 @@ public class UserInforActivity extends FragmentActivity implements View.OnClickL
                 Uri originalUri = data.getData(); // 获得图片的uri
 
                 //以下是将相册uri转成file
-                String[] proj = { MediaStore.Images.Media.DATA };
-                Cursor actualimagecursor = managedQuery(originalUri,proj,null,null,null);
-                int actual_image_column_index = actualimagecursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
-                actualimagecursor.moveToFirst();
-                String img_path = actualimagecursor.getString(actual_image_column_index);
-                mFileName = new File(img_path);
+                String[] proj = {MediaStore.Images.Media.DATA};
+                Cursor actualimagecursor = resolver.query(originalUri, proj, null, null, null);
+                if (actualimagecursor != null) {
+                    actualimagecursor.moveToFirst();
+                    int actual_image_column_index = actualimagecursor.getColumnIndex(MediaStore.Images.Media.DATA);
+                    actualimagecursor.moveToFirst();
+                    String img_path = actualimagecursor.getString(actual_image_column_index);
+                    Log.i("img_path", img_path);
+                    mFileName = new File(img_path);
+                } else {
+                    String img_path = originalUri.getPath();
+                    mFileName = new File(img_path);
+                }
+                
                 try {
                     Bitmap bitmap = MediaStore.Images.Media.getBitmap(resolver, originalUri);
                     mCivHead.setImageBitmap(bitmap);
@@ -459,12 +465,11 @@ public class UserInforActivity extends FragmentActivity implements View.OnClickL
                 String[] permissions = Utils.checkPermission(this);
                 if (permissions.length == 0) {
                     //手机相册调用
-                    Intent intentFromGallery = new Intent();
+                    Intent intentFromGallery = new Intent(Intent.ACTION_PICK,null);
                     // 设置文件类型
-                    intentFromGallery.setType("image/*");
-                    intentFromGallery.setAction(Intent.ACTION_GET_CONTENT);
+                    intentFromGallery.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*");
                     startActivityForResult(intentFromGallery, REQUEST_SELECT_PHOTO);
-                }else {
+                } else {
                     //申请权限
                     ActivityCompat.requestPermissions(this, permissions, 100);
                 }

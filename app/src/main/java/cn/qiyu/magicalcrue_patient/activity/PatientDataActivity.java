@@ -100,6 +100,7 @@ public class PatientDataActivity extends AppCompatActivity {
     private String mUuid;
     private String mDiseaseId;
     private PatientInfor mPatientInfor;
+    private String mVisitFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -112,28 +113,35 @@ public class PatientDataActivity extends AppCompatActivity {
     }
 
     private void init() {
-        Intent intent=getIntent();
+        Intent intent = getIntent();
         //从随访页面进来
         mPatientInfor = (PatientInfor) intent.getSerializableExtra("patientInfor");
-        String visitFragment = intent.getStringExtra("visitFragment");
-        //患者名字
-        mTvRealName.setText(mPatientInfor.getName());
-        //性别
-        String sex = mPatientInfor.getSex();
-        if (sex.equals("0")) {
-            mIvBoy.setImageResource(R.drawable.check_box_select);
-            mIvGirl.setImageResource(R.drawable.check_box_normal);
-        } else {
-            mIvGirl.setImageResource(R.drawable.check_box_select);
-            mIvBoy.setImageResource(R.drawable.check_box_normal);
+        mVisitFragment = intent.getStringExtra("visitFragment");
+        if (mVisitFragment.equals("visitFragment")) {
+
+            //患者名字
+            mTvRealName.setText(mPatientInfor.getName());
+            //性别
+            String sex = mPatientInfor.getSex();
+            if (sex.equals("0")) {
+                mIvBoy.setImageResource(R.drawable.check_box_select);
+                mIvGirl.setImageResource(R.drawable.check_box_normal);
+            } else {
+                mIvGirl.setImageResource(R.drawable.check_box_select);
+                mIvBoy.setImageResource(R.drawable.check_box_normal);
+            }
+            //出生日期
+            mTvSelectDate.setText(mPatientInfor.getBirthday());
+            mTvEighteen.setText(mPatientInfor.getIDcardNo());
+            mTvFlowers.setText(mPatientInfor.getMobile());
+            mTvSelectCitiy.setText(mPatientInfor.getNativeName());
+
+            mTvRelationName.setText(mPatientInfor.getRelationshipName());
+//            Log.i("shipname", mPatientInfor.getRelationshipName());
+            mEtActionsName.setText(mPatientInfor.getAttending_doctor());
+            mTvFirstVisitTime.setText(mPatientInfor.getFirstVisitTime());
+            mTvDiseases.setText(mPatientInfor.getRelationship());
         }
-        //出生日期
-        mTvSelectDate.setText(mPatientInfor.getBirthday());
-
-        
-
-
-
 
         //mUserId 用户id
         mUserId = (String) PreUtils.getParam(PatientDataActivity.this, "userid", "0");
@@ -145,10 +153,11 @@ public class PatientDataActivity extends AppCompatActivity {
         mIvGirl.setTag(0);
 
     }
+
     PatientInforPresenter mPatientInforPresenter = new PatientInforPresenter(new PatientInforView() {
         @Override
         public String getUserId() {
-            Toast.makeText(PatientDataActivity.this, "usrid"+mUserId, Toast.LENGTH_SHORT).show();
+            Toast.makeText(PatientDataActivity.this, "usrid" + mUserId, Toast.LENGTH_SHORT).show();
             return mUserId;
         }
 
@@ -164,6 +173,7 @@ public class PatientDataActivity extends AppCompatActivity {
             }
             return "0";
         }
+
         @Override
         public String getBirthday() {
             return mTvSelectDate.getText().toString();
@@ -202,7 +212,7 @@ public class PatientDataActivity extends AppCompatActivity {
 
         @Override
         public String getDisease_id() {
-            return  mDiseaseId;
+            return mDiseaseId;
         }
 
         @Override
@@ -212,16 +222,20 @@ public class PatientDataActivity extends AppCompatActivity {
 
         @Override
         public void getPatientInfor(ResultModel<PatientInforSaveBean> rlBean) {
-            PreUtils.setParam(PatientDataActivity.this,"patientuuid",rlBean.getData().getUuid());
-            PreUtils.setParam(PatientDataActivity.this,"patientName",rlBean.getData().getName());
-            PreUtils.setParam(PatientDataActivity.this,"patientMobile",rlBean.getData().getMobile());
+            PreUtils.setParam(PatientDataActivity.this, "patientuuid", rlBean.getData().getUuid());
+            PreUtils.setParam(PatientDataActivity.this, "patientName", rlBean.getData().getName());
+            PreUtils.setParam(PatientDataActivity.this, "patientMobile", rlBean.getData().getMobile());
 //            Toast.makeText(PatientDataActivity.this, "跳到首页"+ rlBean.getMessage(), Toast.LENGTH_SHORT).show();
-            PreUtils.setParam(PatientDataActivity.this,"userperfect","3");
-            Intent intent = new Intent(PatientDataActivity.this, MainActivity.class);
-//            rlBean.getData().getUuid(); 患者uuid
-            startActivity(intent);
-            Log.i("Patientuuid------",rlBean.getData().getUuid()) ;
-            Log.i("Useruuid------",mUuid) ;
+            PreUtils.setParam(PatientDataActivity.this, "userperfect", "3");
+            if (mVisitFragment.equals("visitFragment")) {
+                finish();
+            } else {
+                Intent intent = new Intent(PatientDataActivity.this, MainActivity.class);
+                startActivity(intent);
+            }
+
+            Log.i("Patientuuid------", rlBean.getData().getUuid());
+            Log.i("Useruuid------", mUuid);
         }
 
         @Override
@@ -257,7 +271,6 @@ public class PatientDataActivity extends AppCompatActivity {
                 break;
             case R.id.tv_save_userinfor:
 
-
                 mPatientInforPresenter.getPatientInforCom();
 
                 break;
@@ -279,7 +292,7 @@ public class PatientDataActivity extends AppCompatActivity {
             case R.id.iv_relation_arrows:
                 Intent intent = new Intent(PatientDataActivity.this, PatientRelationListActivity.class);
                 intent.putExtra("isreleation", "0");
-                startActivityForResult(intent,0x002);
+                startActivityForResult(intent, 0x002);
                 break;
             case R.id.tv_eighteen:
                 break;
@@ -300,7 +313,7 @@ public class PatientDataActivity extends AppCompatActivity {
             case R.id.iv_diseases_arrows:
                 Intent intent1 = new Intent(PatientDataActivity.this, PatientRelationListActivity.class);
                 intent1.putExtra("isreleation", "1");
-                startActivityForResult(intent1,0x003);
+                startActivityForResult(intent1, 0x003);
                 break;
             case R.id.tv_diseases:
                 break;
@@ -326,11 +339,13 @@ public class PatientDataActivity extends AppCompatActivity {
                 //患者关系列表返回的名字
                 mRelationName = data.getStringExtra("relationName");
                 mRelationNameBianma = data.getStringExtra("relationNameBianma");
+                Log.i("patient_relation_bianma", mRelationNameBianma);
+                Log.i("patient_relation_name", mRelationName);
                 mTvRelationName.setText(mRelationName);
-            } else if (requestCode==0x003) {
+            } else if (requestCode == 0x003) {
                 //疾病种类返回的名字
                 mDiseaseName = data.getStringExtra("DiseaseName");
-                mDiseaseId = data.getStringExtra("DiseaseId");
+                mDiseaseId = data.getStringExtra("uuid");
                 mTvDiseases.setText(mDiseaseName);
             }
         }
