@@ -73,7 +73,7 @@ public class MoreWindow extends PopupWindow implements OnClickListener {
 		mBitmap = view.getDrawingCache();
 		
 		float scaleFactor = 8;//图片缩放比例；
-		float radius = 10;//模糊程度
+		float radius = 5;//模糊程度
 		int width = mBitmap.getWidth();
 		int height =  mBitmap.getHeight();
 
@@ -139,6 +139,7 @@ public class MoreWindow extends PopupWindow implements OnClickListener {
 			public void onClick(View v) {
 				if (isShowing()) {
 					closeAnimation(layout);
+
 				}
 			}
 
@@ -150,6 +151,7 @@ public class MoreWindow extends PopupWindow implements OnClickListener {
 		setFocusable(true);
 		showAtLocation(anchor, Gravity.BOTTOM, 0, statusBarHeight);
 	}
+
 
 	private void showAnimation(ViewGroup layout){
 		for(int i=0;i<layout.getChildCount();i++){

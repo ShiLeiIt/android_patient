@@ -29,7 +29,7 @@ public class MainActivity extends FragmentActivity {
     private static final String TAG_PAGE_VISIT = "随访";
     private static final String TAG_PAGE_ADD = "";
     private static final String TAG_PAGE_INFORMATION = "消息";
-    private static final String TAG_PAGE_PERSON = "我的";
+    private static final String TAG_PAGE_PERSON = "个人";
     private MainNavigateTabBar mNavigateTabBar;
     private String mUuid;
     private long mExitTime;

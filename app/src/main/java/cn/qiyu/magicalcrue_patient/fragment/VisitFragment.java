@@ -23,6 +23,7 @@ import butterknife.ButterKnife;
 import cn.qiyu.magicalcrue_patient.Api.ApiService;
 import cn.qiyu.magicalcrue_patient.R;
 import cn.qiyu.magicalcrue_patient.activity.DoctorListActivity;
+import cn.qiyu.magicalcrue_patient.activity.MyScaleActivity;
 import cn.qiyu.magicalcrue_patient.activity.PatientDataActivity;
 import cn.qiyu.magicalcrue_patient.activity.UserInforActivity;
 import cn.qiyu.magicalcrue_patient.home.HomeNumView;
@@ -59,7 +60,7 @@ public class VisitFragment extends Fragment implements View.OnClickListener {
 
     private static String TITLE_INFO[] =
             {
-                    "对话", "简历", "症状", "用药", "量表", "随访报告", "患教", "急救", "套餐",
+                    "对话", "病历", "症状", "用药", "量表", "随访报告", "患教", "急救", "套餐",
             };
     private MyGridView mGridView;
     private TextView mTv_topleft_visit;
@@ -273,7 +274,7 @@ public class VisitFragment extends Fragment implements View.OnClickListener {
                 String[] permissions = Utils.checkPermission(getActivity());
                 if (permissions.length == 0) {
 
-                    startActivity(new Intent(getActivity(), CaptureActivity.class));
+//                    startActivity(new Intent(getActivity(), CaptureActivity.class));
                 } else {
                     //申请权限
                     ActivityCompat.requestPermissions(getActivity(), permissions, 100);
@@ -332,11 +333,33 @@ public class VisitFragment extends Fragment implements View.OnClickListener {
 //                        startActivity(intent);
                                 break;
                             case 1:
-//                        Toast.makeText(getActivity(), "量表", Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(getActivity(), "对话", Toast.LENGTH_SHORT).show();
                                 break;
                             case 2:
 //                        Toast.makeText(getActivity(), "随访报告", Toast.LENGTH_SHORT).show();
                                 break;
+                            case 3:
+//                        Toast.makeText(getActivity(), "随访报告", Toast.LENGTH_SHORT).show();
+                                break;
+                            case 4:
+                                startActivity(new Intent(getActivity(), MyScaleActivity.class));
+                                Toast.makeText(getActivity(), "量表", Toast.LENGTH_SHORT).show();
+//
+                                break;
+                            case 5:
+                                Toast.makeText(getActivity(), "随访报告", Toast.LENGTH_SHORT).show();
+                                break;
+                            case 6:
+
+//                        Toast.makeText(getActivity(), "随访报告", Toast.LENGTH_SHORT).show();
+                                break;
+                            case 7:
+//                        Toast.makeText(getActivity(), "随访报告", Toast.LENGTH_SHORT).show();
+                                break;
+                            case 8:
+//                        Toast.makeText(getActivity(), "随访报告", Toast.LENGTH_SHORT).show();
+                                break;
+
                         }
                     }
                 });
@@ -387,6 +410,7 @@ public class VisitFragment extends Fragment implements View.OnClickListener {
                 startActivity(intent);
                 break;
             case R.id.tv_mere_update:
+
                 showMoreWindow(v);
                 break;
             case R.id.iv_patient_arrows:

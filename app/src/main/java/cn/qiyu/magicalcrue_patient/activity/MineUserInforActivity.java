@@ -150,7 +150,7 @@ public class MineUserInforActivity extends FragmentActivity implements View.OnCl
         @Override
         public RequestBody getImageUpLoadFileId() {
             if (mFileName != null) {
-                mRequestFile = RequestBody.create(MediaType.parse("image/*"), mFileName);
+                mRequestFile = RequestBody.create(MediaType.parse("multipart/form-data"), mFileName);
                 Log.i("mFileName======", mFileName + "");
             } else {
                 Toast.makeText(MineUserInforActivity.this, "请选择头像", Toast.LENGTH_SHORT).show();

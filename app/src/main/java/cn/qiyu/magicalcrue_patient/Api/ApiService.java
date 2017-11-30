@@ -9,6 +9,7 @@ import cn.qiyu.magicalcrue_patient.model.DoctorInfoBean;
 import cn.qiyu.magicalcrue_patient.model.DoctorTeamBean;
 import cn.qiyu.magicalcrue_patient.model.HomeNumBean;
 import cn.qiyu.magicalcrue_patient.model.ImageUpLoadBean;
+import cn.qiyu.magicalcrue_patient.model.MyScaleBean;
 import cn.qiyu.magicalcrue_patient.model.PatientInfor;
 import cn.qiyu.magicalcrue_patient.model.PatientInforSaveBean;
 import cn.qiyu.magicalcrue_patient.model.PatientRelationBean;
@@ -71,6 +72,9 @@ public interface ApiService {
     String API_USERINFOR = "patientInfo/getUserInfo";
     //获取患者基本信息
     String API_PATIENT_INFOR = "healthFile/getPatientInfo";
+    //量表
+    String API_SCALE_INFOR ="common/questionnaireList";
+
 
 
     /**
@@ -184,4 +188,15 @@ public interface ApiService {
     @POST(API_PATIENT_INFOR)
     @FormUrlEncoded
     Call<ResultModel<PatientInfor>> getPatientBasicInfor(@Field("uuid") String patientUuid);
+
+    /**
+     * 获取随访量表信息
+     */
+    @POST(API_SCALE_INFOR)
+    @FormUrlEncoded
+    Call<ResultModel<List<MyScaleBean>>> getMyScaleInfor(@Field("userID") String patientUuid,
+                                                   @Field("status") String status,
+                                                   @Field("page") String page,
+                                                   @Field("pagecount") String pagecount);
+
 }

@@ -36,8 +36,10 @@
     <string name="diseases">疾病种类</string>
     <string name="platformPlan">治疗方案</string>
     <string name="patientRelation">与患者关系</string>
-    <string name="visitManage">随访管理</string>
+    <string name="visitManage">随访</string>
     <string name="visitTeam">随访团队</string>
+    <string name="myScale">我的量表</string>
+    <string name="question">提问</string>
 
 
 </resources>

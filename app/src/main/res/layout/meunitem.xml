@@ -5,6 +5,7 @@
     >
     <RelativeLayout
         android:layout_width="94dp"
+
         android:layout_height="94dp">
     <ImageView  android:layout_width="25dp"
         android:layout_height="25dp"
