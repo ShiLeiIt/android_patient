@@ -177,7 +177,6 @@ public class RegisterActivity extends AppCompatActivity {
                 mTvSendAuthCode.setBackgroundResource(R.drawable.register_auth_code_show);
                 mTvSendAuthCode.setTextColor(getResources().getColor(R.color.app_white));
 //                mEditAuthCode.setEnabled(true);
-
                     mRegisterPresenter.RegisterLoadMesData();
                 } else {
                     Toast.makeText(RegisterActivity.this, "请输入正确的手机号码", Toast.LENGTH_SHORT).show();

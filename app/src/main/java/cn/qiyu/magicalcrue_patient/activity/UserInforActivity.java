@@ -6,6 +6,7 @@ import android.content.ContentResolver;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.Matrix;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -423,11 +424,21 @@ public class UserInforActivity extends FragmentActivity implements View.OnClickL
             } else if (requestCode == CAMERA) { //拍照
                 //照相返回的
                 Bitmap bitmap = Utils.getLoacalBitmap(mAbsolutePath);
-                mCivHead.setImageBitmap(bitmap);
+                // 得到图片的旋转角度
+                int bitmapDegree = Utils.getBitmapDegree(mAbsolutePath);
+                // 根据旋转角度，生成旋转矩阵
+                Matrix matrix = new Matrix();
+                matrix.postRotate(bitmapDegree);
+                Bitmap returnBm = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
+                mCivHead.setImageBitmap(returnBm);
+
             } else if (requestCode == REQUEST_SELECT_PHOTO) {
                 //相册返回的
                 // 外界的程序访问ContentProvider所提供数据 可以通过ContentResolver接口
                 ContentResolver resolver = getContentResolver();
+
+
+
                 Uri originalUri = data.getData(); // 获得图片的uri
 
                 //以下是将相册uri转成file
