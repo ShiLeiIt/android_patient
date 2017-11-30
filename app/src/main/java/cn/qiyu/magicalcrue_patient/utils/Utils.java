@@ -7,6 +7,7 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
 import android.media.ExifInterface;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
@@ -102,6 +103,24 @@ public class Utils {
             e.printStackTrace();
             return null;
         }
+    }
+
+    /**
+     *
+     * @param bitmap
+     * @param width
+     * @param height
+     * @return
+     */
+    public static Bitmap zoomBitmap(Bitmap bitmap, int width, int height) {
+        int w = bitmap.getWidth();
+        int h = bitmap.getHeight();
+        Matrix matrix = new Matrix();
+        float scaleWidth = ((float) width / w);
+        float scaleHeight = ((float) height / h);
+        matrix.postScale(scaleWidth, scaleHeight);
+        Bitmap newbmp = Bitmap.createBitmap(bitmap, 0, 0, w, h, matrix, true);
+        return newbmp;
     }
 
     //半透明popouwindow

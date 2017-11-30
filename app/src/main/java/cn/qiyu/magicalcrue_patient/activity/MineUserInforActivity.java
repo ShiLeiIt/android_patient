@@ -93,9 +93,7 @@ public class MineUserInforActivity extends FragmentActivity implements View.OnCl
      * 请求CAMERA权限码
      */
     public static final int REQUEST_CAMERA_PERM = 101;
-    public static final String PHOTO_PATH = "photo_path";
-
-    private FileOutputStream mFileOutputStream;
+    private static final int SCALE = 5;//照片缩小比例
     private File mFileName;
     private String mAbsolutePath;
 
@@ -110,7 +108,6 @@ public class MineUserInforActivity extends FragmentActivity implements View.OnCl
     private Intent mIntent;
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -123,10 +120,9 @@ public class MineUserInforActivity extends FragmentActivity implements View.OnCl
     }
 
 
-
     private void init() {
         mIntent = getIntent();
-        mUserInfor = (UserInfor)mIntent.getSerializableExtra("userInfor");
+        mUserInfor = (UserInfor) mIntent.getSerializableExtra("userInfor");
         mPicPopupWindow = new SelectPicPopupWindow(MineUserInforActivity.this, this);
 
         mIvGirl.setTag(0);
@@ -226,7 +222,7 @@ public class MineUserInforActivity extends FragmentActivity implements View.OnCl
 
         @Override
         public String getNative_place_cd() {
-            if (null==mAddresscode) {
+            if (null == mAddresscode) {
                 return mUserInfor.getNative_place_cd();
             }
 
@@ -436,9 +432,14 @@ public class MineUserInforActivity extends FragmentActivity implements View.OnCl
                     mFileName = new File(img_path);
                 }
                 try {
-                    //TODO:此处会造成内存溢出，目前未做处理
+                    //:此处会造成内存溢出，
                     Bitmap bitmap = MediaStore.Images.Media.getBitmap(resolver, originalUri);
-                    mCivHead.setImageBitmap(bitmap);
+                    if (bitmap != null) {
+                        Bitmap smallBitmap = Utils.zoomBitmap(bitmap, bitmap.getWidth() / SCALE, bitmap.getHeight() / SCALE);
+                        //释放原始图片占用的内存，防止out of memory异常发生
+                        bitmap.recycle();
+                        mCivHead.setImageBitmap(smallBitmap);
+                    }
                 } catch (IOException e) {
                     e.printStackTrace();
                 }

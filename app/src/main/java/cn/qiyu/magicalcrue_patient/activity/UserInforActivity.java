@@ -170,7 +170,7 @@ public class UserInforActivity extends FragmentActivity implements View.OnClickL
         @Override
         public RequestBody getImageUpLoadFileId() {
             if (mFileName != null) {
-                mRequestFile = RequestBody.create(MediaType.parse("image/*"), mFileName);
+                mRequestFile = RequestBody.create(MediaType.parse("multipart/form-data"), mFileName);
                 Log.i("mFileName======", mFileName + "");
             } else {
                 Toast.makeText(UserInforActivity.this, "请选择头像", Toast.LENGTH_SHORT).show();
@@ -251,7 +251,6 @@ public class UserInforActivity extends FragmentActivity implements View.OnClickL
 //
             PreUtils.setParam(UserInforActivity.this, "userperfect", 2);
             mTvSelectCitiy.setText(getIntent().getStringExtra("addressname"));
-
             Intent intent = new Intent(UserInforActivity.this, PatientDataActivity.class);
             startActivity(intent);
 
@@ -424,14 +423,13 @@ public class UserInforActivity extends FragmentActivity implements View.OnClickL
             } else if (requestCode == CAMERA) { //拍照
                 //照相返回的
                 Bitmap bitmap = Utils.getLoacalBitmap(mAbsolutePath);
-                // 得到图片的旋转角度
-                int bitmapDegree = Utils.getBitmapDegree(mAbsolutePath);
-                // 根据旋转角度，生成旋转矩阵
-                Matrix matrix = new Matrix();
-                matrix.postRotate(bitmapDegree);
-                Bitmap returnBm = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
-                mCivHead.setImageBitmap(returnBm);
-
+//                // 得到图片的旋转角度
+//                int bitmapDegree = Utils.getBitmapDegree(mAbsolutePath);
+//                // 根据旋转角度，生成旋转矩阵
+//                Matrix matrix = new Matrix();
+//                matrix.postRotate(bitmapDegree);
+//                Bitmap returnBm = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
+                mCivHead.setImageBitmap(bitmap);
             } else if (requestCode == REQUEST_SELECT_PHOTO) {
                 //相册返回的
                 // 外界的程序访问ContentProvider所提供数据 可以通过ContentResolver接口

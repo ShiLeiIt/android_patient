@@ -129,7 +129,7 @@ public interface ApiService {
      */
     @POST(API_SINGLE_IMAGE_UP_LOAD)
     @Multipart
-    Call<ImageUpLoadBean> getUpSingleImage(@Part("myfile\"; filename=\"test.jpg\"") RequestBody imgs);
+    Call<ImageUpLoadBean> getUpSingleImage( @Part("myfile\"; filename=\"image.jpg")RequestBody imgs);
 
     /**
      * 患者信息修改
