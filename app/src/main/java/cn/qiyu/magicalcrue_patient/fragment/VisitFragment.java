@@ -16,6 +16,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -99,6 +100,8 @@ public class VisitFragment extends Fragment implements View.OnClickListener {
         LLTextView llTvRecord = (LLTextView) view.findViewById(R.id.ll_tv_record);//病情记录
         mTv_doc_tem_name = (TextView) view.findViewById(R.id.tv_doc_team);
         mTv_patient_name = (TextView) view.findViewById(R.id.tv_patient_name);
+        RelativeLayout rl_pa_inf_vi = (RelativeLayout) view.findViewById(R.id.rl_patient_infor_visit);
+        RelativeLayout rl_doc_tem_vi = (RelativeLayout) view.findViewById(R.id.rl_doctor_team_visit);
 
         //跳医生列表
         mIv_visit_arrows = (ImageView) view.findViewById(R.id.iv_visit_arrows);
@@ -106,8 +109,8 @@ public class VisitFragment extends Fragment implements View.OnClickListener {
         mTv_mere_updata = (TextView) view.findViewById(R.id.tv_mere_update);
         //患者界面
         mIv_patientInfor = (ImageView) view.findViewById(R.id.iv_patient_arrows);
-
-
+        rl_doc_tem_vi.setOnClickListener(this);
+        rl_pa_inf_vi.setOnClickListener(this);
         mTv_mere_updata.setOnClickListener(this);
         mIv_visit_arrows.setOnClickListener(this);
         mIv_patientInfor.setOnClickListener(this);
@@ -412,8 +415,19 @@ public class VisitFragment extends Fragment implements View.OnClickListener {
                 intent.putExtras(bundle);
                 startActivity(intent);
                 break;
+            case R.id.rl_doctor_team_visit:
+                Intent intent1 = new Intent(getActivity(), DoctorListActivity.class);
+                Bundle bundle1 = new Bundle();
+                bundle1.putSerializable("list", (Serializable) mDoctorTeamList);
+                intent1.putExtras(bundle1);
+                startActivity(intent1);
+                break;
             case R.id.tv_mere_update:
                 updateCase();
+                break;
+            case R.id.rl_patient_infor_visit:
+                mNamewe = "123";
+                mMinePresenter.getPatientBasicInfor();
                 break;
             case R.id.iv_patient_arrows:
                 mNamewe = "123";

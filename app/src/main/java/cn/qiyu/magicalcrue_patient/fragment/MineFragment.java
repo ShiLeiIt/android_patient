@@ -33,7 +33,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
  * 个人信息界面
  */
 
-public class MineFragment extends Fragment {
+public class MineFragment extends Fragment implements View.OnClickListener {
 
     private ImageView mIv_patient_back;
     private ImageView mIv_case_history_back;
@@ -49,6 +49,7 @@ public class MineFragment extends Fragment {
     private String mPhotoPath;
     private String tagName = "";
     private TextView mTv_phoneNume;
+    private PatientInfor mData;
 
 
     @Nullable
@@ -56,6 +57,7 @@ public class MineFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater,
                              @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_mine, container, false);
+        RelativeLayout rl_title_mine = (RelativeLayout) view.findViewById(R.id.rl_title_mine);
 
         RelativeLayout view_patient = (RelativeLayout) view.findViewById(R.id.il_patient);
         RelativeLayout view_case = (RelativeLayout) view.findViewById(R.id.il_case_history);
@@ -64,6 +66,14 @@ public class MineFragment extends Fragment {
         RelativeLayout view_service = (RelativeLayout) view.findViewById(R.id.il_service);
         TextView tv_list_patient = (TextView) view_patient.findViewById(R.id.tv_list_item);
         ImageView iv_list_patient = (ImageView) view_patient.findViewById(R.id.iv_list_item);
+
+        view_patient.setOnClickListener(this);
+        view_case.setOnClickListener(this);
+        view_order.setOnClickListener(this);
+        view_collect.setOnClickListener(this);
+        view_service.setOnClickListener(this);
+
+
         //头像控件
         mIv_mine_icon = (CircleImageView) view.findViewById(R.id.iv_mine_icon);
 
@@ -74,7 +84,13 @@ public class MineFragment extends Fragment {
         //用户名字
         mTv_mine_username = (TextView) view.findViewById(R.id.tv_mine_username);
 
-
+        rl_title_mine.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                tagName = "1";
+                mMinePresenter.getUserBasicInfor();
+            }
+        });
         //用户界面
         mIv_arrows = (ImageView) view.findViewById(R.id.iv_arrows);
         mIv_arrows.setOnClickListener(new View.OnClickListener() {
@@ -121,7 +137,6 @@ public class MineFragment extends Fragment {
 //                PreUtils.clearUserInfomation(getActivity());
             }
         });
-
 
 
         mMinePresenter.getUserBasicInfor();
@@ -187,7 +202,7 @@ public class MineFragment extends Fragment {
             mTv_mine_username.setText(mUserName);
             String path = ApiService.GET_IMAGE_ICON + mPhotoPath;
             DisplayHelper.loadGlide(getActivity(), path, mIv_mine_icon);
-            if(tagName.equals("1")) {
+            if (tagName.equals("1")) {
                 Intent intent = new Intent(getActivity(), MineUserInforActivity.class);
                 intent.putExtra("userInfor", userInforResultModel.getData());
                 startActivity(intent);
@@ -201,11 +216,12 @@ public class MineFragment extends Fragment {
 
         @Override
         public void getPatientBasicInfor(ResultModel<PatientInfor> patientInforResultModel) {
-            mMobile=  patientInforResultModel.getData().getMobile();
-            String one=mMobile.substring(1,4);
-            String two=mMobile.substring(7,11);
-            mTv_phoneNume.setText(one+"****"+two);
-            if(tagName.equals("2")) {
+            mMobile = patientInforResultModel.getData().getMobile();
+            String one = mMobile.substring(1, 4);
+            String two = mMobile.substring(7, 11);
+
+            mTv_phoneNume.setText(one + "****" + two);
+            if (tagName.equals("2")) {
                 Intent intent = new Intent(getActivity(), MinePatientDataActivity.class);
                 intent.putExtra("patientInfor", patientInforResultModel.getData());
                 startActivity(intent);
@@ -235,4 +251,22 @@ public class MineFragment extends Fragment {
     });
 
 
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.il_patient:
+                tagName = "2";
+                mMinePresenter.getPatientBasicInfor();
+                break;
+            case R.id.il_case_history:
+                break;
+            case R.id.il_order:
+                break;
+            case R.id.il_collect:
+                break;
+            case R.id.il_service:
+                break;
+
+        }
+    }
 }
