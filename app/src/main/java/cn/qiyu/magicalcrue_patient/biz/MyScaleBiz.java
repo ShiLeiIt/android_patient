@@ -8,6 +8,7 @@ import cn.qiyu.magicalcrue_patient.model.ResultModel;
 
 public interface MyScaleBiz {
     void getMyScaleInfor(String patientUuid, String status, String page,String pagecount,MyScaleBiz.OnLoginListener onLoginListener);
+    void getScaleDetailsInfor(String paperId, String paperUserId,String userId,MyScaleBiz.OnLoginListener onLoginListener);
 
     interface OnLoginListener<T> {
 

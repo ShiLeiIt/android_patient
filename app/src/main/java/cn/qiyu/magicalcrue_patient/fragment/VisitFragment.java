@@ -1,14 +1,19 @@
 package cn.qiyu.magicalcrue_patient.fragment;
 
+import android.app.Dialog;
 import android.app.Fragment;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.SimpleAdapter;
@@ -19,6 +24,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+
 import butterknife.ButterKnife;
 import cn.qiyu.magicalcrue_patient.Api.ApiService;
 import cn.qiyu.magicalcrue_patient.R;
@@ -40,9 +46,7 @@ import cn.qiyu.magicalcrue_patient.utils.DisplayHelper;
 import cn.qiyu.magicalcrue_patient.utils.PreUtils;
 import cn.qiyu.magicalcrue_patient.utils.Utils;
 import cn.qiyu.magicalcrue_patient.view.LLTextView;
-import cn.qiyu.magicalcrue_patient.view.MoreWindow;
 import cn.qiyu.magicalcrue_patient.view.MyGridView;
-import cn.qiyu.magicalcrue_patient.zxing.activity.CaptureActivity;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
@@ -67,17 +71,16 @@ public class VisitFragment extends Fragment implements View.OnClickListener {
     private TextView mTv_topleft_inquiry;
     private TextView mTv_topleft_report;
     private TextView mTv_topleft_record;
-
     private TextView mTv_doc_tem_name;
     private TextView mTv_patient_name;
     private CircleImageView[] civ;
     private ImageView mIv_visit_arrows;
     private List<DoctorInfoBean> mDoctorTeamList;
     private TextView mTv_mere_updata;
-    private MoreWindow mMoreWindow;
     private String mErrorCode;
     private ImageView mIv_patientInfor;
-    private String mNamewe="";
+    private String mNamewe = "";
+    private Dialog mDialog;
 
 
     @Nullable
@@ -156,7 +159,7 @@ public class VisitFragment extends Fragment implements View.OnClickListener {
             Log.i("patient_user_name", patient_user_name);
             mTv_patient_name.setText(patient_user_name);
 
-            if(mNamewe.equals("123")) {
+            if (mNamewe.equals("123")) {
                 Intent intent = new Intent(getActivity(), PatientDataActivity.class);
                 intent.putExtra("patientInfor", patientInforResultModel.getData());
                 intent.putExtra("visitFragment", "1");
@@ -410,35 +413,84 @@ public class VisitFragment extends Fragment implements View.OnClickListener {
                 startActivity(intent);
                 break;
             case R.id.tv_mere_update:
-
-                showMoreWindow(v);
+                updateCase();
                 break;
             case R.id.iv_patient_arrows:
-            mNamewe="123";
+                mNamewe = "123";
                 mMinePresenter.getPatientBasicInfor();
                 break;
+            //摄像学检查
+            case R.id.tv_iconography:
+                Toast.makeText(getActivity(), "摄像学检查", Toast.LENGTH_SHORT).show();
+                break;
+            //实验室检查
+            case R.id.tv_laboratory:
+                Toast.makeText(getActivity(), "实验室检查", Toast.LENGTH_SHORT).show();
+                break;
+            //基因检测
+            case R.id.tv_gene:
+                Toast.makeText(getActivity(), "基因检测", Toast.LENGTH_SHORT).show();
+                break;
+            //症状记录
+            case R.id.tv_symptomatography:
+                Toast.makeText(getActivity(), "症状记录", Toast.LENGTH_SHORT).show();
+                break;
+            //用药方案
+            case R.id.tv_pharmacy:
+                Toast.makeText(getActivity(), "用药方案", Toast.LENGTH_SHORT).show();
+                break;
+            //出院小结
+            case R.id.tv_leave_hospital:
+                Toast.makeText(getActivity(), "出院小结", Toast.LENGTH_SHORT).show();
+                break;
+            //门诊资料
+            case R.id.tv_outpatient:
+                Toast.makeText(getActivity(), "门诊资料", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.iv_update_delete:
+                mDialog.dismiss();
+                break;
+
         }
 
     }
 
-    private void showMoreWindow(View view) {
-        if (null == mMoreWindow) {
-            mMoreWindow = new MoreWindow(getActivity());
-            mMoreWindow.init();
-        }
-        mMoreWindow.showMoreWindow(view, 100);
+    //更新病历弹出dialog
+    public void updateCase() {
 
+        View diaolgView = View.inflate(getActivity(), R.layout.dialog_update_case, null);
+        mDialog = new Dialog(getActivity(), R.style.selectorDialog);
+        mDialog.setContentView(diaolgView);
+        TextView tv_iconography = (TextView) mDialog.findViewById(R.id.tv_iconography);
+        TextView tv_laboratory = (TextView) mDialog.findViewById(R.id.tv_laboratory);
+        TextView tv_gene = (TextView) mDialog.findViewById(R.id.tv_gene);
+        TextView tv_symptomatography = (TextView) mDialog.findViewById(R.id.tv_symptomatography);
+        TextView tv_pharmacy = (TextView) mDialog.findViewById(R.id.tv_pharmacy);
+        TextView tv_leave_hospital = (TextView) mDialog.findViewById(R.id.tv_leave_hospital);
+        TextView tv_outpatient = (TextView) mDialog.findViewById(R.id.tv_outpatient);
+        ImageView iv_update_detele = (ImageView) mDialog.findViewById(R.id.iv_update_delete);
+
+        tv_iconography.setOnClickListener(this);
+        tv_laboratory.setOnClickListener(this);
+        tv_gene.setOnClickListener(this);
+        tv_symptomatography.setOnClickListener(this);
+        tv_pharmacy.setOnClickListener(this);
+        tv_leave_hospital.setOnClickListener(this);
+        tv_outpatient.setOnClickListener(this);
+        tv_iconography.setOnClickListener(this);
+        iv_update_detele.setOnClickListener(this);
+
+        mDialog.show();
+        Window dialog1Window = mDialog.getWindow();
+        WindowManager m1 = getActivity().getWindowManager();
+        DisplayMetrics dm = new DisplayMetrics();
+        m1.getDefaultDisplay().getMetrics(dm);
+        WindowManager.LayoutParams p1 = dialog1Window.getAttributes();
+        p1.height = (int) (dm.heightPixels * 1.0);
+        p1.width = (int) (dm.widthPixels * 1.0);
+        p1.alpha = 1.0f;
+        dialog1Window.setAttributes(p1);
     }
-//    @Override
-//    public void onDestroy() {
-//        super.onDestroy();
-////        注册过的界面必须反注册，可能内存泄漏
-//        EventBus.getDefault().unregister(this);
-//    }
-//    @Subscribe()
-//    public void onEventCode(String event) {
-//      String  mErrorCode = event;
-//        Log.i("mErrorCode===", event);
-//
-//    }
+
+
 }

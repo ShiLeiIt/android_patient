@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@drawable/dialog_bg1"
+              android:orientation="vertical">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="100dp"
+        android:text="请务必确切记录病情情况"
+        android:textColor="@color/app_userInfor"
+        android:textSize="16dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="5dp"
+        android:text="以便医生随时调整治疗方案"
+        android:textColor="@color/app_userInfor"
+        android:textSize="16dp"/>
+
+    <LinearLayout
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="150dp">
+
+        <TextView
+            android:id="@+id/tv_iconography"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:drawablePadding="10dp"
+            android:drawableTop="@drawable/iconography"
+            android:gravity="center_horizontal"
+            android:text="摄像学检查"
+            android:textColor="@color/app_userInfor"/>
+
+        <TextView
+            android:id="@+id/tv_laboratory"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:drawablePadding="10dp"
+            android:drawableTop="@drawable/laboratory"
+            android:gravity="center_horizontal"
+            android:text="实验室检查"
+            android:textColor="@color/app_userInfor"/>
+
+        <TextView
+            android:id="@+id/tv_gene"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:drawablePadding="10dp"
+            android:drawableTop="@drawable/gene"
+            android:gravity="center_horizontal"
+            android:text="基因检测"
+            android:textColor="@color/app_userInfor"/>
+
+        <TextView
+            android:id="@+id/tv_symptomatography"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:drawablePadding="10dp"
+            android:drawableTop="@drawable/symptomatography"
+            android:gravity="center_horizontal"
+            android:text="症状记录"
+            android:textColor="@color/app_userInfor"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp">
+
+        <TextView
+            android:id="@+id/tv_pharmacy"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:drawablePadding="10dp"
+            android:drawableTop="@drawable/pharmacy"
+            android:gravity="center_horizontal"
+            android:text="用药方案"
+            android:textColor="@color/app_userInfor"/>
+
+        <TextView
+            android:id="@+id/tv_leave_hospital"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:drawablePadding="10dp"
+            android:drawableTop="@drawable/leave_hospital"
+            android:gravity="center_horizontal"
+            android:text="出院小结"
+            android:textColor="@color/app_userInfor"/>
+
+        <TextView
+            android:id="@+id/tv_outpatient"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:drawablePadding="10dp"
+            android:drawableTop="@drawable/outpatient"
+            android:gravity="center_horizontal"
+            android:text="门诊资料"
+            android:textColor="@color/app_userInfor"/>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center_horizontal"/>
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/iv_update_delete"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="50dp"
+        android:src="@drawable/delete"/>
+
+</LinearLayout>

@@ -32,9 +32,10 @@
         <activity
             android:name=".activity.SeclectCityActivity"
             android:theme="@style/Theme.AppCompat.Dialog"/>
-        <activity android:name=".activity.UserInforActivity"
+        <activity android:name=".activity.UserInforActivity"   />
+        <activity android:name=".activity.ScaleDetailActivity"/>
 
-            />
+
 
         <provider
             android:name="android.support.v4.content.FileProvider"

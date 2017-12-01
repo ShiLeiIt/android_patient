@@ -1,10 +1,12 @@
 package cn.qiyu.magicalcrue_patient.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,8 +18,10 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import cn.qiyu.magicalcrue_patient.R;
+import cn.qiyu.magicalcrue_patient.activity.ScaleDetailActivity;
 import cn.qiyu.magicalcrue_patient.model.MyScaleBean;
 import cn.qiyu.magicalcrue_patient.model.ResultModel;
+import cn.qiyu.magicalcrue_patient.model.ScaleDetailBean;
 import cn.qiyu.magicalcrue_patient.utils.PreUtils;
 import cn.qiyu.magicalcrue_patient.visit.MyScalePresenter;
 import cn.qiyu.magicalcrue_patient.visit.MyScaleView;
@@ -32,6 +36,7 @@ public class ToFiScaleFragment extends Fragment {
     @Bind(R.id.rcl_tofi_scale)
     RecyclerView mRclTofiScale;
     private String mQuestionUUid;
+    private int mPaperUserID;
 
     @Nullable
     @Override
@@ -39,13 +44,10 @@ public class ToFiScaleFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_tofi_scale, container, false);
         ButterKnife.bind(this, view);
         mScalePresenter.VisitScaleData();
-        init();
         return view;
     }
 
-    private void init() {
-        Toast.makeText(getActivity(), "youmeiy", Toast.LENGTH_SHORT).show();
-    }
+
 
     MyScalePresenter mScalePresenter = new MyScalePresenter(new MyScaleView() {
 
@@ -71,10 +73,32 @@ public class ToFiScaleFragment extends Fragment {
 
         @Override
         public void LoadDate(ResultModel<List<MyScaleBean>> model) {
-            Toast.makeText(getActivity(), ""+model.getMessage(), Toast.LENGTH_SHORT).show();
+//            Toast.makeText(getActivity(), ""+model.getMessage(), Toast.LENGTH_SHORT).show();
             mRclTofiScale.setAdapter(new RecyclerAdpter( model.getData()));
             mRclTofiScale.setLayoutManager(new LinearLayoutManager(getActivity()));
 
+        }
+
+        @Override
+        public String paperId() {
+            return mQuestionUUid;
+        }
+
+        @Override
+        public String paperUserId() {
+            return String.valueOf(mPaperUserID) ;
+        }
+
+        @Override
+        public String userId() {
+            return (String) PreUtils.getParam(getActivity(),"userid","0");
+        }
+
+        @Override
+        public void LoadScaleDetailsData(ResultModel<ScaleDetailBean> model) {
+            Intent intent = new Intent(getActivity(), ScaleDetailActivity.class);
+            intent.putExtra("scaleDetail", model.getData());
+            startActivity(intent);
         }
 
         @Override
@@ -116,7 +140,12 @@ public class ToFiScaleFragment extends Fragment {
                 @Override
                 public void onClick(View v) {
                     mQuestionUUid = mModel.getPaperID();
-//                    scalePresenter1.questionNaireDetail();
+                    mPaperUserID = mModel.getPaperUserID();
+                    Log.i("paperId", mQuestionUUid);
+                    Log.i("paperUserID", mPaperUserID +"");
+                    Log.i("userid===", (String) PreUtils.getParam(getActivity(),"userid","0"));
+                    mScalePresenter.VisitScaleDetailsData();
+
                 }
             });
 

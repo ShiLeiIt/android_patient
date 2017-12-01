@@ -1,0 +1,49 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical"
+              android:background="@color/view_bg"
+              tools:context=".activity.ScaleDetailActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:id="@+id/ll_qrcode"
+        android:background="@color/app_white"
+        android:gravity="center_vertical"
+        >
+
+        <ImageView
+            android:id="@+id/iv_exit_mine"
+            android:layout_width="31dp"
+            android:layout_height="31dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="6dp"
+            android:src="@drawable/iv_back"/>
+
+        <TextView
+            android:id="@+id/tv_qrcode"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_gravity="center_horizontal"
+            android:text="@string/scaleDetails"
+            android:textColor="@color/app_userInfor"
+            android:textSize="18sp"/>
+        <TextView
+            android:id="@+id/tv_send_patient"
+            android:layout_width="70dp"
+            android:textColor="#44B69C"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:gravity="center"
+            android:text="提交"/>
+    </RelativeLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv_scale_detail"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+</LinearLayout>

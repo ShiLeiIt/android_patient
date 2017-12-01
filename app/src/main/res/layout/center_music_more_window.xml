@@ -3,12 +3,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_centerHorizontal="true"
-                android:background="#90FFFFFF"
+                android:background="@color/app_white"
                 android:gravity="bottom|center_horizontal" >
 
 
 
     <TextView
+        android:background="#90FFFFFF"
         android:id="@+id/more_window_local"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -96,5 +97,4 @@
         android:layout_toRightOf="@+id/more_window_collect"
         android:gravity="center_horizontal"
         android:src="@drawable/tabbar_compose_background_icon_close"/>
-
 </RelativeLayout>

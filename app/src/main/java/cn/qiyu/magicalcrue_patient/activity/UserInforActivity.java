@@ -19,6 +19,7 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.FileProvider;
 import android.text.TextUtils;
 import android.text.format.DateFormat;
+import android.util.Base64;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
@@ -27,6 +28,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
+import org.json.JSONException;
+
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 
 import java.io.FileOutputStream;
@@ -64,6 +68,7 @@ import okhttp3.RequestBody;
 import pub.devrel.easypermissions.AfterPermissionGranted;
 import pub.devrel.easypermissions.AppSettingsDialog;
 import pub.devrel.easypermissions.EasyPermissions;
+import retrofit2.http.HTTP;
 
 /**
  * 用户信息界面
@@ -312,7 +317,7 @@ public class UserInforActivity extends FragmentActivity implements View.OnClickL
                 mIvBoy.setTag(0);
                 mIvGirl.setImageResource(R.drawable.check_box_select);
                 mIvBoy.setImageResource(R.drawable.check_box_normal);
-                Toast.makeText(this, "" + ((Integer) (mIvGirl.getTag())), Toast.LENGTH_SHORT).show();
+//                Toast.makeText(this, "" + ((Integer) (mIvGirl.getTag())), Toast.LENGTH_SHORT).show();
                 break;
             case R.id.iv_boy:
                 mIvBoy.setTag(1);
@@ -525,4 +530,97 @@ public class UserInforActivity extends FragmentActivity implements View.OnClickL
                     .show();
         }
     }
+
+//    // 上传文件到服务器
+//    protected void upload(Bitmap bitmap) throws JSONException {
+//        String uriAPI = GlobalContants.URL_PHOTO;
+//		/* 建立HTTP Post连线 */
+//        HttpPost httpRequest = new HttpPost(uriAPI);
+//        List<NameValuePair> params = new ArrayList<NameValuePair>();
+//        params.add(new BasicNameValuePair("sign", GlobalContants.UP_SIGN));
+//        ByteArrayOutputStream out = new ByteArrayOutputStream();
+//        bitmap.compress(Bitmap.CompressFormat.JPEG, 50, out);
+//        try {
+//            out.flush();
+//            out.close();
+//            byte[] imgBytes = out.toByteArray();
+//            params.add(new BasicNameValuePair("file", Base64.encodeToString(
+//                    imgBytes, Base64.DEFAULT)));
+//            // params.add(new BasicNameValuePair("file",new String(imgBytes));
+//            params.add(new BasicNameValuePair("type", "jpg"));
+//            // 发出HTTP request
+//            httpRequest.setEntity(new UrlEncodedFormEntity(params, HTTP.UTF_8));
+//            // 取得HTTP response
+//            HttpResponse httpResponse = new DefaultHttpClient()
+//                    .execute(httpRequest);
+//            // 若状态码为200 ok
+//            if (httpResponse.getStatusLine().getStatusCode() == 200) {
+//                // 上传成功的地址
+//                final String imageUrl = EntityUtils.toString(httpResponse
+//                        .getEntity());
+//                runOnUiThread(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        Toast.makeText(getApplicationContext(), "图片设置成功",
+//                                Toast.LENGTH_SHORT).show();
+//                    }
+//                });
+//                // 将图片的url地址上传到服务器
+//                HttpUtils utils = new HttpUtils();
+//                JSONObject jsonObj = new JSONObject();
+//                jsonObj.put("guid", ParseUserInfoUtils
+//                        .getGuidFromLocal(getApplicationContext()));
+//                jsonObj.put("imgUrl", imageUrl);
+//                UrlPostEntity entity = new UrlPostEntity(
+//                        GlobalContants.URL_MEMBER,
+//                        GlobalContants.URL_MEMBER_SET_HEADIMG,
+//                        jsonObj.toString(), getApplicationContext());
+//                utils.send(HttpMethod.POST, entity.getUrl(),
+//                        new RequestCallBack<String>() {
+//                            @Override
+//                            public void onFailure(HttpException arg0,
+//                                                  String arg1) {
+//                            }
+//
+//                            @Override
+//                            public void onSuccess(
+//                                    ResponseInfo<String> responseInfo) {
+//                                Gson gson = new Gson();
+//                                try {
+//                                    String json = DesUtils
+//                                            .decrypt(responseInfo.result);
+//
+//                                    JsonResultEntity jre = gson.fromJson(json,
+//                                            JsonResultEntity.class);
+//                                    // 根据服务器返回的结果,提示用户
+//                                    if (jre.getS().equals(
+//                                            GlobalContants.URL_SUCCESS_CODE)
+//                                            && Boolean.parseBoolean(jre.getD())) {
+//                                        PreUtils.setParam(
+//                                                getApplicationContext(),
+//                                                GlobalContants.PHOTO_PATH_NET,
+//                                                imageUrl);
+//                                    }
+//                                } catch (Exception e) {
+//                                    e.printStackTrace();
+//                                }
+//                            }
+//                        });
+//            } else {
+//                runOnUiThread(new Runnable() {
+//                    @Override
+//                    public void run() {
+////                        Toast.makeText(getApplicationContext(),
+////                                R.string.wangluotixin, Toast.LENGTH_SHORT)
+////                                .show();
+//                    }
+//                });
+//            }
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//
+//
+//    }
+
 }

@@ -39,6 +39,7 @@
     <string name="visitManage">随访</string>
     <string name="visitTeam">随访团队</string>
     <string name="myScale">我的量表</string>
+    <string name="scaleDetails">量表详情</string>
     <string name="question">提问</string>
 
 

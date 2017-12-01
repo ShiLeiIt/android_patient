@@ -171,7 +171,7 @@ public class HomePageFragment extends Fragment implements View.OnClickListener, 
         if (split == null || split.length < 1) {
             return;
         }
-        if (doctorUuidUrl.contains("http://www.mircalcure.com/index.html?doctorId")) {
+        if (doctorUuidUrl.contains("http://www.mircalcure.com/index.html?doctor")) {
             mDoctorUuid = split[1].trim();
             homePresenter.getDoctorQRcode();
             Toast.makeText(getActivity(), "医生随访二维码，等待医生审核", Toast.LENGTH_SHORT).show();

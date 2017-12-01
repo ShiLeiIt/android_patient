@@ -16,6 +16,7 @@ import cn.qiyu.magicalcrue_patient.model.PatientRelationBean;
 import cn.qiyu.magicalcrue_patient.model.RegisterLoginBean;
 import cn.qiyu.magicalcrue_patient.model.RegisterLoginVerBean;
 import cn.qiyu.magicalcrue_patient.model.ResultModel;
+import cn.qiyu.magicalcrue_patient.model.ScaleDetailBean;
 import cn.qiyu.magicalcrue_patient.model.UserInfor;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
@@ -65,16 +66,17 @@ public interface ApiService {
     //扫描医生
     String API_DOCTOR_QRCODE = "healthFile/bindingFollowDoctor";
     //医生团队的成员
-    String API_DOCTOR_TEAM ="doctorinfoTeam/getDoctorTeamUserListByPatientId";
+    String API_DOCTOR_TEAM = "doctorinfoTeam/getDoctorTeamUserListByPatientId";
     //头像加载
-    String GET_IMAGE_ICON="http://upload.mircalcure.com/tumourfile/sysfile/getImage/3/";
+    String GET_IMAGE_ICON = "http://upload.mircalcure.com/tumourfile/sysfile/getImage/3/";
     //获取用户基本信息
     String API_USERINFOR = "patientInfo/getUserInfo";
     //获取患者基本信息
     String API_PATIENT_INFOR = "healthFile/getPatientInfo";
     //量表
-    String API_SCALE_INFOR ="common/questionnaireList";
-
+    String API_SCALE_INFOR = "common/questionnaireList";
+    //量表详情
+    String API_SCALE_DETAILS = "common/questionnaireDetail";
 
 
     /**
@@ -133,7 +135,7 @@ public interface ApiService {
      */
     @POST(API_SINGLE_IMAGE_UP_LOAD)
     @Multipart
-    Call<ImageUpLoadBean> getUpSingleImage( @Part("myfile\"; filename=\"image.jpg")RequestBody imgs);
+    Call<ImageUpLoadBean> getUpSingleImage(@Part("myfile\"; filename=\"image.jpg") RequestBody imgs);
 
     /**
      * 患者信息修改
@@ -154,20 +156,20 @@ public interface ApiService {
                                                             @Field("appFirstVisitTime") String appFirstVisitTime);
 
 
-
     /**
      * 疾病种类
      */
     @POST(API_DISEASES)
     @FormUrlEncoded
     Call<ResultModel<List<DiseasesBean>>> getDiseasesList(@Field("") String post);
+
     /**
      * 扫描医生二维码
      */
 
     @POST(API_DOCTOR_QRCODE)
     @FormUrlEncoded
-    Call<ResultModel> getDoctorQRcode(@Field("uuid") String patientUuid,@Field("follow_doctor") String DoctorUuid);
+    Call<ResultModel> getDoctorQRcode(@Field("uuid") String patientUuid, @Field("follow_doctor") String DoctorUuid);
 
     /**
      * 医生团队
@@ -175,6 +177,7 @@ public interface ApiService {
     @POST(API_DOCTOR_TEAM)
     @FormUrlEncoded
     Call<ResultModel<DoctorTeamBean>> getDoctorTeamInfor(@Field("patientId") String patientId);
+
     /**
      * 获取用户基本信息
      */
@@ -195,8 +198,19 @@ public interface ApiService {
     @POST(API_SCALE_INFOR)
     @FormUrlEncoded
     Call<ResultModel<List<MyScaleBean>>> getMyScaleInfor(@Field("userID") String patientUuid,
-                                                   @Field("status") String status,
-                                                   @Field("page") String page,
-                                                   @Field("pagecount") String pagecount);
+                                                         @Field("status") String status,
+                                                         @Field("page") String page,
+                                                         @Field("pagecount") String pagecount);
+
+
+    /**
+     * 获取随访量表详情
+     */
+    @POST(API_SCALE_DETAILS)
+    @FormUrlEncoded
+    Call<ResultModel<ScaleDetailBean>> getScaleDetilsInfor(@Field("paperID") String paperId,
+                                                           @Field("paperUserID") String paperUserId,
+                                                           @Field("userID") String userId
+    );
 
 }

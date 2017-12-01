@@ -298,7 +298,7 @@ public class MineUserInforActivity extends FragmentActivity implements View.OnCl
                 mIvBoy.setTag(0);
                 mIvGirl.setImageResource(R.drawable.check_box_select);
                 mIvBoy.setImageResource(R.drawable.check_box_normal);
-                Toast.makeText(this, "" + ((Integer) (mIvGirl.getTag())), Toast.LENGTH_SHORT).show();
+//                Toast.makeText(this, "" + ((Integer) (mIvGirl.getTag())), Toast.LENGTH_SHORT).show();
                 break;
             case R.id.iv_boy:
                 mIvBoy.setTag(1);
