@@ -12,12 +12,13 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import cn.qiyu.magicalcrue_patient.R;
 import cn.qiyu.magicalcrue_patient.adapter.TabAdapter;
+import cn.qiyu.magicalcrue_patient.base.BaseActivity;
 
 /**
  * Created by ShiLei on 2017/11/30.
  */
 
-public class MyScaleActivity extends FragmentActivity {
+public class MyScaleActivity extends BaseActivity {
     @Bind(R.id.tl_container)
     TabLayout tlContainer;
     @Bind(R.id.vp_container)
@@ -65,7 +66,6 @@ public class MyScaleActivity extends FragmentActivity {
             }
             @Override
             public void onTabUnselected(TabLayout.Tab tab) {
-
             }
             @Override
             public void onTabReselected(TabLayout.Tab tab) {

@@ -13,6 +13,7 @@ import okhttp3.RequestBody;
  */
 
 public interface ImageUpLoadView extends ImageUpLoadBaseView {
+
     RequestBody getImageUpLoadFileId();
 
     void getImageUpLoad(ImageUpLoadBean imageUpLoadBean);

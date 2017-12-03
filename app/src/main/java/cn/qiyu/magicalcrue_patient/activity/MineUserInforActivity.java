@@ -33,6 +33,7 @@ import butterknife.OnClick;
 import cn.addapp.pickers.picker.DatePicker;
 import cn.qiyu.magicalcrue_patient.MyApplication;
 import cn.qiyu.magicalcrue_patient.R;
+import cn.qiyu.magicalcrue_patient.base.BaseActivity;
 import cn.qiyu.magicalcrue_patient.image.ImageUpLoadPresenter;
 import cn.qiyu.magicalcrue_patient.image.ImageUpLoadView;
 import cn.qiyu.magicalcrue_patient.model.ImageUpLoadBean;
@@ -52,7 +53,7 @@ import pub.devrel.easypermissions.EasyPermissions;
 /**
  * 用户信息界面
  */
-public class MineUserInforActivity extends FragmentActivity implements View.OnClickListener, EasyPermissions.PermissionCallbacks {
+public class MineUserInforActivity extends BaseActivity implements View.OnClickListener, EasyPermissions.PermissionCallbacks {
 
     @Bind(R.id.iv_userinfor_back)
     ImageView mIvUserinforBack;

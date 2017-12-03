@@ -20,6 +20,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.qiyu.magicalcrue_patient.MyApplication;
 import cn.qiyu.magicalcrue_patient.R;
+import cn.qiyu.magicalcrue_patient.base.BaseActivity;
 import cn.qiyu.magicalcrue_patient.home.PatientInfoRelationPresenter;
 import cn.qiyu.magicalcrue_patient.home.PatientRelationInfoView;
 import cn.qiyu.magicalcrue_patient.model.DiseasesBean;
@@ -32,7 +33,7 @@ import cn.qiyu.magicalcrue_patient.view.RecycleViewDivider;
  * 患者关系列表页面
  */
 
-public class PatientRelationListActivity extends Activity {
+public class PatientRelationListActivity extends BaseActivity {
 
     @Bind(R.id.iv_patient_relation_back)
     ImageView mIvBack;

@@ -18,6 +18,15 @@ public class ScaleSelectBean  implements Serializable{
     private String optionsTag;
     private String optionID;
     private String content;
+    private boolean isChecked;
+
+    public boolean isChecked() {
+        return isChecked;
+    }
+
+    public void setChecked(boolean checked) {
+        isChecked = checked;
+    }
 
     public String getOptionsTag() {
         return optionsTag;

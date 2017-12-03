@@ -9,6 +9,7 @@ import cn.qiyu.magicalcrue_patient.model.ResultModel;
  */
 
 public interface PatientInforView extends BaseView {
+    String getPatientUuid();
     String getUserId();
     String getPatientName();
     String getSex();

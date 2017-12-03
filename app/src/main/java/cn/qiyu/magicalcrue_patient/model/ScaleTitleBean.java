@@ -48,6 +48,16 @@ public class ScaleTitleBean  implements Serializable{
     private List<?> answerOptionIOS;
     private List<ScaleSelectBean> optionsList;
 
+    private String result;
+
+    public String getResult() {
+        return result;
+    }
+
+    public void setResult(String result) {
+        this.result = result;
+    }
+
     public String getPkID() {
         return pkID;
     }

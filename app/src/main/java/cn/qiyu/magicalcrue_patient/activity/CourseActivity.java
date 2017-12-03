@@ -9,12 +9,13 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.qiyu.magicalcrue_patient.MyApplication;
 import cn.qiyu.magicalcrue_patient.R;
+import cn.qiyu.magicalcrue_patient.base.BaseActivity;
 
 /**
  * 患教课程
  */
 
-public class CourseActivity extends AppCompatActivity {
+public class CourseActivity extends BaseActivity {
 
     @Bind(R.id.iv_course_back)
     ImageView mIvCourseBack;

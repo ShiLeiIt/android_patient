@@ -1,6 +1,7 @@
 package cn.qiyu.magicalcrue_patient.activity;
 
 import android.content.Intent;
+import android.icu.math.BigDecimal;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
@@ -19,6 +20,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.qiyu.magicalcrue_patient.MyApplication;
 import cn.qiyu.magicalcrue_patient.R;
+import cn.qiyu.magicalcrue_patient.base.BaseActivity;
 import cn.qiyu.magicalcrue_patient.model.RegisterLoginBean;
 import cn.qiyu.magicalcrue_patient.model.ResultModel;
 import cn.qiyu.magicalcrue_patient.register_login.RegisterPresenter;
@@ -29,7 +31,7 @@ import cn.qiyu.magicalcrue_patient.utils.Utils;
 /**
  * 注册登录页面
  */
-public class RegisterActivity extends AppCompatActivity {
+public class RegisterActivity extends BaseActivity {
 
     @Bind(R.id.iv_register_del)
     ImageView mIvRegisterDel;
@@ -61,9 +63,8 @@ public class RegisterActivity extends AppCompatActivity {
         String uuid = (String) PreUtils.getParam(RegisterActivity.this, "uuid", "0");
 //        Log.i("userperfect-=", (String) PreUtils.getParam(RegisterActivity.this, "userperfect", "0"));
     if(null!=uuid){
-        if (!uuid.equals("0")) {
-            switch ((String) PreUtils.getParam(RegisterActivity.this, "userperfect", "0")) {
-
+        if (!TextUtils.isEmpty(uuid) && !uuid.equals("0")) {
+            switch (String.valueOf(PreUtils.getParam(RegisterActivity.this, "userperfect", 0))) {
                 case "1":
                     Intent intentUser = new Intent(RegisterActivity.this, UserInforActivity.class);
                     startActivity(intentUser);
@@ -75,6 +76,7 @@ public class RegisterActivity extends AppCompatActivity {
                 default:
                     Intent intentMain = new Intent(RegisterActivity.this, MainActivity.class);
                     startActivity(intentMain);
+                    finish();
                     break;
             }
         }
@@ -118,26 +120,32 @@ public class RegisterActivity extends AppCompatActivity {
                     PreUtils.setParam(RegisterActivity.this, "userid", String.valueOf(model.getData().getId()));
                     PreUtils.setParam(RegisterActivity.this, "token", model.getData().getToken());
 //                        Toast.makeText(RegisterActivity.this, "用户信息界面", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(RegisterActivity.this, "注册成功", Toast.LENGTH_SHORT).show();
                     Intent intentUser = new Intent(RegisterActivity.this, UserInforActivity.class);
                     startActivity(intentUser);
+
                 } else if (userPerfect == 2) {
                     PreUtils.setParam(RegisterActivity.this, "uuid", model.getData().getUuid());
                     PreUtils.setParam(RegisterActivity.this, "userperfect", model.getData().getUserPerfect());
                     PreUtils.setParam(RegisterActivity.this, "token", model.getData().getToken());
                     PreUtils.setParam(RegisterActivity.this, "userid", String.valueOf(model.getData().getId()));
 //                        Toast.makeText(RegisterActivity.this, "患者信息界面", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(RegisterActivity.this, "注册成功", Toast.LENGTH_SHORT).show();
                     Intent intentPatient = new Intent(RegisterActivity.this, PatientDataActivity.class);
                     startActivity(intentPatient);
 
                 } else {
                     PreUtils.setParam(RegisterActivity.this, "userid", String.valueOf(model.getData().getId()));
-                    PreUtils.setParam(RegisterActivity.this, "userperfect", "0");
+                    PreUtils.setParam(RegisterActivity.this, "userperfect", 0);
                     PreUtils.setParam(RegisterActivity.this, "uuid", model.getData().getUuid());
                     PreUtils.setParam(RegisterActivity.this, "patientuuid", model.getData().getMedical_record_uuid());
                     PreUtils.setParam(RegisterActivity.this, "token", model.getData().getToken());
 //                    PreUtils.setParam(RegisterActivity.this, "userid", String.valueOf(model.getData().getId()));
+
+                    Toast.makeText(RegisterActivity.this, "注册成功", Toast.LENGTH_SHORT).show();
                     Intent intentPatient = new Intent(RegisterActivity.this, MainActivity.class);
                     startActivity(intentPatient);
+                    finish();
                 }
 
             }
@@ -201,12 +209,7 @@ public class RegisterActivity extends AppCompatActivity {
                 } else if (tag) {
                     Toast.makeText(this, "请同意注册协议", Toast.LENGTH_SHORT).show();
                 } else {
-                    Toast.makeText(this, "注册成功", Toast.LENGTH_SHORT).show();
-
                         mRegisterPresenter.RegisterLogin();
-
-
-
                 }
                 break;
         }

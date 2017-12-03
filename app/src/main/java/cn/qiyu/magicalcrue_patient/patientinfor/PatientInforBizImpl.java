@@ -17,8 +17,8 @@ public class PatientInforBizImpl extends BaseBiz implements PatientInforBiz {
 
 
     @Override
-    public void getPatientInfor(String userId, String name, String sex, String birthday, String idCardNO, final String mobile, String native_place_cd, String attending_doctor, String firstVisitTime, String relationship, String disease_id, String appFirstVisitTime, final OnLoginListener onLoginListener) {
-        mApiService.getPatientInfor(userId,
+    public void getPatientInfor(String patientUuid, String userId, String name, String sex, String birthday, String idCardNO, final String mobile, String native_place_cd, String attending_doctor, String firstVisitTime, String relationship, String disease_id, String appFirstVisitTime, final OnLoginListener onLoginListener) {
+        mApiService.getPatientInfor(patientUuid, userId,
                 name,
                 sex,
                 birthday,
@@ -41,7 +41,7 @@ public class PatientInforBizImpl extends BaseBiz implements PatientInforBiz {
 
             @Override
             public void onFailure(Call<ResultModel<PatientInforSaveBean>> call, Throwable throwable) {
-                    onLoginListener.onFailure(throwable.getMessage());
+                onLoginListener.onFailure(throwable.getMessage());
             }
         });
 

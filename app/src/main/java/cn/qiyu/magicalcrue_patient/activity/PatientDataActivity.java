@@ -20,17 +20,19 @@ import cn.addapp.pickers.entity.Province;
 import cn.addapp.pickers.picker.DatePicker;
 import cn.qiyu.magicalcrue_patient.MyApplication;
 import cn.qiyu.magicalcrue_patient.R;
+import cn.qiyu.magicalcrue_patient.base.BaseActivity;
 import cn.qiyu.magicalcrue_patient.model.PatientInfor;
 import cn.qiyu.magicalcrue_patient.model.PatientInforSaveBean;
 import cn.qiyu.magicalcrue_patient.model.ResultModel;
 import cn.qiyu.magicalcrue_patient.patientinfor.PatientInforPresenter;
 import cn.qiyu.magicalcrue_patient.patientinfor.PatientInforView;
+import cn.qiyu.magicalcrue_patient.utils.ActivityManagerTool;
 import cn.qiyu.magicalcrue_patient.utils.PreUtils;
 
 /**
  * 患者资料信息页面
  */
-public class PatientDataActivity extends AppCompatActivity {
+public class PatientDataActivity extends BaseActivity {
 
     @Bind(R.id.iv_patient_back)
     ImageView mIvPatientBack;
@@ -114,7 +116,6 @@ public class PatientDataActivity extends AppCompatActivity {
         mIntent = getIntent();
         //从随访页面进来
 
-
         if (null != mIntent.getStringExtra("visitFragment")) {
             mPatientInfor = (PatientInfor) mIntent.getSerializableExtra("patientInfor");
             init();
@@ -163,6 +164,16 @@ public class PatientDataActivity extends AppCompatActivity {
 
 
     PatientInforPresenter mPatientInforPresenter = new PatientInforPresenter(new PatientInforView() {
+        @Override
+        public String getPatientUuid() {
+            if (null != mIntent.getStringExtra("visitFragment")) {
+                Log.i("patientuuid==", (String) PreUtils.getParam(PatientDataActivity.this, "patientuuid", ""));
+                return (String) PreUtils.getParam(PatientDataActivity.this, "patientuuid", "");
+
+            }
+            return "";
+        }
+
         @Override
         public String getUserId() {
 //            Toast.makeText(PatientDataActivity.this, "usrid" + mUserId, Toast.LENGTH_SHORT).show();
@@ -237,12 +248,14 @@ public class PatientDataActivity extends AppCompatActivity {
             PreUtils.setParam(PatientDataActivity.this, "patientuuid", rlBean.getData().getUuid());
             PreUtils.setParam(PatientDataActivity.this, "patientName", rlBean.getData().getName());
             PreUtils.setParam(PatientDataActivity.this, "patientMobile", rlBean.getData().getMobile());
-            PreUtils.setParam(PatientDataActivity.this, "userperfect", "3");
+            PreUtils.setParam(PatientDataActivity.this, "userperfect", 3);
             if (null != mIntent.getStringExtra("visitFragment")) {
                 finish();
             } else {
+                ActivityManagerTool.getActivityManager().finish(PatientDataActivity.this);
                 Intent intent = new Intent(PatientDataActivity.this, MainActivity.class);
                 startActivity(intent);
+                finish();
             }
 
             Log.i("Patientuuid------", rlBean.getData().getUuid());

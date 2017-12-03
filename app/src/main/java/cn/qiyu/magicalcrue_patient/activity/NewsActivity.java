@@ -11,13 +11,14 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.qiyu.magicalcrue_patient.R;
+import cn.qiyu.magicalcrue_patient.base.BaseActivity;
 
 /**
  * Created by ShiLei on 2017/11/30.
  * 随访中对话
  */
 
-public class NewsActivity extends Activity {
+public class NewsActivity extends BaseActivity {
     @Bind(R.id.iv_userinfor_back)
     ImageView mIvUserinforBack;
     @Bind(R.id.tv_question)

@@ -59,6 +59,7 @@ public interface ApiService {
     //单张图片
     String API_SINGLE_IMAGE_UP_LOAD = "sysfile/singleUpload";
 
+
     //患者基本信息修改
     String API_PATIENT_INFOR_EDITOR = "healthFile/medicalRecordInfo";
     //疾病种类列表
@@ -135,14 +136,15 @@ public interface ApiService {
      */
     @POST(API_SINGLE_IMAGE_UP_LOAD)
     @Multipart
-    Call<ImageUpLoadBean> getUpSingleImage(@Part("myfile\"; filename=\"image.jpg") RequestBody imgs);
+    Call<ImageUpLoadBean> getUpSingleImage(@Part("myfile\"; filename=\"text.jpg") RequestBody imgs);
 
     /**
      * 患者信息修改
      */
     @POST(API_PATIENT_INFOR_EDITOR)
     @FormUrlEncoded
-    Call<ResultModel<PatientInforSaveBean>> getPatientInfor(@Field("userId") String userId,
+    Call<ResultModel<PatientInforSaveBean>> getPatientInfor(@Field("uuid") String patientUuid,
+                                                            @Field("userId") String userId,
                                                             @Field("name") String name,
                                                             @Field("sex") String sex,
                                                             @Field("birthday") String birthday,

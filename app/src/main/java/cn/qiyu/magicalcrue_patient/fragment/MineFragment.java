@@ -24,6 +24,7 @@ import cn.qiyu.magicalcrue_patient.mine.MinePresenter;
 import cn.qiyu.magicalcrue_patient.model.PatientInfor;
 import cn.qiyu.magicalcrue_patient.model.ResultModel;
 import cn.qiyu.magicalcrue_patient.model.UserInfor;
+import cn.qiyu.magicalcrue_patient.utils.ActivityManagerTool;
 import cn.qiyu.magicalcrue_patient.utils.DisplayHelper;
 import cn.qiyu.magicalcrue_patient.utils.PreUtils;
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -135,6 +136,9 @@ public class MineFragment extends Fragment implements View.OnClickListener {
             @Override
             public void onClick(View v) {
 //                PreUtils.clearUserInfomation(getActivity());
+                PreUtils.setParam(getActivity(), "userperfect", 0);
+                PreUtils.setParam(getActivity(), "uuid", "");
+                ActivityManagerTool.getActivityManager().exit();
             }
         });
 

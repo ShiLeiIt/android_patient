@@ -19,7 +19,7 @@ public class PatientInforPresenter {
         mPatientInfoView = patientInfoView;
     }
     public  void getPatientInforCom(){
-        mPatientInforBiz.getPatientInfor(mPatientInfoView.getUserId(),
+        mPatientInforBiz.getPatientInfor(mPatientInfoView.getPatientUuid(),mPatientInfoView.getUserId(),
                 mPatientInfoView.getPatientName(),
                 mPatientInfoView.getSex(),
                 mPatientInfoView.getBirthday(),

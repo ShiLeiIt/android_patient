@@ -292,7 +292,7 @@ public class VisitFragment extends Fragment implements View.OnClickListener {
                 Toast.makeText(getActivity(), "您已经加入随访了，请等待您的主治医生审核", Toast.LENGTH_SHORT).show();
 
             } else {
-                String userperfect = (String) PreUtils.getParam(getActivity(), "userperfect", "0");
+                String userperfect = String.valueOf(PreUtils.getParam(getActivity(), "userperfect", 0));
                 if (userperfect.equals("1")) {
                     startActivity(new Intent(getActivity(), UserInforActivity.class));
 

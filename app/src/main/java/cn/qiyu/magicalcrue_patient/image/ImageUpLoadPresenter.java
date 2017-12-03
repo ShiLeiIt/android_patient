@@ -22,19 +22,23 @@ public class ImageUpLoadPresenter {
         mImageUpLoadView = imageUpLoadView;
     }
    public  void getImage(){
+       mImageUpLoadView.showProgress();
        mImageUpLoadBiz.getImageUpLoad(mImageUpLoadView.getImageUpLoadFileId(), new ImageUpLoadBiz.OnLoginListener() {
            @Override
            public void onResponse(ImageUpLoadBean model) {
                if (model.getResult() == 0) {
                    mImageUpLoadView.getImageUpLoad(model);
+                   mImageUpLoadView.hideProgress();
                } else {
                    mImageUpLoadView.onViewFailure(model);
+                   mImageUpLoadView.hideProgress();
                }
            }
 
            @Override
            public void onFailure(String e) {
                 mImageUpLoadView.onServerFailure(e);
+               mImageUpLoadView.hideProgress();
            }
        });
    }

@@ -36,8 +36,10 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -49,6 +51,7 @@ import cn.addapp.pickers.picker.DatePicker;
 import cn.qiyu.magicalcrue_patient.BuildConfig;
 import cn.qiyu.magicalcrue_patient.MyApplication;
 import cn.qiyu.magicalcrue_patient.R;
+import cn.qiyu.magicalcrue_patient.base.BaseActivity;
 import cn.qiyu.magicalcrue_patient.image.ImageUpLoadPresenter;
 import cn.qiyu.magicalcrue_patient.image.ImageUpLoadView;
 import cn.qiyu.magicalcrue_patient.model.CityBean;
@@ -60,10 +63,12 @@ import cn.qiyu.magicalcrue_patient.userinfor.UserInforEdtPresenter;
 import cn.qiyu.magicalcrue_patient.userinfor.UserInforEdtView;
 import cn.qiyu.magicalcrue_patient.utils.PreUtils;
 import cn.qiyu.magicalcrue_patient.utils.Utils;
+import cn.qiyu.magicalcrue_patient.view.LoadingDialog;
 import cn.qiyu.magicalcrue_patient.view.SelectPicPopupWindow;
 import de.hdodenhof.circleimageview.CircleImageView;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
+import okhttp3.Request;
 import okhttp3.RequestBody;
 import pub.devrel.easypermissions.AfterPermissionGranted;
 import pub.devrel.easypermissions.AppSettingsDialog;
@@ -73,7 +78,7 @@ import retrofit2.http.HTTP;
 /**
  * 用户信息界面
  */
-public class UserInforActivity extends FragmentActivity implements View.OnClickListener, EasyPermissions.PermissionCallbacks {
+public class UserInforActivity extends BaseActivity implements View.OnClickListener, EasyPermissions.PermissionCallbacks {
 
     @Bind(R.id.iv_userinfor_back)
     ImageView mIvUserinforBack;
@@ -128,6 +133,7 @@ public class UserInforActivity extends FragmentActivity implements View.OnClickL
     private String mAddressname;
     private Intent mIntent;
     private UserInfor mUserInfor;
+    private LoadingDialog mLoadingDialog;
 
 
     @Override
@@ -136,8 +142,10 @@ public class UserInforActivity extends FragmentActivity implements View.OnClickL
         setContentView(R.layout.activity_user_infor);
         MyApplication.getInstance().addActivity(this);
         ButterKnife.bind(this);
-
+        mLoadingDialog = new LoadingDialog(UserInforActivity.this);
+        mLoadingDialog.setCanceledOnTouchOutside(false);
             initTo();
+
 
     }
 
@@ -170,8 +178,10 @@ public class UserInforActivity extends FragmentActivity implements View.OnClickL
 
     }
 
+
     //图片上传服务器
     ImageUpLoadPresenter mImageUpLoadPresenter = new ImageUpLoadPresenter(new ImageUpLoadView() {
+
         @Override
         public RequestBody getImageUpLoadFileId() {
             if (mFileName != null) {
@@ -187,7 +197,9 @@ public class UserInforActivity extends FragmentActivity implements View.OnClickL
         @Override
         public void getImageUpLoad(ImageUpLoadBean imageUpLoadBean) {
             //
+
             Log.i("picid==", imageUpLoadBean.getFileId());
+
             mFileId = imageUpLoadBean.getFileId();
             //进行用户信息保存到服务器
             mUserInforEdtPresenter.getUserInforEdt();
@@ -196,24 +208,30 @@ public class UserInforActivity extends FragmentActivity implements View.OnClickL
 
         @Override
         public void showProgress() {
+            mLoadingDialog.setCanceledOnTouchOutside(false);
+            mLoadingDialog.show();
 
         }
 
         @Override
         public void hideProgress() {
-
+            mLoadingDialog.hide();
         }
 
         @Override
         public void onViewFailure(ImageUpLoadBean model) {
+            Toast.makeText(UserInforActivity.this, "进来1111"+model.getMessage(), Toast.LENGTH_SHORT).show();
 
         }
 
         @Override
         public void onServerFailure(String e) {
-
+            Toast.makeText(UserInforActivity.this, "进来222"+e, Toast.LENGTH_SHORT).show();
         }
     });
+
+
+
 
     //数据保存
     UserInforEdtPresenter mUserInforEdtPresenter = new UserInforEdtPresenter(new UserInforEdtView() {
@@ -253,6 +271,7 @@ public class UserInforActivity extends FragmentActivity implements View.OnClickL
 
         @Override
         public void getUserInforEdt(ResultModel rlBean) {
+
 //
             PreUtils.setParam(UserInforActivity.this, "userperfect", 2);
             mTvSelectCitiy.setText(getIntent().getStringExtra("addressname"));
@@ -264,11 +283,14 @@ public class UserInforActivity extends FragmentActivity implements View.OnClickL
 
         @Override
         public void showProgress() {
+            mLoadingDialog.setCanceledOnTouchOutside(false);
+            mLoadingDialog.show();
 
         }
 
         @Override
         public void hideProgress() {
+            mLoadingDialog.hide();
 
         }
 
@@ -301,6 +323,7 @@ public class UserInforActivity extends FragmentActivity implements View.OnClickL
                     Toast.makeText(this, "信息填写不完整", Toast.LENGTH_SHORT).show();
 
                 } else {
+                    Toast.makeText(this, "6666666666666666", Toast.LENGTH_SHORT).show();
                     mImageUpLoadPresenter.getImage();
                 }
 

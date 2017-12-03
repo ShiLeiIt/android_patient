@@ -17,6 +17,7 @@ import butterknife.OnClick;
 import cn.addapp.pickers.picker.DatePicker;
 import cn.qiyu.magicalcrue_patient.MyApplication;
 import cn.qiyu.magicalcrue_patient.R;
+import cn.qiyu.magicalcrue_patient.base.BaseActivity;
 import cn.qiyu.magicalcrue_patient.model.PatientInfor;
 import cn.qiyu.magicalcrue_patient.model.PatientInforSaveBean;
 import cn.qiyu.magicalcrue_patient.model.ResultModel;
@@ -27,7 +28,7 @@ import cn.qiyu.magicalcrue_patient.utils.PreUtils;
 /**
  * 患者资料信息页面
  */
-public class MinePatientDataActivity extends AppCompatActivity {
+public class MinePatientDataActivity extends BaseActivity {
 
     @Bind(R.id.iv_patient_back)
     ImageView mIvPatientBack;
@@ -148,6 +149,12 @@ public class MinePatientDataActivity extends AppCompatActivity {
 
     PatientInforPresenter mPatientInforPresenter = new PatientInforPresenter(new PatientInforView() {
         @Override
+        public String getPatientUuid() {
+            Log.i("patientuuid=+++++====", (String) PreUtils.getParam(MinePatientDataActivity.this, "patientuuid", ""));
+            return (String)PreUtils.getParam(MinePatientDataActivity.this,"patientuuid","");
+        }
+
+        @Override
         public String getUserId() {
 //            Toast.makeText(PatientDataActivity.this, "usrid" + mUserId, Toast.LENGTH_SHORT).show();
             return mUuid;
@@ -221,10 +228,8 @@ public class MinePatientDataActivity extends AppCompatActivity {
             PreUtils.setParam(MinePatientDataActivity.this, "patientuuid", rlBean.getData().getUuid());
             PreUtils.setParam(MinePatientDataActivity.this, "patientName", rlBean.getData().getName());
             PreUtils.setParam(MinePatientDataActivity.this, "patientMobile", rlBean.getData().getMobile());
-            PreUtils.setParam(MinePatientDataActivity.this, "userperfect", "3");
-
+            PreUtils.setParam(MinePatientDataActivity.this, "userperfect", 3);
                 finish();
-
 
             Log.i("Patientuuid------", rlBean.getData().getUuid());
             Log.i("Useruuid------", mUuid);

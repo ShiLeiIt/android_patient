@@ -8,7 +8,8 @@ import cn.qiyu.magicalcrue_patient.model.ResultModel;
  */
 
 public interface PatientInforBiz {
-    void getPatientInfor(String userId,
+    void getPatientInfor(String patientUuid,
+            String userId,
                          String name,
                          String sex,
                          String birthday,

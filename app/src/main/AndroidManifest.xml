@@ -33,7 +33,9 @@
             android:name=".activity.SeclectCityActivity"
             android:theme="@style/Theme.AppCompat.Dialog"/>
         <activity android:name=".activity.UserInforActivity"   />
-        <activity android:name=".activity.ScaleDetailActivity"/>
+        <activity android:name=".activity.ScaleDetailActivity"
+            android:windowSoftInputMode="adjustPan"
+            />
 
 
 

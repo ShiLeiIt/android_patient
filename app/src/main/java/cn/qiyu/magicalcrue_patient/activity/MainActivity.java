@@ -20,6 +20,7 @@ import com.startsmake.mainnavigatetabbar.widget.MainNavigateTabBar;
 
 import cn.qiyu.magicalcrue_patient.MyApplication;
 import cn.qiyu.magicalcrue_patient.R;
+import cn.qiyu.magicalcrue_patient.base.BaseActivity;
 import cn.qiyu.magicalcrue_patient.fragment.HomePageFragment;
 import cn.qiyu.magicalcrue_patient.fragment.InformationFragment;
 import cn.qiyu.magicalcrue_patient.fragment.MineFragment;
@@ -30,7 +31,7 @@ import cn.qiyu.magicalcrue_patient.utils.PreUtils;
  * Created by Administrator on 2017/11/13.
  */
 
-public class MainActivity extends FragmentActivity implements View.OnClickListener {
+public class MainActivity extends BaseActivity implements View.OnClickListener {
     private static final String TAG_PAGE_HOME = "首页";
     private static final String TAG_PAGE_VISIT = "随访";
     private static final String TAG_PAGE_ADD = "";

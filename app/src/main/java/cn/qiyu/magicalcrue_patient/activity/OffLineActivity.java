@@ -9,12 +9,13 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.qiyu.magicalcrue_patient.MyApplication;
 import cn.qiyu.magicalcrue_patient.R;
+import cn.qiyu.magicalcrue_patient.base.BaseActivity;
 
 /**
  * 线下沙龙
  */
 
-public class OffLineActivity extends AppCompatActivity {
+public class OffLineActivity extends BaseActivity {
 
     @Bind(R.id.iv_offline_back)
     ImageView mIvOfflineBack;

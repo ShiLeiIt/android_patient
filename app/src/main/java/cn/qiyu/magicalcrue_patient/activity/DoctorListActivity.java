@@ -19,6 +19,7 @@ import butterknife.OnClick;
 import cn.qiyu.magicalcrue_patient.Api.ApiService;
 import cn.qiyu.magicalcrue_patient.MyApplication;
 import cn.qiyu.magicalcrue_patient.R;
+import cn.qiyu.magicalcrue_patient.base.BaseActivity;
 import cn.qiyu.magicalcrue_patient.model.DoctorInfoBean;
 import cn.qiyu.magicalcrue_patient.utils.DisplayHelper;
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -28,7 +29,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
  * 医生列表页面
  */
 
-public class DoctorListActivity extends Activity {
+public class DoctorListActivity extends BaseActivity {
 
 
     @Bind(R.id.iv_patient_relation_back)

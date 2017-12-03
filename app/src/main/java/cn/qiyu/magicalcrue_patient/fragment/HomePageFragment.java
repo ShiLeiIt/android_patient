@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ScrollView;
@@ -88,6 +89,7 @@ public class HomePageFragment extends Fragment implements View.OnClickListener, 
     private String mDoctorUuid;
     private String mPatientuuid;
     private String mErrorCode;
+    private ScrollView sv_home;
 
     @Nullable
     @Override
@@ -121,6 +123,8 @@ public class HomePageFragment extends Fragment implements View.OnClickListener, 
         //全部服务
         mTvAllserve = (TextView) view.findViewById(R.id.ll_tv_all_serve);
 
+        sv_home = (ScrollView) view.findViewById(R.id.sv_home);
+
         mTvCourse.setOnClickListener(this);
         mTvMedical.setOnClickListener(this);
         mTvOffline.setOnClickListener(this);
@@ -144,14 +148,23 @@ public class HomePageFragment extends Fragment implements View.OnClickListener, 
         //通过本地获取患者uuid
 
         homePresenter.HomeLoadNumData();
-      homePresenter.getDoctorTeamInfo();
+        homePresenter.getDoctorTeamInfo();
 
         ButterKnife.bind(this, view);
         //这里设置fragment 点击事件就是我给你发的Demo
 
         Log.i("patientuuid---", (String) PreUtils.getParam(getActivity(), "patientuuid", "0"));
 
+
         return view;
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        sv_home.scrollTo(0,0);
+        mIv_richsan.setFocusableInTouchMode(true);
+        mIv_richsan.requestFocus();
     }
 
     @Override
@@ -178,7 +191,6 @@ public class HomePageFragment extends Fragment implements View.OnClickListener, 
         } else {
             Toast.makeText(getActivity(), "非医生随访二维码", Toast.LENGTH_SHORT).show();
         }
-
     }
 
     @Override
@@ -278,7 +290,7 @@ public class HomePageFragment extends Fragment implements View.OnClickListener, 
 
         @Override
         public void getDoctorQRcode(ResultModel model) {
-//            Toast.makeText(getActivity(), "" + model.getErrorCode(), Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), "" + model.getErrorCode(), Toast.LENGTH_SHORT).show();
         }
 
         @Override

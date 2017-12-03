@@ -48,4 +48,5 @@ dependencies {
     compile 'org.greenrobot:eventbus:3.0.0'
     testCompile 'junit:junit:4.12'
     compile 'com.android.support:design:26.0.0-alpha1'
+
 }

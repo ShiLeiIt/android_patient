@@ -19,6 +19,7 @@ public class UserInforEdtPresenter {
         mUserInforEdtView = userInforEdtView;
     }
     public void getUserInforEdt() {
+        mUserInforEdtView.showProgress();
         mUserInforEdtBiz.getUserInfoEdt(mUserInforEdtView.getUuId(), mUserInforEdtView.getPhotoPath(),
                 mUserInforEdtView.getUser_name(), mUserInforEdtView.getBirthday(), mUserInforEdtView.getSex(),
                 mUserInforEdtView.getNative_place_cd(), new UserInforEdtBiz.OnLoginListener() {
@@ -26,13 +27,16 @@ public class UserInforEdtPresenter {
                     public void onResponse(ResultModel model) {
                         if (model.getResult() == 0) {
                             mUserInforEdtView.getUserInforEdt(model);
+                            mUserInforEdtView.hideProgress();
                         } else {
                             mUserInforEdtView.onViewFailure(model);
+                            mUserInforEdtView.hideProgress();
                         }
                     }
                     @Override
                     public void onFailure(String e) {
                         mUserInforEdtView.onServerFailure(e);
+                        mUserInforEdtView.hideProgress();
                     }
                 }
 

@@ -1,6 +1,6 @@
 package cn.qiyu.magicalcrue_patient.activity;
 
-import android.app.Activity;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -20,6 +20,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.qiyu.magicalcrue_patient.MyApplication;
 import cn.qiyu.magicalcrue_patient.R;
+import cn.qiyu.magicalcrue_patient.base.BaseActivity;
 import cn.qiyu.magicalcrue_patient.city.CityDistrictPresenter;
 import cn.qiyu.magicalcrue_patient.city.CityDistrictView;
 import cn.qiyu.magicalcrue_patient.model.CityBean;
@@ -30,7 +31,7 @@ import cn.qiyu.magicalcrue_patient.model.ResultModel;
  * Created by ShiLei on 2017/11/21.
  */
 
-public class SeclectCityActivity extends Activity {
+public class SeclectCityActivity extends BaseActivity {
     @Bind(R.id.tv_select_city)
     TextView mTvSelectCity;
     @Bind(R.id.tv_city_save)
@@ -99,7 +100,7 @@ public class SeclectCityActivity extends Activity {
 
 
 
-    public class RecyclerAdpter extends RecyclerView.Adapter<SeclectCityActivity.ViewHolder> {
+    public class RecyclerAdpter extends RecyclerView.Adapter<ViewHolder> {
         private List<CityBean> mlist;
 
         public RecyclerAdpter(List mlist) {
@@ -107,14 +108,14 @@ public class SeclectCityActivity extends Activity {
         }
 
         @Override
-        public SeclectCityActivity.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
-            return new SeclectCityActivity.ViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.relview_city_item, null));
+            return new ViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.relview_city_item, null));
 
         }
 
         @Override
-        public void onBindViewHolder(SeclectCityActivity.ViewHolder holder, int position) {
+        public void onBindViewHolder(ViewHolder holder, int position) {
             holder.setItem(mlist.get(position));
             holder.refreshView();
         }

@@ -9,11 +9,12 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.qiyu.magicalcrue_patient.MyApplication;
 import cn.qiyu.magicalcrue_patient.R;
+import cn.qiyu.magicalcrue_patient.base.BaseActivity;
 
 /**
  * 全部服务
  */
-public class AllServeActivity extends AppCompatActivity {
+public class AllServeActivity extends BaseActivity {
 
     @Bind(R.id.iv_allserve_back)
     ImageView mIvAllserveBack;
