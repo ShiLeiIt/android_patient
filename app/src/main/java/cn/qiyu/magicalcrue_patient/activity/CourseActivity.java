@@ -24,7 +24,6 @@ public class CourseActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_course);
-        MyApplication.getInstance().addActivity(this);
         ButterKnife.bind(this);
     }
 

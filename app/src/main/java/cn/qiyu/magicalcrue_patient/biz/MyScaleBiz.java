@@ -10,6 +10,8 @@ public interface MyScaleBiz {
     void getMyScaleInfor(String patientUuid, String status, String page,String pagecount,MyScaleBiz.OnLoginListener onLoginListener);
     void getScaleDetailsInfor(String paperId, String paperUserId,String userId,MyScaleBiz.OnLoginListener onLoginListener);
 
+    void getScaleDetailsCommit(String patientUuid,String questionArr,String paperUserID,OnLoginListener onLoginListener);
+
     interface OnLoginListener<T> {
 
         /**

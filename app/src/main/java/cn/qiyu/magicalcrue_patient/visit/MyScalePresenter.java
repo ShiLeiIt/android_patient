@@ -48,6 +48,8 @@ public class MyScalePresenter {
             }
 
             @Override
+
+
             public void onFailure(String e) {
                 mMyScaleView.onServerFailure(e);
             }
@@ -55,7 +57,24 @@ public class MyScalePresenter {
     }
 
 
+    //量表提交
+    public  void VisitScaleDetailsCommit(){
+     mMyScaleBiz.getScaleDetailsCommit(mMyScaleView.getPatientUuid(), mMyScaleView.getQuestionArr(), mMyScaleView.paperUserId(), new MyScaleBiz.OnLoginListener() {
+         @Override
+         public void onResponse(ResultModel model) {
+             if (model.getResult() == 0) {
+                 mMyScaleView.LoadScaleDetailsCommit(model);
+             } else {
+                 mMyScaleView.onViewFailure(model);
+             }
+         }
 
+         @Override
+         public void onFailure(String e) {
+            mMyScaleView.onServerFailure(e);
+         }
+     });
+    }
 
 
 

@@ -91,14 +91,28 @@ public class ToFiScaleFragment extends Fragment {
 
         @Override
         public String userId() {
-            return (String) PreUtils.getParam(getActivity(),"userid","0");
+            return (String) PreUtils.getParam(getActivity(),"patientuuid","0");
         }
 
         @Override
         public void LoadScaleDetailsData(ResultModel<ScaleDetailBean> model) {
             Intent intent = new Intent(getActivity(), ScaleDetailActivity.class);
             intent.putExtra("scaleDetail", model.getData());
+            intent.putExtra("paperUserID", String.valueOf(mPaperUserID));
+//            Log.i("paperUserID---------=", model.getData().getUserID());
             startActivity(intent);
+        }
+
+
+
+        @Override
+        public String getQuestionArr() {
+            return null;
+        }
+
+        @Override
+        public void LoadScaleDetailsCommit(ResultModel model) {
+
         }
 
         @Override
@@ -129,7 +143,7 @@ public class ToFiScaleFragment extends Fragment {
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
-        @Bind({R.id.tv_group_name, R.id.tv_group_member})
+        @Bind({R.id.tv_group_name, R.id.tv_group_member, R.id.tv_scale_satus})
         TextView[] mtextview;
         MyScaleBean mModel;
 
@@ -141,9 +155,7 @@ public class ToFiScaleFragment extends Fragment {
                 public void onClick(View v) {
                     mQuestionUUid = mModel.getPaperID();
                     mPaperUserID = mModel.getPaperUserID();
-                    Log.i("paperId", mQuestionUUid);
                     Log.i("paperUserID", mPaperUserID +"");
-                    Log.i("userid===", (String) PreUtils.getParam(getActivity(),"userid","0"));
                     mScalePresenter.VisitScaleDetailsData();
 
                 }
@@ -157,9 +169,18 @@ public class ToFiScaleFragment extends Fragment {
 
         //刷新
         void refreshView() {
-            String creatTime = mModel.getCreate_time().substring(0, 10);
+            String creatTime = mModel.getCreate_time();
+            int status = mModel.getStatus();
             mtextview[0].setText(mModel.getPaperTitle());
             mtextview[1].setText(creatTime);
+            if (status == 0) {
+                mtextview[2].setText("未填写");
+                mtextview[2].setTextColor(getResources().getColor(R.color.app_gray));
+            } else {
+                mtextview[2].setText("已填写");
+                mtextview[2].setTextColor(getResources().getColor(R.color.app_relation_tv));
+            }
+
         }
     }
 

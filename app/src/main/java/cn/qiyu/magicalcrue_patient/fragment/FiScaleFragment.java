@@ -1,6 +1,7 @@
 package cn.qiyu.magicalcrue_patient.fragment;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -18,6 +19,8 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.qiyu.magicalcrue_patient.R;
+import cn.qiyu.magicalcrue_patient.activity.ScaleDetailActivity;
+import cn.qiyu.magicalcrue_patient.activity.ScaleDetailShowActivity;
 import cn.qiyu.magicalcrue_patient.model.MyScaleBean;
 import cn.qiyu.magicalcrue_patient.model.ResultModel;
 import cn.qiyu.magicalcrue_patient.model.ScaleDetailBean;
@@ -33,18 +36,20 @@ import cn.qiyu.magicalcrue_patient.visit.MyScaleView;
 public class FiScaleFragment extends Fragment {
     @Bind(R.id.rcl_fi_scale)
     RecyclerView mRclFiScale;
-    private String mPaperID;
+    private int mPaperUserID;
+    private String mQuestionUUid;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_fi_scale, container, false);
         ButterKnife.bind(this, view);
-        mMyScalePresenter.VisitScaleData();
+        mScalePresenter.VisitScaleData();
         return view;
     }
 
-    MyScalePresenter mMyScalePresenter = new MyScalePresenter(new MyScaleView() {
+    MyScalePresenter mScalePresenter = new MyScalePresenter(new MyScaleView() {
+
         @Override
         public String getPatientUuid() {
             return (String) PreUtils.getParam(getActivity(), "patientuuid", "");
@@ -67,27 +72,44 @@ public class FiScaleFragment extends Fragment {
 
         @Override
         public void LoadDate(ResultModel<List<MyScaleBean>> model) {
-            mRclFiScale.setAdapter(new FiScaleFragment.RecyclerAdpter( model.getData()));
+//            Toast.makeText(getActivity(), ""+model.getMessage(), Toast.LENGTH_SHORT).show();
+            mRclFiScale.setAdapter(new FiScaleFragment.RecyclerAdpter(model.getData()));
             mRclFiScale.setLayoutManager(new LinearLayoutManager(getActivity()));
+
         }
 
         @Override
         public String paperId() {
-            return null;
+            return mQuestionUUid;
         }
 
         @Override
         public String paperUserId() {
-            return null;
+            return String.valueOf(mPaperUserID);
         }
 
         @Override
         public String userId() {
-            return null;
+            return (String) PreUtils.getParam(getActivity(), "patientuuid", "0");
         }
 
         @Override
         public void LoadScaleDetailsData(ResultModel<ScaleDetailBean> model) {
+            Intent intent = new Intent(getActivity(), ScaleDetailShowActivity.class);
+            intent.putExtra("scaleDetail", model.getData());
+            intent.putExtra("paperUserID", String.valueOf(mPaperUserID));
+//            Log.i("paperUserID---------=", model.getData().getUserID());
+            startActivity(intent);
+        }
+
+
+        @Override
+        public String getQuestionArr() {
+            return null;
+        }
+
+        @Override
+        public void LoadScaleDetailsCommit(ResultModel model) {
 
         }
 
@@ -103,12 +125,12 @@ public class FiScaleFragment extends Fragment {
 
         @Override
         public void onViewFailure(ResultModel model) {
-
+//            Toast.makeText(getActivity(), ""+model.getMessage(), Toast.LENGTH_SHORT).show();
         }
 
         @Override
         public void onServerFailure(String e) {
-
+//            Toast.makeText(getActivity(), ""+e, Toast.LENGTH_SHORT).show();
         }
     });
 
@@ -119,7 +141,7 @@ public class FiScaleFragment extends Fragment {
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
-        @Bind({R.id.tv_group_name, R.id.tv_group_member})
+        @Bind({R.id.tv_group_name, R.id.tv_group_member, R.id.tv_scale_satus})
         TextView[] mtextview;
         MyScaleBean mModel;
 
@@ -129,9 +151,11 @@ public class FiScaleFragment extends Fragment {
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    mPaperID = mModel.getPaperID();
+                    mQuestionUUid = mModel.getPaperID();
+                    mPaperUserID = mModel.getPaperUserID();
+                    Log.i("paperUserID", mPaperUserID + "");
+                    mScalePresenter.VisitScaleDetailsData();
 
-//                    scalePresenter1.questionNaireDetail();
                 }
             });
 
@@ -143,11 +167,21 @@ public class FiScaleFragment extends Fragment {
 
         //刷新
         void refreshView() {
-            String creatTime = mModel.getCreate_time().substring(0, 10);
+            String creatTime = mModel.getCreate_time();
+            int status = mModel.getStatus();
             mtextview[0].setText(mModel.getPaperTitle());
             mtextview[1].setText(creatTime);
+            if (status == 0) {
+                mtextview[2].setText("未填写");
+                mtextview[2].setTextColor(getResources().getColor(R.color.app_gray));
+            } else {
+                mtextview[2].setText("已填写");
+                mtextview[2].setTextColor(getResources().getColor(R.color.laser_color));
+            }
+
         }
     }
+
 
     class RecyclerAdpter extends RecyclerView.Adapter<FiScaleFragment.ViewHolder> {
         private List<MyScaleBean> mlist;
@@ -171,11 +205,6 @@ public class FiScaleFragment extends Fragment {
         @Override
         public int getItemCount() {
             return mlist.size();
-        }
-
-
-        @OnClick(R.id.rcl_fi_scale)
-        public void onViewClicked() {
         }
     }
 }

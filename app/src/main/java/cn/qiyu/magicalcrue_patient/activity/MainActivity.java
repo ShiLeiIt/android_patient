@@ -46,7 +46,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        MyApplication.getInstance().addActivity(this);
+
 
         mNavigateTabBar = (MainNavigateTabBar) findViewById(R.id.mainTabBar);
         mNavigateTabBar.onRestoreInstanceState(savedInstanceState);

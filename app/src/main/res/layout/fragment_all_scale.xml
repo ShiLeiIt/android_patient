@@ -5,8 +5,9 @@
              android:layout_height="match_parent"
              android:background="#fff"
              android:orientation="vertical">
-    <TextView
-        android:text="全部"
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rcl_all_scale"
+        android:text="填写"
         android:gravity="center"
         android:textColor="@color/app_black"
         android:layout_width="match_parent"

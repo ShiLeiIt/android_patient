@@ -24,7 +24,6 @@ public class OffLineActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_off_line);
-        MyApplication.getInstance().addActivity(this);
         ButterKnife.bind(this);
     }
 

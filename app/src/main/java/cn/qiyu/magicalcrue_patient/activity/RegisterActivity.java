@@ -58,7 +58,6 @@ public class RegisterActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
-        MyApplication.getInstance().addActivity(this);
         ButterKnife.bind(this);
         String uuid = (String) PreUtils.getParam(RegisterActivity.this, "uuid", "0");
 //        Log.i("userperfect-=", (String) PreUtils.getParam(RegisterActivity.this, "userperfect", "0"));

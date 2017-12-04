@@ -7,7 +7,7 @@ import java.util.List;
  * Created by ShiLei on 2017/12/1.
  */
 
-public class ScaleDetailBean  implements Serializable{
+public class ScaleDetailBean implements Serializable {
 
     /**
      * paperData : null
@@ -18,17 +18,17 @@ public class ScaleDetailBean  implements Serializable{
      * 量表详情
      */
 
-    private Object paperData;
+    private PaperData paperData;
     private String paperUserID;
     private String userID;
     private String paperID;
     private List<ScaleTitleBean> questionList;
 
-    public Object getPaperData() {
+    public PaperData getPaperData() {
         return paperData;
     }
 
-    public void setPaperData(Object paperData) {
+    public void setPaperData(PaperData paperData) {
         this.paperData = paperData;
     }
 

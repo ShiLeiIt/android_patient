@@ -28,6 +28,7 @@ import cn.qiyu.magicalcrue_patient.patientinfor.PatientInforPresenter;
 import cn.qiyu.magicalcrue_patient.patientinfor.PatientInforView;
 import cn.qiyu.magicalcrue_patient.utils.ActivityManagerTool;
 import cn.qiyu.magicalcrue_patient.utils.PreUtils;
+import cn.qiyu.magicalcrue_patient.view.LoadingDialog;
 
 /**
  * 患者资料信息页面
@@ -105,13 +106,15 @@ public class PatientDataActivity extends BaseActivity {
     private PatientInfor mPatientInfor;
     private String mVisitFragment;
     private Intent mIntent;
+    private LoadingDialog mLoadingDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_patient_da);
-        MyApplication.getInstance().addActivity(this);
         ButterKnife.bind(this);
+        mLoadingDialog = new LoadingDialog(PatientDataActivity.this);
+        mLoadingDialog.setCanceledOnTouchOutside(false);
 
         mIntent = getIntent();
         //从随访页面进来
@@ -264,12 +267,13 @@ public class PatientDataActivity extends BaseActivity {
 
         @Override
         public void showProgress() {
-
+            mLoadingDialog.setCanceledOnTouchOutside(false);
+            mLoadingDialog.show();
         }
 
         @Override
         public void hideProgress() {
-
+            mLoadingDialog.dismiss();
         }
 
         @Override

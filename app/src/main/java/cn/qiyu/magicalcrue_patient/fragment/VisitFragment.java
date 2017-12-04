@@ -349,11 +349,11 @@ public class VisitFragment extends Fragment implements View.OnClickListener {
                                 break;
                             case 4:
                                 startActivity(new Intent(getActivity(), MyScaleActivity.class));
-                                Toast.makeText(getActivity(), "量表", Toast.LENGTH_SHORT).show();
+//                                Toast.makeText(getActivity(), "量表", Toast.LENGTH_SHORT).show();
 //
                                 break;
                             case 5:
-                                Toast.makeText(getActivity(), "随访报告", Toast.LENGTH_SHORT).show();
+//                                Toast.makeText(getActivity(), "随访报告", Toast.LENGTH_SHORT).show();
                                 break;
                             case 6:
 

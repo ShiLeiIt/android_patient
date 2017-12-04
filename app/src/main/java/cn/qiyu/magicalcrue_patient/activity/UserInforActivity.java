@@ -140,7 +140,7 @@ public class UserInforActivity extends BaseActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_infor);
-        MyApplication.getInstance().addActivity(this);
+
         ButterKnife.bind(this);
         mLoadingDialog = new LoadingDialog(UserInforActivity.this);
         mLoadingDialog.setCanceledOnTouchOutside(false);

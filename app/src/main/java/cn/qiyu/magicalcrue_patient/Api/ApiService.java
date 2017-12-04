@@ -17,6 +17,7 @@ import cn.qiyu.magicalcrue_patient.model.RegisterLoginBean;
 import cn.qiyu.magicalcrue_patient.model.RegisterLoginVerBean;
 import cn.qiyu.magicalcrue_patient.model.ResultModel;
 import cn.qiyu.magicalcrue_patient.model.ScaleDetailBean;
+import cn.qiyu.magicalcrue_patient.model.ScaleDetailsCommitBean;
 import cn.qiyu.magicalcrue_patient.model.UserInfor;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
@@ -78,6 +79,9 @@ public interface ApiService {
     String API_SCALE_INFOR = "common/questionnaireList";
     //量表详情
     String API_SCALE_DETAILS = "common/questionnaireDetail";
+    //量表提交
+    String API_SCALE_COMMIT = "common/saveQuestionnaireOption";
+
 
 
     /**
@@ -211,8 +215,18 @@ public interface ApiService {
     @POST(API_SCALE_DETAILS)
     @FormUrlEncoded
     Call<ResultModel<ScaleDetailBean>> getScaleDetilsInfor(@Field("paperID") String paperId,
-                                                           @Field("paperUserID") String paperUserId,
-                                                           @Field("userID") String userId
+                                                           @Field("paperUserID") String paperUserID,
+                                                           @Field("userID") String patientUuid
     );
+    /**
+     * 量表提交
+     */
+    @POST(API_SCALE_COMMIT)
+    @FormUrlEncoded
+    Call<ResultModel>getScaleDetilsCommit(@Field("userID") String patientUuid,
+                                                                        @Field("questionArr") String questionArr,
+                                                                        @Field("paperUserID") String paperUserID
+    );
+
 
 }

@@ -45,7 +45,7 @@ public class SeclectCityActivity extends BaseActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_select_city);
-        MyApplication.getInstance().addActivity(this);
+
         ButterKnife.bind(this);
         mCityDistrictPresenter.getCity("1", "0");
     }

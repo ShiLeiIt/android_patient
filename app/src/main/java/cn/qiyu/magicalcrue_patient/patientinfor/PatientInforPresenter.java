@@ -19,6 +19,7 @@ public class PatientInforPresenter {
         mPatientInfoView = patientInfoView;
     }
     public  void getPatientInforCom(){
+        mPatientInfoView.showProgress();
         mPatientInforBiz.getPatientInfor(mPatientInfoView.getPatientUuid(),mPatientInfoView.getUserId(),
                 mPatientInfoView.getPatientName(),
                 mPatientInfoView.getSex(),
@@ -35,14 +36,17 @@ public class PatientInforPresenter {
                     public void onResponse(ResultModel model) {
                         if (model.getResult() == 0) {
                             mPatientInfoView.getPatientInfor(model);
+                            mPatientInfoView.hideProgress();
                         } else {
                             mPatientInfoView.onViewFailure(model);
+                            mPatientInfoView.hideProgress();
                         }
                     }
 
                     @Override
                     public void onFailure(String e) {
                         mPatientInfoView.onServerFailure(e);
+                        mPatientInfoView.hideProgress();
                     }
                 });
     }

@@ -43,6 +43,7 @@ import cn.qiyu.magicalcrue_patient.userinfor.UserInforEdtPresenter;
 import cn.qiyu.magicalcrue_patient.userinfor.UserInforEdtView;
 import cn.qiyu.magicalcrue_patient.utils.PreUtils;
 import cn.qiyu.magicalcrue_patient.utils.Utils;
+import cn.qiyu.magicalcrue_patient.view.LoadingDialog;
 import cn.qiyu.magicalcrue_patient.view.SelectPicPopupWindow;
 import de.hdodenhof.circleimageview.CircleImageView;
 import okhttp3.MediaType;
@@ -107,15 +108,16 @@ public class MineUserInforActivity extends BaseActivity implements View.OnClickL
 
     private UserInfor mUserInfor;
     private Intent mIntent;
+    private LoadingDialog mLoadingDialog;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_infor);
-        MyApplication.getInstance().addActivity(this);
         ButterKnife.bind(this);
-
+        mLoadingDialog = new LoadingDialog(MineUserInforActivity.this);
+        mLoadingDialog.setCanceledOnTouchOutside(false);
         init();
 
     }
@@ -151,7 +153,8 @@ public class MineUserInforActivity extends BaseActivity implements View.OnClickL
         @Override
         public RequestBody getImageUpLoadFileId() {
             if (mFileName != null) {
-                mRequestFile = RequestBody.create(MediaType.parse("multipart/form-data"), mFileName);
+//                mRequestFile = RequestBody.create(MediaType.parse("multipart/form-data"), mFileName);
+                mRequestFile = RequestBody.create(MediaType.parse("image/*"), mFileName);
                 Log.i("mFileName======", mFileName + "");
             } else {
                 Toast.makeText(MineUserInforActivity.this, "请选择头像", Toast.LENGTH_SHORT).show();
@@ -163,7 +166,7 @@ public class MineUserInforActivity extends BaseActivity implements View.OnClickL
         @Override
         public void getImageUpLoad(ImageUpLoadBean imageUpLoadBean) {
             //
-            Log.i("picid==", imageUpLoadBean.getFileId());
+            Log.i("fileId==", imageUpLoadBean.getFileId());
             mFileId = imageUpLoadBean.getFileId();
             //进行用户信息保存到服务器
             mUserInforEdtPresenter.getUserInforEdt();
@@ -172,21 +175,25 @@ public class MineUserInforActivity extends BaseActivity implements View.OnClickL
 
         @Override
         public void showProgress() {
-
+            mLoadingDialog.setCanceledOnTouchOutside(false);
+            mLoadingDialog.show();
         }
 
         @Override
         public void hideProgress() {
+            mLoadingDialog.hide();
 
         }
 
         @Override
         public void onViewFailure(ImageUpLoadBean model) {
+            Toast.makeText(MineUserInforActivity.this, ""+model.getMessage(), Toast.LENGTH_SHORT).show();
 
         }
 
         @Override
         public void onServerFailure(String e) {
+            Toast.makeText(MineUserInforActivity.this, ""+e, Toast.LENGTH_SHORT).show();
 
         }
     });
@@ -255,12 +262,11 @@ public class MineUserInforActivity extends BaseActivity implements View.OnClickL
 
         @Override
         public void onViewFailure(ResultModel model) {
-            Toast.makeText(MineUserInforActivity.this, "" + model.getMessage(), Toast.LENGTH_SHORT).show();
+
         }
 
         @Override
         public void onServerFailure(String e) {
-            Toast.makeText(MineUserInforActivity.this, "" + e, Toast.LENGTH_SHORT).show();
         }
     });
 

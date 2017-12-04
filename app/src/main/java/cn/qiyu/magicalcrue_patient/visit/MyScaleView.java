@@ -30,6 +30,15 @@ public interface MyScaleView extends BaseView {
 
     void LoadScaleDetailsData(ResultModel<ScaleDetailBean> model);
 
+    //量表提交
+
+    String getQuestionArr();
+
+
+
+    void LoadScaleDetailsCommit(ResultModel model);
+
+
 
 
 

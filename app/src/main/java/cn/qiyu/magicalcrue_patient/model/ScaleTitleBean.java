@@ -45,7 +45,7 @@ public class ScaleTitleBean  implements Serializable{
     private String answerOption;
     private String paperID;
     private int status;
-    private List<?> answerOptionIOS;
+    private List<String> answerOptionIOS;
     private List<ScaleSelectBean> optionsList;
 
     private String result;
@@ -178,11 +178,11 @@ public class ScaleTitleBean  implements Serializable{
         this.status = status;
     }
 
-    public List<?> getAnswerOptionIOS() {
+    public List<String> getAnswerOptionIOS() {
         return answerOptionIOS;
     }
 
-    public void setAnswerOptionIOS(List<?> answerOptionIOS) {
+    public void setAnswerOptionIOS(List<String> answerOptionIOS) {
         this.answerOptionIOS = answerOptionIOS;
     }
 

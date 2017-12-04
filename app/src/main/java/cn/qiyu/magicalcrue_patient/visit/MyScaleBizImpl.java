@@ -19,7 +19,7 @@ import retrofit2.Response;
  */
 
 public class MyScaleBizImpl extends BaseBiz implements MyScaleBiz {
-    //获取量表
+    ////获取量表信息
     @Override
     public void getMyScaleInfor(String patientUuid, String status, String page, String pagecount, final OnLoginListener onLoginListener) {
         mApiService.getMyScaleInfor(patientUuid,status,page,pagecount).enqueue(new Callback<ResultModel<List<MyScaleBean>>>() {
@@ -57,27 +57,27 @@ public class MyScaleBizImpl extends BaseBiz implements MyScaleBiz {
             }
         });
     }
+    //量表信息提交
+    @Override
+    public void getScaleDetailsCommit(String patientUuid, String questionArr, String paperUserID, final OnLoginListener onLoginListener) {
+        mApiService.getScaleDetilsCommit(patientUuid,questionArr,paperUserID).enqueue(new Callback<ResultModel>() {
+            @Override
+            public void onResponse(Call<ResultModel> call, Response<ResultModel> response) {
+                if (response.isSuccessful()) {
+                    onLoginListener.onResponse(response.body());
+                } else {
+                    onLoginListener.onFailure(response.body().getMessage());
+                }
+            }
 
-    //获取量表信息
+            @Override
+            public void onFailure(Call<ResultModel> call, Throwable throwable) {
+                onLoginListener.onFailure(throwable.getMessage());
 
-//    @Override
-//    public void getMyScaleInfor(String patientUuid, String status, String page, String pagecount, final OnLoginListener onLoginListener) {
-//        mApiService.getMyScaleInfor(patientUuid,status,page,pagecount).enqueue(new Callback<ResultModel<List<MyScaleBean>>>() {
-//            @Override
-//            public void onResponse(Call<ResultModel<List<MyScaleBean>>> call, Response<ResultModel<List<MyScaleBean>>> response) {
-//                if (response.isSuccessful()) {
-//                    onLoginListener.onResponse(response.body());
-//                } else {
-//                    onLoginListener.onFailure(response.body().getMessage());
-//                }
-//            }
-//
-//            @Override
-//            public void onFailure(Call<ResultModel<List<MyScaleBean>>> call, Throwable throwable) {
-//                onLoginListener.onFailure(throwable.getMessage());
-//            }
-//        });
-//    }
+            }
+        });
+    }
+
 }
 
 

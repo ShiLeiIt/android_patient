@@ -52,7 +52,6 @@ public class PatientRelationListActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_patient_relation);
-        MyApplication.getInstance().addActivity(this);
         ButterKnife.bind(this);
         mRl_relation = (RecyclerView) findViewById(R.id.rlv_patient_relation);
         mTv_title = (TextView) findViewById(R.id.tv_title);

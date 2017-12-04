@@ -23,7 +23,7 @@ public class MedicalActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_medical);
-        MyApplication.getInstance().addActivity(this);
+
         ButterKnife.bind(this);
     }
 
