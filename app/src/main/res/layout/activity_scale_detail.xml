@@ -41,6 +41,10 @@
             android:gravity="center"
             android:text="提交"/>
     </RelativeLayout>
+    <View
+        android:background="@color/view_bg"
+        android:layout_width="match_parent"
+        android:layout_height="10dp"/>
 
     <ListView
         android:id="@+id/lv_scale_detail"
