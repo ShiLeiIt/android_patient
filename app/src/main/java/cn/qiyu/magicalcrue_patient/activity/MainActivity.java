@@ -27,6 +27,8 @@ import cn.qiyu.magicalcrue_patient.fragment.MineFragment;
 import cn.qiyu.magicalcrue_patient.fragment.VisitFragment;
 import cn.qiyu.magicalcrue_patient.utils.PreUtils;
 
+import static android.R.attr.type;
+
 /**
  * Created by Administrator on 2017/11/13.
  */
@@ -178,4 +180,12 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 break;
         }
     }
+
+//    @Override
+//    protected void onNewIntent(Intent intent) {
+//        super.onNewIntent(intent);
+//        String doctorNotice = getIntent().getStringExtra("doctorNotice");
+//        Log.i("doctorNotice===", doctorNotice);
+//
+//    }
 }

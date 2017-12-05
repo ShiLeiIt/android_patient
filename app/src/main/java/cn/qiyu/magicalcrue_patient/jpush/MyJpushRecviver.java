@@ -7,13 +7,14 @@ import android.os.Bundle;
 import android.util.Log;
 
 import cn.jpush.android.api.JPushInterface;
+import cn.qiyu.magicalcrue_patient.utils.PreUtils;
 
 /**
  * Created by dev on 2017/11/27.
  */
 
-public class JpushRecviver extends BroadcastReceiver {
-    private static final String TAG = "JpushRecviver";
+public class MyJpushRecviver extends BroadcastReceiver {
+    private static final String TAG = "MyJpushRecviver";
 
 
     @Override
@@ -25,6 +26,9 @@ public class JpushRecviver extends BroadcastReceiver {
             /**
              * 用户注册SDK的intent
              */
+            String jpushId = bundle.getString(JPushInterface.EXTRA_REGISTRATION_ID);
+            Log.i("jpushId---------", jpushId);
+            PreUtils.setParam(context,"jpushId",jpushId);
             Log.e(TAG, "onReceive1: ");
         } else if (JPushInterface.ACTION_MESSAGE_RECEIVED.equals(intent.getAction())) {
             /**
@@ -81,6 +85,10 @@ public class JpushRecviver extends BroadcastReceiver {
             /**
              * 用户打开自定义通知栏的intent
              */
+
+
+
+
             String extra6 = bundle.getString(JPushInterface.EXTRA_ALERT);
             //如果包含 跳转至对应的界面
             if (extra6.contains("Hello World")) {
@@ -92,6 +100,8 @@ public class JpushRecviver extends BroadcastReceiver {
             } else {
                 Log.e(TAG, "onReceive不包含: ");
             }
+
+
         } else {
             Log.e(TAG, "Unhandled intent - " + intent.getAction());
             Log.e(TAG, "收到了自定义消息消息extra是5:");

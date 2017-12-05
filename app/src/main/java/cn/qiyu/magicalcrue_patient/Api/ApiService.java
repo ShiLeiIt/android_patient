@@ -9,6 +9,7 @@ import cn.qiyu.magicalcrue_patient.model.DoctorInfoBean;
 import cn.qiyu.magicalcrue_patient.model.DoctorTeamBean;
 import cn.qiyu.magicalcrue_patient.model.HomeNumBean;
 import cn.qiyu.magicalcrue_patient.model.ImageUpLoadBean;
+import cn.qiyu.magicalcrue_patient.model.InfoDoctorNoticeListBean;
 import cn.qiyu.magicalcrue_patient.model.MyScaleBean;
 import cn.qiyu.magicalcrue_patient.model.PatientInfor;
 import cn.qiyu.magicalcrue_patient.model.PatientInforSaveBean;
@@ -81,7 +82,8 @@ public interface ApiService {
     String API_SCALE_DETAILS = "common/questionnaireDetail";
     //量表提交
     String API_SCALE_COMMIT = "common/saveQuestionnaireOption";
-
+    //消息界面，医生公告列表
+    String API_DOCTOR_NOTICE_LIST = "message/doctorNoticeList";
 
 
     /**
@@ -218,15 +220,24 @@ public interface ApiService {
                                                            @Field("paperUserID") String paperUserID,
                                                            @Field("userID") String patientUuid
     );
+
     /**
      * 量表提交
      */
     @POST(API_SCALE_COMMIT)
     @FormUrlEncoded
-    Call<ResultModel>getScaleDetilsCommit(@Field("userID") String patientUuid,
-                                                                        @Field("questionArr") String questionArr,
-                                                                        @Field("paperUserID") String paperUserID
+    Call<ResultModel> getScaleDetilsCommit(@Field("userID") String patientUuid,
+                                           @Field("questionArr") String questionArr,
+                                           @Field("paperUserID") String paperUserID
     );
 
+    /**
+     * 消息，医生公告列表
+     */
+    @POST(API_DOCTOR_NOTICE_LIST)
+    @FormUrlEncoded
+    Call<ResultModel<List<InfoDoctorNoticeListBean>>> getDoctorNoticeList(@Field("doctorId") String doctorUuid,
+                                                                           @Field("page") String page,
+                                                                           @Field("pagecount") String pagecount);
 
 }

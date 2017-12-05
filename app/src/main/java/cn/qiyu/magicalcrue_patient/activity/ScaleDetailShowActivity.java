@@ -24,6 +24,9 @@ import cn.qiyu.magicalcrue_patient.base.BaseActivity;
 import cn.qiyu.magicalcrue_patient.model.ScaleDetailBean;
 import cn.qiyu.magicalcrue_patient.model.ScaleTitleBean;
 
+/**
+ * 量表详情已填写显示
+ */
 public class ScaleDetailShowActivity extends BaseActivity {
 
     @Bind(R.id.rv_scale_detail)

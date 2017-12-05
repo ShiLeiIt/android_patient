@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.icu.math.BigDecimal;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
@@ -15,9 +17,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.Set;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.jpush.android.api.JPushInterface;
+import cn.jpush.android.api.TagAliasCallback;
 import cn.qiyu.magicalcrue_patient.MyApplication;
 import cn.qiyu.magicalcrue_patient.R;
 import cn.qiyu.magicalcrue_patient.base.BaseActivity;
@@ -25,6 +31,7 @@ import cn.qiyu.magicalcrue_patient.model.RegisterLoginBean;
 import cn.qiyu.magicalcrue_patient.model.ResultModel;
 import cn.qiyu.magicalcrue_patient.register_login.RegisterPresenter;
 import cn.qiyu.magicalcrue_patient.register_login.RegisterVmView;
+import cn.qiyu.magicalcrue_patient.utils.ExampleUtil;
 import cn.qiyu.magicalcrue_patient.utils.PreUtils;
 import cn.qiyu.magicalcrue_patient.utils.Utils;
 
@@ -53,6 +60,7 @@ public class RegisterActivity extends BaseActivity {
     public boolean tag = true;
     private RegisterPresenter mRegisterPresenter;
     private long mExitTime;
+    private String TAG= RegisterActivity.this+"";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -107,7 +115,8 @@ public class RegisterActivity extends BaseActivity {
 
             @Override
             public String getJpushId() {
-                return "";
+                Log.i("jpushId==", (String) PreUtils.getParam(RegisterActivity.this, "jpushId", ""));
+                return (String) PreUtils.getParam(RegisterActivity.this,"jpushId","");
             }
 
             @Override

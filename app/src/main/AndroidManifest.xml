@@ -5,11 +5,11 @@
 
     <!-- Required -->
     <permission
-        android:name="com.android.application.permission.JPUSH_MESSAGE"
+        android:name="cn.qiyu.magicalcrue_patient.permission.JPUSH_MESSAGE"
         android:protectionLevel="signature"/>
 
     <!-- Required  一些系统要求的权限，如访问网络等-->
-    <uses-permission android:name="com.android.application.permission.JPUSH_MESSAGE"/>
+    <uses-permission android:name="cn.qiyu.magicalcrue_patient.permission.JPUSH_MESSAGE"/>
     <uses-permission android:name="android.permission.RECEIVE_USER_PRESENT"/>
     <uses-permission android:name="android.permission.WAKE_LOCK"/>
     <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
@@ -49,7 +49,10 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".activity.MainActivity"/>
+        <activity
+            android:name=".activity.MainActivity"
+            android:launchMode="singleTask"
+            />
         <activity android:name=".activity.LoginActivity"/>
         <activity android:name=".activity.PatientRelationListActivity"/>
         <activity android:name=".activity.PatientDataActivity"
@@ -126,6 +129,7 @@
         </service>
 
         <!-- Required SDK核心功能-->
+
         <receiver
             android:name="cn.jpush.android.service.PushReceiver"
             android:enabled="true">
@@ -195,7 +199,7 @@
 
         <!-- User defined. 用户自定义的广播接收器-->
         <receiver
-            android:name=".jpush.JpushRecviver"
+            android:name=".jpush.MyJpushRecviver"
             android:enabled="true">
             <intent-filter>
                 <!--Required 用户注册SDK的intent-->
@@ -223,7 +227,7 @@
         <!-- Required. AppKey copied from Portal -->
         <meta-data
             android:name="JPUSH_APPKEY"
-            android:value="3bef70df15f87be6d2db9585"/>
+            android:value="62af0792816be4fe96df18de"/>
 
     </application>
 

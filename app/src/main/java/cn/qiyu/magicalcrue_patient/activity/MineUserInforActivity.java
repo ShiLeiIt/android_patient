@@ -378,7 +378,7 @@ public class MineUserInforActivity extends BaseActivity implements View.OnClickL
                 filePath.mkdirs();
                 Log.e("isExists", "=" + filePath.mkdirs());
             }
-            mFileName = new File(filePath, System.currentTimeMillis() + ".jpg");
+            mFileName = new File(filePath,System.currentTimeMillis() + ".jpg");
             try {
                 if (!mFileName.exists()) {
                     mFileName.createNewFile();

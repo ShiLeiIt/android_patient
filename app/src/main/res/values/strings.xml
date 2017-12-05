@@ -41,6 +41,7 @@
     <string name="myScale">我的量表</string>
     <string name="scaleDetails">量表详情</string>
     <string name="question">提问</string>
+    <string name="doctorNotice">医生公告</string>
 
 
 </resources>

@@ -29,7 +29,9 @@ import cn.qiyu.magicalcrue_patient.utils.PreUtils;
 import cn.qiyu.magicalcrue_patient.visit.MyScalePresenter;
 import cn.qiyu.magicalcrue_patient.visit.MyScaleView;
 
-
+/**
+ * 量表详情页面填写并保存
+ */
 public class ScaleDetailActivity extends BaseActivity {
 
     @Bind(R.id.lv_scale_detail)
@@ -196,4 +198,5 @@ public class ScaleDetailActivity extends BaseActivity {
     public void onViewClicked() {
         finish();
     }
+
 }
