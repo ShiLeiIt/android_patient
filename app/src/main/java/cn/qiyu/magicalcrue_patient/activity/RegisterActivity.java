@@ -61,6 +61,7 @@ public class RegisterActivity extends BaseActivity {
     private RegisterPresenter mRegisterPresenter;
     private long mExitTime;
     private String TAG= RegisterActivity.this+"";
+    private String mJpushId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,6 +82,8 @@ public class RegisterActivity extends BaseActivity {
                     startActivity(intentPatient);
                     break;
                 default:
+                    mJpushId = JPushInterface.getRegistrationID(RegisterActivity.this);
+                    Log.i("jpushId-=-=-=----", mJpushId);
                     Intent intentMain = new Intent(RegisterActivity.this, MainActivity.class);
                     startActivity(intentMain);
                     finish();
@@ -115,8 +118,9 @@ public class RegisterActivity extends BaseActivity {
 
             @Override
             public String getJpushId() {
-                Log.i("jpushId==", (String) PreUtils.getParam(RegisterActivity.this, "jpushId", ""));
-                return (String) PreUtils.getParam(RegisterActivity.this,"jpushId","");
+//                Log.i("jpushId==", (String) PreUtils.getParam(RegisterActivity.this, "jpushId", ""));
+                return (String) PreUtils.getParam(RegisterActivity.this, "jpushId", "");
+//                return "";
             }
 
             @Override
@@ -151,6 +155,7 @@ public class RegisterActivity extends BaseActivity {
 //                    PreUtils.setParam(RegisterActivity.this, "userid", String.valueOf(model.getData().getId()));
 
                     Toast.makeText(RegisterActivity.this, "注册成功", Toast.LENGTH_SHORT).show();
+//                    mJpushId = JPushInterface.getRegistrationID(RegisterActivity.this);
                     Intent intentPatient = new Intent(RegisterActivity.this, MainActivity.class);
                     startActivity(intentPatient);
                     finish();

@@ -70,7 +70,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     }
 
 
-
+    //
     public void changFragment(String title) {
         mNavigateTabBar.showFragment(title,4);
     }
@@ -181,11 +181,18 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         }
     }
 
-//    @Override
-//    protected void onNewIntent(Intent intent) {
-//        super.onNewIntent(intent);
-//        String doctorNotice = getIntent().getStringExtra("doctorNotice");
-//        Log.i("doctorNotice===", doctorNotice);
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        if (intent!=null&& intent.getExtras()!=null){
+            if(intent.getExtras().getString("doctorNotice").equals("doctorNotice")){
+                changFragment("消息");
+            }
+        }
+//        String infoFragment = getIntent().getStringExtra("doctorNotice");
+//        if (infoFragment.equals("doctorNotice")) {
 //
-//    }
+//        }
+    }
 }
+

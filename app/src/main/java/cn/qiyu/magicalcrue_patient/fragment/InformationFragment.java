@@ -37,6 +37,7 @@ public class InformationFragment extends Fragment {
     @Bind(R.id.swipeLayout)
     SwipeRefreshLayout mSwipeLayout;
 
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater,

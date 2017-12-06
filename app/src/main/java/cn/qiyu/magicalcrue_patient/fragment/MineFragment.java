@@ -138,6 +138,7 @@ public class MineFragment extends Fragment implements View.OnClickListener {
 //                PreUtils.clearUserInfomation(getActivity());
                 PreUtils.setParam(getActivity(), "userperfect", 0);
                 PreUtils.setParam(getActivity(), "uuid", "");
+//                PreUtils.setParam(getActivity(),"jpushId","");
                 ActivityManagerTool.getActivityManager().exit();
             }
         });
