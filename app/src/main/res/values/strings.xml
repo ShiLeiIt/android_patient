@@ -42,6 +42,8 @@
     <string name="scaleDetails">量表详情</string>
     <string name="question">提问</string>
     <string name="doctorNotice">医生公告</string>
+    <string name="systemNotice">系统公告</string>
+    <string name="visitDialogue">随访对话</string>
 
 
 </resources>

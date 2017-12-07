@@ -13,6 +13,7 @@
     <color name="wheel_timebtn_pre">#CCCCCC</color>
     <color name="view_bg">#f7f7f7</color>
     <color name="dialog_bg">#90FFFFFF</color>
+    <color name="textNumBg">#E43535</color>
 
     //扫描框
     <color name="viewfinder_mask">#60000000</color>

@@ -4,6 +4,7 @@ import android.content.ContentResolver;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -20,6 +21,10 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.google.gson.Gson;
+
+import org.json.JSONObject;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -46,8 +51,14 @@ import cn.qiyu.magicalcrue_patient.utils.Utils;
 import cn.qiyu.magicalcrue_patient.view.LoadingDialog;
 import cn.qiyu.magicalcrue_patient.view.SelectPicPopupWindow;
 import de.hdodenhof.circleimageview.CircleImageView;
+import okhttp3.Call;
+import okhttp3.Callback;
 import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
 import okhttp3.RequestBody;
+import okhttp3.Response;
 import pub.devrel.easypermissions.AppSettingsDialog;
 import pub.devrel.easypermissions.EasyPermissions;
 
@@ -87,6 +98,8 @@ public class MineUserInforActivity extends BaseActivity implements View.OnClickL
     @Bind(R.id.civ_head)
     CircleImageView mCivHead;
     private SelectPicPopupWindow mPicPopupWindow;
+    //单张图片
+    String API_SINGLE_IMAGE_UP_LOAD = "http://api2.mircalcure.com/zlapi/sysfile/singleUpload";
     /**
      * 扫描跳转Activity RequestCode
      */
@@ -111,11 +124,13 @@ public class MineUserInforActivity extends BaseActivity implements View.OnClickL
     private LoadingDialog mLoadingDialog;
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_infor);
         ButterKnife.bind(this);
+
         mLoadingDialog = new LoadingDialog(MineUserInforActivity.this);
         mLoadingDialog.setCanceledOnTouchOutside(false);
         init();
@@ -147,6 +162,66 @@ public class MineUserInforActivity extends BaseActivity implements View.OnClickL
         Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
 
     }
+//    private void upImg(){
+//        OkHttpClient mOkHttpClent = new OkHttpClient();
+//        File file = new File(mFileName.getPath());
+//        MultipartBody.Builder builder = new MultipartBody.Builder()
+//                .setType(MultipartBody.FORM)
+//                .addFormDataPart("myfile", "small.jpg",
+//                        RequestBody.create(MediaType.parse("image/png"), file));
+//
+//        RequestBody requestBody = builder.build();
+//
+//        Request request = new Request.Builder()
+//                .url(API_SINGLE_IMAGE_UP_LOAD)
+//                .post(requestBody)
+//                .build();
+//        Call call = mOkHttpClent.newCall(request);
+//        call.enqueue(new Callback() {
+//            @Override
+//            public void onFailure(Call call, IOException e) {
+////                Log.e(TAG, "onFailure: "+e );
+//                runOnUiThread(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        Toast.makeText(MineUserInforActivity.this, "失败", Toast.LENGTH_SHORT).show();
+//                    }
+//                });
+//            }
+//
+//            @Override
+//            public void onResponse(Call call, final Response response) throws IOException {
+////                Log.e(TAG, "成功"+response);
+//                runOnUiThread(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        Log.i("response==", response.body().toString());
+//                        Toast.makeText(MineUserInforActivity.this, "成功", Toast.LENGTH_SHORT).show();
+//                    }
+//                });
+//                String body = response.body().string();
+//                Gson gson = new Gson();
+//
+//                    final ImageUpLoadBean imageUpLoadBean = gson.fromJson(body, ImageUpLoadBean.class);
+//                    if (imageUpLoadBean != null && imageUpLoadBean.getResult() == 0) {
+//                        runOnUiThread(new Runnable() {
+//                            @Override
+//                            public void run() {
+//                                mFileId = imageUpLoadBean.getFileId();
+//                                mUserInforEdtPresenter.getUserInforEdt();
+//                            }
+//                        });
+//                    }
+//
+//
+//
+//            }
+//        });
+//
+//
+//
+//}
+
 
     //图片上传服务器
     ImageUpLoadPresenter mImageUpLoadPresenter = new ImageUpLoadPresenter(new ImageUpLoadView() {
@@ -154,11 +229,16 @@ public class MineUserInforActivity extends BaseActivity implements View.OnClickL
         public RequestBody getImageUpLoadFileId() {
             if (mFileName != null) {
 //                mRequestFile = RequestBody.create(MediaType.parse("multipart/form-data"), mFileName);
-                mRequestFile = RequestBody.create(MediaType.parse("image/*"), mFileName);
+                mRequestFile = RequestBody.create(MediaType.parse("image/png"), mFileName);
                 Log.i("mFileName======", mFileName + "");
+
+
+
             } else {
                 Toast.makeText(MineUserInforActivity.this, "请选择头像", Toast.LENGTH_SHORT).show();
             }
+            Log.i("mFileName============", mFileName.toString());
+            Log.i("mRequestFile============", mRequestFile.toString());
             return mRequestFile;
         }
 
@@ -289,6 +369,13 @@ public class MineUserInforActivity extends BaseActivity implements View.OnClickL
                     Toast.makeText(this, "信息填写不完整", Toast.LENGTH_SHORT).show();
 
                 } else {
+//                    runOnUiThread(new Runnable() {
+//                        @Override
+//                        public void run() {
+//                            upImg();
+//                        }
+//                    });
+
                     mImageUpLoadPresenter.getImage();
                 }
 

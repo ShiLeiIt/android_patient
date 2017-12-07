@@ -213,8 +213,8 @@ public class MineFragment extends Fragment implements View.OnClickListener {
                 startActivity(intent);
             }
 //            Log.i("username", mUserName);
-//            Log.i("path", ApiService.GET_IMAGE_ICON + mPhotoPath);
-//            Log.i("mPhotoPath", userInforResultModel.getData().getPhotoPath());
+            Log.i("path", ApiService.GET_IMAGE_ICON + mPhotoPath);
+            Log.i("mPhotoPath", userInforResultModel.getData().getPhotoPath());
 
 
         }

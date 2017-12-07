@@ -4,11 +4,15 @@ import cn.qiyu.magicalcrue_patient.model.ResultModel;
 
 /**
  * Created by ShiLei on 2017/11/15.
- * 消息界面，医生公告
+ * 消息界面
  */
 
 public interface InformationBiz {
+    //医生公告列表
     void getDoctorNoticeList(String doctorUuid, String page,String pagecount,OnLoginListener onLoginListener);
+
+    //消息列表
+    void getInformationList(String userUuid,OnLoginListener onLoginListener);
 
     interface OnLoginListener<T> {
 

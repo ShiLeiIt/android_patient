@@ -181,18 +181,15 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         }
     }
 
-    @Override
-    protected void onNewIntent(Intent intent) {
-        super.onNewIntent(intent);
-        if (intent!=null&& intent.getExtras()!=null){
-            if(intent.getExtras().getString("doctorNotice").equals("doctorNotice")){
-                changFragment("消息");
-            }
-        }
-//        String infoFragment = getIntent().getStringExtra("doctorNotice");
-//        if (infoFragment.equals("doctorNotice")) {
-//
+//    @Override
+//    protected void onNewIntent(Intent intent) {
+//        super.onNewIntent(intent);
+//        if (intent!=null&& intent.getExtras()!=null){
+//            if(intent.getExtras().getString("doctorNotice").equals("doctorNotice")){
+//                changFragment("消息");
+//            }
 //        }
-    }
+
+//    }
 }
 

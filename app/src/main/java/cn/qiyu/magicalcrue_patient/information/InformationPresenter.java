@@ -17,12 +17,31 @@ public class InformationPresenter {
         mInformationBiz = new InformationBizImpl();
         mInformationView = informationView;
     }
+    //消息界面，医生公告列表
     public void  InformationDoctorNoticeList(){
         mInformationBiz.getDoctorNoticeList(mInformationView.getDoctorUuid(), mInformationView.getPage(), mInformationView.getPagecount(), new InformationBiz.OnLoginListener() {
             @Override
             public void onResponse(ResultModel model) {
                 if (model.getResult() == 0) {
                     mInformationView.getDoctorNoticeList(model);
+                } else {
+                    mInformationView.onViewFailure(model);
+                }
+            }
+
+            @Override
+            public void onFailure(String e) {
+                mInformationView.onServerFailure(e);
+            }
+        });
+    }
+    //消息界面列表显示
+    public  void InformationListShow(){
+        mInformationBiz.getInformationList(mInformationView.getUserUuid(), new InformationBiz.OnLoginListener() {
+            @Override
+            public void onResponse(ResultModel model) {
+                if (model.getResult() == 0) {
+                    mInformationView.getInformationList(model);
                 } else {
                     mInformationView.onViewFailure(model);
                 }

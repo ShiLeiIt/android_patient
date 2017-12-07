@@ -85,8 +85,6 @@ public class PatientRelationListActivity extends BaseActivity {
 
         @Override
         public void LoadPatientRelation(ResultModel<List<PatientRelationBean>> model) {
-            Toast.makeText(PatientRelationListActivity.this, "" + model.getData().size(), Toast.LENGTH_SHORT).show();
-
             mAdpter = new RecyclerAdpter(model.getData());
             mRl_relation.setAdapter(mAdpter);
             mRl_relation.setLayoutManager(new LinearLayoutManager(PatientRelationListActivity.this));

@@ -375,6 +375,7 @@ public class VisitFragment extends Fragment implements View.OnClickListener {
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
         if (isVisibleToUser) {
+
             //写你每次进入这个fragment需要调用的代码
 //            homePresenter.getDoctorTeamInfo();
 //            homePresenter.HomeLoadNumData();

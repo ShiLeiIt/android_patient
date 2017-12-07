@@ -10,6 +10,7 @@ import cn.qiyu.magicalcrue_patient.model.DoctorTeamBean;
 import cn.qiyu.magicalcrue_patient.model.HomeNumBean;
 import cn.qiyu.magicalcrue_patient.model.ImageUpLoadBean;
 import cn.qiyu.magicalcrue_patient.model.InfoDoctorNoticeListBean;
+import cn.qiyu.magicalcrue_patient.model.InformationBean;
 import cn.qiyu.magicalcrue_patient.model.MyScaleBean;
 import cn.qiyu.magicalcrue_patient.model.PatientInfor;
 import cn.qiyu.magicalcrue_patient.model.PatientInforSaveBean;
@@ -84,6 +85,8 @@ public interface ApiService {
     String API_SCALE_COMMIT = "common/saveQuestionnaireOption";
     //消息界面，医生公告列表
     String API_DOCTOR_NOTICE_LIST = "message/doctorNoticeList";
+    //消息列表
+    String API_INFORMATION_LIST = "message/messageHome";
 
 
     /**
@@ -142,7 +145,8 @@ public interface ApiService {
      */
     @POST(API_SINGLE_IMAGE_UP_LOAD)
     @Multipart
-    Call<ImageUpLoadBean> getUpSingleImage(@Part("myfile\"; filename=\"text.jpg") RequestBody imgs);
+    Call<ImageUpLoadBean> getUpSingleImage(@Part("myfile\"; filename=\"text.jpg\"") RequestBody imgs);
+
 
     /**
      * 患者信息修改
@@ -239,5 +243,12 @@ public interface ApiService {
     Call<ResultModel<List<InfoDoctorNoticeListBean>>> getDoctorNoticeList(@Field("doctorId") String doctorUuid,
                                                                            @Field("page") String page,
                                                                            @Field("pagecount") String pagecount);
+    /**
+     * 消息界面列表
+     */
+    @POST(API_INFORMATION_LIST)
+    @FormUrlEncoded
+    Call<ResultModel<InformationBean>> getInformationList(@Field("userUUid") String Uuid);
+
 
 }
