@@ -2,6 +2,7 @@ package cn.qiyu.magicalcrue_patient.activity;
 
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
@@ -74,5 +75,15 @@ public class MyScaleActivity extends BaseActivity {
 
         });
 
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        if (intent != null && intent.getExtras() != null) {
+            if (intent.getExtras().getString("doctorScale").equals("doctorScale")) {
+                vp_container.setCurrentItem(0);
+            }
+        }
     }
 }

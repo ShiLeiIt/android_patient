@@ -46,7 +46,7 @@ public class DoctorNoticeListActivity extends BaseActivity {
         ButterKnife.bind(this);
         mRclDoctorNotice.addItemDecoration(new RecycleViewDivider(DoctorNoticeListActivity.this, LinearLayoutManager.HORIZONTAL, R.drawable.recycleview_tieku));
         mInformationPresenter.InformationDoctorNoticeList();
-        getLode();
+        getLoad();
     }
 
     InformationPresenter mInformationPresenter = new InformationPresenter(new InformationView() {
@@ -178,7 +178,7 @@ public class DoctorNoticeListActivity extends BaseActivity {
         }
     }
 
-    public void getLode() {
+    public void getLoad() {
 
 /*加载的渐变动画*/
         mSwipeLayout.setColorSchemeResources(R.color.colorAccent,

@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -36,6 +37,8 @@ public class AllScaleFragment extends Fragment {
 
     @Bind(R.id.rcl_all_scale)
     RecyclerView mRclAllScale;
+    @Bind(R.id.swipeLayout)
+    SwipeRefreshLayout mSwipeLayout;
     private int mPaperUserID;
     private String mQuestionUUid;
 
@@ -45,8 +48,10 @@ public class AllScaleFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_all_scale, container, false);
         mMyScalePresenter.VisitScaleData();
         ButterKnife.bind(this, view);
+        getLoad();
         return view;
     }
+
     MyScalePresenter mMyScalePresenter = new MyScalePresenter(new MyScaleView() {
         @Override
         public String getPatientUuid() {
@@ -70,7 +75,8 @@ public class AllScaleFragment extends Fragment {
 
         @Override
         public void LoadDate(ResultModel<List<MyScaleBean>> model) {
-            mRclAllScale.setAdapter(new AllScaleFragment.RecyclerAdpter( model.getData()));
+            mSwipeLayout.setRefreshing(false);
+            mRclAllScale.setAdapter(new RecyclerAdpter(model.getData()));
             mRclAllScale.setLayoutManager(new LinearLayoutManager(getActivity()));
         }
 
@@ -97,7 +103,6 @@ public class AllScaleFragment extends Fragment {
 //            Log.i("paperUserID---------=", model.getData().getUserID());
             startActivity(intent);
         }
-
 
 
         @Override
@@ -138,7 +143,7 @@ public class AllScaleFragment extends Fragment {
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
-        @Bind({R.id.tv_group_name, R.id.tv_group_member,R.id.tv_scale_satus})
+        @Bind({R.id.tv_group_name, R.id.tv_group_member, R.id.tv_scale_satus})
         TextView[] mtextview;
         MyScaleBean mModel;
 
@@ -179,7 +184,7 @@ public class AllScaleFragment extends Fragment {
         }
     }
 
-    class RecyclerAdpter extends RecyclerView.Adapter<AllScaleFragment.ViewHolder> {
+    class RecyclerAdpter extends RecyclerView.Adapter<ViewHolder> {
         private List<MyScaleBean> mlist;
 
         public RecyclerAdpter(List<MyScaleBean> mlist) {
@@ -187,13 +192,13 @@ public class AllScaleFragment extends Fragment {
         }
 
         @Override
-        public AllScaleFragment.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
-            return new AllScaleFragment.ViewHolder(LayoutInflater.from(getContext()).inflate(R.layout.recyclerview_item, null));
+            return new ViewHolder(LayoutInflater.from(getContext()).inflate(R.layout.recyclerview_item, null));
         }
 
         @Override
-        public void onBindViewHolder(AllScaleFragment.ViewHolder holder, int position) {
+        public void onBindViewHolder(ViewHolder holder, int position) {
             holder.setItem(mlist.get(position));
             holder.refreshView();
         }
@@ -209,5 +214,17 @@ public class AllScaleFragment extends Fragment {
         }
     }
 
+    public void getLoad() {
 
+/*加载的渐变动画*/
+        mSwipeLayout.setColorSchemeResources(R.color.colorAccent,
+                R.color.colorPrimary,
+                R.color.colorPrimaryDark);
+        mSwipeLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                mMyScalePresenter.VisitScaleData();
+            }
+        });
+    }
 }

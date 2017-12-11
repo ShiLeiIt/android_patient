@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -17,9 +18,7 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 import cn.qiyu.magicalcrue_patient.R;
-import cn.qiyu.magicalcrue_patient.activity.ScaleDetailActivity;
 import cn.qiyu.magicalcrue_patient.activity.ScaleDetailShowActivity;
 import cn.qiyu.magicalcrue_patient.model.MyScaleBean;
 import cn.qiyu.magicalcrue_patient.model.ResultModel;
@@ -36,6 +35,8 @@ import cn.qiyu.magicalcrue_patient.visit.MyScaleView;
 public class FiScaleFragment extends Fragment {
     @Bind(R.id.rcl_fi_scale)
     RecyclerView mRclFiScale;
+    @Bind(R.id.swipeLayout)
+    SwipeRefreshLayout mSwipeLayout;
     private int mPaperUserID;
     private String mQuestionUUid;
 
@@ -45,6 +46,7 @@ public class FiScaleFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_fi_scale, container, false);
         ButterKnife.bind(this, view);
         mScalePresenter.VisitScaleData();
+        getLoad();
         return view;
     }
 
@@ -72,8 +74,9 @@ public class FiScaleFragment extends Fragment {
 
         @Override
         public void LoadDate(ResultModel<List<MyScaleBean>> model) {
+            mSwipeLayout.setRefreshing(false);
 //            Toast.makeText(getActivity(), ""+model.getMessage(), Toast.LENGTH_SHORT).show();
-            mRclFiScale.setAdapter(new FiScaleFragment.RecyclerAdpter(model.getData()));
+            mRclFiScale.setAdapter(new RecyclerAdpter(model.getData()));
             mRclFiScale.setLayoutManager(new LinearLayoutManager(getActivity()));
 
         }
@@ -183,7 +186,7 @@ public class FiScaleFragment extends Fragment {
     }
 
 
-    class RecyclerAdpter extends RecyclerView.Adapter<FiScaleFragment.ViewHolder> {
+    class RecyclerAdpter extends RecyclerView.Adapter<ViewHolder> {
         private List<MyScaleBean> mlist;
 
         public RecyclerAdpter(List<MyScaleBean> mlist) {
@@ -191,13 +194,13 @@ public class FiScaleFragment extends Fragment {
         }
 
         @Override
-        public FiScaleFragment.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
-            return new FiScaleFragment.ViewHolder(LayoutInflater.from(getContext()).inflate(R.layout.recyclerview_item, null));
+            return new ViewHolder(LayoutInflater.from(getContext()).inflate(R.layout.recyclerview_item, null));
         }
 
         @Override
-        public void onBindViewHolder(FiScaleFragment.ViewHolder holder, int position) {
+        public void onBindViewHolder(ViewHolder holder, int position) {
             holder.setItem(mlist.get(position));
             holder.refreshView();
         }
@@ -206,5 +209,19 @@ public class FiScaleFragment extends Fragment {
         public int getItemCount() {
             return mlist.size();
         }
+    }
+
+    public void getLoad() {
+
+/*加载的渐变动画*/
+        mSwipeLayout.setColorSchemeResources(R.color.colorAccent,
+                R.color.colorPrimary,
+                R.color.colorPrimaryDark);
+        mSwipeLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                mScalePresenter.VisitScaleData();
+            }
+        });
     }
 }

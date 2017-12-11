@@ -398,5 +398,19 @@ public class HomePageFragment extends Fragment implements View.OnClickListener, 
         super.onDestroyView();
         ButterKnife.unbind(this);
     }
-
+    /**
+     *
+     * @param isVisibleToUser
+     * 切换fragment时，状态
+     */
+//    @Override
+//    public void setUserVisibleHint(boolean isVisibleToUser) {
+//        super.setUserVisibleHint(isVisibleToUser);
+//        if (isVisibleToUser) {
+//            if (homePresenter!=null) {
+//                homePresenter.HomeLoadNumData();
+//                homePresenter.getDoctorTeamInfo();
+//            }
+//        }
+//    }
 }

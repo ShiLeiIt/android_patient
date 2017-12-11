@@ -112,7 +112,8 @@ public class ScaleDetailActivity extends BaseActivity {
 
         @Override
         public void LoadScaleDetailsCommit(ResultModel model) {
-
+            Toast.makeText(ScaleDetailActivity.this, "提交成功", Toast.LENGTH_SHORT).show();
+            finish();
         }
 
         @Override

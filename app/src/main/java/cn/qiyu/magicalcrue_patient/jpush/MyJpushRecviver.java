@@ -15,6 +15,7 @@ import cn.jpush.android.api.JPushInterface;
 import cn.qiyu.magicalcrue_patient.activity.DoctorListActivity;
 import cn.qiyu.magicalcrue_patient.activity.DoctorNoticeListActivity;
 import cn.qiyu.magicalcrue_patient.activity.MainActivity;
+import cn.qiyu.magicalcrue_patient.activity.MyScaleActivity;
 import cn.qiyu.magicalcrue_patient.utils.PreUtils;
 
 /**
@@ -119,14 +120,45 @@ public class MyJpushRecviver extends BroadcastReceiver {
                 js = value.replace("\\", "");
                 JSONObject jsonObject = new JSONObject(js);
                 int mTypeId = jsonObject.getInt("typeId");
+                switch (mTypeId) {
+                    case 1:
 
-                if (mTypeId == 1) {
-                    Intent intentMain = new Intent(context, DoctorNoticeListActivity.class);
-                    intentMain.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    intentMain.putExtra("doctorNotice", "doctorNotice");
-                    intentMain.putExtras(bundle);
-                    context.startActivity(intentMain);
+                        break;
+                    case 2:
+                        break;
+                    case 3:
+                        break;
+                    case 4:
+                        //跳转医生公告页面
+                        Intent intentMain = new Intent(context, DoctorNoticeListActivity.class);
+                        intentMain.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        intentMain.putExtra("doctorNotice", "doctorNotice");
+                        intentMain.putExtras(bundle);
+                        context.startActivity(intentMain);
+                        break;
+                    case 5:
+                        break;
+                    case 6:
+                        break;
+                    case 7:
+                        break;
+                    case 8:
+                        break;
+                    case 9:
+                        break;
+                    case 10:
+                        //跳转到医生量表页面
+                        Intent intentScale = new Intent(context, MyScaleActivity.class);
+                        intentScale.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        intentScale.putExtra("doctorScale", "doctorScale");
+                        intentScale.putExtras(bundle);
+                        context.startActivity(intentScale);
+                        break;
                 }
+
+//                if (mTypeId == 1) {
+//
+//                }
 
                 Log.i(TAG, "typeId--------------" + mTypeId);
 //                String data = js.getString("typeId");

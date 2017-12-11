@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -11,7 +12,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.List;
 
@@ -35,6 +35,8 @@ public class ToFiScaleFragment extends Fragment {
 
     @Bind(R.id.rcl_tofi_scale)
     RecyclerView mRclTofiScale;
+    @Bind(R.id.swipeLayout)
+    SwipeRefreshLayout mSwipeLayout;
     private String mQuestionUUid;
     private int mPaperUserID;
 
@@ -44,9 +46,9 @@ public class ToFiScaleFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_tofi_scale, container, false);
         ButterKnife.bind(this, view);
         mScalePresenter.VisitScaleData();
+        getLoad();
         return view;
     }
-
 
 
     MyScalePresenter mScalePresenter = new MyScalePresenter(new MyScaleView() {
@@ -74,7 +76,8 @@ public class ToFiScaleFragment extends Fragment {
         @Override
         public void LoadDate(ResultModel<List<MyScaleBean>> model) {
 //            Toast.makeText(getActivity(), ""+model.getMessage(), Toast.LENGTH_SHORT).show();
-            mRclTofiScale.setAdapter(new RecyclerAdpter( model.getData()));
+            mSwipeLayout.setRefreshing(false);
+            mRclTofiScale.setAdapter(new RecyclerAdpter(model.getData()));
             mRclTofiScale.setLayoutManager(new LinearLayoutManager(getActivity()));
 
         }
@@ -86,12 +89,12 @@ public class ToFiScaleFragment extends Fragment {
 
         @Override
         public String paperUserId() {
-            return String.valueOf(mPaperUserID) ;
+            return String.valueOf(mPaperUserID);
         }
 
         @Override
         public String userId() {
-            return (String) PreUtils.getParam(getActivity(),"patientuuid","0");
+            return (String) PreUtils.getParam(getActivity(), "patientuuid", "0");
         }
 
         @Override
@@ -102,7 +105,6 @@ public class ToFiScaleFragment extends Fragment {
 //            Log.i("paperUserID---------=", model.getData().getUserID());
             startActivity(intent);
         }
-
 
 
         @Override
@@ -155,7 +157,7 @@ public class ToFiScaleFragment extends Fragment {
                 public void onClick(View v) {
                     mQuestionUUid = mModel.getPaperID();
                     mPaperUserID = mModel.getPaperUserID();
-                    Log.i("paperUserID", mPaperUserID +"");
+                    Log.i("paperUserID", mPaperUserID + "");
                     mScalePresenter.VisitScaleDetailsData();
 
                 }
@@ -207,5 +209,18 @@ public class ToFiScaleFragment extends Fragment {
         public int getItemCount() {
             return mlist.size();
         }
+    }
+    public void getLoad() {
+
+/*加载的渐变动画*/
+        mSwipeLayout.setColorSchemeResources(R.color.colorAccent,
+                R.color.colorPrimary,
+                R.color.colorPrimaryDark);
+        mSwipeLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                mScalePresenter.VisitScaleData();
+            }
+        });
     }
 }

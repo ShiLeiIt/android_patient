@@ -26,7 +26,7 @@
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="6dp"
                 android:src="@drawable/iv_back"
-                android:visibility="visible"/>
+                android:visibility="gone"/>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -35,7 +35,7 @@
                 android:layout_gravity="center_horizontal"
                 android:text="@string/visitManage"
                 android:textColor="@color/app_userInfor"
-                android:textSize="18sp"/>
+                android:textSize="20sp"/>
 
             <TextView
                 android:id="@+id/tv_mere_update"
