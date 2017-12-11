@@ -63,7 +63,8 @@ public class MineFragment extends Fragment implements View.OnClickListener {
         RelativeLayout view_patient = (RelativeLayout) view.findViewById(R.id.il_patient);
         RelativeLayout view_case = (RelativeLayout) view.findViewById(R.id.il_case_history);
         RelativeLayout view_order = (RelativeLayout) view.findViewById(R.id.il_order);
-        RelativeLayout view_collect = (RelativeLayout) view.findViewById(R.id.il_collect);
+        //收藏第一版不显示
+//        RelativeLayout view_collect = (RelativeLayout) view.findViewById(R.id.il_collect);
         RelativeLayout view_service = (RelativeLayout) view.findViewById(R.id.il_service);
         TextView tv_list_patient = (TextView) view_patient.findViewById(R.id.tv_list_item);
         ImageView iv_list_patient = (ImageView) view_patient.findViewById(R.id.iv_list_item);
@@ -71,7 +72,8 @@ public class MineFragment extends Fragment implements View.OnClickListener {
         view_patient.setOnClickListener(this);
         view_case.setOnClickListener(this);
         view_order.setOnClickListener(this);
-        view_collect.setOnClickListener(this);
+        //收藏第一版不显示
+//        view_collect.setOnClickListener(this);
         view_service.setOnClickListener(this);
 
 
@@ -114,10 +116,11 @@ public class MineFragment extends Fragment implements View.OnClickListener {
         ImageView iv_list_order = (ImageView) view_order.findViewById(R.id.iv_list_item);
         tv_list_order.setText("订单");
         iv_list_order.setImageResource(R.drawable.mine_order);
-        TextView tv_list_collect = (TextView) view_collect.findViewById(R.id.tv_list_item);
-        ImageView iv_list_collect = (ImageView) view_collect.findViewById(R.id.iv_list_item);
-        tv_list_collect.setText("收藏");
-        iv_list_collect.setImageResource(R.drawable.mine_collect);
+        //收藏第一版不显示
+//        TextView tv_list_collect = (TextView) view_collect.findViewById(R.id.tv_list_item);
+//        ImageView iv_list_collect = (ImageView) view_collect.findViewById(R.id.iv_list_item);
+//        tv_list_collect.setText("收藏");
+//        iv_list_collect.setImageResource(R.drawable.mine_collect);
 
         TextView tv_list_service = (TextView) view_service.findViewById(R.id.tv_list_item);
         ImageView iv_list_service = (ImageView) view_service.findViewById(R.id.iv_list_item);
@@ -128,7 +131,7 @@ public class MineFragment extends Fragment implements View.OnClickListener {
         mIv_patient_back = (ImageView) view_patient.findViewById(R.id.iv_list_item_arrows);
         mIv_case_history_back = (ImageView) view_case.findViewById(R.id.iv_list_item_arrows);
         mIv_order_back = (ImageView) view_order.findViewById(R.id.iv_list_item_arrows);
-        mIv_collect_back = (ImageView) view_collect.findViewById(R.id.iv_list_item_arrows);
+//        mIv_collect_back = (ImageView) view_collect.findViewById(R.id.iv_list_item_arrows);
         mIv_service_back = (ImageView) view_service.findViewById(R.id.iv_list_item_arrows);
         mIv_setting = (ImageView) view.findViewById(R.id.iv_mine_setting);
 
@@ -168,12 +171,12 @@ public class MineFragment extends Fragment implements View.OnClickListener {
 
             }
         });
-        mIv_collect_back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
+//        mIv_collect_back.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//
+//            }
+//        });
         mIv_service_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
