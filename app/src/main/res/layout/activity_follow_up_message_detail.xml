@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    tools:context=".activity.FollowUpMessageDetailActivity">
+
+
+<FrameLayout
+    android:background="@color/view_bg"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <ListView
+        android:descendantFocusability="beforeDescendants"
+        android:divider="@null"
+        android:dividerHeight="10dp"
+        android:id="@+id/lv_follow_up_Detail"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    </ListView>
+ <LinearLayout
+     android:background="@color/app_white"
+     android:visibility="invisible"
+     android:id="@+id/ll_message_send"
+     android:layout_width="match_parent"
+     android:layout_height="50dp"
+     android:layout_gravity="bottom">
+     <EditText
+         android:paddingLeft="10dp"
+         android:layout_gravity="center_vertical"
+
+         android:layout_height="35dp"
+         android:layout_marginLeft="40dp"
+         android:layout_width="250dp"
+         android:id="@+id/et_reply_patient"
+         android:background="@drawable/edit_bg" />
+     <Button
+         android:id="@+id/btn_send_message"
+         android:text="发送"
+         android:layout_marginLeft="5dp"
+
+         android:layout_gravity="center_vertical"
+         android:layout_width="40dp"
+         android:layout_height="30dp" />
+ </LinearLayout>
+</FrameLayout>
+</LinearLayout>

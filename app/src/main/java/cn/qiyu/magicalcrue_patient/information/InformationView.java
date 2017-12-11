@@ -20,6 +20,7 @@ public interface InformationView extends BaseView {
     void getDoctorNoticeList(ResultModel<List<InfoDoctorNoticeListBean>> model);
 
     String getUserUuid();
+
     void getInformationList(ResultModel<InformationBean> model);
 
 }

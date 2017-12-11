@@ -30,6 +30,7 @@ import butterknife.ButterKnife;
 import cn.qiyu.magicalcrue_patient.Api.ApiService;
 import cn.qiyu.magicalcrue_patient.R;
 import cn.qiyu.magicalcrue_patient.activity.DoctorListActivity;
+import cn.qiyu.magicalcrue_patient.activity.FollowUpMessageDetailActivity;
 import cn.qiyu.magicalcrue_patient.activity.MyScaleActivity;
 import cn.qiyu.magicalcrue_patient.activity.PatientDataActivity;
 import cn.qiyu.magicalcrue_patient.activity.UserInforActivity;
@@ -334,12 +335,14 @@ public class VisitFragment extends Fragment implements View.OnClickListener {
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                         switch (position) {
                             case 0:
+                                startActivity(new Intent(getActivity(), FollowUpMessageDetailActivity.class));
 //                        Intent intent = new Intent(getActivity(), WorkGroupActivity.class);
 //                        intent.putExtra("by_doctor_uuid", "desk");
 //                        startActivity(intent);
                                 break;
                             case 1:
 //                        Toast.makeText(getActivity(), "对话", Toast.LENGTH_SHORT).show();
+
                                 break;
                             case 2:
 //                        Toast.makeText(getActivity(), "随访报告", Toast.LENGTH_SHORT).show();

@@ -44,6 +44,10 @@
     <string name="doctorNotice">医生公告</string>
     <string name="systemNotice">系统公告</string>
     <string name="visitDialogue">随访对话</string>
+    <string name="quizEtNum">0/500</string>
+    <string name="quizText">门诊手册拍照上传</string>
+
+    <string name="quizHint">你可以向随访医生团队咨询问题，请尽可能简练、准确的描述症状、部位等信息，方便医生给的准确建议。你也可以拍照进行上传</string>
 
 
 </resources>

@@ -353,7 +353,6 @@ public class PatientDataActivity extends BaseActivity {
             case R.id.rl_patient_relation:
 //                startActivityForResult(new Intent(PatientDataActivity.this, PatientRelationListActivity.class),0x002);
                 break;
-
         }
     }
 

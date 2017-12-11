@@ -3,17 +3,17 @@ package cn.qiyu.magicalcrue_patient.biz;
 import cn.qiyu.magicalcrue_patient.model.ResultModel;
 
 /**
- * Created by ShiLei on 2017/11/15.
- * 消息界面
+ * Created by ShiLei on 2017/12/11.
+ * 随访对话
  */
 
-public interface InformationBiz {
-    //医生公告列表
-    void getDoctorNoticeList(String doctorUuid, String page, String pagecount, OnLoginListener onLoginListener);
+public interface FollowUpDialogueBiz {
 
-    //消息列表
-    void getInformationList(String userUuid, OnLoginListener onLoginListener);
-
+    //随访消息列表
+    void getFollowUpDialogueList(String userUuid,
+                                 String userType,
+                                 String page,
+                                 String pagecount, OnLoginListener onLoginListener);
 
 
     interface OnLoginListener<T> {

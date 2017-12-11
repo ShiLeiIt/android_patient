@@ -7,6 +7,7 @@ import cn.qiyu.magicalcrue_patient.model.CityBean;
 import cn.qiyu.magicalcrue_patient.model.DiseasesBean;
 import cn.qiyu.magicalcrue_patient.model.DoctorInfoBean;
 import cn.qiyu.magicalcrue_patient.model.DoctorTeamBean;
+import cn.qiyu.magicalcrue_patient.model.FollowUpMessageDetaild;
 import cn.qiyu.magicalcrue_patient.model.HomeNumBean;
 import cn.qiyu.magicalcrue_patient.model.ImageUpLoadBean;
 import cn.qiyu.magicalcrue_patient.model.InfoDoctorNoticeListBean;
@@ -87,6 +88,8 @@ public interface ApiService {
     String API_DOCTOR_NOTICE_LIST = "message/doctorNoticeList";
     //消息列表
     String API_INFORMATION_LIST = "message/messageHome";
+    //医生随访消息详情 根据患者ID
+    String GET_FOLLOW_UP_DIALOGUELIST="patientInfo/getFollowUpDialogueList";
 
 
     /**
@@ -250,5 +253,16 @@ public interface ApiService {
     @FormUrlEncoded
     Call<ResultModel<InformationBean>> getInformationList(@Field("userUUid") String Uuid);
 
+    /**
+     * 随访消息列表
+     * @param
+     * @return
+     */
+    @POST(GET_FOLLOW_UP_DIALOGUELIST)
+    @FormUrlEncoded
+    Call<ResultModel<List<FollowUpMessageDetaild>>> getFollowUpDialogueList(@Field("userId") String userUuid,
+                                                                            @Field("userType") String userType,
+                                                                            @Field("page") String page,
+                                                                            @Field("pagecount") String pagecount);
 
 }
