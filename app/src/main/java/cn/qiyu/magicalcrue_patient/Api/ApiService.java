@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.List;
 
 import cn.qiyu.magicalcrue_patient.model.CityBean;
+import cn.qiyu.magicalcrue_patient.model.Comment;
 import cn.qiyu.magicalcrue_patient.model.DiseasesBean;
 import cn.qiyu.magicalcrue_patient.model.DoctorInfoBean;
 import cn.qiyu.magicalcrue_patient.model.DoctorTeamBean;
@@ -73,7 +74,8 @@ public interface ApiService {
     //医生团队的成员
     String API_DOCTOR_TEAM = "doctorinfoTeam/getDoctorTeamUserListByPatientId";
     //头像加载
-    String GET_IMAGE_ICON = "http://upload.mircalcure.com/tumourfile/sysfile/getImage/3/";
+    String GET_IMAGE_ICON = "http://upload2.mircalcure.com/tumourfile/sysfile/getImage/2/";
+
     //获取用户基本信息
     String API_USERINFOR = "patientInfo/getUserInfo";
     //获取患者基本信息
@@ -88,8 +90,14 @@ public interface ApiService {
     String API_DOCTOR_NOTICE_LIST = "message/doctorNoticeList";
     //消息列表
     String API_INFORMATION_LIST = "message/messageHome";
-    //医生随访消息详情 根据患者ID
+    //随访对话详情
     String GET_FOLLOW_UP_DIALOGUELIST="patientInfo/getFollowUpDialogueList";
+    //评论随访对话
+    String API_COMMENT_VISIT_DIALOGUE ="patientInfo/setConsultationComment";
+    //评论列表
+    String API_COMMENT_LIST ="patientInfo/getCommentList";
+
+
 
 
     /**
@@ -148,7 +156,7 @@ public interface ApiService {
      */
     @POST(API_SINGLE_IMAGE_UP_LOAD)
     @Multipart
-    Call<ImageUpLoadBean> getUpSingleImage(@Part("myfile\"; filename=\"text.jpg\"") RequestBody imgs);
+    Call<ImageUpLoadBean> getUpSingleImage(@Part("myfile\"; filename=\"image.png") RequestBody imgs);
 
 
     /**
@@ -265,4 +273,27 @@ public interface ApiService {
                                                                             @Field("page") String page,
                                                                             @Field("pagecount") String pagecount);
 
+    /**
+     * 评论随访对话
+     * @param
+     * @return
+     */
+    @POST(API_COMMENT_VISIT_DIALOGUE)
+    @FormUrlEncoded
+    Call<ResultModel> getCommentVisitDialogue(@Field("userId") String userUuid,
+                                                             @Field("consultation_id") String consultationUuid,
+                                                             @Field("user_role") String userRole,
+                                                             @Field("content") String content,@Field("parent_id") String parentId, @Field("type") String type);
+
+    /**
+     * 评论列表
+     * @param
+     * @return
+     */
+    @POST(API_COMMENT_LIST)
+    @FormUrlEncoded
+    Call<ResultModel<List<Comment>>> getCommentList(
+                                              @Field("consultation_id") String consultationUuid,
+                                              @Field("page") String page,
+                                              @Field("pagecount") String pagecount);
 }

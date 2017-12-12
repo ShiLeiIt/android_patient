@@ -1,8 +1,6 @@
 package cn.qiyu.magicalcrue_patient.image;
 
-import java.io.File;
 
-import cn.qiyu.magicalcrue_patient.biz.RegisterBiz;
 import cn.qiyu.magicalcrue_patient.model.ImageUpLoadBean;
 import okhttp3.RequestBody;
 /**

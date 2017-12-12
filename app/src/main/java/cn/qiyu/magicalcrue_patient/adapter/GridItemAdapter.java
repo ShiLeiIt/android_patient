@@ -12,6 +12,7 @@ import java.io.Serializable;
 import java.util.List;
 
 import cn.qiyu.magicalcrue_patient.R;
+import cn.qiyu.magicalcrue_patient.activity.CommentImageActivity;
 import cn.qiyu.magicalcrue_patient.model.EncloSure;
 import cn.qiyu.magicalcrue_patient.utils.DisplayHelper;
 
@@ -124,11 +125,12 @@ public class GridItemAdapter extends BaseAdapter {
            view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-//                    Intent intent=new Intent(context, ImageActivity.class);
-//                    intent.putExtra("lists", (Serializable) lists);
-//                    //将下标传过去
-//                    intent.putExtra("index",i+"");
-//                    context.startActivity(intent);
+                    //跳转到图片预览界面
+                    Intent intent=new Intent(context, CommentImageActivity.class);
+                    intent.putExtra("lists", (Serializable) lists);
+                    //将下标传过去
+                    intent.putExtra("index",i+"");
+                    context.startActivity(intent);
                 }
             });
         }

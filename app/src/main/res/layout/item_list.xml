@@ -33,20 +33,20 @@
              android:layout_width="wrap_content"
              android:layout_height="wrap_content"
              android:layout_gravity="center"
-             android:layout_marginLeft="1dp"
+             android:layout_marginLeft="11dp"
              android:layout_toRightOf="@id/iv_avatar"
              android:textSize="14dp" />
 
          <TextView
-
+             android:background="@drawable/edit_message_relation"
              android:id="@+id/tv_patient_relation"
              android:layout_width="59dp"
              android:layout_height="16dp"
              android:layout_gravity="center"
              android:layout_marginLeft="5dp"
              android:gravity="center"
-             android:textColor="@color/app_gray"
-             android:textSize="11dp" />
+             android:textColor="@color/relation"
+             android:textSize="11sp" />
          <RelativeLayout
              android:id="@+id/ll_list_item"
              android:layout_width="match_parent"
@@ -54,8 +54,9 @@
              <TextView
                  android:layout_marginTop="5dp"
                  android:id="@+id/tv_message_establish_time"
-                 android:textSize="11dp"
+                 android:textSize="11sp"
                  android:text="2016-12-12"
+                 android:textColor="@color/app_gray"
                  android:layout_marginRight="15dp"
                  android:layout_alignParentRight="true"
                  android:layout_width="wrap_content"

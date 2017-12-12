@@ -6,8 +6,7 @@ import java.util.List;
  * Created by ShiLei on 2017/11/22.
  */
 
-public class ImageUpLoadBean
-{
+public class ImageUpLoadBean {
 
 
     /**
@@ -27,14 +26,14 @@ public class ImageUpLoadBean
     private int result;
     private String message;
     private String filePath;
-    private Object fileNewName;
+    private String fileNewName;
     private String fileId;
-    private Object fileIds;
-    private Object filePath1;
-    private Object filePath2;
-    private Object filePath3;
-    private List<?> fileList;
-    private List<?> varList;
+    private String fileIds;
+    private String filePath1;
+    private String filePath2;
+    private String filePath3;
+    private List<String> fileList;
+    private List<String> varList;
 
     public int getResult() {
         return result;
@@ -60,11 +59,11 @@ public class ImageUpLoadBean
         this.filePath = filePath;
     }
 
-    public Object getFileNewName() {
+    public String getFileNewName() {
         return fileNewName;
     }
 
-    public void setFileNewName(Object fileNewName) {
+    public void setFileNewName(String fileNewName) {
         this.fileNewName = fileNewName;
     }
 
@@ -76,51 +75,51 @@ public class ImageUpLoadBean
         this.fileId = fileId;
     }
 
-    public Object getFileIds() {
+    public String getFileIds() {
         return fileIds;
     }
 
-    public void setFileIds(Object fileIds) {
+    public void setFileIds(String fileIds) {
         this.fileIds = fileIds;
     }
 
-    public Object getFilePath1() {
+    public String getFilePath1() {
         return filePath1;
     }
 
-    public void setFilePath1(Object filePath1) {
+    public void setFilePath1(String filePath1) {
         this.filePath1 = filePath1;
     }
 
-    public Object getFilePath2() {
+    public String getFilePath2() {
         return filePath2;
     }
 
-    public void setFilePath2(Object filePath2) {
+    public void setFilePath2(String filePath2) {
         this.filePath2 = filePath2;
     }
 
-    public Object getFilePath3() {
+    public String getFilePath3() {
         return filePath3;
     }
 
-    public void setFilePath3(Object filePath3) {
+    public void setFilePath3(String filePath3) {
         this.filePath3 = filePath3;
     }
 
-    public List<?> getFileList() {
+    public List<String> getFileList() {
         return fileList;
     }
 
-    public void setFileList(List<?> fileList) {
+    public void setFileList(List<String> fileList) {
         this.fileList = fileList;
     }
 
-    public List<?> getVarList() {
+    public List<String> getVarList() {
         return varList;
     }
 
-    public void setVarList(List<?> varList) {
+    public void setVarList(List<String> varList) {
         this.varList = varList;
     }
 }

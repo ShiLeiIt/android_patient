@@ -36,6 +36,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.addapp.pickers.picker.DatePicker;
+import cn.qiyu.magicalcrue_patient.Api.ApiService;
 import cn.qiyu.magicalcrue_patient.MyApplication;
 import cn.qiyu.magicalcrue_patient.R;
 import cn.qiyu.magicalcrue_patient.base.BaseActivity;
@@ -46,6 +47,7 @@ import cn.qiyu.magicalcrue_patient.model.ResultModel;
 import cn.qiyu.magicalcrue_patient.model.UserInfor;
 import cn.qiyu.magicalcrue_patient.userinfor.UserInforEdtPresenter;
 import cn.qiyu.magicalcrue_patient.userinfor.UserInforEdtView;
+import cn.qiyu.magicalcrue_patient.utils.DisplayHelper;
 import cn.qiyu.magicalcrue_patient.utils.PreUtils;
 import cn.qiyu.magicalcrue_patient.utils.Utils;
 import cn.qiyu.magicalcrue_patient.view.LoadingDialog;
@@ -156,71 +158,18 @@ public class MineUserInforActivity extends BaseActivity implements View.OnClickL
             mIvBoy.setImageResource(R.drawable.check_box_normal);
         }
         mTvSelectDate.setText(mUserInfor.getBirthday());
+        //头像保存
+        String mFileId = (String)PreUtils.getParam(MineUserInforActivity.this, "mFileId", "");
+        if (!mFileId.equals("")) {
+            String path = ApiService.GET_IMAGE_ICON +mFileId ;
+            DisplayHelper.loadGlide(MineUserInforActivity.this, path, mCivHead);
+        }
     }
 
     private void showToast(String msg) {
         Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
 
     }
-//    private void upImg(){
-//        OkHttpClient mOkHttpClent = new OkHttpClient();
-//        File file = new File(mFileName.getPath());
-//        MultipartBody.Builder builder = new MultipartBody.Builder()
-//                .setType(MultipartBody.FORM)
-//                .addFormDataPart("myfile", "small.jpg",
-//                        RequestBody.create(MediaType.parse("image/png"), file));
-//
-//        RequestBody requestBody = builder.build();
-//
-//        Request request = new Request.Builder()
-//                .url(API_SINGLE_IMAGE_UP_LOAD)
-//                .post(requestBody)
-//                .build();
-//        Call call = mOkHttpClent.newCall(request);
-//        call.enqueue(new Callback() {
-//            @Override
-//            public void onFailure(Call call, IOException e) {
-////                Log.e(TAG, "onFailure: "+e );
-//                runOnUiThread(new Runnable() {
-//                    @Override
-//                    public void run() {
-//                        Toast.makeText(MineUserInforActivity.this, "失败", Toast.LENGTH_SHORT).show();
-//                    }
-//                });
-//            }
-//
-//            @Override
-//            public void onResponse(Call call, final Response response) throws IOException {
-////                Log.e(TAG, "成功"+response);
-//                runOnUiThread(new Runnable() {
-//                    @Override
-//                    public void run() {
-//                        Log.i("response==", response.body().toString());
-//                        Toast.makeText(MineUserInforActivity.this, "成功", Toast.LENGTH_SHORT).show();
-//                    }
-//                });
-//                String body = response.body().string();
-//                Gson gson = new Gson();
-//
-//                    final ImageUpLoadBean imageUpLoadBean = gson.fromJson(body, ImageUpLoadBean.class);
-//                    if (imageUpLoadBean != null && imageUpLoadBean.getResult() == 0) {
-//                        runOnUiThread(new Runnable() {
-//                            @Override
-//                            public void run() {
-//                                mFileId = imageUpLoadBean.getFileId();
-//                                mUserInforEdtPresenter.getUserInforEdt();
-//                            }
-//                        });
-//                    }
-//
-//
-//
-//            }
-//        });
-//
-//
-//
-//}
 
 
     //图片上传服务器
@@ -245,9 +194,12 @@ public class MineUserInforActivity extends BaseActivity implements View.OnClickL
 
         @Override
         public void getImageUpLoad(ImageUpLoadBean imageUpLoadBean) {
-            //
+            Toast.makeText(MineUserInforActivity.this, ""+imageUpLoadBean.getMessage(), Toast.LENGTH_SHORT).show();
             Log.i("fileId==", imageUpLoadBean.getFileId());
+
             mFileId = imageUpLoadBean.getFileId();
+            PreUtils.setParam(MineUserInforActivity.this,"mFileId",mFileId);
+
             //进行用户信息保存到服务器
             mUserInforEdtPresenter.getUserInforEdt();
 

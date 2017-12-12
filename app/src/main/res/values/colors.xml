@@ -15,6 +15,8 @@
     <color name="dialog_bg">#90FFFFFF</color>
     <color name="textNumBg">#E43535</color>
     <color name="quizEtHint">#666666</color>
+    <color name="relation">#44B69C</color>
+    <color name="btSend">#3AB5AC</color>
 
     //扫描框
     <color name="viewfinder_mask">#60000000</color>
@@ -23,6 +25,7 @@
     <color name="result_point_color">#C0FFFF00</color>
     <color name="laser_color">#0F0</color>
     <color name="corner_color">#00FF00</color>
+    <color name="photopicker_background">#181819</color>
 
 
 

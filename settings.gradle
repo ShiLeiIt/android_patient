@@ -1,1 +1,1 @@
-include ':app', ':mainnavigatetabbar', ':android-pickers'
+include ':app', ':mainnavigatetabbar', ':android-pickers', ':photopicker'

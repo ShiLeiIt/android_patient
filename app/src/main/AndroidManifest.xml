@@ -98,6 +98,15 @@
         <activity android:name=".activity.DoctorNoticeListActivity"/>
         <activity android:name=".activity.QuizActivity"/>
         <activity android:name=".activity.FollowUpMessageDetailActivity"/>
+        <activity android:name=".activity.CommentImageActivity"/>
+        <activity
+            android:name="com.lidong.photopicker.PhotoPickerActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/PhotoPickerTheme" />
+        <activity
+            android:name="com.lidong.photopicker.PhotoPreviewActivity"
+            android:theme="@style/PhotoPickerTheme" />
+
 
 
 

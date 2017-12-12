@@ -8,6 +8,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
@@ -24,8 +25,12 @@ import cn.qiyu.magicalcrue_patient.Api.ApiService;
 import cn.qiyu.magicalcrue_patient.R;
 import cn.qiyu.magicalcrue_patient.model.Comment;
 import cn.qiyu.magicalcrue_patient.model.FollowUpMessageDetaild;
+import cn.qiyu.magicalcrue_patient.model.ResultModel;
 import cn.qiyu.magicalcrue_patient.utils.DisplayHelper;
+import cn.qiyu.magicalcrue_patient.utils.PreUtils;
 import cn.qiyu.magicalcrue_patient.view.NoScrollGridView;
+import cn.qiyu.magicalcrue_patient.visit.CommentVisitDialoguePresenter;
+import cn.qiyu.magicalcrue_patient.visit.CommentVisitDialogueView;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 
@@ -33,7 +38,6 @@ import de.hdodenhof.circleimageview.CircleImageView;
  * 首页ListView的数据适配器
  *
  * @author Administrator
- *
  */
 public class ListItemAdapter extends BaseAdapter {
 
@@ -45,14 +49,14 @@ public class ListItemAdapter extends BaseAdapter {
     private ViewHolder holder;
     private List<Comment> comments1;
     //对话UUID
-    private  String commentUUid;
+    private String commentUUid;
     private int indexrefresh;
 
-    public ListItemAdapter(Context ctx,Activity activity, List<FollowUpMessageDetaild> items) {
-        this.items=items;
+    public ListItemAdapter(Context ctx, Activity activity, List<FollowUpMessageDetaild> items) {
+        this.items = items;
         this.mContext = ctx;
         this.items = items;
-        this.activity=activity;
+        this.activity = activity;
     }
 
     @Override
@@ -95,8 +99,10 @@ public class ListItemAdapter extends BaseAdapter {
             holder.gridview = (NoScrollGridView) convertView
                     .findViewById(R.id.grid_view_item);
             //回复展示
-            holder.recyclerView=(RecyclerView)convertView.findViewById(R.id.rv_comment);
+            holder.recyclerView = (RecyclerView) convertView.findViewById(R.id.rv_comment);
             convertView.setTag(holder);
+
+
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
@@ -105,7 +111,7 @@ public class ListItemAdapter extends BaseAdapter {
         //回复title
         holder.tv_title.setText(itemEntity.getUser_name());
         //回复内容
-            holder.tv_content.setText(itemEntity.getComplaint());
+        holder.tv_content.setText(itemEntity.getComplaint());
         //回复时间
         holder.tv_create_time.setText(itemEntity.getCreate_time());
         //回复者姓名
@@ -122,44 +128,45 @@ public class ListItemAdapter extends BaseAdapter {
                 indexrefresh = position;
                 InputMethodManager imm = (InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE);
                 imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
-                //将包含输入框的布局显示出来
+//                //将包含输入框的布局显示出来
                 LinearLayout   llSend = (LinearLayout)activity.findViewById(R.id.ll_message_send);
                 llSend.setVisibility(View.VISIBLE);
-                //发送按钮的点击事件，处理
+//                //发送按钮的点击事件，处理
                 activity.findViewById(R.id.btn_send_message).setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         reply_patient = (EditText) activity.findViewById(R.id.et_reply_patient);
                         if(reply_patient.getText().toString().equals(""))
                             Toast.makeText(mContext, "请输入字符", Toast.LENGTH_SHORT).show();
-
-//                            messagePresenter.setConsultationComment();
+                        else
+                            mCommentVisitDialoguePresenter.getCommentVisitDialogue();
                     }
                 });
             }
         });
 
 
-            //刷新部分的列表
-            holder.recyclerView.setAdapter(new CommentAdapter(itemEntity.getCommentList()));
-            holder.recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
+        //刷新部分的列表
+        holder.recyclerView.setAdapter(new CommentAdapter(itemEntity.getCommentList()));
+        holder.recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
         //设置评论区不可滑动
-            holder.recyclerView.setNestedScrollingEnabled(false);
+        holder.recyclerView.setNestedScrollingEnabled(false);
 
-            //判断图片集合是否为空
-      if(itemEntity.getEnclosureList().get(0).getId().equals("")){
-          //隐藏装载容器
-          holder.gridview.setVisibility(View.GONE);
-      }else {
-          //显示加载容器
-          DisplayHelper.loadGlide(mContext, ApiService.GET_IMAGE_ICON+ itemEntity.getPhotoPath(), holder.iv_avatar);
-          holder.gridview.setVisibility(View.VISIBLE);
-          holder.gridview.setAdapter(new GridItemAdapter(mContext, itemEntity.getEnclosureList()));
-      }
+        //判断图片集合是否为空
+        if (itemEntity.getEnclosureList().get(0).getId().equals("")) {
+            //隐藏装载容器
+            holder.gridview.setVisibility(View.GONE);
+        } else {
+            //显示加载容器
+            DisplayHelper.loadGlide(mContext, ApiService.GET_IMAGE_ICON + itemEntity.getPhotoPath(), holder.iv_avatar);
+            holder.gridview.setVisibility(View.VISIBLE);
+            holder.gridview.setAdapter(new GridItemAdapter(mContext, itemEntity.getEnclosureList()));
+        }
         return convertView;
     }
+
     //局部刷新评论区
-    private void updateItem(int index,List<Comment> list) {
+    private void updateItem(int index, List<Comment> list) {
         ListView list_message = (ListView) activity.findViewById(R.id.lv_follow_up_Detail);
         int visibleFirstPosi = list_message.getFirstVisiblePosition();
         int visibleLastPosi = list_message.getLastVisiblePosition();
@@ -178,9 +185,8 @@ public class ListItemAdapter extends BaseAdapter {
      * listview组件复用，防止“卡顿”
      *
      * @author Administrator
-     *
      */
-   static class  ViewHolder {
+    static class ViewHolder {
         private RecyclerView recyclerView;
         private CircleImageView iv_avatar;
         private TextView tv_title;
@@ -189,80 +195,91 @@ public class ListItemAdapter extends BaseAdapter {
         private TextView tv_create_time;
         private NoScrollGridView gridview;
     }
-    /**
-     *
-     *
-     *
-     *
-     *
-     */
-//    MessagePresenter messagePresenter=new MessagePresenter(new MessageReplyView() {
-//        @Override
-//        public String userId() {
-//            return (String) PreUtils.getParam(mContext,"uuid","0");
-//        }
-//
-//        @Override
-//        public String consultation_id() {
-//            return commentUUid;
-//        }
-//
-//        @Override
-//        public String user_role() {
-//            return "2";
-//        }
-//
-//        @Override
-//        public String content() {
-//            return reply_patient.getText().toString();
-//        }
-//
-//        @Override
-//        public String parent_id() {
-//            return null;
-//        }
-//
-//        @Override
-//        public String type() {
-//            return "1";
-//        }
-//
-//        @Override
-//        public void setConsultationComment(ResultModel model) {
-//                messagePresenter.getCommentList();
-//        }
-//
-//        @Override
-//        public void getCommentList(ResultModel<List<Comment>> model) {
-//            comments1 = model.getData();
-//            //发送回复成功之后隐藏软键盘
-//            InputMethodManager imm = (InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE);
-//            if (imm != null) {
-//                imm.hideSoftInputFromWindow(activity.getWindow().getDecorView().getWindowToken(), 0);
-//            }
-//            updateItem(indexrefresh,model.getData());
-//            //更新items  集合中被评论的 评论集合
-//            items.get(indexrefresh).setCommentList(model.getData());
-//        }
-//
-//        @Override
-//        public void showProgress() {
-//
-//        }
-//
-//        @Override
-//        public void hideProgress() {
-//
-//        }
-//
-//        @Override
-//        public void onViewFailure(ResultModel model) {
-//            Toast.makeText(mContext, ""+model.getMessage(), Toast.LENGTH_SHORT).show();
-//        }
-//
-//        @Override
-//        public void onServerFailure(String e) {
-//            Toast.makeText(mContext, ""+e, Toast.LENGTH_SHORT).show();
-//        }
-//    });
-    }
+
+
+    CommentVisitDialoguePresenter mCommentVisitDialoguePresenter = new CommentVisitDialoguePresenter(new CommentVisitDialogueView() {
+        @Override
+        public String getUserUuid() {
+            return (String) PreUtils.getParam(mContext, "uuid", "0");
+        }
+
+        @Override
+        public String getConsultationId() {
+            Log.i("commentUUid==", commentUUid);
+            return commentUUid;
+        }
+
+        @Override
+        public String getUserRole() {
+            return "1";
+        }
+
+        @Override
+        public String getContent() {
+            return reply_patient.getText().toString();
+        }
+
+        @Override
+        public String getParentId() {
+            return "";
+        }
+
+        @Override
+        public String getType() {
+            return "1";
+        }
+
+        @Override
+        public void LoadCommentVisitDialogue(ResultModel model) {
+//            Toast.makeText(mContext, "" + model.getMessage(), Toast.LENGTH_SHORT).show();
+            mCommentVisitDialoguePresenter.getCommentList();
+        }
+
+
+        @Override
+        public String getPage() {
+            return "1";
+        }
+
+        @Override
+        public String getPageCount() {
+            return "100";
+        }
+
+        @Override
+        public void LoadCommentList(ResultModel<List<Comment>> model) {
+            comments1 = model.getData();
+        //发送回复成功之后隐藏软键盘
+            InputMethodManager imm = (InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE);
+            if (imm != null) {
+                imm.hideSoftInputFromWindow(activity.getWindow().getDecorView().getWindowToken(), 0);
+            }
+            updateItem(indexrefresh, model.getData());
+        //更新items  集合中被评论的 评论集合
+            items.get(indexrefresh).setCommentList(model.getData());
+
+        }
+
+        @Override
+        public void showProgress() {
+
+        }
+
+        @Override
+        public void hideProgress() {
+
+        }
+
+        @Override
+        public void onViewFailure(ResultModel model) {
+            Toast.makeText(mContext, "" + model.getMessage(), Toast.LENGTH_SHORT).show();
+        }
+
+        @Override
+        public void onServerFailure(String e) {
+            Log.i("消息", e);
+            Toast.makeText(mContext, "" + e, Toast.LENGTH_SHORT).show();
+        }
+    });
+
+}
