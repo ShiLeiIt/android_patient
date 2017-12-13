@@ -1,33 +1,34 @@
 package cn.qiyu.magicalcrue_patient.activity;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
+import android.view.MotionEvent;
+import android.view.View;
 import android.widget.TextView;
+
+import com.lidong.photopicker.widget.ViewPagerFixed;
+
+import java.util.ArrayList;
 
 import java.util.List;
 
-import butterknife.Bind;
 import butterknife.ButterKnife;
 import cn.qiyu.magicalcrue_patient.R;
-import cn.qiyu.magicalcrue_patient.adapter.PagerAdapterImpl;
-import cn.qiyu.magicalcrue_patient.base.BaseActivity;
+import cn.qiyu.magicalcrue_patient.adapter.PhotoPagerAdapter;
 import cn.qiyu.magicalcrue_patient.model.EncloSure;
 
-/**
- * 随访对话，评论中，图片预览
- */
-public class CommentImageActivity extends BaseActivity {
 
-    @Bind(R.id.tv_current)
-    TextView tvCurrent;
-    @Bind(R.id.tv_count)
-    TextView tvCount;
+public class CommentImageActivity extends FragmentActivity  {
+
+    private TextView tvNum;
+    private ArrayList<String> urlList;
+
     /**
      * ViewPager
      */
-    private ViewPager viewPager;
+    private ViewPagerFixed viewPager;
 
 
     /**
@@ -35,36 +36,39 @@ public class CommentImageActivity extends BaseActivity {
      */
     private List<EncloSure> lists;
     private int indices;
+    private Intent intent;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_image);
         ButterKnife.bind(this);
-        Intent intent = getIntent();
+//        viewPager = (ViewPager) findViewById(R.id.viewpager);
+
+        tvNum = (TextView) findViewById(R.id.tv_num);
+        intent = getIntent();
         lists = (List<EncloSure>) intent.getSerializableExtra("lists");
-        indices = Integer.parseInt(intent.getStringExtra("index"));
         initView();
-        initEvent();
-        tvCount.setText(lists.size()+"");
-        tvCurrent.setText((indices+1)+"");
-        viewPager.setCurrentItem(indices);
     }
 
     private void initView() {
-        viewPager = (ViewPager) findViewById(R.id.viewPager);
-    }
+        //ViewPagerFixed 解决ViewPager 缩放奔溃问题   java.lang.IllegalArgumentException: pointerIndex out of range 
+        viewPager = (ViewPagerFixed) findViewById(R.id.viewpager);
+        tvNum = (TextView) findViewById(R.id.tv_num);
 
-    private void initEvent() {
-        viewPager.setAdapter(new PagerAdapterImpl(this, lists));
+        PhotoPagerAdapter viewPagerAdapter = new PhotoPagerAdapter(getSupportFragmentManager(), lists);
+        viewPager.setAdapter(viewPagerAdapter);
+        indices = Integer.parseInt(intent.getStringExtra("index"));
+        viewPager.setCurrentItem(indices);
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
+                if (null != lists) {
+                    tvNum.setText((position + 1) + "/" + lists.size());
+                }
             }
 
             @Override
             public void onPageSelected(int position) {
-                tvCurrent.setText((position+1)+"");
             }
 
             @Override
@@ -73,6 +77,8 @@ public class CommentImageActivity extends BaseActivity {
             }
         });
     }
+
+
 
 }
 

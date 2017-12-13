@@ -97,8 +97,8 @@
         <activity android:name=".activity.ScaleDetailShowActivity"/>
         <activity android:name=".activity.DoctorNoticeListActivity"/>
         <activity android:name=".activity.QuizActivity"/>
-        <activity android:name=".activity.FollowUpMessageDetailActivity"/>
         <activity android:name=".activity.CommentImageActivity"/>
+        <activity android:name=".activity.FollowUpMessageDetailActivity"/>
         <activity
             android:name="com.lidong.photopicker.PhotoPickerActivity"
             android:screenOrientation="portrait"

@@ -153,7 +153,7 @@ public class ListItemAdapter extends BaseAdapter {
         holder.recyclerView.setNestedScrollingEnabled(false);
 
         //判断图片集合是否为空
-        if (itemEntity.getEnclosureList().get(0).getId().equals("")) {
+        if (itemEntity.getEnclosureList().size()==0) {
             //隐藏装载容器
             holder.gridview.setVisibility(View.GONE);
         } else {
