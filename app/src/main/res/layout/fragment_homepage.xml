@@ -219,7 +219,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        app:topLeftName="5"
+                        app:topLeftName="0"
                         app:topRightName="个患教课程"/>
 
                     <cn.qiyu.magicalcrue_patient.view.LLTextViewNew

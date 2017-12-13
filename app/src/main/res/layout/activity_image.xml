@@ -6,6 +6,7 @@
     android:background="@color/app_black"
     android:id="@+id/fl_container"
     tools:context=".activity.CommentImageActivity">
+
     <com.lidong.photopicker.widget.ViewPagerFixed
         android:id="@+id/viewpager"
         android:layout_width="match_parent"

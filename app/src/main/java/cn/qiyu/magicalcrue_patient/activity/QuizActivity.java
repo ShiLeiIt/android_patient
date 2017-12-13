@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -19,6 +20,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.google.gson.Gson;
 import com.lidong.photopicker.ImageCaptureManager;
 import com.lidong.photopicker.ImageConfig;
 import com.lidong.photopicker.PhotoPickerActivity;
@@ -28,14 +30,41 @@ import com.lidong.photopicker.intent.PhotoPickerIntent;
 import com.lidong.photopicker.intent.PhotoPreviewIntent;
 
 import org.json.JSONArray;
+import org.json.JSONObject;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.qiyu.magicalcrue_patient.Api.ApiService;
 import cn.qiyu.magicalcrue_patient.R;
 import cn.qiyu.magicalcrue_patient.base.BaseActivity;
+import cn.qiyu.magicalcrue_patient.image.ImageUpLoadPresenter;
+import cn.qiyu.magicalcrue_patient.image.ImageUpLoadView;
+import cn.qiyu.magicalcrue_patient.model.ImageUpLoadBean;
+import cn.qiyu.magicalcrue_patient.model.ResultModel;
+import cn.qiyu.magicalcrue_patient.model.VisitDialogueQuizBean;
+import cn.qiyu.magicalcrue_patient.utils.LGImgCompressor;
+import cn.qiyu.magicalcrue_patient.utils.PreUtils;
+import cn.qiyu.magicalcrue_patient.visit.VisitDialogueQuizPresenter;
+import cn.qiyu.magicalcrue_patient.visit.VisitDialogueQuizView;
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
+import rx.functions.Func1;
+import rx.Observer;
+import rx.Observable;
+import rx.android.schedulers.AndroidSchedulers;
+
+import rx.schedulers.Schedulers;
 
 /**
  * Created by ShiLei on 2017/12/11.
@@ -65,6 +94,13 @@ public class QuizActivity extends BaseActivity {
     private ImageCaptureManager captureManager; // 相机拍照处理类
     private String TAG = QuizActivity.class.getSimpleName();
     private GridAdapter mGridAdapter;
+    private String mUserUuid;
+    private File mFileName;
+    private RequestBody mRequestFile;
+    private String mFileId;
+    private ArrayList<String> mList;
+    private StringBuffer mStringBuffer = new StringBuffer();
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -75,6 +111,11 @@ public class QuizActivity extends BaseActivity {
     }
 
     private void init() {
+
+        mUserUuid = (String) PreUtils.getParam(QuizActivity.this, "uuid", "0");
+        Log.i("mUserUuid======", mUserUuid);
+
+
         imgConfig = new ImageConfig();
         imgConfig.minHeight = 1080;
         imgConfig.minWidth = 1920;
@@ -90,6 +131,7 @@ public class QuizActivity extends BaseActivity {
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
             }
+
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
 
@@ -145,7 +187,22 @@ public class QuizActivity extends BaseActivity {
             case R.id.tv_quiz:
                 break;
             case R.id.tv_quiz_commit:
-                break;
+
+                if (TextUtils.isEmpty(mIdEditorDetail.getText().toString())) {
+                    Toast.makeText(QuizActivity.this, "请输入需要发表的内容!", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                for (int i = 0; i < mList.size(); i++) {
+                    mFileName = new File(mList.get(i));
+                    mImageUpLoadPresenter.getImage();
+                }
+                mVisitDialogueQuizPresenter.getVisitDialogueQuiz();
+//                String photoList=mStringBuffer.toString();
+//                Log.i("photoList.length()==", photoList.length()+"");
+////                photoList.substring(0, photoList.length() - 1);
+//
+//                    Log.i("mStringBuffer===",photoList );
+
         }
     }
 
@@ -155,6 +212,7 @@ public class QuizActivity extends BaseActivity {
         super.onResume();
     }
 
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -162,9 +220,13 @@ public class QuizActivity extends BaseActivity {
             switch (requestCode) {
                 // 选择照片
                 case REQUEST_CAMERA_CODE:
-                    ArrayList<String> list = data.getStringArrayListExtra(PhotoPickerActivity.EXTRA_RESULT);
-                    Log.d(TAG, "list: " + "list = [" + list.size());
-                    loadAdpater(list);
+                    mList = data.getStringArrayListExtra(PhotoPickerActivity.EXTRA_RESULT);
+                    Log.d(TAG, "list: " + "list = [" + mList.size());
+                    for (int i = 0; i < mList.size(); i++) {
+                        mFileName = new File(mList.get(i));
+                        mRequestFile = RequestBody.create(MediaType.parse("image/png"), mFileName);
+                    }
+                    loadAdpater(mList);
                     break;
                 // 预览
                 case REQUEST_PREVIEW_CODE:
@@ -175,6 +237,7 @@ public class QuizActivity extends BaseActivity {
             }
         }
     }
+
     private void loadAdpater(ArrayList<String> paths) {
         if (imagePaths != null && imagePaths.size() > 0) {
             imagePaths.clear();
@@ -252,5 +315,99 @@ public class QuizActivity extends BaseActivity {
         }
     }
 
+
+    //随访对话提问上传
+    VisitDialogueQuizPresenter mVisitDialogueQuizPresenter = new VisitDialogueQuizPresenter(new VisitDialogueQuizView() {
+        @Override
+        public String getDoctorUuid() {
+            return "95bbb5cb43ec43b58b464e89be63a585";
+        }
+
+        @Override
+        public String getUserUuid() {
+            return mUserUuid;
+        }
+
+        @Override
+        public String getUserType() {
+            return "1";
+        }
+
+        @Override
+        public String getComplaint() {
+            return mIdEditorDetail.getText().toString();
+        }
+
+        @Override
+        public String getImageArray() {
+            return mStringBuffer.toString();
+        }
+
+        @Override
+        public void LoadVisitDialogueQuiz(ResultModel<VisitDialogueQuizBean> model) {
+            Toast.makeText(QuizActivity.this, "" + model.getMessage(), Toast.LENGTH_SHORT).show();
+
+        }
+
+        @Override
+        public void showProgress() {
+
+        }
+
+        @Override
+        public void hideProgress() {
+
+        }
+
+        @Override
+        public void onViewFailure(ResultModel model) {
+            Toast.makeText(QuizActivity.this, "" + model.getMessage(), Toast.LENGTH_SHORT).show();
+
+        }
+
+        @Override
+        public void onServerFailure(String e) {
+            Toast.makeText(QuizActivity.this, "" + e, Toast.LENGTH_SHORT).show();
+
+        }
+    });
+
+    ImageUpLoadPresenter mImageUpLoadPresenter = new ImageUpLoadPresenter(new ImageUpLoadView() {
+        @Override
+        public RequestBody getImageUpLoadFileId() {
+
+            return mRequestFile;
+        }
+
+        @Override
+        public void getImageUpLoad(ImageUpLoadBean imageUpLoadBean) {
+//            Toast.makeText(QuizActivity.this, "成功", Toast.LENGTH_SHORT).show();
+            mStringBuffer.append(imageUpLoadBean.getFileId()+",");
+//            mFileId = imageUpLoadBean.getFileId();
+            //上传
+//
+        }
+
+        @Override
+        public void showProgress() {
+
+        }
+
+        @Override
+        public void hideProgress() {
+
+        }
+
+        @Override
+        public void onViewFailure(ImageUpLoadBean model) {
+            Toast.makeText(QuizActivity.this, "" + model.getMessage(), Toast.LENGTH_SHORT).show();
+        }
+
+        @Override
+        public void onServerFailure(String e) {
+            Toast.makeText(QuizActivity.this, "" + e, Toast.LENGTH_SHORT).show();
+
+        }
+    });
 
 }

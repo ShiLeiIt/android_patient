@@ -23,6 +23,7 @@ import cn.qiyu.magicalcrue_patient.model.ResultModel;
 import cn.qiyu.magicalcrue_patient.model.ScaleDetailBean;
 import cn.qiyu.magicalcrue_patient.model.ScaleDetailsCommitBean;
 import cn.qiyu.magicalcrue_patient.model.UserInfor;
+import cn.qiyu.magicalcrue_patient.model.VisitDialogueQuizBean;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import retrofit2.Call;
@@ -96,7 +97,8 @@ public interface ApiService {
     String API_COMMENT_VISIT_DIALOGUE ="patientInfo/setConsultationComment";
     //评论列表
     String API_COMMENT_LIST ="patientInfo/getCommentList";
-
+    //随访对话中提问
+    String API_VISITDIALOGUE_QUIZ = "patientInfo/createConsultation";
 
 
 
@@ -296,4 +298,22 @@ public interface ApiService {
                                               @Field("consultation_id") String consultationUuid,
                                               @Field("page") String page,
                                               @Field("pagecount") String pagecount);
+
+
+    /**
+     * 随访对话提问
+     * @param
+     * @return
+     */
+
+    @POST(API_VISITDIALOGUE_QUIZ)
+    @FormUrlEncoded
+    Call<ResultModel<VisitDialogueQuizBean>> getVisitDialogueQuiz(
+            @Field("doctorId") String doctorUuid,
+            @Field("userId") String userUuid,
+            @Field("userType") String userType,
+            @Field("complaint") String complaint,
+            @Field("imageArray") String imageArray
+            );
+
 }

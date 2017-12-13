@@ -51,7 +51,7 @@ public class CommentImageActivity extends FragmentActivity  {
     }
 
     private void initView() {
-        //ViewPagerFixed 解决ViewPager 缩放奔溃问题   java.lang.IllegalArgumentException: pointerIndex out of range 
+        //ViewPagerFixed 解决ViewPager 缩放奔溃问题   java.lang.IllegalArgumentException: pointerIndex out of range
         viewPager = (ViewPagerFixed) findViewById(R.id.viewpager);
         tvNum = (TextView) findViewById(R.id.tv_num);
 

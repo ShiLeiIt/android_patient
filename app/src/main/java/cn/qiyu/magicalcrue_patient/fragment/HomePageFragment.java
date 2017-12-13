@@ -32,6 +32,7 @@ import cn.qiyu.magicalcrue_patient.activity.AllServeActivity;
 import cn.qiyu.magicalcrue_patient.activity.CourseActivity;
 import cn.qiyu.magicalcrue_patient.activity.MainActivity;
 import cn.qiyu.magicalcrue_patient.activity.MedicalActivity;
+import cn.qiyu.magicalcrue_patient.activity.MyScaleActivity;
 import cn.qiyu.magicalcrue_patient.activity.OffLineActivity;
 import cn.qiyu.magicalcrue_patient.adapter.AppAdapter;
 import cn.qiyu.magicalcrue_patient.home.HomeNumView;
@@ -124,6 +125,13 @@ public class HomePageFragment extends Fragment implements View.OnClickListener, 
         mTvAllserve = (TextView) view.findViewById(R.id.ll_tv_all_serve);
 
         sv_home = (ScrollView) view.findViewById(R.id.sv_home);
+        llTvDiaglog.setOnClickListener(this);
+        llTvScale.setOnClickListener(this);
+        llTvNewReport.setOnClickListener(this);
+        llTvCourse.setOnClickListener(this);
+        llTvUnscramble.setOnClickListener(this);
+
+
 
         mTvCourse.setOnClickListener(this);
         mTvMedical.setOnClickListener(this);
@@ -204,15 +212,37 @@ public class HomePageFragment extends Fragment implements View.OnClickListener, 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
+            //新对话
+            case R.id.ll_tv_diaglogue:
+                MainActivity activity = (MainActivity) getActivity();
+                activity.changFragment("消息");
+                break;
+            //新的量表
+            case R.id.ll_tv_scale:
+                startActivity(new Intent(getActivity(), MyScaleActivity.class));
+                break;
+            //新的随访报告
+            case R.id.ll_tv_new_report:
+                break;
+            //患教课程
+            case R.id.ll_tv_course:
+                break;
+            //待付款
+            case R.id.ll_tv_unscramble:
+                break;
+            //患教课程
             case R.id.ll_tv_course_new:
                 getActivity().startActivityForResult(new Intent(getActivity(), CourseActivity.class), 1111);
                 break;
+            //医疗机构
             case R.id.ll_tv_medical:
                 getActivity().startActivityForResult(new Intent(getActivity(), MedicalActivity.class), 2222);
                 break;
+            //线下沙龙
             case R.id.ll_tv_offline:
                 getActivity().startActivityForResult(new Intent(getActivity(), OffLineActivity.class), 3333);
                 break;
+            //全部服务
             case R.id.ll_tv_all_serve:
                 getActivity().startActivityForResult(new Intent(getActivity(), AllServeActivity.class), 4444);
                 break;
@@ -273,7 +303,7 @@ public class HomePageFragment extends Fragment implements View.OnClickListener, 
                 mTv_diaglog.setText(String.valueOf(numBean.getData().getNewDialogueCount()));
                 mTv_scale.setText(String.valueOf(numBean.getData().getNwePaperCount()));
                 mTv_newReport.setText(String.valueOf(numBean.getData().getNewFollowUpCount()));
-//                    mTv_course.setText(String.valueOf(numBean.getData().getCourseCount()));
+                    mTv_course.setText(String.valueOf(numBean.getData().getCourseCount()));
                 mTv_unScra.setText(String.valueOf(numBean.getData().getPendingPaymentCount()));
 //                    mTv_doctor_name.setText(numBean.getData().get);
 
