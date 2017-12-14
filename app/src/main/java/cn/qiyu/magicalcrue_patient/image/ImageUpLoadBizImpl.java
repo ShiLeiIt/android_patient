@@ -24,7 +24,7 @@ public class ImageUpLoadBizImpl extends ImageBaseBiz implements ImageUpLoadBiz {
                if (response.isSuccessful()) {
                    onLoginListener.onResponse(response.body());
                } else {
-                   onLoginListener.onFailure("服务器");
+                   onLoginListener.onFailure(response.body().getMessage());
                }
            }
 

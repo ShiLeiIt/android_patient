@@ -94,7 +94,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             System.exit(0);
         }
     }
-    
+
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
