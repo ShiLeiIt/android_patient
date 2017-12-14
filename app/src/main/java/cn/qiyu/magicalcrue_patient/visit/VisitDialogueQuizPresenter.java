@@ -18,7 +18,7 @@ public class VisitDialogueQuizPresenter {
         mVisitDialogueQuizBiz = new VisitDialogueQuizBizImpl();
         mVisitDialogueQuizView = visitDialogueQuizView;
     }
-
+    //提问带图片
    public void getVisitDialogueQuiz(){
        mVisitDialogueQuizBiz.getVisitDialogueQuiz(mVisitDialogueQuizView.getDoctorUuid(),
                mVisitDialogueQuizView.getUserUuid(),
@@ -37,6 +37,28 @@ public class VisitDialogueQuizPresenter {
                    @Override
                    public void onFailure(String e) {
                     mVisitDialogueQuizView.onServerFailure(e);
+                   }
+               });
+   }
+   //提问不带图片
+   public void getVisitDialogQuizText(){
+       mVisitDialogueQuizBiz.getVisitDialogueQuizText(mVisitDialogueQuizView.getDoctorUuid(),
+               mVisitDialogueQuizView.getUserUuid(),
+               mVisitDialogueQuizView.getUserType(),
+               mVisitDialogueQuizView.getComplaint(),
+                new VisitDialogueQuizBiz.OnLoginListener() {
+                   @Override
+                   public void onResponse(ResultModel model) {
+                       if (model.getResult() == 0) {
+                           mVisitDialogueQuizView.LoadVisitDialogueQuizText(model);
+                       } else {
+                           mVisitDialogueQuizView.onViewFailure(model);
+                       }
+                   }
+
+                   @Override
+                   public void onFailure(String e) {
+                       mVisitDialogueQuizView.onServerFailure(e);
                    }
                });
    }

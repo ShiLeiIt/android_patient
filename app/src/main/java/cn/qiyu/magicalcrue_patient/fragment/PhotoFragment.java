@@ -4,11 +4,9 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 
@@ -73,6 +71,7 @@ public class PhotoFragment extends Fragment {
         });
         Glide.with(getContext())
                 .load(url)
+                .crossFade(1000)
                 //.placeholder(R.mipmap.ic_launcher)//加载过程中图片未显示时显示的本地图片
                 .error(R.mipmap.ic_launcher)//加载异常时显示的图片
 //                .centerCrop()//图片图填充ImageView设置的大小

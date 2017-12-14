@@ -36,6 +36,25 @@ public class VisitDialogueQuizBizImpl extends BaseBiz implements VisitDialogueQu
         });
     }
 
+    @Override
+    public void getVisitDialogueQuizText(String doctorUuid, String userUuid, String userType, String complaint, final OnLoginListener onLoginListener) {
+        mApiService.getVisitDialogueQuizText(doctorUuid,userUuid,userType,complaint).enqueue(new Callback<ResultModel<VisitDialogueQuizBean>>() {
+            @Override
+            public void onResponse(Call<ResultModel<VisitDialogueQuizBean>> call, Response<ResultModel<VisitDialogueQuizBean>> response) {
+                if (response.isSuccessful()) {
+                    onLoginListener.onResponse(response.body());
+                } else {
+                    onLoginListener.onFailure(response.body().getMessage());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResultModel<VisitDialogueQuizBean>> call, Throwable throwable) {
+                onLoginListener.onFailure(throwable.getMessage());
+            }
+        });
+    }
+
 }
 
 

@@ -301,7 +301,7 @@ public interface ApiService {
 
 
     /**
-     * 随访对话提问
+     * 随访对话提问带图片（imageArray）
      * @param
      * @return
      */
@@ -315,5 +315,20 @@ public interface ApiService {
             @Field("complaint") String complaint,
             @Field("imageArray") String imageArray
             );
+    /**
+     * 随访对话提问不带图片（imageArray）
+     * @param
+     * @return
+     */
+
+    @POST(API_VISITDIALOGUE_QUIZ)
+    @FormUrlEncoded
+    Call<ResultModel<VisitDialogueQuizBean>> getVisitDialogueQuizText(
+            @Field("doctorId") String doctorUuid,
+            @Field("userId") String userUuid,
+            @Field("userType") String userType,
+            @Field("complaint") String complaint
+
+    );
 
 }

@@ -53,7 +53,7 @@ public class FollowUpMessageDetailActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_follow_up_message_detail);
         ButterKnife.bind(this);
-        mFollowUpDialoguePresenter.getFollowUpDialogue();
+
 
         //获取屏幕高度
         screenHeight = this.getWindowManager().getDefaultDisplay().getHeight();
@@ -135,6 +135,12 @@ public class FollowUpMessageDetailActivity extends BaseActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                mFollowUpDialoguePresenter.getFollowUpDialogue();
+            }
+        });
         getWindow().getDecorView().addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
             @Override
             public void onLayoutChange(View v, int left, int top, int right, int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom) {
@@ -160,4 +166,5 @@ public class FollowUpMessageDetailActivity extends BaseActivity {
         startActivity(new Intent(FollowUpMessageDetailActivity.this,QuizActivity.class));
 
     }
+
 }

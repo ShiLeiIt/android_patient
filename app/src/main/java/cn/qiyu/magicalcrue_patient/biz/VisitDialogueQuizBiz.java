@@ -15,6 +15,13 @@ public interface VisitDialogueQuizBiz {
                               String userType,
                               String complaint, String imageArray, OnLoginListener onLoginListener);
 
+    //随访对话提问不带图片
+    void getVisitDialogueQuizText(String doctorUuid,
+                              String userUuid,
+                              String userType,
+                              String complaint, OnLoginListener onLoginListener);
+
+
 
     interface OnLoginListener<T> {
 

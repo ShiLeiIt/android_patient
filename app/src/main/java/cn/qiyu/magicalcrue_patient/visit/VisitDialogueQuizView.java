@@ -18,7 +18,9 @@ public interface VisitDialogueQuizView extends BaseView {
     String getUserType();
     String getComplaint();
     String getImageArray();
-
+    //提问带图片
    void LoadVisitDialogueQuiz(ResultModel<VisitDialogueQuizBean> model);
+    //不带图片
+   void LoadVisitDialogueQuizText(ResultModel<VisitDialogueQuizBean> model);
 
 }
