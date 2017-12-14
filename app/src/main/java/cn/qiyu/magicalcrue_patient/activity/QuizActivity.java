@@ -192,17 +192,7 @@ public class QuizActivity extends BaseActivity {
                     Toast.makeText(QuizActivity.this, "请输入需要发表的内容!", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                for (int i = 0; i < mList.size(); i++) {
-                    mFileName = new File(mList.get(i));
-                    mImageUpLoadPresenter.getImage();
-                }
                 mVisitDialogueQuizPresenter.getVisitDialogueQuiz();
-//                String photoList=mStringBuffer.toString();
-//                Log.i("photoList.length()==", photoList.length()+"");
-////                photoList.substring(0, photoList.length() - 1);
-//
-//                    Log.i("mStringBuffer===",photoList );
-
         }
     }
 
@@ -222,10 +212,11 @@ public class QuizActivity extends BaseActivity {
                 case REQUEST_CAMERA_CODE:
                     mList = data.getStringArrayListExtra(PhotoPickerActivity.EXTRA_RESULT);
                     Log.d(TAG, "list: " + "list = [" + mList.size());
-                    for (int i = 0; i < mList.size(); i++) {
-                        mFileName = new File(mList.get(i));
-                        mRequestFile = RequestBody.create(MediaType.parse("image/png"), mFileName);
-                    }
+//                    for (int i = 0; i < mList.size(); i++) {
+//                        mFileName = new File(mList.get(i));
+//                        Log.i("mFileName---===",mList.get(i));
+//
+//                    }
                     loadAdpater(mList);
                     break;
                 // 预览
@@ -315,7 +306,44 @@ public class QuizActivity extends BaseActivity {
         }
     }
 
+    ImageUpLoadPresenter mImageUpLoadPresenter = new ImageUpLoadPresenter(new ImageUpLoadView() {
+        @Override
+        public RequestBody getImageUpLoadFileId() {
+            mRequestFile = RequestBody.create(MediaType.parse("image/png"), mFileName);
+            return mRequestFile;
+        }
 
+        @Override
+        public void getImageUpLoad(ImageUpLoadBean imageUpLoadBean) {
+//            Toast.makeText(QuizActivity.this, "成功", Toast.LENGTH_SHORT).show();
+            StringBuffer stringBuffer = mStringBuffer.append(imageUpLoadBean.getFileId() + ",");
+            Log.i("mStringBuffer=======", mStringBuffer.toString());
+//            mFileId = imageUpLoadBean.getFileId();
+            //上传
+//
+        }
+
+        @Override
+        public void showProgress() {
+
+        }
+
+        @Override
+        public void hideProgress() {
+
+        }
+
+        @Override
+        public void onViewFailure(ImageUpLoadBean model) {
+            Toast.makeText(QuizActivity.this, "" + model.getMessage(), Toast.LENGTH_SHORT).show();
+        }
+
+        @Override
+        public void onServerFailure(String e) {
+            Toast.makeText(QuizActivity.this, "" + e, Toast.LENGTH_SHORT).show();
+
+        }
+    });
     //随访对话提问上传
     VisitDialogueQuizPresenter mVisitDialogueQuizPresenter = new VisitDialogueQuizPresenter(new VisitDialogueQuizView() {
         @Override
@@ -340,11 +368,17 @@ public class QuizActivity extends BaseActivity {
 
         @Override
         public String getImageArray() {
+
+            Log.i("mStringBuffer------", mStringBuffer.toString());
             return mStringBuffer.toString();
         }
 
         @Override
         public void LoadVisitDialogueQuiz(ResultModel<VisitDialogueQuizBean> model) {
+            for (int i = 0; i < mList.size(); i++) {
+                mFileName = new File(mList.get(i));
+                mImageUpLoadPresenter.getImage();
+            }
             Toast.makeText(QuizActivity.this, "" + model.getMessage(), Toast.LENGTH_SHORT).show();
 
         }
@@ -363,44 +397,6 @@ public class QuizActivity extends BaseActivity {
         public void onViewFailure(ResultModel model) {
             Toast.makeText(QuizActivity.this, "" + model.getMessage(), Toast.LENGTH_SHORT).show();
 
-        }
-
-        @Override
-        public void onServerFailure(String e) {
-            Toast.makeText(QuizActivity.this, "" + e, Toast.LENGTH_SHORT).show();
-
-        }
-    });
-
-    ImageUpLoadPresenter mImageUpLoadPresenter = new ImageUpLoadPresenter(new ImageUpLoadView() {
-        @Override
-        public RequestBody getImageUpLoadFileId() {
-
-            return mRequestFile;
-        }
-
-        @Override
-        public void getImageUpLoad(ImageUpLoadBean imageUpLoadBean) {
-//            Toast.makeText(QuizActivity.this, "成功", Toast.LENGTH_SHORT).show();
-            mStringBuffer.append(imageUpLoadBean.getFileId()+",");
-//            mFileId = imageUpLoadBean.getFileId();
-            //上传
-//
-        }
-
-        @Override
-        public void showProgress() {
-
-        }
-
-        @Override
-        public void hideProgress() {
-
-        }
-
-        @Override
-        public void onViewFailure(ImageUpLoadBean model) {
-            Toast.makeText(QuizActivity.this, "" + model.getMessage(), Toast.LENGTH_SHORT).show();
         }
 
         @Override

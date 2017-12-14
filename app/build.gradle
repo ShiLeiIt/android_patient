@@ -65,8 +65,7 @@ dependencies {
     compile 'cn.jiguang.sdk:jcore:1.1.7'
     // 此处以JCore 1.1.7 版本为例。
     compile project(':photopicker')
-
-    compile 'com.github.chrisbanes.photoview:library:+'
+//    compile 'com.github.chrisbanes.photoview:library:+'
     compile 'io.reactivex:rxandroid:1.2.1'
     compile 'io.reactivex:rxjava:1.1.7'
 }
