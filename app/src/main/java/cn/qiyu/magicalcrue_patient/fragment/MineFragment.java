@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import cn.qiyu.magicalcrue_patient.Api.ApiService;
 import cn.qiyu.magicalcrue_patient.R;
+import cn.qiyu.magicalcrue_patient.activity.CaseHistoryActivity;
 import cn.qiyu.magicalcrue_patient.activity.MinePatientDataActivity;
 import cn.qiyu.magicalcrue_patient.activity.MineUserInforActivity;
 import cn.qiyu.magicalcrue_patient.activity.PatientDataActivity;
@@ -267,6 +268,8 @@ public class MineFragment extends Fragment implements View.OnClickListener {
                 mMinePresenter.getPatientBasicInfor();
                 break;
             case R.id.il_case_history:
+                //病历
+                startActivity(new Intent(getActivity(), CaseHistoryActivity.class));
                 break;
             case R.id.il_order:
                 break;

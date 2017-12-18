@@ -41,10 +41,8 @@ public class DoctorListActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_doctor_list);
-
         ButterKnife.bind(this);
         init();
-
     }
 
     private void init() {

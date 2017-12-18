@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="51dp"
+                android:background="#fff"
+                android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/tv_first_visit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="20dp"
+        android:text="@string/firstVisitTime"
+        android:textColor="@color/app_userInfor"
+        android:textSize="14sp"/>
+
+    <ImageView
+        android:id="@+id/iv_first_arrows"
+        android:layout_width="23dp"
+        android:layout_height="23dp"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="3dp"
+        android:layout_marginRight="7dp"
+        android:src="@drawable/mine_arrows"/>
+
+    <TextView
+        android:id="@+id/tv_first_visit_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_toLeftOf="@id/iv_first_arrows"
+        android:background="@null"
+        android:focusable="true"
+        android:gravity="right|center_vertical"
+        android:maxLines="1"
+        android:text="2017-11-20"
+        android:textColor="@color/app_gray"
+        android:textColorHint="@color/app_gray"
+        android:textSize="12sp"/>
+
+</RelativeLayout>

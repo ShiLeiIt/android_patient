@@ -32,6 +32,7 @@
     <dimen name="dp_15">15dp</dimen>
     <dimen name="dp_14">14dp</dimen>
     <dimen name="dp_16">16dp</dimen>
+    <dimen name="dp_18">18dp</dimen>
     <dimen name="dp_2">2dp</dimen>
     <dimen name="sp_14">14dp</dimen>
 

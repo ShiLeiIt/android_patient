@@ -300,7 +300,9 @@ public class PatientDataActivity extends BaseActivity {
                 break;
             case R.id.tv_save_userinfor:
 
+
                 mPatientInforPresenter.getPatientInforCom();
+//                Toast.makeText(this, "信息填写不完整", Toast.LENGTH_SHORT).show();
 
                 break;
             case R.id.iv_name_arrows:

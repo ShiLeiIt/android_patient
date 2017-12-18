@@ -1,13 +1,10 @@
 package cn.qiyu.magicalcrue_patient.activity;
 
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-import android.widget.ImageView;
+import android.widget.TextView;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
-import cn.qiyu.magicalcrue_patient.MyApplication;
 import cn.qiyu.magicalcrue_patient.R;
 import cn.qiyu.magicalcrue_patient.base.BaseActivity;
 
@@ -17,18 +14,20 @@ import cn.qiyu.magicalcrue_patient.base.BaseActivity;
 
 public class OffLineActivity extends BaseActivity {
 
-    @Bind(R.id.iv_offline_back)
-    ImageView mIvOfflineBack;
+
+    @Bind(R.id.tv_title)
+    TextView mTvTitle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_off_line);
         ButterKnife.bind(this);
+        init();
     }
 
-    @OnClick(R.id.iv_offline_back)
-    public void onViewClicked() {
-        finish();
+    private void init() {
+        mTvTitle.setText(R.string.offline);
     }
+
 }

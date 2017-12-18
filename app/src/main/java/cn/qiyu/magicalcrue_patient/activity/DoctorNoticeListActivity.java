@@ -1,5 +1,6 @@
 package cn.qiyu.magicalcrue_patient.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -69,6 +70,7 @@ public class DoctorNoticeListActivity extends BaseActivity {
         @Override
         public void getDoctorNoticeList(ResultModel<List<InfoDoctorNoticeListBean>> model) {
             mSwipeLayout.setRefreshing(false);
+
             mRclDoctorNotice.setAdapter(new DoctorNoticeListActivity.RecyclerAdpter(model.getData()));
             mRclDoctorNotice.setLayoutManager(new LinearLayoutManager(DoctorNoticeListActivity.this));
         }
@@ -128,7 +130,10 @@ public class DoctorNoticeListActivity extends BaseActivity {
                 @Override
                 public void onClick(View v) {
                 //条目点击
-
+                    Intent intent = new Intent(DoctorNoticeListActivity.this, DoctorNoticeDetailActivity.class);
+                    intent.putExtra("title", mModel.getTitle());
+                    intent.putExtra("context", mModel.getContent());
+                    startActivity(intent);
                 }
             });
 

@@ -151,14 +151,15 @@ public class ListItemAdapter extends BaseAdapter {
         holder.recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
         //设置评论区不可滑动
         holder.recyclerView.setNestedScrollingEnabled(false);
+        //显示加载容器
+        DisplayHelper.loadGlide(mContext, ApiService.GET_IMAGE_ICON + itemEntity.getPhotoPath(), holder.iv_avatar);
 
         //判断图片集合是否为空
         if (itemEntity.getEnclosureList().size()==0) {
             //隐藏装载容器
             holder.gridview.setVisibility(View.GONE);
         } else {
-            //显示加载容器
-            DisplayHelper.loadGlide(mContext, ApiService.GET_IMAGE_ICON + itemEntity.getPhotoPath(), holder.iv_avatar);
+
             holder.gridview.setVisibility(View.VISIBLE);
             holder.gridview.setAdapter(new GridItemAdapter(mContext, itemEntity.getEnclosureList()));
         }

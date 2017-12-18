@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:id="@+id/ll_case_history"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/view_bg"
+              android:orientation="vertical">
+
+    <include layout="@layout/layout_titlebar"/>
+
+    <View style="@style/view_rule16"/>
+
+    <include
+        android:id="@+id/icl_outpatient"
+        layout="@layout/case_history_list_item"
+        />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/view_bg"/>
+
+    <include
+        android:id="@+id/icl_leave_hospital"
+        layout="@layout/case_history_list_item"
+        />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/view_bg"/>
+
+    <include
+        android:id="@+id/icl_examine"
+        layout="@layout/case_history_list_item"
+        />
+
+    <View style="@style/view_rule16"/>
+
+    <include
+        android:id="@+id/icl_pharmacy"
+        layout="@layout/case_history_list_item"
+
+        />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/view_bg"/>
+
+    <include
+        android:id="@+id/icl_symptomatography"
+        layout="@layout/case_history_list_item"
+        />
+
+
+</LinearLayout>

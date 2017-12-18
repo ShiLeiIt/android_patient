@@ -3,6 +3,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="51dp"
                 android:background="#fff"
+
     >
 
     <ImageView
@@ -10,7 +11,7 @@
         android:layout_width="20dp"
         android:layout_height="25dp"
         android:layout_marginLeft="15dp"
-        android:layout_marginTop="16dp"
+        android:layout_centerVertical="true"
         android:src="@drawable/mine_patient"/>
 
     <TextView

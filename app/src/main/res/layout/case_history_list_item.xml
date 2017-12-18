@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="51dp"
+                android:background="#fff" >
+
+
+    <ImageView
+        android:id="@+id/iv_case_history_list_item"
+        android:layout_width="18dp"
+        android:layout_height="23dp"
+        android:layout_marginLeft="18dp"
+        android:src="@drawable/outpatient"
+        android:layout_centerVertical="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="18dp"/>
+
+    <TextView
+        android:id="@+id/tv_case_history_list_item"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="16dp"
+        android:layout_toRightOf="@id/iv_case_history_list_item"
+        android:text="门诊资料"
+        android:textColor="@color/app_userInfor"
+        android:textSize="14dp"/>
+
+    <ImageView
+        android:id="@+id/iv_case_history_list_item_arrows"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:src="@drawable/mine_arrows"/>
+
+    <TextView
+        android:id="@+id/tv_case_history_num"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="11dp"
+        android:layout_toLeftOf="@id/iv_case_history_list_item_arrows"
+        android:text="6份"
+        android:textColor="@color/app_userInfor"/>
+
+</RelativeLayout>

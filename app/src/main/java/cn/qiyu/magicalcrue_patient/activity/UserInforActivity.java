@@ -221,13 +221,13 @@ public class UserInforActivity extends BaseActivity implements View.OnClickListe
 
         @Override
         public void onViewFailure(ImageUpLoadBean model) {
-            Toast.makeText(UserInforActivity.this, "进来1111"+model.getMessage(), Toast.LENGTH_SHORT).show();
+//            Toast.makeText(UserInforActivity.this, "进来1111"+model.getMessage(), Toast.LENGTH_SHORT).show();
 
         }
 
         @Override
         public void onServerFailure(String e) {
-            Toast.makeText(UserInforActivity.this, "进来222"+e, Toast.LENGTH_SHORT).show();
+//            Toast.makeText(UserInforActivity.this, "进来222"+e, Toast.LENGTH_SHORT).show();
         }
     });
 
@@ -324,7 +324,7 @@ public class UserInforActivity extends BaseActivity implements View.OnClickListe
                     Toast.makeText(this, "信息填写不完整", Toast.LENGTH_SHORT).show();
 
                 } else {
-                    Toast.makeText(this, "6666666666666666", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(this, "6666666666666666", Toast.LENGTH_SHORT).show();
                     mImageUpLoadPresenter.getImage();
                 }
 

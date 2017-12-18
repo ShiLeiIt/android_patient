@@ -29,4 +29,13 @@
         <attr name="label_text_size" format="float"/>
     </declare-styleable>
 
+
+    <declare-styleable name="LayoutAddOutpatientView">
+
+        <attr name="text_Title" format="string" />
+        <attr name="left" format="color" />
+        <attr name="right" format="color" />
+        <attr name="text_content" format="string" />
+    </declare-styleable>
+
 </resources>

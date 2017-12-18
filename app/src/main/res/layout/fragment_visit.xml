@@ -45,7 +45,7 @@
                 android:layout_centerVertical="true"
                 android:layout_marginRight="15dp"
                 android:text="病历更新"
-                android:textColor="#4BC27E"/>
+                android:textColor="@color/caseHistoryUpdate"/>
         </RelativeLayout>
 
         <View
@@ -172,9 +172,7 @@
                 android:layout_toLeftOf="@+id/iv_doctor_icon_four"/>
         </RelativeLayout>
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="16dp"/>
+        <View style="@style/view_rule16"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -222,10 +220,7 @@
                 app:topRightName="条"/>
         </LinearLayout>
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="16dp"/>
-
+        <View style="@style/view_rule16"/>
 
         <LinearLayout
             android:layout_width="match_parent"

@@ -133,24 +133,29 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         View diaolgView = View.inflate(MainActivity.this, R.layout.dialog_update_case, null);
         mDialog = new Dialog(MainActivity.this, R.style.selectorDialog);
         mDialog.setContentView(diaolgView);
-        TextView tv_iconography = (TextView) mDialog.findViewById(R.id.tv_iconography);
-        TextView tv_laboratory = (TextView) mDialog.findViewById(R.id.tv_laboratory);
-        TextView tv_gene = (TextView) mDialog.findViewById(R.id.tv_gene);
-        TextView tv_symptomatography = (TextView) mDialog.findViewById(R.id.tv_symptomatography);
-        TextView tv_pharmacy = (TextView) mDialog.findViewById(R.id.tv_pharmacy);
-        TextView tv_leave_hospital = (TextView) mDialog.findViewById(R.id.tv_leave_hospital);
-        TextView tv_outpatient = (TextView) mDialog.findViewById(R.id.tv_outpatient);
-        ImageView iv_update_detele = (ImageView) mDialog.findViewById(R.id.iv_update_delete);
+        //出院小结
+        TextView tvLeaveHospital = (TextView) mDialog.findViewById(R.id.tv_leave_hospital);
+        //检查报告单
+        TextView tvExamine = (TextView) mDialog.findViewById(R.id.tv_examine);
+        //门诊资料
+        TextView tvOutpatient = (TextView) mDialog.findViewById(R.id.tv_outpatient);
+        //症状记录
+        TextView tvSymptomatography = (TextView) mDialog.findViewById(R.id.tv_symptomatography);
+        //用药方案
+        TextView tvPharmacy = (TextView) mDialog.findViewById(R.id.tv_pharmacy);
 
-        tv_iconography.setOnClickListener(this);
-        tv_laboratory.setOnClickListener(this);
-        tv_gene.setOnClickListener(this);
-        tv_symptomatography.setOnClickListener(this);
-        tv_pharmacy.setOnClickListener(this);
-        tv_leave_hospital.setOnClickListener(this);
-        tv_outpatient.setOnClickListener(this);
-        tv_iconography.setOnClickListener(this);
-        iv_update_detele.setOnClickListener(this);
+
+        ImageView ivUpdateDetele = (ImageView) mDialog.findViewById(R.id.iv_update_delete);
+
+
+        tvLeaveHospital.setOnClickListener(this);
+        tvExamine.setOnClickListener(this);
+        tvOutpatient.setOnClickListener(this);
+        tvSymptomatography.setOnClickListener(this);
+        tvPharmacy.setOnClickListener(this);
+
+
+        ivUpdateDetele.setOnClickListener(this);
 
         mDialog.show();
         Window dialog1Window = mDialog.getWindow();
@@ -168,18 +173,19 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            //摄像学检查
-            case R.id.tv_iconography:
-                Toast.makeText(MainActivity.this, "摄像学检查", Toast.LENGTH_SHORT).show();
+            //出院小结
+            case R.id.tv_leave_hospital:
+                Toast.makeText(MainActivity.this, "出院小结", Toast.LENGTH_SHORT).show();
                 break;
-            //实验室检查
-            case R.id.tv_laboratory:
-                Toast.makeText(MainActivity.this, "实验室检查", Toast.LENGTH_SHORT).show();
+            //检查报告单
+            case R.id.tv_examine:
+                Toast.makeText(MainActivity.this, "检查报告单", Toast.LENGTH_SHORT).show();
                 break;
-            //基因检测
-            case R.id.tv_gene:
-                Toast.makeText(MainActivity.this, "基因检测", Toast.LENGTH_SHORT).show();
+            //门诊资料
+            case R.id.tv_outpatient:
+                Toast.makeText(MainActivity.this, "门诊资料", Toast.LENGTH_SHORT).show();
                 break;
+
             //症状记录
             case R.id.tv_symptomatography:
                 Toast.makeText(MainActivity.this, "症状记录", Toast.LENGTH_SHORT).show();
@@ -188,14 +194,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             case R.id.tv_pharmacy:
                 Toast.makeText(MainActivity.this, "用药方案", Toast.LENGTH_SHORT).show();
                 break;
-            //出院小结
-            case R.id.tv_leave_hospital:
-                Toast.makeText(MainActivity.this, "出院小结", Toast.LENGTH_SHORT).show();
-                break;
-            //门诊资料
-            case R.id.tv_outpatient:
-                Toast.makeText(MainActivity.this, "门诊资料", Toast.LENGTH_SHORT).show();
-                break;
+
             case R.id.iv_update_delete:
                 mDialog.dismiss();
                 break;

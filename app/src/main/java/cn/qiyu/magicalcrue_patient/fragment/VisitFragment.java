@@ -29,8 +29,10 @@ import java.util.List;
 import butterknife.ButterKnife;
 import cn.qiyu.magicalcrue_patient.Api.ApiService;
 import cn.qiyu.magicalcrue_patient.R;
+import cn.qiyu.magicalcrue_patient.activity.CaseHistoryActivity;
 import cn.qiyu.magicalcrue_patient.activity.DoctorListActivity;
 import cn.qiyu.magicalcrue_patient.activity.FollowUpMessageDetailActivity;
+import cn.qiyu.magicalcrue_patient.activity.MainActivity;
 import cn.qiyu.magicalcrue_patient.activity.MyScaleActivity;
 import cn.qiyu.magicalcrue_patient.activity.PatientDataActivity;
 import cn.qiyu.magicalcrue_patient.activity.UserInforActivity;
@@ -329,18 +331,21 @@ public class VisitFragment extends Fragment implements View.OnClickListener {
         mGridView.setAdapter(saMenuItem);
         mGridView.setOnItemClickListener(
 
-
                 new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                         switch (position) {
                             case 0:
+                                //随访对话
                                 startActivity(new Intent(getActivity(), FollowUpMessageDetailActivity.class));
+
 //                        Intent intent = new Intent(getActivity(), WorkGroupActivity.class);
 //                        intent.putExtra("by_doctor_uuid", "desk");
 //                        startActivity(intent);
                                 break;
                             case 1:
+                                //病历
+                                startActivity(new Intent(getActivity(), CaseHistoryActivity.class));
 //                        Toast.makeText(getActivity(), "对话", Toast.LENGTH_SHORT).show();
 
                                 break;
@@ -409,6 +414,7 @@ public class VisitFragment extends Fragment implements View.OnClickListener {
     }
 
 
+
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -437,17 +443,9 @@ public class VisitFragment extends Fragment implements View.OnClickListener {
                 mNamewe = "123";
                 mMinePresenter.getPatientBasicInfor();
                 break;
-            //摄像学检查
-            case R.id.tv_iconography:
-                Toast.makeText(getActivity(), "摄像学检查", Toast.LENGTH_SHORT).show();
-                break;
-            //实验室检查
-            case R.id.tv_laboratory:
-                Toast.makeText(getActivity(), "实验室检查", Toast.LENGTH_SHORT).show();
-                break;
-            //基因检测
-            case R.id.tv_gene:
-                Toast.makeText(getActivity(), "基因检测", Toast.LENGTH_SHORT).show();
+            //检查报告单
+            case R.id.tv_examine:
+                Toast.makeText(getActivity(), "检查报告单", Toast.LENGTH_SHORT).show();
                 break;
             //症状记录
             case R.id.tv_symptomatography:
@@ -479,23 +477,22 @@ public class VisitFragment extends Fragment implements View.OnClickListener {
         View diaolgView = View.inflate(getActivity(), R.layout.dialog_update_case, null);
         mDialog = new Dialog(getActivity(), R.style.selectorDialog);
         mDialog.setContentView(diaolgView);
-        TextView tv_iconography = (TextView) mDialog.findViewById(R.id.tv_iconography);
-        TextView tv_laboratory = (TextView) mDialog.findViewById(R.id.tv_laboratory);
-        TextView tv_gene = (TextView) mDialog.findViewById(R.id.tv_gene);
+
+        //检查报告单
+        TextView tvExamine = (TextView) mDialog.findViewById(R.id.tv_examine);
+
         TextView tv_symptomatography = (TextView) mDialog.findViewById(R.id.tv_symptomatography);
         TextView tv_pharmacy = (TextView) mDialog.findViewById(R.id.tv_pharmacy);
         TextView tv_leave_hospital = (TextView) mDialog.findViewById(R.id.tv_leave_hospital);
         TextView tv_outpatient = (TextView) mDialog.findViewById(R.id.tv_outpatient);
         ImageView iv_update_detele = (ImageView) mDialog.findViewById(R.id.iv_update_delete);
 
-        tv_iconography.setOnClickListener(this);
-        tv_laboratory.setOnClickListener(this);
-        tv_gene.setOnClickListener(this);
+        tvExamine.setOnClickListener(this);
         tv_symptomatography.setOnClickListener(this);
         tv_pharmacy.setOnClickListener(this);
         tv_leave_hospital.setOnClickListener(this);
         tv_outpatient.setOnClickListener(this);
-        tv_iconography.setOnClickListener(this);
+
         iv_update_detele.setOnClickListener(this);
 
         mDialog.show();

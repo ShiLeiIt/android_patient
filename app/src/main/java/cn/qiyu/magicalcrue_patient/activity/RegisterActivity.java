@@ -118,8 +118,9 @@ public class RegisterActivity extends BaseActivity {
 
             @Override
             public String getJpushId() {
-//                Log.i("jpushId==", (String) PreUtils.getParam(RegisterActivity.this, "jpushId", ""));
-                return (String) PreUtils.getParam(RegisterActivity.this, "jpushId", "");
+                mJpushId = JPushInterface.getRegistrationID(RegisterActivity.this);
+                Log.i("jpushId==========", mJpushId);
+                return mJpushId;
 //                return "";
             }
 

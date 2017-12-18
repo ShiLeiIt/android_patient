@@ -48,5 +48,12 @@
         <item name="android:textStyle">normal</item>
     </style>
 
+    <!-- 全局分割线16dp -->
+    <style name="view_rule16">
+        <item name="android:background">@color/view_bg</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">16dp</item>
+    </style>
+
 
 </resources>

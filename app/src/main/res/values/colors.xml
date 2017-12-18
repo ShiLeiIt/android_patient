@@ -17,6 +17,7 @@
     <color name="quizEtHint">#666666</color>
     <color name="relation">#44B69C</color>
     <color name="btSend">#3AB5AC</color>
+    <color name="caseHistoryUpdate">#4BC27E</color>
 
     //扫描框
     <color name="viewfinder_mask">#60000000</color>

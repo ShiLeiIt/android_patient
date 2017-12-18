@@ -340,6 +340,8 @@ public class QuizActivity extends BaseActivity {
 //            mFileId = imageUpLoadBean.getFileId();
             //上传
             Log.i("mList==", mList.size()+"");
+
+
             if(requestImageIndex==mList.size()-1){
                 mVisitDialogueQuizPresenter.getVisitDialogueQuiz();
 

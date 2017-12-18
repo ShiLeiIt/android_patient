@@ -99,7 +99,7 @@ public class HomePageFragment extends Fragment implements View.OnClickListener, 
 
         View view = inflater.inflate(R.layout.fragment_homepage, container, false);
 
-        //注册EventBus，在开始的位置 ok
+        //注册EventBus，在开始的位置
         EventBus.getDefault().register(this);
 //        LLImageView viewById = (LLImageView) view.findViewById(R.id.iv_doctor_icon);
         mTv_doctor_name = (TextView) view.findViewById(R.id.tv_mydocter);
@@ -107,6 +107,7 @@ public class HomePageFragment extends Fragment implements View.OnClickListener, 
         LLTextView llTvInquiry = (LLTextView) view.findViewById(R.id.ll_inquiry);//在线问诊
         LLTextView llTvReport = (LLTextView) view.findViewById(R.id.ll_tv_report);//随访报告
         LLTextView llTvRecord = (LLTextView) view.findViewById(R.id.ll_tv_record);//病情记录
+
         LLTextViewNew llTvDiaglog = (LLTextViewNew) view.findViewById(R.id.ll_tv_diaglogue);//新对话
         LLTextViewNew llTvScale = (LLTextViewNew) view.findViewById(R.id.ll_tv_scale);//新量表
         LLTextViewNew llTvNewReport = (LLTextViewNew) view.findViewById(R.id.ll_tv_new_report);//新随访报告
@@ -303,6 +304,7 @@ public class HomePageFragment extends Fragment implements View.OnClickListener, 
                 mTv_diaglog.setText(String.valueOf(numBean.getData().getNewDialogueCount()));
                 mTv_scale.setText(String.valueOf(numBean.getData().getNwePaperCount()));
                 mTv_newReport.setText(String.valueOf(numBean.getData().getNewFollowUpCount()));
+
                     mTv_course.setText(String.valueOf(numBean.getData().getCourseCount()));
                 mTv_unScra.setText(String.valueOf(numBean.getData().getPendingPaymentCount()));
 //                    mTv_doctor_name.setText(numBean.getData().get);

@@ -36,6 +36,7 @@ public class MyScaleActivity extends BaseActivity {
         initview();
         initevents();
     }
+
     private void initview() {
         // 在 fragment 中进行绑定
         ButterKnife.bind(this);
@@ -65,9 +66,11 @@ public class MyScaleActivity extends BaseActivity {
                     vp_container.setCurrentItem(2);
                 }
             }
+
             @Override
             public void onTabUnselected(TabLayout.Tab tab) {
             }
+
             @Override
             public void onTabReselected(TabLayout.Tab tab) {
 
@@ -75,6 +78,12 @@ public class MyScaleActivity extends BaseActivity {
 
         });
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
     }
 
     @Override

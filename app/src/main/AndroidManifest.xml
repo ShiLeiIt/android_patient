@@ -53,7 +53,6 @@
             android:launchMode="singleTask"
             />
 
-        <activity android:name=".activity.LoginActivity"/>
         <activity android:name=".activity.PatientRelationListActivity"/>
         <activity android:name=".activity.PatientDataActivity"
 
@@ -93,12 +92,21 @@
             />
         <activity android:name=".activity.MinePatientDataActivity"
             />
-        <activity android:name=".activity.MyScaleActivity"/>
+        <activity android:name=".activity.MyScaleActivity"
+                  android:launchMode="singleTop"
+            />
         <activity android:name=".activity.ScaleDetailShowActivity"/>
-        <activity android:name=".activity.DoctorNoticeListActivity"/>
+        <activity android:name=".activity.DoctorNoticeListActivity"
+                  android:launchMode="singleTop"
+            />
+        <activity android:name=".activity.DoctorNoticeDetailActivity"
+                  android:launchMode="singleTop"
+            />
         <activity android:name=".activity.QuizActivity"/>
         <activity android:name=".activity.CommentImageActivity"/>
-        <activity android:name=".activity.FollowUpMessageDetailActivity"/>
+        <activity android:name=".activity.FollowUpMessageDetailActivity"
+                  android:launchMode="singleTop"
+            />
         <activity
             android:name="com.lidong.photopicker.PhotoPickerActivity"
             android:screenOrientation="portrait"
@@ -106,6 +114,10 @@
         <activity
             android:name="com.lidong.photopicker.PhotoPreviewActivity"
             android:theme="@style/PhotoPickerTheme" />
+        <activity android:name=".activity.CaseHistoryActivity"/>
+        <activity android:name=".activity.AddOutpatientDataActivity"/>
+        <activity android:name=".activity.SymptomDescriptionsActivity"/>
+
 
 
 

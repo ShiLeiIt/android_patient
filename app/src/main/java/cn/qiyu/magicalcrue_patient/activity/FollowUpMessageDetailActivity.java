@@ -161,6 +161,12 @@ public class FollowUpMessageDetailActivity extends BaseActivity {
         });
     }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
+    }
+
     @OnClick(R.id.tv_condition_quiz)
     public void onViewClicked() {
         startActivity(new Intent(FollowUpMessageDetailActivity.this,QuizActivity.class));

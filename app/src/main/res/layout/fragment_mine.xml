@@ -44,7 +44,7 @@
                 android:textColor="#0f0f00"
                 android:layout_toRightOf="@id/iv_mine_icon"
                 android:text="钱宝宝"
-                android:textSize="14dp"/>
+                android:textSize="14sp"/>
 
             <TextView
                 android:id="@+id/tv_mine_phone_num"
@@ -55,7 +55,7 @@
                 android:layout_marginTop="8dp"
                 android:layout_toRightOf="@id/iv_mine_icon"
                 android:text="136****6666"
-                android:textSize="12dp"/>
+                android:textSize="12sp"/>
 
             <TextView
                 android:id="@+id/tv_nametag"
@@ -83,16 +83,13 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="0.5dp"
-            android:background="#C6C6C6"/>
+            android:background="@color/view_bg"/>
 
         <include
             android:id="@+id/il_case_history"
             layout="@layout/mine_list_item"/>
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="16dp"
-            />
+        <View style="@style/view_rule16"/>
 
         <include
             android:id="@+id/il_order"
@@ -101,7 +98,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="0.5dp"
-            android:background="#C6C6C6"/>
+            android:background="@color/view_bg"/>
 
         <include
             android:id="@+id/il_collect"

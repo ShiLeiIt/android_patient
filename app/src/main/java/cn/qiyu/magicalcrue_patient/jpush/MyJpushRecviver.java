@@ -8,12 +8,15 @@ import android.util.Log;
 
 import com.alibaba.fastjson.JSON;
 
+import org.greenrobot.eventbus.EventBus;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import cn.jpush.android.api.JPushInterface;
 import cn.qiyu.magicalcrue_patient.activity.DoctorListActivity;
+import cn.qiyu.magicalcrue_patient.activity.DoctorNoticeDetailActivity;
 import cn.qiyu.magicalcrue_patient.activity.DoctorNoticeListActivity;
+import cn.qiyu.magicalcrue_patient.activity.FollowUpMessageDetailActivity;
 import cn.qiyu.magicalcrue_patient.activity.MainActivity;
 import cn.qiyu.magicalcrue_patient.activity.MyScaleActivity;
 import cn.qiyu.magicalcrue_patient.utils.PreUtils;
@@ -42,8 +45,28 @@ public class MyJpushRecviver extends BroadcastReceiver {
             Log.e(TAG, "onReceive1: ");
         } else if (JPushInterface.ACTION_MESSAGE_RECEIVED.equals(intent.getAction())) {
             /**
-             * 用户接受SDK消息的intent
+             * 用户接受SDK自定义消息的intent
              */
+
+            String message=bundle.getString(JPushInterface.EXTRA_MESSAGE);
+            String messageJson=bundle.getString(JPushInterface.EXTRA_EXTRA);
+            Log.i(TAG, "收到自定义消息 "+message);
+            Log.i(TAG, "收到自定义消息类型 "+messageJson);
+
+
+            try {
+                JSONObject json = new JSONObject(messageJson);
+                String value = json.getString("message extras key");
+                messageJson = value.replace("\\", "");
+                JSONObject jsonObject = new JSONObject(messageJson);
+                int mTypeId = jsonObject.getInt("typeId");
+                Log.i(TAG, "mTypeId "+mTypeId);
+//                EventBus.getDefault().post(mTypeId+"");
+            }
+            catch (JSONException e) {
+                e.printStackTrace();
+            }
+
 //            Log.e(TAG, "收到了自定义消息消息是2");
 //            Log. d ( TAG ,  "接收到推送下来的自定义消息: "  + bundle.getString(JPushInterface. EXTRA_MESSAGE ));
 
@@ -80,20 +103,20 @@ public class MyJpushRecviver extends BroadcastReceiver {
 
             //这里做自己的操作，关于EventBus后续会讲的
             //匹配对应的内容发送通知
-            if (extra6.contains("Hello World")) {
-                Log.e(TAG, "onReceive包含: ");
-                //  EventBus.getDefault().post(new HomeRecviverEvent());
-            }
-
-            Log.e(TAG, "收到了自定义消息消息内容是-extra1:" + extra1);
-            Log.e(TAG, "收到了自定义消息消息extra是-extra2:" + extra2);
-            Log.e(TAG, "收到了自定义消息消息extra是-extra3:" + extra3);
-            Log.e(TAG, "收到了自定义消息消息extra是-extra4:" + extra4);
-            Log.e(TAG, "收到了自定义消息消息extra是-extra5:" + extra5);
-            Log.e(TAG, "收到了自定义消息消息extra是-extra6:" + extra6);
-            Log.e(TAG, "收到了自定义消息消息extra是-notifactionId:" + notifactionId + "");
-            Log.e(TAG, "收到了自定义消息消息extra是-extra8:" + extra8);
-            Log.e(TAG, "收到了自定义消息消息extra是-extra9:" + extra9);
+//            if (extra6.contains("Hello World")) {
+//                Log.e(TAG, "onReceive包含: ");
+//                //  EventBus.getDefault().post(new HomeRecviverEvent());
+//            }
+//
+//            Log.e(TAG, "收到了自定义消息消息内容是-extra1:" + extra1);
+//            Log.e(TAG, "收到了自定义消息消息extra是-extra2:" + extra2);
+//            Log.e(TAG, "收到了自定义消息消息extra是-extra3:" + extra3);
+//            Log.e(TAG, "收到了自定义消息消息extra是-extra4:" + extra4);
+//            Log.e(TAG, "收到了自定义消息消息extra是-extra5:" + extra5);
+//            Log.e(TAG, "收到了自定义消息消息extra是-extra6:" + extra6);
+//            Log.e(TAG, "收到了自定义消息消息extra是-notifactionId:" + notifactionId + "");
+//            Log.e(TAG, "收到了自定义消息消息extra是-extra8:" + extra8);
+//            Log.e(TAG, "收到了自定义消息消息extra是-extra9:" + extra9);
 //            Log.e(TAG, "收到了自定义消息消息extra是2:" + extra10);
         } else if (JPushInterface.ACTION_NOTIFICATION_OPENED.equals(intent.getAction())) {
             /**
@@ -116,13 +139,18 @@ public class MyJpushRecviver extends BroadcastReceiver {
             String js = "";
             try {
                 JSONObject json = new JSONObject(extra10);
+                Log.i("json===", json.toString());
                 String value = json.getString("androidNotification extras key");
                 js = value.replace("\\", "");
                 JSONObject jsonObject = new JSONObject(js);
                 int mTypeId = jsonObject.getInt("typeId");
                 switch (mTypeId) {
                     case 1:
-
+                        //跳转随访对话
+                        Intent intentDialogue = new Intent(context, FollowUpMessageDetailActivity.class);
+                        intentDialogue.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        intentDialogue.putExtras(bundle);
+                        context.startActivity(intentDialogue);
                         break;
                     case 2:
                         break;
@@ -156,9 +184,6 @@ public class MyJpushRecviver extends BroadcastReceiver {
                         break;
                 }
 
-//                if (mTypeId == 1) {
-//
-//                }
 
                 Log.i(TAG, "typeId--------------" + mTypeId);
 //                String data = js.getString("typeId");
