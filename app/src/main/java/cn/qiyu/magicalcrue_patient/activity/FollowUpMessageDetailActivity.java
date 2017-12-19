@@ -170,7 +170,6 @@ public class FollowUpMessageDetailActivity extends BaseActivity {
     @OnClick(R.id.tv_condition_quiz)
     public void onViewClicked() {
         startActivity(new Intent(FollowUpMessageDetailActivity.this,QuizActivity.class));
-
     }
 
 }

@@ -40,6 +40,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/dp_16"
         android:layout_marginTop="@dimen/dp_16"
         android:background="@color/app_white">
 
@@ -49,7 +50,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/dp_15"
             android:layout_marginTop="@dimen/dp_18"
-            android:text="描述:"
+            android:text="详情:"
             android:textColor="@color/app_userInfor"
             android:textSize="14sp"/>
 
@@ -58,10 +59,10 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="24dp"
-            android:focusable="true"
-            android:focusableInTouchMode="true"
             android:layout_toRightOf="@id/tv_describe"
-            android:background="@drawable/shape_circle_et_bg">
+            android:background="@drawable/shape_circle_et_bg"
+            android:focusable="true"
+            android:focusableInTouchMode="true">
 
             <EditText
                 android:id="@+id/id_editor_detail"
@@ -91,15 +92,12 @@
                 android:textColor="@color/app_gray"
                 android:textSize="@dimen/sp_14"/>
         </RelativeLayout>
-
-
     </RelativeLayout>
 
     <RelativeLayout
         android:id="@+id/rl_camera"
         android:layout_width="match_parent"
         android:layout_height="81dp"
-        android:layout_marginTop="@dimen/dp_16"
         android:background="@color/app_white">
 
         <ImageView

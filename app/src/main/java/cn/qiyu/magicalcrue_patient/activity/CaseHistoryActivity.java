@@ -1,6 +1,7 @@
 package cn.qiyu.magicalcrue_patient.activity;
 
 import android.app.Dialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.util.DisplayMetrics;
@@ -121,7 +122,6 @@ public class CaseHistoryActivity extends BaseActivity implements View.OnClickLis
     public void onViewClicked() {
         updateCase();
 
-//        Toast.makeText(this, "提交", Toast.LENGTH_SHORT).show();
     }
     //弹出Dialog
     public void updateCase() {
@@ -190,10 +190,12 @@ public class CaseHistoryActivity extends BaseActivity implements View.OnClickLis
                 mDialog.dismiss();
                 break;
             case R.id.icl_outpatient:
-                Toast.makeText(this, "门诊资料1", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(this, "门诊资料1", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(CaseHistoryActivity.this,OutpatientInformationListActivity.class));
                 break;
             case R.id.icl_leave_hospital:
-                Toast.makeText(this, "出院小结1", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(CaseHistoryActivity.this,LeaveHospitalInfoListActivity.class));
+//                Toast.makeText(this, "出院小结1", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.icl_examine:
                 Toast.makeText(this, "检查报告单1", Toast.LENGTH_SHORT).show();

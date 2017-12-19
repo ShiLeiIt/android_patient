@@ -5,11 +5,13 @@ import java.util.List;
 
 import cn.qiyu.magicalcrue_patient.model.CityBean;
 import cn.qiyu.magicalcrue_patient.model.Comment;
+import cn.qiyu.magicalcrue_patient.model.DischargeBean;
 import cn.qiyu.magicalcrue_patient.model.DiseasesBean;
 import cn.qiyu.magicalcrue_patient.model.DoctorInfoBean;
 import cn.qiyu.magicalcrue_patient.model.DoctorTeamBean;
 import cn.qiyu.magicalcrue_patient.model.FollowUpMessageDetaild;
 import cn.qiyu.magicalcrue_patient.model.HomeNumBean;
+import cn.qiyu.magicalcrue_patient.model.HospitalListBean;
 import cn.qiyu.magicalcrue_patient.model.ImageUpLoadBean;
 import cn.qiyu.magicalcrue_patient.model.InfoDoctorNoticeListBean;
 import cn.qiyu.magicalcrue_patient.model.InformationBean;
@@ -95,14 +97,19 @@ public interface ApiService {
     //消息列表
     String API_INFORMATION_LIST = "message/messageHome";
     //随访对话详情
-    String GET_FOLLOW_UP_DIALOGUELIST="patientInfo/getFollowUpDialogueList";
+    String GET_FOLLOW_UP_DIALOGUELIST = "patientInfo/getFollowUpDialogueList";
     //评论随访对话
-    String API_COMMENT_VISIT_DIALOGUE ="patientInfo/setConsultationComment";
+    String API_COMMENT_VISIT_DIALOGUE = "patientInfo/setConsultationComment";
     //评论列表
-    String API_COMMENT_LIST ="patientInfo/getCommentList";
+    String API_COMMENT_LIST = "patientInfo/getCommentList";
     //随访对话中提问
     String API_VISITDIALOGUE_QUIZ = "patientInfo/createConsultation";
-
+    //门诊资料信息获取
+    String API_OUTPATIENT_INFORMATION_OBTAIN = "medicalRecord/getOutpatientDepartmenList";
+    //出院小结信息获取
+    String API_LEAVE_HOSPITAL_INFORMATION_OBTAIN = "medicalRecord/getHospitalizationHistory";
+    //医院列表信息
+    String API_HOSPITALLIST = "hospital/hospitalList";
 
 
     /**
@@ -257,8 +264,9 @@ public interface ApiService {
     @POST(API_DOCTOR_NOTICE_LIST)
     @FormUrlEncoded
     Call<ResultModel<List<InfoDoctorNoticeListBean>>> getDoctorNoticeList(@Field("doctorId") String doctorUuid,
-                                                                           @Field("page") String page,
-                                                                           @Field("pagecount") String pagecount);
+                                                                          @Field("page") String page,
+                                                                          @Field("pagecount") String pagecount);
+
     /**
      * 消息界面列表
      */
@@ -268,6 +276,7 @@ public interface ApiService {
 
     /**
      * 随访消息列表
+     *
      * @param
      * @return
      */
@@ -280,31 +289,34 @@ public interface ApiService {
 
     /**
      * 评论随访对话
+     *
      * @param
      * @return
      */
     @POST(API_COMMENT_VISIT_DIALOGUE)
     @FormUrlEncoded
     Call<ResultModel> getCommentVisitDialogue(@Field("userId") String userUuid,
-                                                             @Field("consultation_id") String consultationUuid,
-                                                             @Field("user_role") String userRole,
-                                                             @Field("content") String content,@Field("parent_id") String parentId, @Field("type") String type);
+                                              @Field("consultation_id") String consultationUuid,
+                                              @Field("user_role") String userRole,
+                                              @Field("content") String content, @Field("parent_id") String parentId, @Field("type") String type);
 
     /**
      * 评论列表
+     *
      * @param
      * @return
      */
     @POST(API_COMMENT_LIST)
     @FormUrlEncoded
     Call<ResultModel<List<Comment>>> getCommentList(
-                                              @Field("consultation_id") String consultationUuid,
-                                              @Field("page") String page,
-                                              @Field("pagecount") String pagecount);
+            @Field("consultation_id") String consultationUuid,
+            @Field("page") String page,
+            @Field("pagecount") String pagecount);
 
 
     /**
      * 随访对话提问带图片（imageArray）
+     *
      * @param
      * @return
      */
@@ -317,9 +329,11 @@ public interface ApiService {
             @Field("userType") String userType,
             @Field("complaint") String complaint,
             @Field("imageArray") String imageArray
-            );
+    );
+
     /**
      * 随访对话提问不带图片（imageArray）
+     *
      * @param
      * @return
      */
@@ -333,5 +347,35 @@ public interface ApiService {
             @Field("complaint") String complaint
 
     );
+
+    /**
+     * 门诊资料信息获取显示
+     */
+    @POST(API_OUTPATIENT_INFORMATION_OBTAIN)
+    @FormUrlEncoded
+    Call<ResultModel<List<DischargeBean>>> getOutpatientInfo(
+            @Field("patientId") String patientUuid,
+            @Field("page") String page,
+            @Field("pagecount") String pageCount);
+
+    /**
+     * 出院小结信息获取
+     */
+    @POST(API_LEAVE_HOSPITAL_INFORMATION_OBTAIN)
+    @FormUrlEncoded
+    Call<ResultModel<List<DischargeBean>>> getLeaveHospitalInfo(
+            @Field("patientId") String patientUuid,
+            @Field("page") String page,
+            @Field("pagecount") String pageCount);
+
+    /**
+     * 医院列表信息
+     */
+    @POST(API_HOSPITALLIST)
+    @FormUrlEncoded
+    Call<ResultModel<List<HospitalListBean>>> getHospitalList(
+            @Field("keywords") String keywords,
+            @Field("page") String page,
+            @Field("pagecount") String pageCount);
 
 }

@@ -124,6 +124,8 @@ public class AddOutpatientDataActivity extends BaseActivity {
                 tvSelectDate(mTvFirstTime);
                 break;
             case R.id.lav_hospital:
+            startActivity(new Intent(AddOutpatientDataActivity.this,HospitalListActivity.class));
+
                 break;
             case R.id.lav_departments:
                 break;

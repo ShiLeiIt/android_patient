@@ -117,6 +117,9 @@
         <activity android:name=".activity.CaseHistoryActivity"/>
         <activity android:name=".activity.AddOutpatientDataActivity"/>
         <activity android:name=".activity.SymptomDescriptionsActivity"/>
+        <activity android:name=".activity.OutpatientInformationListActivity"/>
+        <activity android:name=".activity.LeaveHospitalInfoListActivity"/>
+        <activity android:name=".activity.HospitalListActivity"/>
 
 
 
