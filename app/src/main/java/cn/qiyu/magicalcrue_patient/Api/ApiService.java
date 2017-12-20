@@ -3,6 +3,7 @@ package cn.qiyu.magicalcrue_patient.Api;
 import java.io.File;
 import java.util.List;
 
+import cn.qiyu.magicalcrue_patient.model.AddOutPatientDataSaveBean;
 import cn.qiyu.magicalcrue_patient.model.CityBean;
 import cn.qiyu.magicalcrue_patient.model.Comment;
 import cn.qiyu.magicalcrue_patient.model.DischargeBean;
@@ -12,6 +13,7 @@ import cn.qiyu.magicalcrue_patient.model.DoctorTeamBean;
 import cn.qiyu.magicalcrue_patient.model.FollowUpMessageDetaild;
 import cn.qiyu.magicalcrue_patient.model.HomeNumBean;
 import cn.qiyu.magicalcrue_patient.model.HospitalListBean;
+import cn.qiyu.magicalcrue_patient.model.HospitalOfficeListBean;
 import cn.qiyu.magicalcrue_patient.model.ImageUpLoadBean;
 import cn.qiyu.magicalcrue_patient.model.InfoDoctorNoticeListBean;
 import cn.qiyu.magicalcrue_patient.model.InformationBean;
@@ -110,6 +112,11 @@ public interface ApiService {
     String API_LEAVE_HOSPITAL_INFORMATION_OBTAIN = "medicalRecord/getHospitalizationHistory";
     //医院列表信息
     String API_HOSPITALLIST = "hospital/hospitalList";
+    //科室列表信息
+    String API_HOSPITALOFFICE_LIST = "hospital/officeList";
+    //门诊信息保存
+    String API_OUTPATIENT_INFO_SAVE ="medicalRecord/setOutpatientDepartmen";
+
 
 
     /**
@@ -377,5 +384,44 @@ public interface ApiService {
             @Field("keywords") String keywords,
             @Field("page") String page,
             @Field("pagecount") String pageCount);
+
+
+
+    /**
+     * 科室列表信息
+     */
+    @POST(API_HOSPITALOFFICE_LIST)
+    @FormUrlEncoded
+    Call<ResultModel<List<HospitalOfficeListBean>>> getHospitalOfficeList(
+            @Field("page") String page,
+            @Field("pagecount") String pageCount);
+
+    /**
+     * 添加门诊信息保存带图片
+     */
+    @POST(API_OUTPATIENT_INFO_SAVE)
+    @FormUrlEncoded
+    Call<ResultModel<AddOutPatientDataSaveBean>> getOutPatientSave(
+            @Field("patientId") String patientUuid,
+            @Field("diagnosis_date") String diagnosisDate,
+            @Field("hospital_id") String hospitalId,
+            @Field("office_id") String officeId,
+            @Field("doctorinfo_id") String doctorUuid,
+            @Field("summary") String summary,
+            @Field("imageList") String imageList);
+
+    /**
+     * 添加门诊信息保存不带图片
+     */
+    @POST(API_OUTPATIENT_INFO_SAVE)
+    @FormUrlEncoded
+    Call<ResultModel<AddOutPatientDataSaveBean>> getOutPatientSaveText(
+            @Field("patientId") String patientUuid,
+            @Field("diagnosis_date") String diagnosisDate,
+            @Field("hospital_id") String hospitalId,
+            @Field("office_id") String officeId,
+            @Field("doctorinfo_id") String doctorUuid,
+            @Field("summary") String summary);
+
 
 }

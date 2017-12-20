@@ -21,6 +21,7 @@ import cn.qiyu.magicalcrue_patient.model.ScaleTitleBean;
 
 /**
  * Created by shilei on 2017/12/2.
+ * 量表详情适配器
  */
 
 public class ScaleDetailsAdapter extends BaseAdapter {

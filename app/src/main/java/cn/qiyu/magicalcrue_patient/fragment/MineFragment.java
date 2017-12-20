@@ -226,7 +226,7 @@ public class MineFragment extends Fragment implements View.OnClickListener {
         @Override
         public void getPatientBasicInfor(ResultModel<PatientInfor> patientInforResultModel) {
             mMobile = patientInforResultModel.getData().getMobile();
-            String one = mMobile.substring(1, 4);
+            String one = mMobile.substring(0, 3);
             String two = mMobile.substring(7, 11);
 
             mTv_phoneNume.setText(one + "****" + two);

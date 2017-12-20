@@ -228,6 +228,7 @@
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         app:topLeftName="0"
+                        android:visibility="gone"
                         app:topRightName="个待付款"/>
 
                     <cn.qiyu.magicalcrue_patient.view.LLTextViewNew

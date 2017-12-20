@@ -17,6 +17,11 @@ public interface CaseHistoryBiz {
     //获取医院列表
     void getHospitalList(String keywords,String page,String pageCount ,OnLoginListener onLoginListener);
 
+    //获取科室列表
+    void getHospitalOfficeList(String page,String pageCount ,OnLoginListener onLoginListener);
+
+
+
     interface OnLoginListener<T> {
 
         /**

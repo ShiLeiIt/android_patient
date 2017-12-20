@@ -1,7 +1,8 @@
 package cn.qiyu.magicalcrue_patient.visit;
 
+import android.util.Log;
+
 import cn.qiyu.magicalcrue_patient.biz.CaseHistoryBiz;
-import cn.qiyu.magicalcrue_patient.biz.CommentVisitDialogueBiz;
 import cn.qiyu.magicalcrue_patient.model.ResultModel;
 
 /**
@@ -12,17 +13,32 @@ import cn.qiyu.magicalcrue_patient.model.ResultModel;
 public class CaseHistoryPresenter {
     private CaseHistoryView mCaseHistoryView;
     private CaseHistoryHospitalListView mCaseHistoryHospitalListView;
-    private CaseHistoryBiz mCaseHistoryBiz;
+    private CaseHistoryHospitalOfficeListView mCaseHistoryHospitalOfficeListView;
+    private OutPatientAddView mOutPatientAddView;
 
+
+    private CaseHistoryBiz mCaseHistoryBiz;
+    //病历
     public CaseHistoryPresenter(CaseHistoryView caseHistoryView) {
         mCaseHistoryBiz = new CaseHistoryBizImpl();
         mCaseHistoryView = caseHistoryView;
     }
+    //医院列表
     public CaseHistoryPresenter(CaseHistoryHospitalListView caseHistoryHospitalListView){
         mCaseHistoryBiz = new CaseHistoryBizImpl();
         mCaseHistoryHospitalListView = caseHistoryHospitalListView;
     }
+    //科室列表
+    public CaseHistoryPresenter(CaseHistoryHospitalOfficeListView caseHistoryHospitalOfficeListView){
+        mCaseHistoryBiz = new CaseHistoryBizImpl();
+        mCaseHistoryHospitalOfficeListView = caseHistoryHospitalOfficeListView;
+    }
+    //添加门诊信息保存
 
+    public CaseHistoryPresenter(OutPatientAddView outPatientAddView){
+        mCaseHistoryBiz = new CaseHistoryBizImpl();
+        mOutPatientAddView = outPatientAddView;
+    }
 
     //获取门诊资料信息列表
     public void getOutPatientInfoList() {
@@ -80,4 +96,24 @@ public class CaseHistoryPresenter {
           }
       });
   }
+    //获取医院科室列表信息
+    public  void getHospitalOfficeList(){
+        mCaseHistoryBiz.getHospitalOfficeList(mCaseHistoryHospitalOfficeListView.getPage(), mCaseHistoryHospitalOfficeListView.getPageCount(), new CaseHistoryBiz.OnLoginListener() {
+            @Override
+            public void onResponse(ResultModel model) {
+                if (model.getResult() == 0) {
+                    mCaseHistoryHospitalOfficeListView.LoadHospitalOfficeList(model);
+                } else {
+                    mCaseHistoryHospitalOfficeListView.onViewFailure(model);
+                }
+            }
+            @Override
+            public void onFailure(String e) {
+            mCaseHistoryHospitalOfficeListView.onServerFailure(e);
+            }
+        });
+    }
+
+
+
 }

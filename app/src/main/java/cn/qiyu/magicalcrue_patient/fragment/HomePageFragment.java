@@ -112,7 +112,8 @@ public class HomePageFragment extends Fragment implements View.OnClickListener, 
         LLTextViewNew llTvScale = (LLTextViewNew) view.findViewById(R.id.ll_tv_scale);//新量表
         LLTextViewNew llTvNewReport = (LLTextViewNew) view.findViewById(R.id.ll_tv_new_report);//新随访报告
         LLTextViewNew llTvCourse = (LLTextViewNew) view.findViewById(R.id.ll_tv_course);//患教课程
-        LLTextViewNew llTvUnscramble = (LLTextViewNew) view.findViewById(R.id.ll_tv_unscramble);//待付款
+        //第一版不需要
+//        LLTextViewNew llTvUnscramble = (LLTextViewNew) view.findViewById(R.id.ll_tv_unscramble);//待付款
         mIv_richsan = (ImageView) view.findViewById(R.id.richscan);
         //二维码扫描
         mIv_richsan.setOnClickListener(this);
@@ -130,7 +131,7 @@ public class HomePageFragment extends Fragment implements View.OnClickListener, 
         llTvScale.setOnClickListener(this);
         llTvNewReport.setOnClickListener(this);
         llTvCourse.setOnClickListener(this);
-        llTvUnscramble.setOnClickListener(this);
+//        llTvUnscramble.setOnClickListener(this);
 
 
 
@@ -148,7 +149,7 @@ public class HomePageFragment extends Fragment implements View.OnClickListener, 
         mTv_scale = (TextView) llTvScale.findViewById(R.id.tv_top_left);
         mTv_newReport = (TextView) llTvNewReport.findViewById(R.id.tv_top_left);
         mTv_course = (TextView) llTvCourse.findViewById(R.id.tv_top_left);
-        mTv_unScra = (TextView) llTvUnscramble.findViewById(R.id.tv_top_left);
+//        mTv_unScra = (TextView) llTvUnscramble.findViewById(R.id.tv_top_left);
 
         //banner图listView加载
         mLv_sv = (ListView) view.findViewById(R.id.lv_home_image);
@@ -306,7 +307,7 @@ public class HomePageFragment extends Fragment implements View.OnClickListener, 
                 mTv_newReport.setText(String.valueOf(numBean.getData().getNewFollowUpCount()));
 
                     mTv_course.setText(String.valueOf(numBean.getData().getCourseCount()));
-                mTv_unScra.setText(String.valueOf(numBean.getData().getPendingPaymentCount()));
+//                mTv_unScra.setText(String.valueOf(numBean.getData().getPendingPaymentCount()));
 //                    mTv_doctor_name.setText(numBean.getData().get);
 
             } else {

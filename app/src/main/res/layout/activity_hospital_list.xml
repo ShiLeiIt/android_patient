@@ -20,29 +20,16 @@
             android:layout_marginLeft="6dp"
             android:src="@drawable/iv_back"/>
 
-        <SearchView
-            android:id="@+id/searchView"
-            android:layout_width="match_parent"
-            android:layout_height="35dp"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="60dp"
-            android:focusable="false"
-            android:layout_toRightOf="@id/iv_hospital_list_back"
-            android:background="@drawable/shape_search_bg"
-            android:iconifiedByDefault="false"
-            android:queryHint="请输入关键字"/>
-
         <TextView
-            android:id="@+id/tv_search_cancel"
+            android:id="@+id/tv_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="10dp"
-            android:text="取消"
+            android:layout_centerInParent="true"
+            android:layout_gravity="center_horizontal"
+            android:text="@string/medical"
+            android:textColor="#000"
+            android:textSize="18sp"/>
 
-            android:textColor="@color/addFont"
-            android:textSize="14sp"/>
     </RelativeLayout>
 
     <View

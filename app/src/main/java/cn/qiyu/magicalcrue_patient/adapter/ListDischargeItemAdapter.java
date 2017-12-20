@@ -2,16 +2,14 @@ package cn.qiyu.magicalcrue_patient.adapter;
 
 import android.app.Activity;
 import android.content.Context;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.EditText;
 import android.widget.TextView;
-
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 
 import cn.qiyu.magicalcrue_patient.R;
@@ -22,6 +20,7 @@ import cn.qiyu.magicalcrue_patient.view.NoScrollGridView;
 
 /**
  * Created by Administrator on 2017/12/18.
+ * 门诊信息，与出院小结数据适配器
  */
 
 public class ListDischargeItemAdapter extends BaseAdapter {
@@ -37,11 +36,13 @@ public class ListDischargeItemAdapter extends BaseAdapter {
     private  String commentUUid;
     private int indexrefresh;
 
+
     public ListDischargeItemAdapter(Context ctx,Activity activity, List<DischargeBean> items) {
         this.items=items;
         this.mContext = ctx;
         this.items = items;
         this.activity=activity;
+
     }
 
     @Override
@@ -85,8 +86,8 @@ public class ListDischargeItemAdapter extends BaseAdapter {
             holder.gridview = (NoScrollGridView) convertView
                     .findViewById(R.id.nv_discharge_photo);
             convertView.setTag(holder);
-       /*     //回复展示
-            holder.recyclerView=(RecyclerView)convertView.findViewById(R.id.rv_comment);*/
+            //回复展示
+            holder.recyclerView=(RecyclerView)convertView.findViewById(R.id.ry_comment_discharge);
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
@@ -94,25 +95,24 @@ public class ListDischargeItemAdapter extends BaseAdapter {
         itemEntity = items.get(position);
         // 时间
 
-        SimpleDateFormat dateFormat = new SimpleDateFormat("MM月dd日");
-        String date=dateFormat.format(itemEntity.getBe_hospitalized_date());
+//        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy年MM月dd日");
+//        String date=dateFormat.format(itemEntity.getBe_hospitalized_date());
 
-        holder.tv_date.setText(date+"   门诊信息");
+        holder.tv_date.setText(itemEntity.getCreate_time()+"   门诊信息");
         //地址
-        holder.tv_hospital.setText("医院：  "+itemEntity.getHospital_name());
+        holder.tv_hospital.setText("医院：  "+itemEntity.getHospitalName());
         //科室
         holder.tv_administrative.setText("科室：  "+itemEntity.getOffice_name());
         //医生姓名
-        holder.tv_doctor_name.setText("医师：  "+itemEntity.getDoctorName());
+        holder.tv_doctor_name.setText("医师：  "+itemEntity.getDoctorinfo_id());
         //备注
         holder.tv_context.setText(itemEntity.getSummary());
         // 回复列表
         //刷新部分的列表
-       // holder.recyclerView.setAdapter(new CommentAdapter(itemEntity.getCommentList()));
-       // holder.recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
-
+        holder.recyclerView.setAdapter(new Comment2Adapter(itemEntity.getCommentList()));
+        holder.recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
         //设置评论区不可滑动
-//        holder.recyclerView.setNestedScrollingEnabled(false);
+        holder.recyclerView.setNestedScrollingEnabled(false);
         //判断图片集合是否为空
         if(itemEntity.getImglist().size()==0){
             //隐藏装载容器
@@ -122,20 +122,37 @@ public class ListDischargeItemAdapter extends BaseAdapter {
             holder.gridview.setVisibility(View.VISIBLE);
             holder.gridview.setAdapter(new GridItemAdapter(mContext, itemEntity.getImglist()));
         }
+        //回复按钮单击事件
+//        convertView.findViewById(R.id.ll_message_reply_discharge).setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//
+//                commentUUid=items.get(position).getUuid();
+//                indexrefresh = position;
+//                InputMethodManager imm = (InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE);
+//                imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
+//                //将包含输入框的布局显示出来
+//                LinearLayout llSend = (LinearLayout)activity.findViewById(R.id.ll_discharge_message_send);
+//                llSend.setVisibility(View.VISIBLE);
+//                //发送按钮的点击事件，处理
+//                activity.findViewById(R.id.btn_discharge_send_message).setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//                        reply_patient = (EditText) activity.findViewById(R.id.et_discharge_reply_patient);
+//                        if(reply_patient.getText().toString().equals(""))
+//                            Toast.makeText(mContext, "请输入字符", Toast.LENGTH_SHORT).show();
+//                        else {
+//                            casePresenter.setmedicalrecordcomment();
+//                        }
+//                    }
+//                });
+//            }
+//        });
+
         return convertView;
     }
-/*    //局部刷新评论区
-    private void updateItem(int index,List<Comment> list) {
-        ListView list_message = (ListView) activity.findViewById(R.id.lv_follow_up_Detail);
-        int visibleFirstPosi = list_message.getFirstVisiblePosition();
-        int visibleLastPosi = list_message.getLastVisiblePosition();
-        if (index >= visibleFirstPosi && index <= visibleLastPosi) {
-            View view = list_message.getChildAt(index - visibleFirstPosi);
-            RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.rv_comment);
-            recyclerView.setAdapter(new CommentAdapter(list));
-            recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
-        }
-    }*/
+
+
 
 
     /**
@@ -160,4 +177,7 @@ public class ListDischargeItemAdapter extends BaseAdapter {
      *
      *
      */
+
+
+
 }

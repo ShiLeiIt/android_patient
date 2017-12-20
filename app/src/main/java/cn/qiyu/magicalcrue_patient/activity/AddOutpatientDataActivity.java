@@ -3,6 +3,9 @@ package cn.qiyu.magicalcrue_patient.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.text.Editable;
+import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,7 +29,9 @@ import com.lidong.photopicker.intent.PhotoPreviewIntent;
 
 import org.json.JSONArray;
 
+import java.io.File;
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -34,7 +39,18 @@ import butterknife.OnClick;
 import cn.addapp.pickers.picker.DatePicker;
 import cn.qiyu.magicalcrue_patient.R;
 import cn.qiyu.magicalcrue_patient.base.BaseActivity;
+import cn.qiyu.magicalcrue_patient.image.ImageUpLoadPresenter;
+import cn.qiyu.magicalcrue_patient.image.ImageUpLoadView;
+import cn.qiyu.magicalcrue_patient.model.AddOutPatientDataSaveBean;
+import cn.qiyu.magicalcrue_patient.model.ImageUpLoadBean;
+import cn.qiyu.magicalcrue_patient.model.ResultModel;
+import cn.qiyu.magicalcrue_patient.utils.PreUtils;
 import cn.qiyu.magicalcrue_patient.view.LayoutAddOutpatientView;
+import cn.qiyu.magicalcrue_patient.visit.OutPatientAddPresenter;
+import cn.qiyu.magicalcrue_patient.visit.OutPatientAddView;
+import cn.qiyu.magicalcrue_patient.visit.CaseHistoryPresenter;
+import okhttp3.MediaType;
+import okhttp3.RequestBody;
 
 /**
  * Created by ShiLei on 2017/12/18.
@@ -62,6 +78,10 @@ public class AddOutpatientDataActivity extends BaseActivity {
     RelativeLayout mRlCamera;
     @Bind(R.id.gridView)
     GridView mGridView;
+    @Bind(R.id.id_editor_detail)
+    EditText mIdEditorDetail;
+    @Bind(R.id.id_editor_detail_font_count)
+    TextView mIdEditorDetailFontCount;
 
     private TextView mTvFirstTime;
     private TextView mTvHospital;
@@ -71,7 +91,17 @@ public class AddOutpatientDataActivity extends BaseActivity {
     private static final int REQUEST_PREVIEW_CODE = 20;
     private ArrayList<String> imagePaths = new ArrayList<>();
     private ArrayList<String> mList;
-    private AddOutpatientDataActivity.GridAdapter mGridAdapter;
+    private GridAdapter mGridAdapter;
+    private String mHospitalName;
+    private String mOfficeName;
+    private boolean islMaxCount;
+    private String mHospitalId;
+    private String mOfficeId;
+    private RequestBody mRequestFile;
+    private File mFileName;
+    private StringBuffer mStringBuffer = new StringBuffer();
+    private int requestImageIndex=0;
+    private String mDoctorName;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -107,13 +137,164 @@ public class AddOutpatientDataActivity extends BaseActivity {
         mGridView.setNumColumns(cols);
 
 
+
+        mIdEditorDetail.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                int detailLength = s.length();
+                mIdEditorDetailFontCount.setText(detailLength + "/500字");
+                if (detailLength == 499) {
+                    islMaxCount = true;
+                }
+                if (detailLength == 500 && islMaxCount) {
+                    Toast.makeText(AddOutpatientDataActivity.this, "最多输入500字", Toast.LENGTH_SHORT).show();
+                    islMaxCount = false;
+                }
+            }
+        });
+
     }
+    ImageUpLoadPresenter mImageUpLoadPresenter = new ImageUpLoadPresenter(new ImageUpLoadView() {
+        @Override
+        public RequestBody getImageUpLoadFileId() {
+
+            mRequestFile = RequestBody.create(MediaType.parse("image/png"), mFileName);
+            return mRequestFile;
+        }
+
+        @Override
+        public void getImageUpLoad(ImageUpLoadBean imageUpLoadBean) {
+            requestImageIndex=requestImageIndex+1;
+            mStringBuffer.append(imageUpLoadBean.getFileId() + ",");
+
+            if(requestImageIndex==mList.size()-1){
+                mOutPatientAddPresenter.getOutPatientSave();
+            }
+        }
+
+        @Override
+        public void showProgress() {
+
+        }
+
+        @Override
+        public void hideProgress() {
+
+        }
+
+        @Override
+        public void onViewFailure(ImageUpLoadBean model) {
 
 
+        }
+
+        @Override
+        public void onServerFailure(String e) {
+
+
+        }
+    });
+
+
+
+     //上传门诊信息
+    OutPatientAddPresenter mOutPatientAddPresenter = new OutPatientAddPresenter(new OutPatientAddView() {
+        @Override
+        public String getParentUuid() {
+            return (String) PreUtils.getParam(AddOutpatientDataActivity.this,"patientuuid","0");
+        }
+
+        @Override
+        public String getDiagnosisDate() {
+            return mTvFirstTime.getText().toString();
+        }
+
+        @Override
+        public String getHospitalId() {
+            return mHospitalId;
+        }
+
+        @Override
+        public String getOfficeId() {
+            return mOfficeId;
+        }
+
+        @Override
+        public String getDoctorUuid() {
+            return mEtDoctorName.getText().toString();
+        }
+
+        @Override
+        public String getSummary() {
+            return mIdEditorDetail.getText().toString();
+        }
+
+        @Override
+        public String getImageList() {
+            return  null==mStringBuffer.toString()? null:mStringBuffer.toString();
+        }
+
+        @Override
+        public void LoadOutPatientSave(ResultModel<AddOutPatientDataSaveBean> model) {
+            Log.i("222==========", "jinglai");
+            Toast.makeText(AddOutpatientDataActivity.this, "添加成功", Toast.LENGTH_SHORT).show();
+            finish();
+        }
+
+         @Override
+         public void LoadOutPatientSaveText(ResultModel<AddOutPatientDataSaveBean> model) {
+             Log.i("1111111111111111111==", "meijin");
+             Toast.makeText(AddOutpatientDataActivity.this, "添加成功", Toast.LENGTH_SHORT).show();
+             finish();
+         }
+
+         @Override
+        public void showProgress() {
+
+        }
+
+        @Override
+        public void hideProgress() {
+
+        }
+
+        @Override
+        public void onViewFailure(ResultModel model) {
+
+        }
+
+        @Override
+        public void onServerFailure(String e) {
+
+        }
+    });
 
     @OnClick(R.id.tv_commit)
     public void onViewClicked() {
-        Toast.makeText(this, "保存", Toast.LENGTH_SHORT).show();
+        if (TextUtils.isEmpty(mTvFirstTime.getText().toString())||TextUtils.isEmpty(mHospitalName)||TextUtils.isEmpty(mOfficeName)||TextUtils.isEmpty(mEtDoctorName.getText().toString())) {
+            Toast.makeText(AddOutpatientDataActivity.this, "有选项没有填写完整", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if (mList != null && mList.size() > 0) {
+            Toast.makeText(this, "图片上传中...,请稍后", Toast.LENGTH_SHORT).show();
+            for (int i = 0; i < mList.size() - 1; i++) {
+                mFileName = new File(mList.get(i));
+                mImageUpLoadPresenter.getImage();
+            }
+        } else {
+            mOutPatientAddPresenter.getOutPatientSaveText();
+        }
+
     }
 
     @OnClick({R.id.lav_time, R.id.lav_hospital, R.id.lav_departments, R.id.rl_doctor_name, R.id.iv_quiz_pic})
@@ -124,12 +305,17 @@ public class AddOutpatientDataActivity extends BaseActivity {
                 tvSelectDate(mTvFirstTime);
                 break;
             case R.id.lav_hospital:
-            startActivity(new Intent(AddOutpatientDataActivity.this,HospitalListActivity.class));
-
+                Intent intentHos = new Intent(AddOutpatientDataActivity.this, HospitalListActivity.class);
+                intentHos.putExtra("isHospital", "0");
+                startActivityForResult(intentHos, 0x000);
                 break;
             case R.id.lav_departments:
+                Intent intentDep = new Intent(AddOutpatientDataActivity.this, HospitalListActivity.class);
+                intentDep.putExtra("isHospital", "1");
+                startActivityForResult(intentDep, 0x001);
                 break;
             case R.id.rl_doctor_name:
+
                 break;
             case R.id.iv_quiz_pic:
                 mRlCamera.setVisibility(View.GONE);
@@ -155,11 +341,12 @@ public class AddOutpatientDataActivity extends BaseActivity {
                     }
                 });
                 imagePaths.add("000000");
-                mGridAdapter = new AddOutpatientDataActivity.GridAdapter(imagePaths);
+                mGridAdapter = new GridAdapter(imagePaths);
                 mGridView.setAdapter(mGridAdapter);
                 break;
         }
     }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -168,9 +355,6 @@ public class AddOutpatientDataActivity extends BaseActivity {
                 // 选择照片
                 case REQUEST_CAMERA_CODE:
                     mList = data.getStringArrayListExtra(PhotoPickerActivity.EXTRA_RESULT);
-//                    Log.d(TAG, "list: " + "list = [" + mList.size());
-
-
                     loadAdpater(mList);
                     break;
                 // 预览
@@ -179,10 +363,22 @@ public class AddOutpatientDataActivity extends BaseActivity {
 //                    Log.d(TAG, "ListExtra: " + "ListExtra = [" + ListExtra.size());
                     loadAdpater(ListExtra);
                     break;
+                case 0x000:
+                    //医院列表
+                    mHospitalName = data.getStringExtra("HospitalName");
+                    mHospitalId = data.getStringExtra("HospitalId");
+
+                    mTvHospital.setText(mHospitalName);
+                    break;
+                case 0x001:
+                    //科室列表
+                    mOfficeName = data.getStringExtra("OfficeName");
+                    mOfficeId = data.getStringExtra("OfficeId");
+                    mTvDepartments.setText(mOfficeName);
+                    break;
             }
         }
     }
-
 
 
     private void loadAdpater(ArrayList<String> paths) {
@@ -194,7 +390,7 @@ public class AddOutpatientDataActivity extends BaseActivity {
         }
         paths.add("000000");
         imagePaths.addAll(paths);
-        mGridAdapter = new AddOutpatientDataActivity.GridAdapter(imagePaths);
+        mGridAdapter = new GridAdapter(imagePaths);
         mGridView.setAdapter(mGridAdapter);
         try {
             JSONArray obj = new JSONArray(imagePaths);
@@ -203,6 +399,7 @@ public class AddOutpatientDataActivity extends BaseActivity {
             e.printStackTrace();
         }
     }
+
     private class GridAdapter extends BaseAdapter {
         private ArrayList<String> listUrls;
         private LayoutInflater inflater;
@@ -231,14 +428,14 @@ public class AddOutpatientDataActivity extends BaseActivity {
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
-            AddOutpatientDataActivity.GridAdapter.ViewHolder holder = null;
+            ViewHolder holder = null;
             if (convertView == null) {
-                holder = new AddOutpatientDataActivity.GridAdapter.ViewHolder();
+                holder = new ViewHolder();
                 convertView = inflater.inflate(R.layout.item_image, parent, false);
                 holder.image = (ImageView) convertView.findViewById(R.id.imageView);
                 convertView.setTag(holder);
             } else {
-                holder = (AddOutpatientDataActivity.GridAdapter.ViewHolder) convertView.getTag();
+                holder = (ViewHolder) convertView.getTag();
             }
 
             final String path = listUrls.get(position);
@@ -260,8 +457,6 @@ public class AddOutpatientDataActivity extends BaseActivity {
             ImageView image;
         }
     }
-
-
 
 
     //日期的选择

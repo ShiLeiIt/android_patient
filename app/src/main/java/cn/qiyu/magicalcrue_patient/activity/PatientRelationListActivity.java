@@ -144,7 +144,7 @@ public class PatientRelationListActivity extends BaseActivity {
 
 
     }
-
+    //患者关系
     class ViewHolder extends RecyclerView.ViewHolder {
         PatientRelationBean mModel;
         private final TextView mTv_relation;
@@ -173,7 +173,7 @@ public class PatientRelationListActivity extends BaseActivity {
             }
         }
     }
-
+    //患者关系适配器
     public class RecyclerAdpter extends RecyclerView.Adapter<ViewHolder> {
         private List<PatientRelationBean> mlist;
 

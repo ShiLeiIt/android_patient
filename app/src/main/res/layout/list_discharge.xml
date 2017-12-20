@@ -2,134 +2,150 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
+              android:background="@color/view_bg"
               android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/tv_discharge_date"
-        android:layout_width="match_parent"
-        android:layout_height="30dp"
-        android:layout_marginLeft="13dp"
-        android:textColor="@color/app_gray"
-        android:background="@color/view_bg"
-        android:gravity="center_vertical"
-        android:textSize="12sp"
-        />
-
     <LinearLayout
-        android:background="@color/app_white"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="16dp">
+        android:orientation="vertical">
 
         <TextView
+            android:id="@+id/tv_discharge_date"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_marginLeft="13dp"
+            android:background="@color/view_bg"
             android:textColor="@color/app_userInfor"
-            android:id="@+id/tv_discharge_hospital_address"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="12sp"/>
-
-        <TextView
-            android:textColor="@color/app_userInfor"
-            android:id="@+id/tv_discharge_administrative"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:textSize="12sp"/>
-
-        <TextView
-            android:textColor="@color/app_userInfor"
-            android:id="@+id/tv_discharge_doctor_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:textSize="12sp"/>
+            android:gravity="center_vertical"
+            android:textSize="12sp"
+            />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:background="@color/app_white"
+            android:orientation="vertical"
+            android:padding="16dp">
 
             <TextView
+                android:id="@+id/tv_discharge_hospital_address"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="备注："
                 android:textColor="@color/app_userInfor"
                 android:textSize="12sp"/>
 
-            <RelativeLayout
+            <TextView
+                android:id="@+id/tv_discharge_administrative"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:textColor="@color/app_userInfor"
+                android:textSize="12sp"/>
+
+            <TextView
+                android:id="@+id/tv_discharge_doctor_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:textColor="@color/app_userInfor"
+                android:textSize="12sp"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
 
                 <TextView
-                    android:textColor="@color/app_userInfor"
-                    android:id="@+id/tv_discharge_context"
-                    android:layout_width="302dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="5dp"
+                    android:text="备注："
                     android:textSize="12sp"/>
 
-                <cn.qiyu.magicalcrue_patient.view.NoScrollGridView
-                    android:id="@+id/nv_discharge_photo"
-                    android:layout_width="250dp"
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/tv_discharge_context"
+                        android:layout_width="302dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:textColor="@color/app_userInfor"
+                        android:textSize="12sp"/>
+
+                    <cn.qiyu.magicalcrue_patient.view.NoScrollGridView
+                        android:id="@+id/nv_discharge_photo"
+                        android:layout_width="250dp"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/tv_discharge_context"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginTop="3dp"
+                        android:columnWidth="70dp"
+                        android:gravity="center"
+                        android:horizontalSpacing="2.5dp"
+                        android:numColumns="4"
+                        android:stretchMode="columnWidth"/>
+                </RelativeLayout>
+            </LinearLayout>
+        </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/ry_comment_discharge"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+            </android.support.v7.widget.RecyclerView>
+        </RelativeLayout>
+
+        <RelativeLayout
+
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:visibility="gone"
+            android:layout_marginBottom="10dp"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:id="@+id/ll_message_reply_discharge"
+                android:layout_width="80dp"
+                android:layout_height="match_parent"
+                android:layout_alignParentRight="true">
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/message_dialogue"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/tv_discharge_context"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginTop="3dp"
-                    android:columnWidth="70dp"
-                    android:gravity="center"
-                    android:horizontalSpacing="2.5dp"
-                    android:numColumns="4"
-                    android:stretchMode="columnWidth"/>
-            </RelativeLayout>
-        </LinearLayout>
+                    android:layout_gravity="center"
+                    android:text="回复"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="80dp"
+                android:layout_height="match_parent"
+                android:visibility="gone">
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/mine_collect"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="收藏"/>
+            </LinearLayout>
+        </RelativeLayout>
     </LinearLayout>
-
-    <RelativeLayout
-        android:background="@color/app_white"
-        android:layout_width="match_parent"
-        android:layout_height="30dp"
-        android:visibility="gone"
-        android:orientation="horizontal">
-
-        <LinearLayout
-            android:id="@+id/ll_message_reply_discharge"
-            android:layout_width="80dp"
-
-            android:layout_height="match_parent"
-            android:layout_alignParentRight="true">
-
-            <ImageView
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:layout_gravity="center"
-                android:src="@drawable/message_dialogue"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:textSize="12sp"
-                android:textColor="@color/app_userInfor"
-                android:text="回复"/>
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="80dp"
-            android:layout_height="match_parent"
-            android:visibility="gone">
-
-            <ImageView
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:layout_gravity="center"
-                android:src="@drawable/mine_collect"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="收藏"/>
-        </LinearLayout>
-    </RelativeLayout>
 </LinearLayout>

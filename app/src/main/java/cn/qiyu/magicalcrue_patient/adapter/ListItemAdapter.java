@@ -35,7 +35,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 
 /**
- * 首页ListView的数据适配器
+ * 随访对话的数据适配器
  *
  * @author Administrator
  */

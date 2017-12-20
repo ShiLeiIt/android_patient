@@ -36,5 +36,4 @@ public class ImageUpLoadBizImpl extends ImageBaseBiz implements ImageUpLoadBiz {
     }
 
 
-
 }

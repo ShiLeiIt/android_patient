@@ -39,7 +39,15 @@ public class DischargeBean {
     private String hospitalName;
     private int hospital_id;
     private String uuid;
+    private String doctorinfo_id;
 
+    public String getDoctorinfo_id() {
+        return doctorinfo_id;
+    }
+
+    public void setDoctorinfo_id(String doctorinfo_id) {
+        this.doctorinfo_id = doctorinfo_id;
+    }
 
     private int is_delete;
     private String office_name;

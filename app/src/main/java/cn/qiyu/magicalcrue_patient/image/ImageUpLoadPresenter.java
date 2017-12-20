@@ -1,5 +1,7 @@
 package cn.qiyu.magicalcrue_patient.image;
 
+import android.widget.Toast;
+
 import java.io.File;
 
 import cn.qiyu.magicalcrue_patient.biz.CityDistrictBiz;
@@ -38,6 +40,7 @@ public class ImageUpLoadPresenter {
            @Override
            public void onFailure(String e) {
                 mImageUpLoadView.onServerFailure(e);
+
                mImageUpLoadView.hideProgress();
            }
        });

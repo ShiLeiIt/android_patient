@@ -60,6 +60,7 @@
     <string name="doctor">医生</string>
     <string name="commit">提交</string>
     <string name="add">添加</string>
+    <string name="remark">请在这里填写备注.(选填)</string>
 
 
     <string name="quizHint">你可以向随访医生团队咨询问题，请尽可能简练、准确的描述症状、部位等信息，方便医生给的准确建议。你也可以拍照进行上传</string>

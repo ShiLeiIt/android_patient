@@ -25,7 +25,7 @@ import cn.qiyu.magicalcrue_patient.visit.CaseHistoryView;
 
 /**
  * Created by ShiLei on 2017/12/19.
- * 门诊信息
+ * 出院小结信息
  */
 
 public class LeaveHospitalInfoListActivity extends BaseActivity {
@@ -57,7 +57,7 @@ public class LeaveHospitalInfoListActivity extends BaseActivity {
         public String getParentUuid() {
             Log.i("patientUuid=-------=", (String) PreUtils.getParam(LeaveHospitalInfoListActivity.this, "patientuuid", "0"));
             return (String) PreUtils.getParam(LeaveHospitalInfoListActivity.this,"patientuuid","0");
-//            return "f1d4d544b4d2423691386b5f6963aac5";
+
         }
 
         @Override

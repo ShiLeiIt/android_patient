@@ -3,6 +3,7 @@ package cn.qiyu.magicalcrue_patient.visit;
 import java.util.List;
 
 import cn.qiyu.magicalcrue_patient.base.BaseView;
+import cn.qiyu.magicalcrue_patient.model.AddOutPatientDataSaveBean;
 import cn.qiyu.magicalcrue_patient.model.Comment;
 import cn.qiyu.magicalcrue_patient.model.DischargeBean;
 import cn.qiyu.magicalcrue_patient.model.ResultModel;
@@ -22,4 +23,10 @@ public interface CaseHistoryView extends BaseView {
 
     //获取出院小结信息
     void LoadLeaveHospitalInfoList(ResultModel<List<DischargeBean>> model);
+
+
+
+
+
+
 }

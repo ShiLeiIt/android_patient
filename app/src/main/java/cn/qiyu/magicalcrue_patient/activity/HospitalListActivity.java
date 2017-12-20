@@ -1,5 +1,6 @@
 package cn.qiyu.magicalcrue_patient.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
@@ -12,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.SearchView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,11 +23,13 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.qiyu.magicalcrue_patient.R;
 import cn.qiyu.magicalcrue_patient.base.BaseActivity;
+import cn.qiyu.magicalcrue_patient.model.DiseasesBean;
 import cn.qiyu.magicalcrue_patient.model.HospitalListBean;
-import cn.qiyu.magicalcrue_patient.model.PatientRelationBean;
+import cn.qiyu.magicalcrue_patient.model.HospitalOfficeListBean;
 import cn.qiyu.magicalcrue_patient.model.ResultModel;
 import cn.qiyu.magicalcrue_patient.view.RecycleViewDivider;
 import cn.qiyu.magicalcrue_patient.visit.CaseHistoryHospitalListView;
+import cn.qiyu.magicalcrue_patient.visit.CaseHistoryHospitalOfficeListView;
 import cn.qiyu.magicalcrue_patient.visit.CaseHistoryPresenter;
 
 /**
@@ -35,19 +39,20 @@ import cn.qiyu.magicalcrue_patient.visit.CaseHistoryPresenter;
 public class HospitalListActivity extends BaseActivity {
     @Bind(R.id.iv_hospital_list_back)
     ImageView mIvHospitalListBack;
-    @Bind(R.id.searchView)
-    SearchView mSearchView;
-    @Bind(R.id.tv_search_cancel)
-    TextView mTvSearchCancel;
     @Bind(R.id.rlv_hospital_list)
     RecyclerView mRlvHospitalList;
     private String mHospitalName;
     private RecyclerAdpter mRecyclerAdpter;
 
     private List<HospitalListBean> mList;
+    private String mIsHospital;
+    private String mOfficeName;
+    private RecyclerOfficeAdpter mOfficeAdpter;
+    private int mHospitalId;
+    private String mOfficeUuid;
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_hospital_list);
         ButterKnife.bind(this);
@@ -56,21 +61,52 @@ public class HospitalListActivity extends BaseActivity {
     }
 
 
-
     private void init() {
-        int searchId = mSearchView.getContext().getResources().getIdentifier("android:id/search_src_text", null, null);
-        TextView tvSearch = (TextView) mSearchView.findViewById(searchId);
-        tvSearch.setTextColor(getResources().getColor(R.color.app_gray));
-        tvSearch.setHintTextColor(getResources().getColor(R.color.app_gray));
-        tvSearch.setTextSize(TypedValue.COMPLEX_UNIT_SP,14);
-        android.widget.LinearLayout.LayoutParams layoutParams = (android.widget.LinearLayout.LayoutParams) tvSearch.getLayoutParams();
-        layoutParams.bottomMargin = getResources().getDimensionPixelSize(R.dimen.dp__3);
-        tvSearch.setLayoutParams(layoutParams);
 
         mRlvHospitalList.addItemDecoration(new RecycleViewDivider(HospitalListActivity.this, LinearLayoutManager.HORIZONTAL, R.drawable.relation_bg));
-
+        mIsHospital = getIntent().getStringExtra("isHospital");
 
     }
+    //科室列表
+    CaseHistoryPresenter caseHistoryPresenter = new CaseHistoryPresenter(new CaseHistoryHospitalOfficeListView() {
+        @Override
+        public String getPage() {
+            return "1";
+        }
+
+        @Override
+        public String getPageCount() {
+            return "100";
+        }
+
+        @Override
+        public void LoadHospitalOfficeList(ResultModel<List<HospitalOfficeListBean>> model) {
+            mOfficeAdpter = new RecyclerOfficeAdpter(model.getData());
+            mRlvHospitalList.setAdapter(mOfficeAdpter);
+            mRlvHospitalList.setLayoutManager(new LinearLayoutManager(HospitalListActivity.this));
+        }
+
+        @Override
+        public void showProgress() {
+
+        }
+
+        @Override
+        public void hideProgress() {
+
+        }
+
+        @Override
+        public void onViewFailure(ResultModel model) {
+
+        }
+
+        @Override
+        public void onServerFailure(String e) {
+
+        }
+    });
+    //医院列表
     CaseHistoryPresenter mCaseHistoryPresenter = new CaseHistoryPresenter(new CaseHistoryHospitalListView() {
         @Override
         public String getKeyWords() {
@@ -89,6 +125,7 @@ public class HospitalListActivity extends BaseActivity {
 
         @Override
         public void LoadHospitalList(ResultModel<List<HospitalListBean>> model) {
+
             mRecyclerAdpter = new RecyclerAdpter(model.getData());
             mRlvHospitalList.setAdapter(mRecyclerAdpter);
             mRlvHospitalList.setLayoutManager(new LinearLayoutManager(HospitalListActivity.this));
@@ -114,66 +151,50 @@ public class HospitalListActivity extends BaseActivity {
 
         }
     });
+
     private void initData() {
-        //设置搜索文本监听
-        mSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                return true;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                if (mList!=null&&mList.size()>0) {
-                    final List<HospitalListBean> filteredModelList = filter(mList, newText);
-                    //reset
-                    mRecyclerAdpter.setFilter(filteredModelList);
-                    mRecyclerAdpter.animateTo(filteredModelList);
-                    mRlvHospitalList.scrollToPosition(0);
-                }
-
-
-
-                return true;
-            }
-        });
-        mSearchView.setOnCloseListener(new SearchView.OnCloseListener() {
-            @Override
-            public boolean onClose() {
-                mRecyclerAdpter.setFilter(mList);
-                return false;
-            }
-        });
-        mCaseHistoryPresenter.getHospitalList();
-    }
-    private List<HospitalListBean> filter(List<HospitalListBean> peoples, String query) {
-        query = query.toLowerCase();
-
-        final List<HospitalListBean> filteredModelList = new ArrayList<>();
-        for (HospitalListBean hospitalListBean : peoples) {
-
-            final String nameEn = hospitalListBean.getHospitalName().toLowerCase();
-//            final String desEn = people.getDescription().toLowerCase();
-            final String name = hospitalListBean.getHospitalName();
-//            final String des = people.getDescription();
-
-            if (name.contains(query)  || nameEn.contains(query) ) {
-
-                filteredModelList.add(hospitalListBean);
-            }
+        if (mIsHospital.equals("0")) {
+            mCaseHistoryPresenter.getHospitalList();
+        } else if (mIsHospital.equals("1")) {
+            caseHistoryPresenter.getHospitalOfficeList();
         }
-        return filteredModelList;
     }
 
-    @OnClick({R.id.iv_hospital_list_back, R.id.tv_search_cancel})
+    @OnClick({R.id.iv_hospital_list_back})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.iv_hospital_list_back:
+                Intent intent = new Intent(HospitalListActivity.this, OutpatientInformationListActivity.class);
+                if (TextUtils.isEmpty(mHospitalName)) {
+                    if (mIsHospital.equals("0")) {
+                        Toast.makeText(this, "请选择医院", Toast.LENGTH_SHORT).show();
+                    }
+                } else {
+                    intent.putExtra("HospitalName", mHospitalName);
+                    intent.putExtra("HospitalId",String.valueOf(mHospitalId));
+                    setResult(RESULT_OK, intent);
+                    finish();
+                }
+
+                if (TextUtils.isEmpty(mOfficeName)) {
+                    if (mIsHospital.equals("1")) {
+                        Toast.makeText(this, "请选择科室", Toast.LENGTH_SHORT).show();
+                    }
+                } else {
+                    intent.putExtra("OfficeName", mOfficeName);
+                    intent.putExtra("OfficeId", mOfficeUuid);
+                    setResult(RESULT_OK, intent);
+                    finish();
+                }
+
+
                 break;
-            case R.id.tv_search_cancel:
-                break;
+
         }
     }
+
+
+
     class ViewHolder extends RecyclerView.ViewHolder {
         HospitalListBean mModel;
         private final TextView mTv_relation;
@@ -202,6 +223,7 @@ public class HospitalListActivity extends BaseActivity {
             }
         }
     }
+
     public class RecyclerAdpter extends RecyclerView.Adapter<HospitalListActivity.ViewHolder> {
 
 
@@ -223,6 +245,8 @@ public class HospitalListActivity extends BaseActivity {
                 public void onClick(View v) {
 //                    Toast.makeText(PatientRelationListActivity.this, "position"+position, Toast.LENGTH_SHORT).show();
                     mHospitalName = mList.get(position).getHospitalName();
+                    mHospitalId = mList.get(position).getHospitalId();
+
 //                    mBianma = mlist.get(position).getBIANMA();
                     for (int i = 0; i < mList.size(); i++) {
                         if (i == position) {
@@ -241,63 +265,81 @@ public class HospitalListActivity extends BaseActivity {
         public int getItemCount() {
             return mList.size();
         }
-        public void setFilter(List<HospitalListBean> hospitalListBeen) {
-            mList = new ArrayList<>();
-            mList.addAll(hospitalListBeen);
-            notifyDataSetChanged();
-        }
-        public void animateTo(List<HospitalListBean> peoples) {
-            applyAndAnimateRemovals(peoples);
-            applyAndAnimateAdditions(peoples);
-            applyAndAnimateMovedItems(peoples);
+
+    }
+
+    //医院科室列表
+    class ViewHolderOffice extends RecyclerView.ViewHolder {
+        HospitalOfficeListBean mModel;
+        private final TextView mTv_relation;
+        private final ImageView mIv_seclect;
+
+        public ViewHolderOffice(final View itemView) {
+            super(itemView);
+            mTv_relation = (TextView) itemView.findViewById(R.id.tv_relation);
+            mIv_seclect = (ImageView) itemView.findViewById(R.id.iv_select);
         }
 
-        private void applyAndAnimateRemovals(List<HospitalListBean> peoples) {
-            for (int i = mList.size() - 1; i >= 0; i--) {
-                final HospitalListBean people = mList.get(i);
-                if (!peoples.contains(people)) {
-                    removeItem(i);
-                }
+        void setItem(HospitalOfficeListBean item) {
+            this.mModel = item;
+
+        }
+
+        //刷新
+        void refreshView() {
+            mTv_relation.setText(mModel.getOffice_name());
+            if (mModel.isSelect()) {
+                mIv_seclect.setVisibility(View.VISIBLE);
+                mTv_relation.setTextColor(getResources().getColor(R.color.app_relation_tv));
+            } else {
+                mIv_seclect.setVisibility(View.INVISIBLE);
+                mTv_relation.setTextColor(getResources().getColor(R.color.app_userInfor));
             }
         }
+    }
 
-        private void applyAndAnimateAdditions(List<HospitalListBean> peoples) {
-            for (int i = 0, count = peoples.size(); i < count; i++) {
-                final HospitalListBean people = mList.get(i);
-                if (!mList.contains(people)) {
-                    addItem(i, people);
+    public class RecyclerOfficeAdpter extends RecyclerView.Adapter<HospitalListActivity.ViewHolderOffice> {
+        private List<HospitalOfficeListBean> mlist;
+
+        public RecyclerOfficeAdpter(List<HospitalOfficeListBean> mlist) {
+            this.mlist = mlist;
+        }
+
+        @Override
+        public HospitalListActivity.ViewHolderOffice onCreateViewHolder(ViewGroup parent, int viewType) {
+
+            return new HospitalListActivity.ViewHolderOffice(LayoutInflater.from(parent.getContext()).inflate(R.layout.listview_patient_relation_item, null));
+
+        }
+
+        @Override
+        public void onBindViewHolder(final HospitalListActivity.ViewHolderOffice holder, final int position) {
+            holder.setItem(mlist.get(position));
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+//                    Toast.makeText(PatientRelationListActivity.this, "position"+position, Toast.LENGTH_SHORT).show();
+                    mOfficeName = mlist.get(position).getOffice_name();
+                    mOfficeUuid = mlist.get(position).getUuid();
+                    for (int i = 0; i < mlist.size(); i++) {
+                        if (i == position) {
+                            mlist.get(i).setSelect(true);
+                        } else {
+                            mlist.get(i).setSelect(false);
+                        }
+                    }
+                    mOfficeAdpter.notifyDataSetChanged();
                 }
-            }
+            });
+            holder.refreshView();
         }
 
-        private void applyAndAnimateMovedItems(List<HospitalListBean> peoples) {
-            for (int toPosition = peoples.size() - 1; toPosition >= 0; toPosition--) {
-                final HospitalListBean people = peoples.get(toPosition);
-                final int fromPosition = mList.indexOf(people);
-                if (fromPosition >= 0 && fromPosition != toPosition) {
-                    moveItem(fromPosition, toPosition);
-                }
-            }
-        }
-
-
-        public HospitalListBean removeItem(int position) {
-            final HospitalListBean people = mList.remove(position);
-            notifyItemRemoved(position);
-            return people;
-        }
-
-
-        public void addItem(int position, HospitalListBean people) {
-            mList.add(position, people);
-            notifyItemInserted(position);
-        }
-
-        public void moveItem(int fromPosition, int toPosition) {
-            final HospitalListBean people = mList.remove(fromPosition);
-            mList.add(toPosition, people);
-            notifyItemMoved(fromPosition, toPosition);
+        @Override
+        public int getItemCount() {
+            return mlist.size();
         }
 
     }
+
+
 }

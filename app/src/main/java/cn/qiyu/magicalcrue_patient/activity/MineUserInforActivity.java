@@ -187,8 +187,7 @@ public class MineUserInforActivity extends BaseActivity implements View.OnClickL
             } else {
                 Toast.makeText(MineUserInforActivity.this, "请选择头像", Toast.LENGTH_SHORT).show();
             }
-            Log.i("mFileName============", mFileName.toString());
-            Log.i("mRequestFile============", mRequestFile.toString());
+
             return mRequestFile;
         }
 
@@ -196,7 +195,7 @@ public class MineUserInforActivity extends BaseActivity implements View.OnClickL
         @Override
         public void getImageUpLoad(ImageUpLoadBean imageUpLoadBean) {
             Toast.makeText(MineUserInforActivity.this, ""+imageUpLoadBean.getMessage(), Toast.LENGTH_SHORT).show();
-            Log.i("fileId==", imageUpLoadBean.getFileId());
+//            Log.i("fileId==", imageUpLoadBean.getFileId());
 
             mFileId = imageUpLoadBean.getFileId();
             PreUtils.setParam(MineUserInforActivity.this,"mFileId",mFileId);

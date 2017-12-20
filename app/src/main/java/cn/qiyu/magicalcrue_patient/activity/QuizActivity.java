@@ -332,14 +332,14 @@ public class QuizActivity extends BaseActivity {
         @Override
         public void getImageUpLoad(ImageUpLoadBean imageUpLoadBean) {
             requestImageIndex=requestImageIndex+1;
-            Log.i("getImageUpLoad==", "requestImageIndex="+requestImageIndex+"");
+//            Log.i("getImageUpLoad==", "requestImageIndex="+requestImageIndex+"");
 
 //            Toast.makeText(QuizActivity.this, "成功", Toast.LENGTH_SHORT).show();
             mStringBuffer.append(imageUpLoadBean.getFileId() + ",");
-            Log.i("mStringBuffer=======", mStringBuffer.toString());
+//            Log.i("mStringBuffer=======", mStringBuffer.toString());
 //            mFileId = imageUpLoadBean.getFileId();
             //上传
-            Log.i("mList==", mList.size()+"");
+//            Log.i("mList==", mList.size()+"");
 
 
             if(requestImageIndex==mList.size()-1){

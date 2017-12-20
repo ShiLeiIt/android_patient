@@ -17,6 +17,7 @@ import butterknife.OnClick;
 import cn.qiyu.magicalcrue_patient.R;
 import cn.qiyu.magicalcrue_patient.adapter.ListDischargeItemAdapter;
 import cn.qiyu.magicalcrue_patient.base.BaseActivity;
+import cn.qiyu.magicalcrue_patient.model.AddOutPatientDataSaveBean;
 import cn.qiyu.magicalcrue_patient.model.DischargeBean;
 import cn.qiyu.magicalcrue_patient.model.ResultModel;
 import cn.qiyu.magicalcrue_patient.utils.PreUtils;
@@ -57,7 +58,7 @@ public class OutpatientInformationListActivity extends BaseActivity {
         public String getParentUuid() {
             Log.i("patientUuid=-------=", (String) PreUtils.getParam(OutpatientInformationListActivity.this, "patientuuid", "0"));
             return (String) PreUtils.getParam(OutpatientInformationListActivity.this,"patientuuid","0");
-//            return "f1d4d544b4d2423691386b5f6963aac5";
+
         }
 
         @Override
@@ -82,6 +83,7 @@ public class OutpatientInformationListActivity extends BaseActivity {
         public void LoadLeaveHospitalInfoList(ResultModel<List<DischargeBean>> model) {
 
         }
+
 
         @Override
         public void showProgress() {
@@ -114,6 +116,7 @@ public class OutpatientInformationListActivity extends BaseActivity {
             }
         });
     }
+
 
     @OnClick(R.id.tv_commit)
     public void onViewClicked() {
