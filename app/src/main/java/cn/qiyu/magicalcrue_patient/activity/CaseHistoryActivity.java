@@ -191,17 +191,23 @@ public class CaseHistoryActivity extends BaseActivity implements View.OnClickLis
                 break;
             case R.id.icl_outpatient:
 //                Toast.makeText(this, "门诊资料1", Toast.LENGTH_SHORT).show();
-                startActivity(new Intent(CaseHistoryActivity.this,OutpatientInformationListActivity.class));
+                Intent intent1 = new Intent(CaseHistoryActivity.this, OutpatientInformationListActivity.class);
+                intent1.putExtra("outPatient", "outPatient");
+                startActivity(intent1);
                 break;
             case R.id.icl_leave_hospital:
-                startActivity(new Intent(CaseHistoryActivity.this,LeaveHospitalInfoListActivity.class));
+                Intent intent = new Intent(CaseHistoryActivity.this, LeaveHospitalInfoListActivity.class);
+                intent.putExtra("leaveHospital", "leaveHospital");
+                startActivity(intent);
 //                Toast.makeText(this, "出院小结1", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.icl_examine:
                 Toast.makeText(this, "检查报告单1", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.icl_pharmacy:
-                Toast.makeText(this, "用药方案记录1", Toast.LENGTH_SHORT).show();
+                Intent intentP = new Intent(CaseHistoryActivity.this, PharmacyPlanRecordInfoListActivity.class);
+                startActivity(intentP);
+//                Toast.makeText(this, "用药方案记录1", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.icl_symptomatography:
                 Toast.makeText(this, "身体症状记录1", Toast.LENGTH_SHORT).show();

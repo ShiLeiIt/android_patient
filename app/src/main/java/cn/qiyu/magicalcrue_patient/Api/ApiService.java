@@ -21,6 +21,8 @@ import cn.qiyu.magicalcrue_patient.model.MyScaleBean;
 import cn.qiyu.magicalcrue_patient.model.PatientInfor;
 import cn.qiyu.magicalcrue_patient.model.PatientInforSaveBean;
 import cn.qiyu.magicalcrue_patient.model.PatientRelationBean;
+import cn.qiyu.magicalcrue_patient.model.PharmacyBean;
+import cn.qiyu.magicalcrue_patient.model.PharmacyWaybean;
 import cn.qiyu.magicalcrue_patient.model.RegisterLoginBean;
 import cn.qiyu.magicalcrue_patient.model.RegisterLoginVerBean;
 import cn.qiyu.magicalcrue_patient.model.ResultModel;
@@ -116,6 +118,17 @@ public interface ApiService {
     String API_HOSPITALOFFICE_LIST = "hospital/officeList";
     //门诊信息保存
     String API_OUTPATIENT_INFO_SAVE ="medicalRecord/setOutpatientDepartmen";
+    //出院小结信息保存
+    String API_LEAVEHOSPITAL_INFO_SAVE ="medicalRecord/setHospitalizationHistory";
+    //用药记录方案信息获取
+    String API_PHARMACY_PALN_RECORD ="medicalRecord/getDurgRecord";
+    //用药方案记录添加
+    String API_PHARMACY_RECROD_SAVE = "medicalRecord/setDurgRecord";
+    //获取用药方式
+    String API_PHARMACY_WAY="dictionaries/getDictionariesList";
+
+
+
 
 
 
@@ -406,7 +419,7 @@ public interface ApiService {
             @Field("diagnosis_date") String diagnosisDate,
             @Field("hospital_id") String hospitalId,
             @Field("office_id") String officeId,
-            @Field("doctorinfo_id") String doctorUuid,
+            @Field("doctor_name") String doctorName,
             @Field("summary") String summary,
             @Field("imageList") String imageList);
 
@@ -420,8 +433,79 @@ public interface ApiService {
             @Field("diagnosis_date") String diagnosisDate,
             @Field("hospital_id") String hospitalId,
             @Field("office_id") String officeId,
-            @Field("doctorinfo_id") String doctorUuid,
+            @Field("doctor_name") String doctorName,
             @Field("summary") String summary);
+    /**
+     * 添加出院小结信息带图片
+     */
+    @POST(API_LEAVEHOSPITAL_INFO_SAVE)
+    @FormUrlEncoded
+    Call<ResultModel<AddOutPatientDataSaveBean>> getLeaveHospitalSave(
+            @Field("patientId") String patientUuid,
+            @Field("be_hospitalized_date") String beHospitalizedDate,
+            @Field("leave_hospital_date") String leaveHospitalDate,
+            @Field("hospital_id") String hospitalId,
+            @Field("hospitalization_office_id") String hospitalizationOfficeId,
+            @Field("doctor_name") String doctorName,
+            @Field("summary") String summary,
+            @Field("imageList") String imageList);
+
+    /**
+     * 添加出院小结信息不带图片
+     */
+    @POST(API_LEAVEHOSPITAL_INFO_SAVE)
+    @FormUrlEncoded
+    Call<ResultModel<AddOutPatientDataSaveBean>> getLeaveHospitalSaveText(
+            @Field("patientId") String patientUuid,
+            @Field("be_hospitalized_date") String beHospitalizedDate,
+            @Field("leave_hospital_date") String leaveHospitalDate,
+            @Field("hospital_id") String hospitalId,
+            @Field("hospitalization_office_id") String hospitalizationOfficeId,
+            @Field("doctor_name") String doctorName,
+            @Field("summary") String summary
+           );
 
 
+    /**
+     * 用药方案记录信息获取
+     */
+    @POST(API_PHARMACY_PALN_RECORD)
+    @FormUrlEncoded
+    Call<ResultModel<List<PharmacyBean>>> getPharmacyRecordInfo(
+            @Field("patientId") String patientUuid,
+            @Field("page") String page,
+            @Field("pagecount") String pageCount);
+
+    /**
+     * 添加用药方案记录带图片
+     */
+    @POST(API_PHARMACY_RECROD_SAVE)
+    @FormUrlEncoded
+    Call<ResultModel<AddOutPatientDataSaveBean>> getPharmacyRecordSave(
+            @Field("patientId") String patientUuid,
+            @Field("drug_name") String drugName,
+            @Field("usaged") String usaged,
+            @Field("amount") String amount,
+            @Field("remarks") String remarks,
+            @Field("imageList") String imageList);
+
+
+    /**
+     * 添加用药方案记录带图片
+     */
+    @POST(API_PHARMACY_RECROD_SAVE)
+    @FormUrlEncoded
+    Call<ResultModel<AddOutPatientDataSaveBean>> getPharmacyRecordSaveText(
+            @Field("patientId") String patientUuid,
+            @Field("drug_name") String drugName,
+            @Field("usaged") String usaged,
+            @Field("amount") String amount,
+            @Field("remarks") String remarks );
+
+    /**
+     * 获取用药方式
+     */
+    @POST(API_PHARMACY_WAY)
+    @FormUrlEncoded
+    Call<ResultModel<List<PharmacyWaybean>>> getPharmacyWay(@Field("bianma") String bianma, @Field("type") String type);
 }

@@ -13,7 +13,7 @@ public interface OutPatientAddBiz  {
     void addOutPatientSave(String patientUuid,String diagnosisDate,String hospitalId, String officeId,String doctorUuid,String summary,String imageList,CaseHistoryBiz.OnLoginListener onLoginListener);
 
     //添加门诊信息保存不带图片
-    void addOutPatientSaveText(String patientUuid,String diagnosisDate,String hospitalId, String officeId,String doctorUuid,String summary,CaseHistoryBiz.OnLoginListener onLoginListener);
+    void addOutPatientSaveText(String patientUuid,String diagnosisDate,String hospitalId, String officeId,String doctorName,String summary,CaseHistoryBiz.OnLoginListener onLoginListener);
 
 
 

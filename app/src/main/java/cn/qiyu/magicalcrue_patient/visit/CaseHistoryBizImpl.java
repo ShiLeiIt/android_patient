@@ -10,6 +10,7 @@ import cn.qiyu.magicalcrue_patient.model.Comment;
 import cn.qiyu.magicalcrue_patient.model.DischargeBean;
 import cn.qiyu.magicalcrue_patient.model.HospitalListBean;
 import cn.qiyu.magicalcrue_patient.model.HospitalOfficeListBean;
+import cn.qiyu.magicalcrue_patient.model.PharmacyBean;
 import cn.qiyu.magicalcrue_patient.model.ResultModel;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -96,6 +97,26 @@ public class CaseHistoryBizImpl extends BaseBiz implements CaseHistoryBiz {
 
             @Override
             public void onFailure(Call<ResultModel<List<HospitalOfficeListBean>>> call, Throwable throwable) {
+                onLoginListener.onFailure(throwable.getMessage());
+            }
+        });
+    }
+
+    //获取用药方案记录信息
+    @Override
+    public void getPhPharmacyRecordInfo(String patientUuid, String page, String pageCount, final OnLoginListener onLoginListener) {
+        mApiService.getPharmacyRecordInfo(patientUuid,page,pageCount).enqueue(new Callback<ResultModel<List<PharmacyBean>>>() {
+            @Override
+            public void onResponse(Call<ResultModel<List<PharmacyBean>>> call, Response<ResultModel<List<PharmacyBean>>> response) {
+                if (response.isSuccessful()) {
+                    onLoginListener.onResponse(response.body());
+                } else {
+                    onLoginListener.onFailure(response.body().getMessage());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResultModel<List<PharmacyBean>>> call, Throwable throwable) {
                 onLoginListener.onFailure(throwable.getMessage());
             }
         });

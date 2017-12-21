@@ -144,6 +144,8 @@ public class MyJpushRecviver extends BroadcastReceiver {
                 js = value.replace("\\", "");
                 JSONObject jsonObject = new JSONObject(js);
                 int mTypeId = jsonObject.getInt("typeId");
+                int paperUserID = jsonObject.getInt("paperUserID");
+                Log.i("paperUserID==", paperUserID+"");
                 switch (mTypeId) {
                     case 1:
                         //跳转随访对话

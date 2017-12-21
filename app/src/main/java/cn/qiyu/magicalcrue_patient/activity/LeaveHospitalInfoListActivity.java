@@ -73,13 +73,12 @@ public class LeaveHospitalInfoListActivity extends BaseActivity {
         //获取门诊信息
         @Override
         public void LoadOutPatientInfoList(ResultModel<List<DischargeBean>> model) {
-
         }
 
         //获取出院小结
         @Override
         public void LoadLeaveHospitalInfoList(ResultModel<List<DischargeBean>> model) {
-            ListDischargeItemAdapter listDischargeItemAdapter = new ListDischargeItemAdapter(LeaveHospitalInfoListActivity.this, LeaveHospitalInfoListActivity.this, model.getData());
+            ListDischargeItemAdapter listDischargeItemAdapter = new ListDischargeItemAdapter(LeaveHospitalInfoListActivity.this, LeaveHospitalInfoListActivity.this, model.getData(),"");
             mLvFollowUpDetail.setAdapter(listDischargeItemAdapter);
         }
 
@@ -117,6 +116,6 @@ public class LeaveHospitalInfoListActivity extends BaseActivity {
 
     @OnClick(R.id.tv_commit)
     public void onViewClicked() {
-        startActivity(new Intent(LeaveHospitalInfoListActivity.this,AddOutpatientDataActivity.class));
+        startActivity(new Intent(LeaveHospitalInfoListActivity.this,AddLeaveHospitalDataActivity.class));
     }
 }

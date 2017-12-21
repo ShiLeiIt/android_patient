@@ -120,6 +120,11 @@
         <activity android:name=".activity.OutpatientInformationListActivity"/>
         <activity android:name=".activity.LeaveHospitalInfoListActivity"/>
         <activity android:name=".activity.HospitalListActivity"/>
+        <activity android:name=".activity.AddLeaveHospitalDataActivity"/>
+        <activity android:name=".activity.PharmacyPlanRecordInfoListActivity"/>
+        <activity android:name=".activity.AddPharmacyRecordDataActivity"/>
+        <activity android:name=".activity.PharmacyWayListActivity"/>
+        <activity android:name=".activity.BannerDetailActivity"/>
 
 
 

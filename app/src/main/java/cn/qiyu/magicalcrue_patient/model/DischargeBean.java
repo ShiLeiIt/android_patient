@@ -4,6 +4,7 @@ import java.util.List;
 
 /**
  * Created by Administrator on 2017/12/18.
+ * 门诊资料和医院小结列表Bean
  */
 
 public class DischargeBean {

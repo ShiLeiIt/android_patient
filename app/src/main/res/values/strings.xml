@@ -49,11 +49,14 @@
     <string name="quizText">门诊手册拍照上传</string>
     <string name="outpatientData">门诊资料</string>
     <string name="addOutpatientData">添加门诊资料</string>
+    <string name="addLeaveHospitalData">添加出院小结</string>
     <string name="outpatientInfo">门诊信息</string>
     <string name="leaveHospital">出院小结</string>
     <string name="examinationReportSheet">检查报告单</string>
     <string name="therapeuticRegimen">用药方案记录</string>
     <string name="pharmacy">用药方案</string>
+    <string name="pharmacyRecord">用药方案记录</string>
+    <string name="addPharmacyRecord">添加用药方案记录</string>
     <string name="symptomatography">身体症状记录</string>
     <string name="symptomatraphy">症状记录</string>
     <string name="symptomaDescriptions">症状描述</string>
@@ -61,6 +64,8 @@
     <string name="commit">提交</string>
     <string name="add">添加</string>
     <string name="remark">请在这里填写备注.(选填)</string>
+    <string name="ruHospitalTime">入院时间</string>
+    <string name="OutHospitalTime">出院时间</string>
 
 
     <string name="quizHint">你可以向随访医生团队咨询问题，请尽可能简练、准确的描述症状、部位等信息，方便医生给的准确建议。你也可以拍照进行上传</string>

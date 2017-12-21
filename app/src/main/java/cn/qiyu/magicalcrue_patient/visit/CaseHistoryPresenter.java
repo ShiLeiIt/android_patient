@@ -14,7 +14,8 @@ public class CaseHistoryPresenter {
     private CaseHistoryView mCaseHistoryView;
     private CaseHistoryHospitalListView mCaseHistoryHospitalListView;
     private CaseHistoryHospitalOfficeListView mCaseHistoryHospitalOfficeListView;
-    private OutPatientAddView mOutPatientAddView;
+    private CaseHistoryPharcyRdListView mCaseHistoryPharcyRdListView;
+
 
 
     private CaseHistoryBiz mCaseHistoryBiz;
@@ -33,12 +34,13 @@ public class CaseHistoryPresenter {
         mCaseHistoryBiz = new CaseHistoryBizImpl();
         mCaseHistoryHospitalOfficeListView = caseHistoryHospitalOfficeListView;
     }
-    //添加门诊信息保存
 
-    public CaseHistoryPresenter(OutPatientAddView outPatientAddView){
+    //用药方案记录列表
+    public CaseHistoryPresenter(CaseHistoryPharcyRdListView caseHistoryPharcyRdListView){
         mCaseHistoryBiz = new CaseHistoryBizImpl();
-        mOutPatientAddView = outPatientAddView;
+        mCaseHistoryPharcyRdListView = caseHistoryPharcyRdListView;
     }
+
 
     //获取门诊资料信息列表
     public void getOutPatientInfoList() {
@@ -113,7 +115,23 @@ public class CaseHistoryPresenter {
             }
         });
     }
-
+    //获取用药方案记录列表
+    public void getPharcyRecodeList(){
+        mCaseHistoryBiz.getPhPharmacyRecordInfo(mCaseHistoryPharcyRdListView.getPatientUuid(), mCaseHistoryPharcyRdListView.getPage(), mCaseHistoryPharcyRdListView.getPageCount(), new CaseHistoryBiz.OnLoginListener() {
+            @Override
+            public void onResponse(ResultModel model) {
+                if (model.getResult() == 0) {
+                    mCaseHistoryPharcyRdListView.LoadPharcyRecodeList(model);
+                } else {
+                    mCaseHistoryPharcyRdListView.onViewFailure(model);
+                }
+            }
+            @Override
+            public void onFailure(String e) {
+            mCaseHistoryPharcyRdListView.onServerFailure(e);
+            }
+        });
+    }
 
 
 }

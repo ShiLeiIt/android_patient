@@ -20,6 +20,9 @@ public interface CaseHistoryBiz {
     //获取科室列表
     void getHospitalOfficeList(String page,String pageCount ,OnLoginListener onLoginListener);
 
+    //获取用药方案记录信息
+    void getPhPharmacyRecordInfo(String patientUuid, String page, String pageCount, OnLoginListener onLoginListener);
+
 
 
     interface OnLoginListener<T> {

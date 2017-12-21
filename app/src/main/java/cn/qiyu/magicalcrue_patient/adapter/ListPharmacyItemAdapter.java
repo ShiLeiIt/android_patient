@@ -2,50 +2,43 @@ package cn.qiyu.magicalcrue_patient.adapter;
 
 import android.app.Activity;
 import android.content.Context;
-import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.EditText;
 import android.widget.TextView;
-import java.text.SimpleDateFormat;
-import java.util.List;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
 import cn.qiyu.magicalcrue_patient.R;
-import cn.qiyu.magicalcrue_patient.model.Comment;
-import cn.qiyu.magicalcrue_patient.model.DischargeBean;
+import cn.qiyu.magicalcrue_patient.model.PharmacyBean;
 import cn.qiyu.magicalcrue_patient.view.NoScrollGridView;
 
 
 /**
- * Created by Administrator on 2017/12/18.
- * 门诊信息，与出院小结数据适配器
+ * Created by Administrator on 2017/12/21.
+ * 用药方案适配器
  */
 
-public class ListDischargeItemAdapter extends BaseAdapter {
+public class ListPharmacyItemAdapter extends BaseAdapter {
 
     private Context mContext;
-    private List<DischargeBean> items;
+    private List<PharmacyBean> items;
     private Activity activity;
-    private DischargeBean itemEntity;
-    private EditText reply_patient;
+    private PharmacyBean itemEntity;
     private ViewHolder holder;
-    private List<Comment> comments1;
-    //对话UUID
-    private  String commentUUid;
-    private int indexrefresh;
-    private String mIsOutPatient;
 
 
-    public ListDischargeItemAdapter(Context ctx,Activity activity, List<DischargeBean> items,String isOutPatient) {
+    public ListPharmacyItemAdapter(Context ctx, Activity activity, List<PharmacyBean> items) {
         this.items=items;
         this.mContext = ctx;
         this.items = items;
         this.activity=activity;
-        this.mIsOutPatient = isOutPatient;
+
 
     }
 
@@ -74,14 +67,14 @@ public class ListDischargeItemAdapter extends BaseAdapter {
             //门诊时间
             holder.tv_date = (TextView) convertView
                     .findViewById(R.id.tv_discharge_date);
-            //医院地址
-            holder.tv_hospital = (TextView) convertView
+            //药名
+            holder.tv_drug_name = (TextView) convertView
                     .findViewById(R.id.tv_discharge_hospital_address);
-            //医生姓名
-            holder.tv_doctor_name = (TextView) convertView
+            //剂量
+            holder.dosage = (TextView) convertView
                     .findViewById(R.id.tv_discharge_doctor_name);
-            //科室
-            holder.tv_administrative = (TextView) convertView
+            //方式
+            holder.tv_treatment_for = (TextView) convertView
                     .findViewById(R.id.tv_discharge_administrative);
             //备注
             holder.tv_context = (TextView) convertView
@@ -99,25 +92,27 @@ public class ListDischargeItemAdapter extends BaseAdapter {
         itemEntity = items.get(position);
         // 时间
 
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy年MM月dd日");
-        String date=dateFormat.format(itemEntity.getBe_hospitalized_date());
-        if (mIsOutPatient.equals("outPatient")) {
-            holder.tv_date.setText(date + "   门诊信息");
-        } else {
-            holder.tv_date.setText(date+"   出院小结");
-        }
+//        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy年MM月dd日");
+//        String date=dateFormat.format(itemEntity.getCreate_time());
 
-        //地址
-        holder.tv_hospital.setText("医院：  "+itemEntity.getHospitalName());
-        //科室
-        holder.tv_administrative.setText("科室：  "+itemEntity.getOffice_name());
-        //医生姓名
-        holder.tv_doctor_name.setText("医师：  "+itemEntity.getDoctor_name());
+
+        String createTime = itemEntity.getCreate_time();
+        String substringTime = createTime.substring(0, 10);
+
+
+        holder.tv_date.setText(substringTime+"  "+itemEntity.getUsaged());
+
+        //药名
+        holder.tv_drug_name.setText("药名：  "+itemEntity.getDrug_name());
+        //方式
+        holder.tv_treatment_for.setText("方式：  "+itemEntity.getUsaged());
+        //剂量
+        holder.dosage.setText("剂量：  "+itemEntity.getAmount());
         //备注
-        if (TextUtils.isEmpty(itemEntity.getSummary())) {
+        if (TextUtils.isEmpty(itemEntity.getRemarks())) {
             holder.tv_context.setText("暂无");
         }else{
-            holder.tv_context.setText(itemEntity.getSummary());
+            holder.tv_context.setText(itemEntity.getRemarks());
         }
 
         // 回复列表
@@ -135,32 +130,7 @@ public class ListDischargeItemAdapter extends BaseAdapter {
             holder.gridview.setVisibility(View.VISIBLE);
             holder.gridview.setAdapter(new GridItemAdapter(mContext, itemEntity.getImglist()));
         }
-        //回复按钮单击事件
-//        convertView.findViewById(R.id.ll_message_reply_discharge).setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//
-//                commentUUid=items.get(position).getUuid();
-//                indexrefresh = position;
-//                InputMethodManager imm = (InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE);
-//                imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
-//                //将包含输入框的布局显示出来
-//                LinearLayout llSend = (LinearLayout)activity.findViewById(R.id.ll_discharge_message_send);
-//                llSend.setVisibility(View.VISIBLE);
-//                //发送按钮的点击事件，处理
-//                activity.findViewById(R.id.btn_discharge_send_message).setOnClickListener(new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View v) {
-//                        reply_patient = (EditText) activity.findViewById(R.id.et_discharge_reply_patient);
-//                        if(reply_patient.getText().toString().equals(""))
-//                            Toast.makeText(mContext, "请输入字符", Toast.LENGTH_SHORT).show();
-//                        else {
-//                            casePresenter.setmedicalrecordcomment();
-//                        }
-//                    }
-//                });
-//            }
-//        });
+
 
         return convertView;
     }
@@ -177,9 +147,9 @@ public class ListDischargeItemAdapter extends BaseAdapter {
     static class  ViewHolder {
         private RecyclerView recyclerView;
         private TextView tv_date;
-        private TextView tv_hospital;
-        private TextView tv_administrative;
-        private TextView tv_doctor_name;
+        private TextView tv_drug_name;
+        private TextView tv_treatment_for;
+        private TextView dosage;
         private TextView tv_context;
         private NoScrollGridView gridview;
     }

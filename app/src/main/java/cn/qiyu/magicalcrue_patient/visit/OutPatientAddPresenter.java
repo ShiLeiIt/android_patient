@@ -25,7 +25,7 @@ public class OutPatientAddPresenter {
     //添加门诊信息保存带图片
     public  void getOutPatientSave(){
         mOutPatientAddBiz.addOutPatientSave(mOutPatientAddView.getParentUuid(), mOutPatientAddView.getDiagnosisDate()
-                , mOutPatientAddView.getHospitalId(), mOutPatientAddView.getOfficeId(), mOutPatientAddView.getDoctorUuid(), mOutPatientAddView.getSummary(), mOutPatientAddView.getImageList(), new CaseHistoryBiz.OnLoginListener() {
+                , mOutPatientAddView.getHospitalId(), mOutPatientAddView.getOfficeId(), mOutPatientAddView.getDoctorName(), mOutPatientAddView.getSummary(), mOutPatientAddView.getImageList(), new CaseHistoryBiz.OnLoginListener() {
                     @Override
                     public void onResponse(ResultModel model) {
                         if (model.getResult() == 0) {
@@ -48,7 +48,7 @@ public class OutPatientAddPresenter {
         mOutPatientAddBiz.addOutPatientSaveText(mOutPatientAddView.getParentUuid(),
                 mOutPatientAddView.getDiagnosisDate(), mOutPatientAddView.getHospitalId(),
                 mOutPatientAddView.getOfficeId(),
-                mOutPatientAddView.getDoctorUuid(), mOutPatientAddView.getSummary(), new CaseHistoryBiz.OnLoginListener() {
+                mOutPatientAddView.getDoctorName(), mOutPatientAddView.getSummary(), new CaseHistoryBiz.OnLoginListener() {
                     @Override
                     public void onResponse(ResultModel model) {
                         if (model.getResult() == 0) {

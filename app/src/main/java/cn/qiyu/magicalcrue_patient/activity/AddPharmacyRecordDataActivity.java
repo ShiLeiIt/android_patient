@@ -31,7 +31,6 @@ import org.json.JSONArray;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -48,30 +47,21 @@ import cn.qiyu.magicalcrue_patient.utils.PreUtils;
 import cn.qiyu.magicalcrue_patient.view.LayoutAddOutpatientView;
 import cn.qiyu.magicalcrue_patient.visit.OutPatientAddPresenter;
 import cn.qiyu.magicalcrue_patient.visit.OutPatientAddView;
-import cn.qiyu.magicalcrue_patient.visit.CaseHistoryPresenter;
+import cn.qiyu.magicalcrue_patient.visit.PharmacyRecordAddView;
+import cn.qiyu.magicalcrue_patient.visit.PharmacyRecordPresenter;
 import okhttp3.MediaType;
 import okhttp3.RequestBody;
 
 /**
- * Created by ShiLei on 2017/12/18.
- * 添加门诊资料信息
+ * Created by ShiLei on 2017/12/21.
+ * 添加用药方案记录信息
  */
 
-public class AddOutpatientDataActivity extends BaseActivity {
+public class AddPharmacyRecordDataActivity extends BaseActivity {
     @Bind(R.id.tv_title)
     TextView mTvTitle;
     @Bind(R.id.tv_commit)
     TextView mTvCommit;
-    @Bind(R.id.lav_time)
-    LayoutAddOutpatientView mLavTime;
-    @Bind(R.id.lav_hospital)
-    LayoutAddOutpatientView mLavHospital;
-    @Bind(R.id.lav_departments)
-    LayoutAddOutpatientView mLavDepartments;
-    @Bind(R.id.et_doctor_name)
-    EditText mEtDoctorName;
-    @Bind(R.id.rl_doctor_name)
-    RelativeLayout mRlDoctorName;
     @Bind(R.id.iv_quiz_pic)
     ImageView mIvQuizPic;
     @Bind(R.id.rl_camera)
@@ -82,10 +72,15 @@ public class AddOutpatientDataActivity extends BaseActivity {
     EditText mIdEditorDetail;
     @Bind(R.id.id_editor_detail_font_count)
     TextView mIdEditorDetailFontCount;
+    @Bind(R.id.et_drug_name)
+    EditText mEtDrugName;
+    @Bind(R.id.rl_drug_name)
+    RelativeLayout mRlDrugName;
+    @Bind(R.id.lav_pharmacy_way)
+    LayoutAddOutpatientView mLavPharmacyWay;
+    @Bind(R.id.et_dosage_name)
+    EditText mEtDosageName;
 
-    private TextView mTvFirstTime;
-    private TextView mTvHospital;
-    private TextView mTvDepartments;
     private ImageConfig imgConfig;
     private static final int REQUEST_CAMERA_CODE = 10;
     private static final int REQUEST_PREVIEW_CODE = 20;
@@ -100,13 +95,15 @@ public class AddOutpatientDataActivity extends BaseActivity {
     private RequestBody mRequestFile;
     private File mFileName;
     private StringBuffer mStringBuffer = new StringBuffer();
-    private int requestImageIndex=0;
-    private String mDoctorName;
+    private int requestImageIndex = 0;
+    private String mWayName;
+    private TextView mTvWayName;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_outpatient_data);
+        setContentView(R.layout.activity_add_pharmacy_recode_data);
         ButterKnife.bind(this);
         init();
 
@@ -117,14 +114,8 @@ public class AddOutpatientDataActivity extends BaseActivity {
         mTvCommit.setVisibility(View.VISIBLE);
         mTvCommit.setText(R.string.save);
         mTvCommit.setTextColor(getResources().getColor(R.color.app_userInfor));
-        mTvTitle.setText(R.string.addOutpatientData);
-        //门诊时间
-        mTvFirstTime = (TextView) mLavTime.findViewById(R.id.tv_first_visit_time);
-        //医院
-        mTvHospital = (TextView) mLavHospital.findViewById(R.id.tv_first_visit_time);
-        //科室
-        mTvDepartments = (TextView) mLavDepartments.findViewById(R.id.tv_first_visit_time);
-
+        mTvTitle.setText(R.string.addPharmacyRecord);
+        mTvWayName = (TextView) mLavPharmacyWay.findViewById(R.id.tv_first_visit_time);
 
         //图片
         imgConfig = new ImageConfig();
@@ -135,8 +126,6 @@ public class AddOutpatientDataActivity extends BaseActivity {
         int cols = getResources().getDisplayMetrics().widthPixels / getResources().getDisplayMetrics().densityDpi;
         cols = cols < 4 ? 4 : cols;
         mGridView.setNumColumns(cols);
-
-
 
         mIdEditorDetail.addTextChangedListener(new TextWatcher() {
             @Override
@@ -157,13 +146,14 @@ public class AddOutpatientDataActivity extends BaseActivity {
                     islMaxCount = true;
                 }
                 if (detailLength == 500 && islMaxCount) {
-                    Toast.makeText(AddOutpatientDataActivity.this, "最多输入500字", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AddPharmacyRecordDataActivity.this, "最多输入500字", Toast.LENGTH_SHORT).show();
                     islMaxCount = false;
                 }
             }
         });
 
     }
+
     ImageUpLoadPresenter mImageUpLoadPresenter = new ImageUpLoadPresenter(new ImageUpLoadView() {
         @Override
         public RequestBody getImageUpLoadFileId() {
@@ -174,11 +164,11 @@ public class AddOutpatientDataActivity extends BaseActivity {
 
         @Override
         public void getImageUpLoad(ImageUpLoadBean imageUpLoadBean) {
-            requestImageIndex=requestImageIndex+1;
+            requestImageIndex = requestImageIndex + 1;
             mStringBuffer.append(imageUpLoadBean.getFileId() + ",");
 
-            if(requestImageIndex==mList.size()-1){
-                mOutPatientAddPresenter.getOutPatientSave();
+            if (requestImageIndex == mList.size() - 1) {
+                mPharmacyRecordPresenter.getPharmacyRecodeSave();
             }
         }
 
@@ -206,60 +196,52 @@ public class AddOutpatientDataActivity extends BaseActivity {
     });
 
 
-
-     //上传门诊信息
-    OutPatientAddPresenter mOutPatientAddPresenter = new OutPatientAddPresenter(new OutPatientAddView() {
+    //上传用药方案记录
+    PharmacyRecordPresenter mPharmacyRecordPresenter = new PharmacyRecordPresenter(new PharmacyRecordAddView() {
         @Override
         public String getParentUuid() {
-            return (String) PreUtils.getParam(AddOutpatientDataActivity.this,"patientuuid","0");
+            return (String)PreUtils.getParam(AddPharmacyRecordDataActivity.this,"patientuuid","0");
         }
 
         @Override
-        public String getDiagnosisDate() {
-            return mTvFirstTime.getText().toString();
+        public String getDrugName() {
+            return mEtDrugName.getText().toString();
         }
 
         @Override
-        public String getHospitalId() {
-            return mHospitalId;
+        public String getUsaged() {
+            return mWayName;
         }
 
         @Override
-        public String getOfficeId() {
-            return mOfficeId;
+        public String getAmount() {
+            return mEtDosageName.getText().toString();
         }
 
         @Override
-        public String getDoctorName() {
-            return mEtDoctorName.getText().toString();
-        }
-
-        @Override
-        public String getSummary() {
+        public String getRemarks() {
             return mIdEditorDetail.getText().toString();
         }
 
         @Override
         public String getImageList() {
-            Log.i("mStringBuffer===", mStringBuffer.toString());
-            return  null==mStringBuffer.toString()? null:mStringBuffer.toString();
+            return null==mStringBuffer.toString()? null:mStringBuffer.toString();
         }
 
         @Override
-        public void LoadOutPatientSave(ResultModel<AddOutPatientDataSaveBean> model) {
-            Log.i("222==========", "jinglai");
-            Toast.makeText(AddOutpatientDataActivity.this, "添加成功", Toast.LENGTH_SHORT).show();
+        public void LoadPharmacyRecordSave(ResultModel<AddOutPatientDataSaveBean> model) {
+            Toast.makeText(AddPharmacyRecordDataActivity.this, "添加成功", Toast.LENGTH_SHORT).show();
             finish();
         }
 
-         @Override
-         public void LoadOutPatientSaveText(ResultModel<AddOutPatientDataSaveBean> model) {
-             Log.i("1111111111111111111==", "meijin");
-             Toast.makeText(AddOutpatientDataActivity.this, "添加成功", Toast.LENGTH_SHORT).show();
-             finish();
-         }
+        @Override
+        public void LoadPharmacyRecordSaveText(ResultModel<AddOutPatientDataSaveBean> model) {
+            Toast.makeText(AddPharmacyRecordDataActivity.this, "添加成功", Toast.LENGTH_SHORT).show();
+            finish();
 
-         @Override
+        }
+
+        @Override
         public void showProgress() {
 
         }
@@ -282,8 +264,8 @@ public class AddOutpatientDataActivity extends BaseActivity {
 
     @OnClick(R.id.tv_commit)
     public void onViewClicked() {
-        if (TextUtils.isEmpty(mTvFirstTime.getText().toString())||TextUtils.isEmpty(mHospitalName)||TextUtils.isEmpty(mOfficeName)||TextUtils.isEmpty(mEtDoctorName.getText().toString())) {
-            Toast.makeText(AddOutpatientDataActivity.this, "有选项没有填写完整", Toast.LENGTH_SHORT).show();
+        if (TextUtils.isEmpty(mEtDrugName.getText().toString())||TextUtils.isEmpty(mWayName)||TextUtils.isEmpty(mEtDosageName.getText().toString())) {
+            Toast.makeText(AddPharmacyRecordDataActivity.this, "有选项没有填写完整", Toast.LENGTH_SHORT).show();
             return;
         }
         if (mList != null && mList.size() > 0) {
@@ -293,30 +275,19 @@ public class AddOutpatientDataActivity extends BaseActivity {
                 mImageUpLoadPresenter.getImage();
             }
         } else {
-            mOutPatientAddPresenter.getOutPatientSaveText();
+            mPharmacyRecordPresenter.getPharmacyRecodeSaveText();
         }
 
     }
 
-    @OnClick({R.id.lav_time, R.id.lav_hospital, R.id.lav_departments, R.id.rl_doctor_name, R.id.iv_quiz_pic})
+    @OnClick({R.id.lav_pharmacy_way,R.id.iv_quiz_pic})
     public void onViewClicked(View view) {
         switch (view.getId()) {
-            case R.id.lav_time:
-                //门诊时间
-                tvSelectDate(mTvFirstTime);
-                break;
-            case R.id.lav_hospital:
-                Intent intentHos = new Intent(AddOutpatientDataActivity.this, HospitalListActivity.class);
+            case R.id.lav_pharmacy_way:
+                //用药方式
+                Intent intentHos = new Intent(AddPharmacyRecordDataActivity.this, PharmacyWayListActivity.class);
                 intentHos.putExtra("isHospital", "0");
                 startActivityForResult(intentHos, 0x000);
-                break;
-            case R.id.lav_departments:
-                Intent intentDep = new Intent(AddOutpatientDataActivity.this, HospitalListActivity.class);
-                intentDep.putExtra("isHospital", "1");
-                startActivityForResult(intentDep, 0x001);
-                break;
-            case R.id.rl_doctor_name:
-
                 break;
             case R.id.iv_quiz_pic:
                 mRlCamera.setVisibility(View.GONE);
@@ -326,7 +297,7 @@ public class AddOutpatientDataActivity extends BaseActivity {
                         String imgs = (String) parent.getItemAtPosition(position);
                         if ("000000".equals(imgs)) {
 
-                            PhotoPickerIntent intent = new PhotoPickerIntent(AddOutpatientDataActivity.this);
+                            PhotoPickerIntent intent = new PhotoPickerIntent(AddPharmacyRecordDataActivity.this);
                             intent.setSelectModel(SelectModel.MULTI);
                             intent.setShowCarema(true); // 是否显示拍照
                             intent.setMaxTotal(8); // 最多选择照片数量，默认为6
@@ -334,7 +305,7 @@ public class AddOutpatientDataActivity extends BaseActivity {
                             intent.setSelectedPaths(imagePaths); // 已选中的照片地址， 用于回显选中状态
                             startActivityForResult(intent, REQUEST_CAMERA_CODE);
                         } else {
-                            PhotoPreviewIntent intent = new PhotoPreviewIntent(AddOutpatientDataActivity.this);
+                            PhotoPreviewIntent intent = new PhotoPreviewIntent(AddPharmacyRecordDataActivity.this);
                             intent.setCurrentItem(position);
                             intent.setPhotoPaths(imagePaths);
                             startActivityForResult(intent, REQUEST_PREVIEW_CODE);
@@ -365,17 +336,15 @@ public class AddOutpatientDataActivity extends BaseActivity {
                     loadAdpater(ListExtra);
                     break;
                 case 0x000:
-                    //医院列表
-                    mHospitalName = data.getStringExtra("HospitalName");
-                    mHospitalId = data.getStringExtra("HospitalId");
-
-                    mTvHospital.setText(mHospitalName);
+                    //用药方式列表
+                    mWayName = data.getStringExtra("WayName");
+                    mTvWayName.setText(mWayName);
                     break;
                 case 0x001:
-                    //科室列表
-                    mOfficeName = data.getStringExtra("OfficeName");
-                    mOfficeId = data.getStringExtra("OfficeId");
-                    mTvDepartments.setText(mOfficeName);
+//                    //科室列表
+//                    mOfficeName = data.getStringExtra("OfficeName");
+//                    mOfficeId = data.getStringExtra("OfficeId");
+//                    mTvDepartments.setText(mOfficeName);
                     break;
             }
         }
@@ -401,6 +370,8 @@ public class AddOutpatientDataActivity extends BaseActivity {
         }
     }
 
+
+
     private class GridAdapter extends BaseAdapter {
         private ArrayList<String> listUrls;
         private LayoutInflater inflater;
@@ -410,7 +381,7 @@ public class AddOutpatientDataActivity extends BaseActivity {
             if (listUrls.size() == 9) {
                 listUrls.remove(listUrls.size() - 1);
             }
-            inflater = LayoutInflater.from(AddOutpatientDataActivity.this);
+            inflater = LayoutInflater.from(AddPharmacyRecordDataActivity.this);
         }
 
         public int getCount() {
@@ -443,7 +414,7 @@ public class AddOutpatientDataActivity extends BaseActivity {
             if (path.equals("000000")) {
                 holder.image.setImageResource(R.drawable.add);
             } else {
-                Glide.with(AddOutpatientDataActivity.this)
+                Glide.with(AddPharmacyRecordDataActivity.this)
                         .load(path)
                         .placeholder(R.mipmap.default_error)
                         .error(R.mipmap.default_error)
@@ -453,47 +424,10 @@ public class AddOutpatientDataActivity extends BaseActivity {
             }
             return convertView;
         }
-
         class ViewHolder {
             ImageView image;
         }
     }
 
-
-    //日期的选择
-    private void tvSelectDate(final TextView tv) {
-        final DatePicker picker = new DatePicker(this);
-        picker.setCanLoop(false);
-        picker.setWheelModeEnable(true);
-        picker.setTopPadding(15);
-        picker.setRangeStart(1950, 1, 1);
-        picker.setRangeEnd(2050, 1, 11);
-        picker.setSelectedItem(2017, 10, 14);
-        picker.setWeightEnable(true);
-        picker.setOnDatePickListener(new DatePicker.OnYearMonthDayPickListener() {
-            @Override
-            public void onDatePicked(String year, String month, String day) {
-
-                tv.setText(year + "-" + month + "-" + day);
-            }
-        });
-        picker.setOnWheelListener(new DatePicker.OnWheelListener() {
-            @Override
-            public void onYearWheeled(int index, String year) {
-                picker.setTitleText(year + "-" + picker.getSelectedMonth() + "-" + picker.getSelectedDay());
-            }
-
-            @Override
-            public void onMonthWheeled(int index, String month) {
-                picker.setTitleText(picker.getSelectedYear() + "-" + month + "-" + picker.getSelectedDay());
-            }
-
-            @Override
-            public void onDayWheeled(int index, String day) {
-                picker.setTitleText(picker.getSelectedYear() + "-" + picker.getSelectedMonth() + "-" + day);
-            }
-        });
-        picker.show();
-    }
 
 }

@@ -7,68 +7,10 @@
               android:orientation="vertical">
 
     <include layout="@layout/layout_titlebar"/>
-    <cn.qiyu.magicalcrue_patient.view.LayoutAddOutpatientView
-        android:id="@+id/lav_time"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_marginTop="16dp"
-        android:background="@color/app_white"
-        app:left="@color/app_userInfor"
-        app:right="@color/app_gray"
-        app:text_Title="门诊时间"
-        app:text_content="请选择"
-        />
-    <cn.qiyu.magicalcrue_patient.view.LayoutAddOutpatientView
-        android:id="@+id/lav_time_out"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:background="@color/app_white"
-        app:left="@color/app_userInfor"
-        app:right="@color/app_gray"
-        app:text_Title="出院时间"
-        android:visibility="gone"
-        app:text_content="请选择"
-        />
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="0.5dp"
-        android:background="@color/view_bg"/>
-
-    <cn.qiyu.magicalcrue_patient.view.LayoutAddOutpatientView
-        android:id="@+id/lav_hospital"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:background="@color/app_white"
-        app:left="@color/app_userInfor"
-        app:right="@color/app_gray"
-        app:text_Title="医院"
-        app:text_content="请选择"
-        />
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="0.5dp"
-        android:background="@color/view_bg"/>
-
-    <cn.qiyu.magicalcrue_patient.view.LayoutAddOutpatientView
-        android:id="@+id/lav_departments"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:background="@color/app_white"
-        app:left="@color/app_userInfor"
-        app:right="@color/app_gray"
-        app:text_Title="科室"
-        app:text_content="请选择"
-        />
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="0.5dp"
-        android:background="@color/view_bg"/>
 
     <RelativeLayout
-        android:id="@+id/rl_doctor_name"
+        android:layout_marginTop="16dp"
+        android:id="@+id/rl_drug_name"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:background="@color/app_white"
@@ -76,17 +18,17 @@
         android:focusableInTouchMode="true">
 
         <TextView
-            android:id="@+id/tv_doctor"
+            android:id="@+id/tv_drug_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginLeft="20dp"
-            android:text="@string/doctor"
+            android:text="药物名称"
             android:textColor="@color/app_userInfor"
             android:textSize="14sp"/>
 
         <ImageView
-            android:id="@+id/iv_doctor_name_arrows"
+            android:id="@+id/iv_drug_name_arrows"
             android:layout_width="23dp"
             android:layout_height="23dp"
             android:layout_alignParentRight="true"
@@ -96,11 +38,72 @@
             android:src="@drawable/mine_arrows"/>
 
         <EditText
-            android:id="@+id/et_doctor_name"
+            android:id="@+id/et_drug_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_toLeftOf="@id/iv_doctor_name_arrows"
+            android:layout_toLeftOf="@id/iv_drug_name_arrows"
+            android:background="@null"
+            android:focusable="true"
+            android:gravity="right|center_vertical"
+            android:hint="请输入"
+            android:maxLines="1"
+            android:textColor="@color/app_gray"
+            android:textColorHint="@color/app_gray"
+            android:textCursorDrawable="@null"
+            android:textSize="12sp"/>
+    </RelativeLayout>
+
+
+    <cn.qiyu.magicalcrue_patient.view.LayoutAddOutpatientView
+        android:id="@+id/lav_pharmacy_way"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/app_white"
+        app:left="@color/app_userInfor"
+        app:right="@color/app_gray"
+        app:text_Title="用药方式"
+        app:text_content="请选择"/>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/view_bg"/>
+
+
+    <RelativeLayout
+        android:id="@+id/rl_dosage_name"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/app_white"
+        android:focusable="true"
+        android:focusableInTouchMode="true">
+
+        <TextView
+            android:id="@+id/tv_dosage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="20dp"
+            android:text="剂量"
+            android:textColor="@color/app_userInfor"
+            android:textSize="14sp"/>
+
+        <ImageView
+            android:id="@+id/iv_dosage_name_arrows"
+            android:layout_width="23dp"
+            android:layout_height="23dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="3dp"
+            android:layout_marginRight="7dp"
+            android:src="@drawable/mine_arrows"/>
+
+        <EditText
+            android:id="@+id/et_dosage_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@id/iv_dosage_name_arrows"
             android:background="@null"
             android:focusable="true"
             android:gravity="right|center_vertical"
