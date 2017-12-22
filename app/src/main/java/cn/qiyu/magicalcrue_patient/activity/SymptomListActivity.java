@@ -27,10 +27,10 @@ import cn.qiyu.magicalcrue_patient.visit.PharmacyRecordWayView;
 
 /**
  * Created by ShiLei on 2017/12/21.
- * 用药方式列表
+ * 症状列表
  */
 
-public class PharmacyWayListActivity extends BaseActivity {
+public class SymptomListActivity extends BaseActivity {
     @Bind(R.id.iv_hospital_list_back)
     ImageView mIvHospitalListBack;
     @Bind(R.id.rlv_hospital_list)
@@ -38,8 +38,8 @@ public class PharmacyWayListActivity extends BaseActivity {
     @Bind(R.id.tv_title)
     TextView mTvTitle;
     private List<PharmacyWaybean> mList;
-    private String mWayName;
     private RecyclerAdpter mRecyclerAdpter;
+    private String mSymptomName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,16 +51,15 @@ public class PharmacyWayListActivity extends BaseActivity {
     }
 
     private void init() {
-        mTvTitle.setText(R.string.pharmacyWay);
-        mRlvHospitalList.addItemDecoration(new RecycleViewDivider(PharmacyWayListActivity.this, LinearLayoutManager.HORIZONTAL, R.drawable.relation_bg));
-
+        mTvTitle.setText(R.string.symptom);
+        mRlvHospitalList.addItemDecoration(new RecycleViewDivider(SymptomListActivity.this, LinearLayoutManager.HORIZONTAL, R.drawable.relation_bg));
     }
 
-    //用药方式列表
+    //症状列表
     PharmacyRecordPresenter mPharmacyRecordPresenter = new PharmacyRecordPresenter(new PharmacyRecordWayView() {
         @Override
         public String getBianMa() {
-            return "routeofmedication";
+            return "symptom";
         }
 
         @Override
@@ -72,7 +71,7 @@ public class PharmacyWayListActivity extends BaseActivity {
         public void LoadPharmacyRecordWay(ResultModel<List<PharmacyWaybean>> model) {
             mRecyclerAdpter = new RecyclerAdpter(model.getData());
             mRlvHospitalList.setAdapter(mRecyclerAdpter);
-            mRlvHospitalList.setLayoutManager(new LinearLayoutManager(PharmacyWayListActivity.this));
+            mRlvHospitalList.setLayoutManager(new LinearLayoutManager(SymptomListActivity.this));
         }
 
         @Override
@@ -105,11 +104,11 @@ public class PharmacyWayListActivity extends BaseActivity {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.iv_hospital_list_back:
-                Intent intent = new Intent(PharmacyWayListActivity.this, AddPharmacyRecordDataActivity.class);
-                if (TextUtils.isEmpty(mWayName)) {
-                    Toast.makeText(this, "请选择用药方式", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(SymptomListActivity.this, AddPharmacyRecordDataActivity.class);
+                if (TextUtils.isEmpty(mSymptomName)) {
+                    Toast.makeText(this, "请症状", Toast.LENGTH_SHORT).show();
                 } else {
-                    intent.putExtra("WayName", mWayName);
+                    intent.putExtra("symptomName", mSymptomName);
                     setResult(RESULT_OK, intent);
                     finish();
                 }
@@ -164,7 +163,7 @@ public class PharmacyWayListActivity extends BaseActivity {
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    mWayName = mList.get(position).getNAME();
+                    mSymptomName = mList.get(position).getNAME();
                     for (int i = 0; i < mList.size(); i++) {
                         if (i == position) {
                             mList.get(i).setSelect(true);

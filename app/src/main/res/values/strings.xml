@@ -56,9 +56,13 @@
     <string name="therapeuticRegimen">用药方案记录</string>
     <string name="pharmacy">用药方案</string>
     <string name="pharmacyRecord">用药方案记录</string>
+    <string name="pharmacyWay">用药方式</string>
+
     <string name="addPharmacyRecord">添加用药方案记录</string>
     <string name="symptomatography">身体症状记录</string>
+    <string name="addSymptomatography">添加身体症状记录</string>
     <string name="symptomatraphy">症状记录</string>
+    <string name="symptom">症状</string>
     <string name="symptomaDescriptions">症状描述</string>
     <string name="doctor">医生</string>
     <string name="commit">提交</string>

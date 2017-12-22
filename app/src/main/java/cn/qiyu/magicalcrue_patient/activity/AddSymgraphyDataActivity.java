@@ -45,33 +45,21 @@ import cn.qiyu.magicalcrue_patient.model.ImageUpLoadBean;
 import cn.qiyu.magicalcrue_patient.model.ResultModel;
 import cn.qiyu.magicalcrue_patient.utils.PreUtils;
 import cn.qiyu.magicalcrue_patient.view.LayoutAddOutpatientView;
-import cn.qiyu.magicalcrue_patient.visit.LeaveHospitalAddPresenter;
-import cn.qiyu.magicalcrue_patient.visit.LeaveHospitalAddView;
-import cn.qiyu.magicalcrue_patient.visit.OutPatientAddPresenter;
-import cn.qiyu.magicalcrue_patient.visit.OutPatientAddView;
+import cn.qiyu.magicalcrue_patient.visit.SymptomatographyAddPresenter;
+import cn.qiyu.magicalcrue_patient.visit.SymptomatographyAddView;
 import okhttp3.MediaType;
 import okhttp3.RequestBody;
 
 /**
- * Created by ShiLei on 2017/12/21.
- * 添加出院小结信息
+ * Created by ShiLei on 2017/12/22.
+ * 添加身体症状记录
  */
 
-public class AddLeaveHospitalDataActivity extends BaseActivity {
+public class AddSymgraphyDataActivity extends BaseActivity {
     @Bind(R.id.tv_title)
     TextView mTvTitle;
     @Bind(R.id.tv_commit)
     TextView mTvCommit;
-    @Bind(R.id.lav_time)
-    LayoutAddOutpatientView mLavTime;
-    @Bind(R.id.lav_hospital)
-    LayoutAddOutpatientView mLavHospital;
-    @Bind(R.id.lav_departments)
-    LayoutAddOutpatientView mLavDepartments;
-    @Bind(R.id.et_doctor_name)
-    EditText mEtDoctorName;
-    @Bind(R.id.rl_doctor_name)
-    RelativeLayout mRlDoctorName;
     @Bind(R.id.iv_quiz_pic)
     ImageView mIvQuizPic;
     @Bind(R.id.rl_camera)
@@ -82,36 +70,35 @@ public class AddLeaveHospitalDataActivity extends BaseActivity {
     EditText mIdEditorDetail;
     @Bind(R.id.id_editor_detail_font_count)
     TextView mIdEditorDetailFontCount;
-    @Bind(R.id.lav_time_out)
-    LayoutAddOutpatientView mLavTimeOut;
+    @Bind(R.id.lav_symptom)
+    LayoutAddOutpatientView mLavSymptom;
+    @Bind(R.id.et_custom_name)
+    EditText mEtCustomName;
+    @Bind(R.id.rl_custom_symptom)
+    RelativeLayout mRlCustomSymptom;
+    @Bind(R.id.remark)
+    TextView mRemark;
+    @Bind(R.id.tv_quiz)
+    TextView mTvQuiz;
 
-    private TextView mTvFirstTime;
-    private TextView mTvHospital;
-    private TextView mTvDepartments;
     private ImageConfig imgConfig;
     private static final int REQUEST_CAMERA_CODE = 10;
     private static final int REQUEST_PREVIEW_CODE = 20;
     private ArrayList<String> imagePaths = new ArrayList<>();
     private ArrayList<String> mList;
     private GridAdapter mGridAdapter;
-    private String mHospitalName;
-    private String mOfficeName;
     private boolean islMaxCount;
-    private String mHospitalId;
-    private String mOfficeId;
     private RequestBody mRequestFile;
     private File mFileName;
     private StringBuffer mStringBuffer = new StringBuffer();
     private int requestImageIndex = 0;
-    private String mDoctorName;
-    private TextView mTvLeaveTime;
-    private TextView mTvRuHospitalName;
-    private TextView mTvOutHospitalName;
+    private TextView mTv_symptom;
+    private String mSymptomName;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_outpatient_data);
+        setContentView(R.layout.activity_add_symptomatography_data);
         ButterKnife.bind(this);
         init();
 
@@ -121,21 +108,9 @@ public class AddLeaveHospitalDataActivity extends BaseActivity {
         mTvCommit.setVisibility(View.VISIBLE);
         mTvCommit.setText(R.string.save);
         mTvCommit.setTextColor(getResources().getColor(R.color.app_userInfor));
-        mTvTitle.setText(R.string.addLeaveHospitalData);
-        //入院时间
-        mTvFirstTime = (TextView) mLavTime.findViewById(R.id.tv_first_visit_time);
-        mTvRuHospitalName = (TextView) mLavTime.findViewById(R.id.tv_first_visit);
-        mTvRuHospitalName.setText(R.string.ruHospitalTime);
-        //出院时间
-        mLavTimeOut.setVisibility(View.VISIBLE);
-        mTvLeaveTime = (TextView) mLavTimeOut.findViewById(R.id.tv_first_visit_time);
-        mTvOutHospitalName = (TextView) mLavTimeOut.findViewById(R.id.tv_first_visit);
-        mTvOutHospitalName.setText(R.string.OutHospitalTime);
-        //医院
-        mTvHospital = (TextView) mLavHospital.findViewById(R.id.tv_first_visit_time);
-        //科室
-        mTvDepartments = (TextView) mLavDepartments.findViewById(R.id.tv_first_visit_time);
-
+        mTvTitle.setText(R.string.addSymptomatography);
+        //症状
+        mTv_symptom = (TextView) mLavSymptom.findViewById(R.id.tv_first_visit_time);
 
         //图片
         imgConfig = new ImageConfig();
@@ -167,7 +142,7 @@ public class AddLeaveHospitalDataActivity extends BaseActivity {
                     islMaxCount = true;
                 }
                 if (detailLength == 500 && islMaxCount) {
-                    Toast.makeText(AddLeaveHospitalDataActivity.this, "最多输入500字", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AddSymgraphyDataActivity.this, "最多输入500字", Toast.LENGTH_SHORT).show();
                     islMaxCount = false;
                 }
             }
@@ -189,7 +164,7 @@ public class AddLeaveHospitalDataActivity extends BaseActivity {
             mStringBuffer.append(imageUpLoadBean.getFileId() + ",");
 
             if (requestImageIndex == mList.size() - 1) {
-                mLeaveHospitalAddPresenter.getLeaveHospitalSave();
+                mSymptomatographyAddPresenter.getSymptomatographySave();
             }
         }
 
@@ -215,40 +190,25 @@ public class AddLeaveHospitalDataActivity extends BaseActivity {
 
         }
     });
-    //添加出院小结
-    LeaveHospitalAddPresenter mLeaveHospitalAddPresenter = new LeaveHospitalAddPresenter(new LeaveHospitalAddView() {
+
+    SymptomatographyAddPresenter mSymptomatographyAddPresenter = new SymptomatographyAddPresenter(new SymptomatographyAddView() {
         @Override
         public String getParentUuid() {
-            return (String) PreUtils.getParam(AddLeaveHospitalDataActivity.this, "patientuuid", "0");
+            return (String) PreUtils.getParam(AddSymgraphyDataActivity.this, "patientuuid", "0");
         }
 
         @Override
-        public String getBeHospitalDate() {
-            return mTvFirstTime.getText().toString();
+        public String getSymptomCode() {
+            return mSymptomName;
         }
 
         @Override
-        public String getLeaveHospitalDate() {
-            return mTvLeaveTime.getText().toString();
+        public String getSymptom() {
+            return mEtCustomName.getText().toString();
         }
 
         @Override
-        public String getHospitalId() {
-            return mHospitalId;
-        }
-
-        @Override
-        public String getHospitalizationOfficeId() {
-            return mOfficeId;
-        }
-
-        @Override
-        public String getDoctorName() {
-            return mEtDoctorName.getText().toString();
-        }
-
-        @Override
-        public String getSummary() {
+        public String getRemarks() {
             return mIdEditorDetail.getText().toString();
         }
 
@@ -258,15 +218,14 @@ public class AddLeaveHospitalDataActivity extends BaseActivity {
         }
 
         @Override
-        public void LoadLeaveHospitalSave(ResultModel<AddOutPatientDataSaveBean> model) {
-            Toast.makeText(AddLeaveHospitalDataActivity.this, "添加成功", Toast.LENGTH_SHORT).show();
+        public void LoadSymptomatographySave(ResultModel<AddOutPatientDataSaveBean> model) {
+            Toast.makeText(AddSymgraphyDataActivity.this, "添加成功", Toast.LENGTH_SHORT).show();
             finish();
-
         }
 
         @Override
-        public void LoadLeaveHospitalSaveText(ResultModel<AddOutPatientDataSaveBean> model) {
-            Toast.makeText(AddLeaveHospitalDataActivity.this, "添加成功", Toast.LENGTH_SHORT).show();
+        public void LoadSymptomatographyAddSaveText(ResultModel<AddOutPatientDataSaveBean> model) {
+            Toast.makeText(AddSymgraphyDataActivity.this, "添加成功", Toast.LENGTH_SHORT).show();
             finish();
         }
 
@@ -292,12 +251,10 @@ public class AddLeaveHospitalDataActivity extends BaseActivity {
     });
 
 
-
-
     @OnClick(R.id.tv_commit)
     public void onViewClicked() {
-        if (TextUtils.isEmpty(mTvFirstTime.getText().toString()) ||TextUtils.isEmpty(mTvLeaveTime.getText().toString())|| TextUtils.isEmpty(mHospitalName) || TextUtils.isEmpty(mOfficeName) || TextUtils.isEmpty(mEtDoctorName.getText().toString())) {
-            Toast.makeText(AddLeaveHospitalDataActivity.this, "有选项没有填写完整", Toast.LENGTH_SHORT).show();
+        if (TextUtils.isEmpty(mSymptomName) ||TextUtils.isEmpty(mEtCustomName.getText().toString())) {
+            Toast.makeText(AddSymgraphyDataActivity.this, "有选项没有填写完整", Toast.LENGTH_SHORT).show();
             return;
         }
         if (mList != null && mList.size() > 0) {
@@ -307,33 +264,15 @@ public class AddLeaveHospitalDataActivity extends BaseActivity {
                 mImageUpLoadPresenter.getImage();
             }
         } else {
-            mLeaveHospitalAddPresenter.getLeaveHospitalSaveText();
+            mSymptomatographyAddPresenter.getSymptomatographySaveText();
         }
-
     }
-
-    @OnClick({R.id.lav_time, R.id.lav_time_out,R.id.lav_hospital, R.id.lav_departments, R.id.rl_doctor_name, R.id.iv_quiz_pic})
+    @OnClick({R.id.lav_symptom,R.id.iv_quiz_pic})
     public void onViewClicked(View view) {
         switch (view.getId()) {
-            case R.id.lav_time:
-                //入院时间
-                tvSelectDate(mTvFirstTime);
-                break;
-            case R.id.lav_time_out:
-                tvSelectDate(mTvLeaveTime);
-                break;
-            case R.id.lav_hospital:
-                Intent intentHos = new Intent(AddLeaveHospitalDataActivity.this, HospitalListActivity.class);
-                intentHos.putExtra("isHospital", "0");
+            case R.id.lav_symptom:
+                Intent intentHos = new Intent(AddSymgraphyDataActivity.this, SymptomListActivity.class);
                 startActivityForResult(intentHos, 0x000);
-                break;
-            case R.id.lav_departments:
-                Intent intentDep = new Intent(AddLeaveHospitalDataActivity.this, HospitalListActivity.class);
-                intentDep.putExtra("isHospital", "1");
-                startActivityForResult(intentDep, 0x001);
-                break;
-            case R.id.rl_doctor_name:
-
                 break;
             case R.id.iv_quiz_pic:
                 mRlCamera.setVisibility(View.GONE);
@@ -343,7 +282,7 @@ public class AddLeaveHospitalDataActivity extends BaseActivity {
                         String imgs = (String) parent.getItemAtPosition(position);
                         if ("000000".equals(imgs)) {
 
-                            PhotoPickerIntent intent = new PhotoPickerIntent(AddLeaveHospitalDataActivity.this);
+                            PhotoPickerIntent intent = new PhotoPickerIntent(AddSymgraphyDataActivity.this);
                             intent.setSelectModel(SelectModel.MULTI);
                             intent.setShowCarema(true); // 是否显示拍照
                             intent.setMaxTotal(8); // 最多选择照片数量，默认为6
@@ -351,7 +290,7 @@ public class AddLeaveHospitalDataActivity extends BaseActivity {
                             intent.setSelectedPaths(imagePaths); // 已选中的照片地址， 用于回显选中状态
                             startActivityForResult(intent, REQUEST_CAMERA_CODE);
                         } else {
-                            PhotoPreviewIntent intent = new PhotoPreviewIntent(AddLeaveHospitalDataActivity.this);
+                            PhotoPreviewIntent intent = new PhotoPreviewIntent(AddSymgraphyDataActivity.this);
                             intent.setCurrentItem(position);
                             intent.setPhotoPaths(imagePaths);
                             startActivityForResult(intent, REQUEST_PREVIEW_CODE);
@@ -382,18 +321,10 @@ public class AddLeaveHospitalDataActivity extends BaseActivity {
                     loadAdpater(ListExtra);
                     break;
                 case 0x000:
-                    //医院列表
-                    mHospitalName = data.getStringExtra("HospitalName");
-                    mHospitalId = data.getStringExtra("HospitalId");
+                    mSymptomName = data.getStringExtra("symptomName");
+                    mTv_symptom.setText(mSymptomName);
+                    break;
 
-                    mTvHospital.setText(mHospitalName);
-                    break;
-                case 0x001:
-                    //科室列表
-                    mOfficeName = data.getStringExtra("OfficeName");
-                    mOfficeId = data.getStringExtra("OfficeId");
-                    mTvDepartments.setText(mOfficeName);
-                    break;
             }
         }
     }
@@ -418,6 +349,7 @@ public class AddLeaveHospitalDataActivity extends BaseActivity {
         }
     }
 
+
     private class GridAdapter extends BaseAdapter {
         private ArrayList<String> listUrls;
         private LayoutInflater inflater;
@@ -427,7 +359,7 @@ public class AddLeaveHospitalDataActivity extends BaseActivity {
             if (listUrls.size() == 9) {
                 listUrls.remove(listUrls.size() - 1);
             }
-            inflater = LayoutInflater.from(AddLeaveHospitalDataActivity.this);
+            inflater = LayoutInflater.from(AddSymgraphyDataActivity.this);
         }
 
         public int getCount() {
@@ -460,7 +392,7 @@ public class AddLeaveHospitalDataActivity extends BaseActivity {
             if (path.equals("000000")) {
                 holder.image.setImageResource(R.drawable.add);
             } else {
-                Glide.with(AddLeaveHospitalDataActivity.this)
+                Glide.with(AddSymgraphyDataActivity.this)
                         .load(path)
                         .placeholder(R.mipmap.default_error)
                         .error(R.mipmap.default_error)

@@ -125,6 +125,9 @@
         <activity android:name=".activity.AddPharmacyRecordDataActivity"/>
         <activity android:name=".activity.PharmacyWayListActivity"/>
         <activity android:name=".activity.BannerDetailActivity"/>
+        <activity android:name=".activity.SymgraphyInfoListActivity"/>
+        <activity android:name=".activity.AddSymgraphyDataActivity"/>
+        <activity android:name=".activity.SymptomListActivity"/>
 
 
 

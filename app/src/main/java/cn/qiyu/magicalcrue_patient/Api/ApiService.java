@@ -28,6 +28,7 @@ import cn.qiyu.magicalcrue_patient.model.RegisterLoginVerBean;
 import cn.qiyu.magicalcrue_patient.model.ResultModel;
 import cn.qiyu.magicalcrue_patient.model.ScaleDetailBean;
 import cn.qiyu.magicalcrue_patient.model.ScaleDetailsCommitBean;
+import cn.qiyu.magicalcrue_patient.model.SymptomatographyBean;
 import cn.qiyu.magicalcrue_patient.model.UserInfor;
 import cn.qiyu.magicalcrue_patient.model.VisitDialogueQuizBean;
 import okhttp3.MultipartBody;
@@ -126,6 +127,10 @@ public interface ApiService {
     String API_PHARMACY_RECROD_SAVE = "medicalRecord/setDurgRecord";
     //获取用药方式
     String API_PHARMACY_WAY="dictionaries/getDictionariesList";
+    //身体症状记录列表
+    String API_SYMPTOMATOGRAPHY_LIST = "medicalRecord/getSymptomRecord";
+    //身体症状记录添加
+    String API_SYMPTOMATOGRAPHY_SAVE = "medicalRecord/setSymptomRecord";
 
 
 
@@ -508,4 +513,43 @@ public interface ApiService {
     @POST(API_PHARMACY_WAY)
     @FormUrlEncoded
     Call<ResultModel<List<PharmacyWaybean>>> getPharmacyWay(@Field("bianma") String bianma, @Field("type") String type);
+
+
+    /**
+     * 身体症状记录列表
+     */
+    @POST(API_SYMPTOMATOGRAPHY_LIST)
+    @FormUrlEncoded
+    Call<ResultModel<List<SymptomatographyBean>>> getSymptomatographyList(
+            @Field("patientId") String PatientUuid,
+            @Field("page") String page,
+            @Field("pagecount") String pageCount);
+
+
+    /**
+     * 添加症状记录带图片
+     */
+    @POST(API_SYMPTOMATOGRAPHY_SAVE)
+    @FormUrlEncoded
+    Call<ResultModel<AddOutPatientDataSaveBean>> getSymptomatographySave(
+            @Field("patientId") String PatientUuid,
+            @Field("symptom_code") String symptomCode,
+            @Field("symptom") String symptom,
+            @Field("remarks") String remarks,
+            @Field("imageList") String imageList);
+
+
+
+    /**
+     * 添加症状记录不带图片
+     */
+    @POST(API_SYMPTOMATOGRAPHY_SAVE)
+    @FormUrlEncoded
+    Call<ResultModel<AddOutPatientDataSaveBean>> getSymptomatographySaveText(
+            @Field("patientId") String PatientUuid,
+            @Field("symptom_code") String symptomCode,
+            @Field("symptom") String symptom,
+            @Field("remarks") String remarks);
+
+
 }

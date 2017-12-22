@@ -23,6 +23,9 @@ public interface CaseHistoryBiz {
     //获取用药方案记录信息
     void getPhPharmacyRecordInfo(String patientUuid, String page, String pageCount, OnLoginListener onLoginListener);
 
+    //获取身体症状记录列表
+    void getSymptomatographyList(String patientUuid, String page, String pageCount, OnLoginListener onLoginListener);
+
 
 
     interface OnLoginListener<T> {

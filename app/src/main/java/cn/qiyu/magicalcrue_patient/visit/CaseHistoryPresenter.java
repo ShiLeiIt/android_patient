@@ -15,6 +15,7 @@ public class CaseHistoryPresenter {
     private CaseHistoryHospitalListView mCaseHistoryHospitalListView;
     private CaseHistoryHospitalOfficeListView mCaseHistoryHospitalOfficeListView;
     private CaseHistoryPharcyRdListView mCaseHistoryPharcyRdListView;
+    private CaseHistorySymgyListView mCaseHistorySymgyListView;
 
 
 
@@ -40,11 +41,16 @@ public class CaseHistoryPresenter {
         mCaseHistoryBiz = new CaseHistoryBizImpl();
         mCaseHistoryPharcyRdListView = caseHistoryPharcyRdListView;
     }
+    //身体症状记录列表
+    public CaseHistoryPresenter(CaseHistorySymgyListView caseHistorySymgyListView){
+        mCaseHistoryBiz = new CaseHistoryBizImpl();
+        mCaseHistorySymgyListView = caseHistorySymgyListView;
+    }
 
 
     //获取门诊资料信息列表
     public void getOutPatientInfoList() {
-        mCaseHistoryBiz.getOutpatientInfo(mCaseHistoryView.getParentUuid(), mCaseHistoryView.getPage(), mCaseHistoryView.getPageCount(), new CaseHistoryBiz.OnLoginListener() {
+        mCaseHistoryBiz.getOutpatientInfo(mCaseHistoryView.getPatientUuid(), mCaseHistoryView.getPage(), mCaseHistoryView.getPageCount(), new CaseHistoryBiz.OnLoginListener() {
             @Override
             public void onResponse(ResultModel model) {
                 if (model.getResult() == 0) {
@@ -64,7 +70,7 @@ public class CaseHistoryPresenter {
 
     //获取出院小结信息
     public void getLeaveHospitalInfoList() {
-        mCaseHistoryBiz.getLeaveHospitalInfo(mCaseHistoryView.getParentUuid(), mCaseHistoryView.getPage(), mCaseHistoryView.getPageCount(), new CaseHistoryBiz.OnLoginListener() {
+        mCaseHistoryBiz.getLeaveHospitalInfo(mCaseHistoryView.getPatientUuid(), mCaseHistoryView.getPage(), mCaseHistoryView.getPageCount(), new CaseHistoryBiz.OnLoginListener() {
             @Override
             public void onResponse(ResultModel model) {
                 if (model.getResult() == 0) {
@@ -129,6 +135,24 @@ public class CaseHistoryPresenter {
             @Override
             public void onFailure(String e) {
             mCaseHistoryPharcyRdListView.onServerFailure(e);
+            }
+        });
+    }
+    //获取身体症状记录列表
+    public  void getSymgyList(){
+        mCaseHistoryBiz.getSymptomatographyList(mCaseHistorySymgyListView.getPatientUuid(), mCaseHistorySymgyListView.getPage(), mCaseHistorySymgyListView.getPageCount(), new CaseHistoryBiz.OnLoginListener() {
+            @Override
+            public void onResponse(ResultModel model) {
+                if (model.getResult() == 0) {
+                    mCaseHistorySymgyListView.LoadSymgyList(model);
+                } else {
+                    mCaseHistorySymgyListView.onViewFailure(model);
+                }
+            }
+
+            @Override
+            public void onFailure(String e) {
+            mCaseHistorySymgyListView.onServerFailure(e);
             }
         });
     }

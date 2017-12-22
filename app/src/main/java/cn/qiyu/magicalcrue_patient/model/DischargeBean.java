@@ -9,8 +9,6 @@ import java.util.List;
 
 public class DischargeBean {
 
-
-
     /**
      * summary : 单独的
      * hospitalization_office_id : db4331b09834414fa3dbe9ff3aaf4b65

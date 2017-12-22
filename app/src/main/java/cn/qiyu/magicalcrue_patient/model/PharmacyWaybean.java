@@ -2,7 +2,7 @@ package cn.qiyu.magicalcrue_patient.model;
 
 /**
  * Created by ShiLei on 2017/12/21.
- * 获取用药方式bean
+ * 获取用药方式bean及症状Bean
  */
 
 public class PharmacyWaybean {

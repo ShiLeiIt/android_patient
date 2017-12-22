@@ -210,7 +210,9 @@ public class CaseHistoryActivity extends BaseActivity implements View.OnClickLis
 //                Toast.makeText(this, "用药方案记录1", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.icl_symptomatography:
-                Toast.makeText(this, "身体症状记录1", Toast.LENGTH_SHORT).show();
+                Intent intentS = new Intent(CaseHistoryActivity.this, SymgraphyInfoListActivity.class);
+                startActivity(intentS);
+//                Toast.makeText(this, "身体症状记录1", Toast.LENGTH_SHORT).show();
                 break;
 
         }

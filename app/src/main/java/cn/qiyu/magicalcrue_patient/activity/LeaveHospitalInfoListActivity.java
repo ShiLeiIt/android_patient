@@ -54,7 +54,7 @@ public class LeaveHospitalInfoListActivity extends BaseActivity {
 
     CaseHistoryPresenter mCaseHistoryPresenter = new CaseHistoryPresenter(new CaseHistoryView() {
         @Override
-        public String getParentUuid() {
+        public String getPatientUuid() {
             Log.i("patientUuid=-------=", (String) PreUtils.getParam(LeaveHospitalInfoListActivity.this, "patientuuid", "0"));
             return (String) PreUtils.getParam(LeaveHospitalInfoListActivity.this,"patientuuid","0");
 

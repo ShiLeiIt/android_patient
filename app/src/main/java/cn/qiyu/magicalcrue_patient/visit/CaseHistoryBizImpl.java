@@ -12,6 +12,7 @@ import cn.qiyu.magicalcrue_patient.model.HospitalListBean;
 import cn.qiyu.magicalcrue_patient.model.HospitalOfficeListBean;
 import cn.qiyu.magicalcrue_patient.model.PharmacyBean;
 import cn.qiyu.magicalcrue_patient.model.ResultModel;
+import cn.qiyu.magicalcrue_patient.model.SymptomatographyBean;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -102,7 +103,7 @@ public class CaseHistoryBizImpl extends BaseBiz implements CaseHistoryBiz {
         });
     }
 
-    //获取用药方案记录信息
+    //获取用药方案记录列表信息
     @Override
     public void getPhPharmacyRecordInfo(String patientUuid, String page, String pageCount, final OnLoginListener onLoginListener) {
         mApiService.getPharmacyRecordInfo(patientUuid,page,pageCount).enqueue(new Callback<ResultModel<List<PharmacyBean>>>() {
@@ -120,6 +121,26 @@ public class CaseHistoryBizImpl extends BaseBiz implements CaseHistoryBiz {
                 onLoginListener.onFailure(throwable.getMessage());
             }
         });
+    }
+    //获取身体症状记录列表信息
+    @Override
+    public void getSymptomatographyList(String patientUuid, String page, String pageCount, final OnLoginListener onLoginListener) {
+        mApiService.getSymptomatographyList(patientUuid,page,pageCount).enqueue(new Callback<ResultModel<List<SymptomatographyBean>>>() {
+            @Override
+            public void onResponse(Call<ResultModel<List<SymptomatographyBean>>> call, Response<ResultModel<List<SymptomatographyBean>>> response) {
+                if (response.isSuccessful()) {
+                    onLoginListener.onResponse(response.body());
+                } else {
+                    onLoginListener.onFailure(response.body().getMessage());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResultModel<List<SymptomatographyBean>>> call, Throwable throwable) {
+                onLoginListener.onFailure(throwable.getMessage());
+            }
+        });
+
     }
 
 

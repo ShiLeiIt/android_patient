@@ -5,7 +5,6 @@ import android.content.Context;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -14,26 +13,28 @@ import android.widget.TextView;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+
 import cn.qiyu.magicalcrue_patient.R;
 import cn.qiyu.magicalcrue_patient.model.PharmacyBean;
+import cn.qiyu.magicalcrue_patient.model.SymptomatographyBean;
 import cn.qiyu.magicalcrue_patient.view.NoScrollGridView;
 
 
 /**
  * Created by Administrator on 2017/12/21.
- * 用药方案适配器
+ * 身体症状记录
  */
 
-public class ListPharmacyItemAdapter extends BaseAdapter {
+public class ListSymgraphyItemAdapter extends BaseAdapter {
 
     private Context mContext;
-    private List<PharmacyBean> items;
+    private List<SymptomatographyBean> items;
     private Activity activity;
-    private PharmacyBean itemEntity;
+    private SymptomatographyBean itemEntity;
     private ViewHolder holder;
 
 
-    public ListPharmacyItemAdapter(Context ctx, Activity activity, List<PharmacyBean> items) {
+    public ListSymgraphyItemAdapter(Context ctx, Activity activity, List<SymptomatographyBean> items) {
         this.items=items;
         this.mContext = ctx;
         this.items = items;
@@ -67,15 +68,16 @@ public class ListPharmacyItemAdapter extends BaseAdapter {
             //门诊时间
             holder.tv_date = (TextView) convertView
                     .findViewById(R.id.tv_discharge_date);
-            //药名
-            holder.tv_drug_name = (TextView) convertView
+            //报告单类型
+            holder.tv_report_form = (TextView) convertView
                     .findViewById(R.id.tv_discharge_hospital_address);
-            //剂量
+            //
             holder.dosage = (TextView) convertView
                     .findViewById(R.id.tv_discharge_doctor_name);
-            //方式
+            //
             holder.tv_treatment_for = (TextView) convertView
                     .findViewById(R.id.tv_discharge_administrative);
+
             //备注
             holder.tv_context = (TextView) convertView
                     .findViewById(R.id.tv_discharge_context);
@@ -105,15 +107,12 @@ public class ListPharmacyItemAdapter extends BaseAdapter {
         String yue = date.substring(5, 7) + "月";
         String ri = date.substring(8, 10) + "日";
 
+        holder.tv_date.setText(nian+yue+ri+"  "+"身体症状记录");
+        //报告单类型
+        holder.tv_report_form.setText("症状名称：  "+itemEntity.getSymptom_code());
+        holder.dosage.setVisibility(View.GONE);
+        holder.tv_treatment_for.setVisibility(View.GONE);
 
-        holder.tv_date.setText(nian+yue+ri+"  "+itemEntity.getUsaged());
-
-        //药名
-        holder.tv_drug_name.setText("药名：  "+itemEntity.getDrug_name());
-        //方式
-        holder.tv_treatment_for.setText("方式：  "+itemEntity.getUsaged());
-        //剂量
-        holder.dosage.setText("剂量：  "+itemEntity.getAmount());
         //备注
         if (TextUtils.isEmpty(itemEntity.getRemarks())) {
             holder.tv_context.setText("暂无");
@@ -153,19 +152,13 @@ public class ListPharmacyItemAdapter extends BaseAdapter {
     static class  ViewHolder {
         private RecyclerView recyclerView;
         private TextView tv_date;
-        private TextView tv_drug_name;
-        private TextView tv_treatment_for;
-        private TextView dosage;
+        private TextView tv_report_form;
         private TextView tv_context;
+        private TextView dosage;
+        private TextView tv_treatment_for;
         private NoScrollGridView gridview;
     }
-    /**
-     *
-     *
-     *
-     *
-     *
-     */
+
 
 
 

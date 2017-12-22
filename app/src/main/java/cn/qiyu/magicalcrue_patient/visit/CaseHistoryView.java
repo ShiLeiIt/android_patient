@@ -15,7 +15,7 @@ import cn.qiyu.magicalcrue_patient.model.ResultModel;
 
 public interface CaseHistoryView extends BaseView {
 
-    String getParentUuid();
+    String getPatientUuid();
     String getPage();
     String getPageCount();
     //获取门诊信息
