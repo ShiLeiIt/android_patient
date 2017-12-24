@@ -128,6 +128,9 @@
         <activity android:name=".activity.SymgraphyInfoListActivity"/>
         <activity android:name=".activity.AddSymgraphyDataActivity"/>
         <activity android:name=".activity.SymptomListActivity"/>
+        <activity android:name=".activity.InspectionReportInfoListActivity"/>
+        <activity android:name=".activity.AddInspectionReportDataActivity"/>
+        <activity android:name=".activity.NewFollowupReportActivity"/>
 
 
 

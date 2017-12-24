@@ -32,9 +32,14 @@ import cn.qiyu.magicalcrue_patient.R;
 import cn.qiyu.magicalcrue_patient.activity.CaseHistoryActivity;
 import cn.qiyu.magicalcrue_patient.activity.DoctorListActivity;
 import cn.qiyu.magicalcrue_patient.activity.FollowUpMessageDetailActivity;
+import cn.qiyu.magicalcrue_patient.activity.InspectionReportInfoListActivity;
+import cn.qiyu.magicalcrue_patient.activity.LeaveHospitalInfoListActivity;
 import cn.qiyu.magicalcrue_patient.activity.MainActivity;
 import cn.qiyu.magicalcrue_patient.activity.MyScaleActivity;
+import cn.qiyu.magicalcrue_patient.activity.OutpatientInformationListActivity;
 import cn.qiyu.magicalcrue_patient.activity.PatientDataActivity;
+import cn.qiyu.magicalcrue_patient.activity.PharmacyPlanRecordInfoListActivity;
+import cn.qiyu.magicalcrue_patient.activity.SymgraphyInfoListActivity;
 import cn.qiyu.magicalcrue_patient.activity.UserInforActivity;
 import cn.qiyu.magicalcrue_patient.home.HomeNumView;
 import cn.qiyu.magicalcrue_patient.home.HomePresenter;
@@ -445,23 +450,37 @@ public class VisitFragment extends Fragment implements View.OnClickListener {
                 break;
             //检查报告单
             case R.id.tv_examine:
-                Toast.makeText(getActivity(), "检查报告单", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getActivity(), "检查报告单", Toast.LENGTH_SHORT).show();
+                Intent intentI = new Intent(getActivity(), InspectionReportInfoListActivity.class);
+                startActivity(intentI);
+
                 break;
             //症状记录
             case R.id.tv_symptomatography:
-                Toast.makeText(getActivity(), "症状记录", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getActivity(), "症状记录", Toast.LENGTH_SHORT).show();
+                Intent intentS = new Intent(getActivity(), SymgraphyInfoListActivity.class);
+                startActivity(intentS);
                 break;
+
             //用药方案
             case R.id.tv_pharmacy:
-                Toast.makeText(getActivity(), "用药方案", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getActivity(), "用药方案", Toast.LENGTH_SHORT).show();
+                Intent intentP = new Intent(getActivity(), PharmacyPlanRecordInfoListActivity.class);
+                startActivity(intentP);
                 break;
             //出院小结
             case R.id.tv_leave_hospital:
-                Toast.makeText(getActivity(), "出院小结", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getActivity(), "出院小结", Toast.LENGTH_SHORT).show();
+                Intent intentL = new Intent(getActivity(), LeaveHospitalInfoListActivity.class);
+                intentL.putExtra("leaveHospital", "leaveHospital");
+                startActivity(intentL);
                 break;
             //门诊资料
             case R.id.tv_outpatient:
-                Toast.makeText(getActivity(), "门诊资料", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getActivity(), "门诊资料", Toast.LENGTH_SHORT).show();
+                Intent intentO = new Intent(getActivity(), OutpatientInformationListActivity.class);
+                intentO.putExtra("outPatient", "outPatient");
+                startActivity(intentO);
                 break;
             case R.id.iv_update_delete:
                 mDialog.dismiss();

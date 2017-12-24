@@ -26,6 +26,8 @@ public interface CaseHistoryBiz {
     //获取身体症状记录列表
     void getSymptomatographyList(String patientUuid, String page, String pageCount, OnLoginListener onLoginListener);
 
+    //获取检查报告单信息
+    void getInspectionReportInfo(String patientUuid, String page, String pageCount, OnLoginListener onLoginListener);
 
 
     interface OnLoginListener<T> {

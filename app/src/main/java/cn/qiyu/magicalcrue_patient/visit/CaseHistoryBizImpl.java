@@ -10,6 +10,7 @@ import cn.qiyu.magicalcrue_patient.model.Comment;
 import cn.qiyu.magicalcrue_patient.model.DischargeBean;
 import cn.qiyu.magicalcrue_patient.model.HospitalListBean;
 import cn.qiyu.magicalcrue_patient.model.HospitalOfficeListBean;
+import cn.qiyu.magicalcrue_patient.model.InspectionReportBean;
 import cn.qiyu.magicalcrue_patient.model.PharmacyBean;
 import cn.qiyu.magicalcrue_patient.model.ResultModel;
 import cn.qiyu.magicalcrue_patient.model.SymptomatographyBean;
@@ -141,6 +142,25 @@ public class CaseHistoryBizImpl extends BaseBiz implements CaseHistoryBiz {
             }
         });
 
+    }
+    //获取检查报告单信息
+    @Override
+    public void getInspectionReportInfo(String patientUuid, String page, String pageCount, final OnLoginListener onLoginListener) {
+        mApiService.getInspectionReportInfo(patientUuid,page,pageCount).enqueue(new Callback<ResultModel<List<InspectionReportBean>>>() {
+            @Override
+            public void onResponse(Call<ResultModel<List<InspectionReportBean>>> call, Response<ResultModel<List<InspectionReportBean>>> response) {
+                if (response.isSuccessful()) {
+                    onLoginListener.onResponse(response.body());
+                } else {
+                    onLoginListener.onFailure(response.body().getMessage());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResultModel<List<InspectionReportBean>>> call, Throwable throwable) {
+                onLoginListener.onFailure(throwable.getMessage());
+            }
+        });
     }
 
 

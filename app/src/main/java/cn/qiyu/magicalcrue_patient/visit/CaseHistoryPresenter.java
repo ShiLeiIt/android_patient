@@ -16,6 +16,7 @@ public class CaseHistoryPresenter {
     private CaseHistoryHospitalOfficeListView mCaseHistoryHospitalOfficeListView;
     private CaseHistoryPharcyRdListView mCaseHistoryPharcyRdListView;
     private CaseHistorySymgyListView mCaseHistorySymgyListView;
+    private CaseHistoryInspectionRtListView mHistoryInspectionRtListView;
 
 
 
@@ -46,6 +47,13 @@ public class CaseHistoryPresenter {
         mCaseHistoryBiz = new CaseHistoryBizImpl();
         mCaseHistorySymgyListView = caseHistorySymgyListView;
     }
+
+    //检查报告单列表
+    public CaseHistoryPresenter(CaseHistoryInspectionRtListView caseHistoryInspectionRtListView){
+        mCaseHistoryBiz = new CaseHistoryBizImpl();
+        mHistoryInspectionRtListView = caseHistoryInspectionRtListView;
+    }
+
 
 
     //获取门诊资料信息列表
@@ -155,6 +163,26 @@ public class CaseHistoryPresenter {
             mCaseHistorySymgyListView.onServerFailure(e);
             }
         });
+    }
+    //获取检查报告单列表信息
+    public  void getInspectionRtInfoList(){
+        mCaseHistoryBiz.getInspectionReportInfo(mHistoryInspectionRtListView.getPatientUuid(), mHistoryInspectionRtListView.getPage(), mHistoryInspectionRtListView.getPageCount(), new CaseHistoryBiz.OnLoginListener() {
+            @Override
+            public void onResponse(ResultModel model) {
+                if (model.getResult() == 0) {
+                    mHistoryInspectionRtListView.LoadInspectionReportList(model);
+                } else {
+                    mHistoryInspectionRtListView.onViewFailure(model);
+                }
+            }
+
+            @Override
+            public void onFailure(String e) {
+                mHistoryInspectionRtListView.onServerFailure(e);
+            }
+        });
+
+
     }
 
 

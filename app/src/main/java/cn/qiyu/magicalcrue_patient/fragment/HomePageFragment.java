@@ -33,6 +33,7 @@ import cn.qiyu.magicalcrue_patient.activity.CourseActivity;
 import cn.qiyu.magicalcrue_patient.activity.MainActivity;
 import cn.qiyu.magicalcrue_patient.activity.MedicalActivity;
 import cn.qiyu.magicalcrue_patient.activity.MyScaleActivity;
+import cn.qiyu.magicalcrue_patient.activity.NewFollowupReportActivity;
 import cn.qiyu.magicalcrue_patient.activity.OffLineActivity;
 import cn.qiyu.magicalcrue_patient.adapter.AppAdapter;
 import cn.qiyu.magicalcrue_patient.home.HomeNumView;
@@ -225,9 +226,11 @@ public class HomePageFragment extends Fragment implements View.OnClickListener, 
                 break;
             //新的随访报告
             case R.id.ll_tv_new_report:
+                getActivity().startActivityForResult(new Intent(getActivity(), NewFollowupReportActivity.class), 0000);
                 break;
             //患教课程
             case R.id.ll_tv_course:
+                getActivity().startActivityForResult(new Intent(getActivity(), CourseActivity.class), 1111);
                 break;
             //待付款
             case R.id.ll_tv_unscramble:

@@ -202,7 +202,9 @@ public class CaseHistoryActivity extends BaseActivity implements View.OnClickLis
 //                Toast.makeText(this, "出院小结1", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.icl_examine:
-                Toast.makeText(this, "检查报告单1", Toast.LENGTH_SHORT).show();
+                Intent intentI = new Intent(CaseHistoryActivity.this, InspectionReportInfoListActivity.class);
+                startActivity(intentI);
+//                Toast.makeText(this, "检查报告单1", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.icl_pharmacy:
                 Intent intentP = new Intent(CaseHistoryActivity.this, PharmacyPlanRecordInfoListActivity.class);

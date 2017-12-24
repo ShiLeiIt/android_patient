@@ -153,6 +153,7 @@ public class RegisterActivity extends BaseActivity {
                     PreUtils.setParam(RegisterActivity.this, "uuid", model.getData().getUuid());
                     PreUtils.setParam(RegisterActivity.this, "patientuuid", model.getData().getMedical_record_uuid());
                     PreUtils.setParam(RegisterActivity.this, "token", model.getData().getToken());
+
 //                    PreUtils.setParam(RegisterActivity.this, "userid", String.valueOf(model.getData().getId()));
 
                     Toast.makeText(RegisterActivity.this, "注册成功", Toast.LENGTH_SHORT).show();

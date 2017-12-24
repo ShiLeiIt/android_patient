@@ -38,6 +38,7 @@ public class SymptomListActivity extends BaseActivity {
     @Bind(R.id.tv_title)
     TextView mTvTitle;
     private List<PharmacyWaybean> mList;
+    private String mWayName;
     private RecyclerAdpter mRecyclerAdpter;
     private String mSymptomName;
 
@@ -106,7 +107,7 @@ public class SymptomListActivity extends BaseActivity {
             case R.id.iv_hospital_list_back:
                 Intent intent = new Intent(SymptomListActivity.this, AddPharmacyRecordDataActivity.class);
                 if (TextUtils.isEmpty(mSymptomName)) {
-                    Toast.makeText(this, "请症状", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, "请选择症状", Toast.LENGTH_SHORT).show();
                 } else {
                     intent.putExtra("symptomName", mSymptomName);
                     setResult(RESULT_OK, intent);

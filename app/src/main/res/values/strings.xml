@@ -39,6 +39,7 @@
     <string name="patientRelation">与患者关系</string>
     <string name="visitManage">随访</string>
     <string name="visitTeam">随访团队</string>
+    <string name="followUpReport">随访报告</string>
     <string name="myScale">我的量表</string>
     <string name="scaleDetails">量表详情</string>
     <string name="question">提问</string>
@@ -63,6 +64,8 @@
     <string name="addSymptomatography">添加身体症状记录</string>
     <string name="symptomatraphy">症状记录</string>
     <string name="symptom">症状</string>
+    <string name="inspectionReport">检查报告单</string>
+    <string name="addInspectionReport">添加检查报告单</string>
     <string name="symptomaDescriptions">症状描述</string>
     <string name="doctor">医生</string>
     <string name="commit">提交</string>

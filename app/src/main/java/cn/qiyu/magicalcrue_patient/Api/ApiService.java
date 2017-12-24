@@ -17,6 +17,7 @@ import cn.qiyu.magicalcrue_patient.model.HospitalOfficeListBean;
 import cn.qiyu.magicalcrue_patient.model.ImageUpLoadBean;
 import cn.qiyu.magicalcrue_patient.model.InfoDoctorNoticeListBean;
 import cn.qiyu.magicalcrue_patient.model.InformationBean;
+import cn.qiyu.magicalcrue_patient.model.InspectionReportBean;
 import cn.qiyu.magicalcrue_patient.model.MyScaleBean;
 import cn.qiyu.magicalcrue_patient.model.PatientInfor;
 import cn.qiyu.magicalcrue_patient.model.PatientInforSaveBean;
@@ -131,6 +132,10 @@ public interface ApiService {
     String API_SYMPTOMATOGRAPHY_LIST = "medicalRecord/getSymptomRecord";
     //身体症状记录添加
     String API_SYMPTOMATOGRAPHY_SAVE = "medicalRecord/setSymptomRecord";
+    //检查报告单信息获取
+    String API_INSPECTION_REPORT_OBTAIN = "medicalRecord/getInspectRecord";
+    //检查报告单添加
+    String API_INSPECTION_REPORT_SAVE = "medicalRecord/setInspectRecord";
 
 
 
@@ -550,6 +555,42 @@ public interface ApiService {
             @Field("symptom_code") String symptomCode,
             @Field("symptom") String symptom,
             @Field("remarks") String remarks);
+
+
+
+    /**
+     * 检查报告单信息获取
+     */
+    @POST(API_INSPECTION_REPORT_OBTAIN)
+    @FormUrlEncoded
+    Call<ResultModel<List<InspectionReportBean>>> getInspectionReportInfo(
+            @Field("patientId") String patientUuid,
+            @Field("page") String page,
+            @Field("pagecount") String pageCount);
+
+    /**
+     * 添加检查报告单带图片
+     */
+    @POST(API_INSPECTION_REPORT_SAVE)
+    @FormUrlEncoded
+    Call<ResultModel<AddOutPatientDataSaveBean>> getInspectionReportSave(
+            @Field("patientId") String PatientUuid,
+            @Field("inspection_date") String inspectionDate,
+            @Field("type_id") String typeId,
+            @Field("inspection_description") String inspectionDescription,
+            @Field("imageList") String imageList);
+
+    /**
+     * 添加检查报告单不带图片
+     */
+    @POST(API_INSPECTION_REPORT_SAVE)
+    @FormUrlEncoded
+    Call<ResultModel<AddOutPatientDataSaveBean>> getInspectionReportSaveText(
+            @Field("patientId") String PatientUuid,
+            @Field("inspection_date") String inspectionDate,
+            @Field("type_id") String typeId,
+            @Field("inspection_description") String inspectionDescription
+           );
 
 
 }
