@@ -29,6 +29,9 @@ public interface CaseHistoryBiz {
     //获取检查报告单信息
     void getInspectionReportInfo(String patientUuid, String page, String pageCount, OnLoginListener onLoginListener);
 
+    //获取病历数目
+    void getCaseHistoryNum(String patientUuid, OnLoginListener onLoginListener);
+
 
     interface OnLoginListener<T> {
 

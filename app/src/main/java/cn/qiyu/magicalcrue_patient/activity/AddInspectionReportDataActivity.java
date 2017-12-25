@@ -30,6 +30,7 @@ import com.lidong.photopicker.intent.PhotoPreviewIntent;
 import org.json.JSONArray;
 
 import java.io.File;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 import butterknife.Bind;
@@ -45,8 +46,8 @@ import cn.qiyu.magicalcrue_patient.model.ImageUpLoadBean;
 import cn.qiyu.magicalcrue_patient.model.ResultModel;
 import cn.qiyu.magicalcrue_patient.utils.PreUtils;
 import cn.qiyu.magicalcrue_patient.view.LayoutAddOutpatientView;
-import cn.qiyu.magicalcrue_patient.visit.SymptomatographyAddPresenter;
-import cn.qiyu.magicalcrue_patient.visit.SymptomatographyAddView;
+import cn.qiyu.magicalcrue_patient.visit.InspectionReportAddPresenter;
+import cn.qiyu.magicalcrue_patient.visit.InspectionReportAddView;
 import okhttp3.MediaType;
 import okhttp3.RequestBody;
 
@@ -83,8 +84,11 @@ public class AddInspectionReportDataActivity extends BaseActivity {
     private File mFileName;
     private StringBuffer mStringBuffer = new StringBuffer();
     private int requestImageIndex = 0;
-    private TextView mTv_symptom;
+
     private String mSymptomName;
+    private TextView mTvReportFrom;
+    private String mReportName;
+    private String mReportBianMa;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -101,7 +105,7 @@ public class AddInspectionReportDataActivity extends BaseActivity {
         mTvCommit.setTextColor(getResources().getColor(R.color.app_userInfor));
         mTvTitle.setText(R.string.addInspectionReport);
         //选择报告单类型
-        mTv_symptom = (TextView) mLavReport.findViewById(R.id.tv_first_visit_time);
+        mTvReportFrom = (TextView) mLavReport.findViewById(R.id.tv_first_visit_time);
 
         //图片
         imgConfig = new ImageConfig();
@@ -157,7 +161,7 @@ public class AddInspectionReportDataActivity extends BaseActivity {
             mStringBuffer.append(imageUpLoadBean.getFileId() + ",");
 
             if (requestImageIndex == mList.size() - 1) {
-//                mSymptomatographyAddPresenter.getSymptomatographySave();
+                mInspectionReportAddPresenter.getInspectionReportSave();
             }
         }
 
@@ -183,70 +187,72 @@ public class AddInspectionReportDataActivity extends BaseActivity {
 
         }
     });
+    InspectionReportAddPresenter mInspectionReportAddPresenter = new InspectionReportAddPresenter(new InspectionReportAddView() {
+        @Override
+        public String getParentUuid() {
+            return (String) PreUtils.getParam(AddInspectionReportDataActivity.this, "patientuuid", "0");
+        }
 
-//    SymptomatographyAddPresenter mSymptomatographyAddPresenter = new SymptomatographyAddPresenter(new SymptomatographyAddView() {
-//        @Override
-//        public String getParentUuid() {
-//            return (String) PreUtils.getParam(AddInspectionReportDataActivity.this, "patientuuid", "0");
-//        }
-//
-//        @Override
-//        public String getSymptomCode() {
-//            return mSymptomName;
-//        }
-//
-//        @Override
-//        public String getSymptom() {
-//            return mEtCustomName.getText().toString();
-//        }
-//
-//        @Override
-//        public String getRemarks() {
-//            return mIdEditorDetail.getText().toString();
-//        }
-//
-//        @Override
-//        public String getImageList() {
-//            return null == mStringBuffer.toString() ? null : mStringBuffer.toString();
-//        }
-//
-//        @Override
-//        public void LoadSymptomatographySave(ResultModel<AddOutPatientDataSaveBean> model) {
-//            Toast.makeText(AddInspectionReportDataActivity.this, "添加成功", Toast.LENGTH_SHORT).show();
-//            finish();
-//        }
-//
-//        @Override
-//        public void LoadSymptomatographyAddSaveText(ResultModel<AddOutPatientDataSaveBean> model) {
-//            Toast.makeText(AddInspectionReportDataActivity.this, "添加成功", Toast.LENGTH_SHORT).show();
-//            finish();
-//        }
-//
-//        @Override
-//        public void showProgress() {
-//
-//        }
-//
-//        @Override
-//        public void hideProgress() {
-//
-//        }
-//
-//        @Override
-//        public void onViewFailure(ResultModel model) {
-//
-//        }
-//
-//        @Override
-//        public void onServerFailure(String e) {
-//
-//        }
-//    });
+        @Override
+        public String getInspectionDate() {
+            SimpleDateFormat sDateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+            String date = sDateFormat.format(new java.util.Date());
+            return date;
+        }
+
+        @Override
+        public String getTypeId() {
+            return mReportBianMa;
+        }
+
+        @Override
+        public String getInspectionDescription() {
+            return mIdEditorDetail.getText().toString();
+        }
+
+        @Override
+        public String getImageList() {
+            return null == mStringBuffer.toString() ? null : mStringBuffer.toString();
+        }
+
+        @Override
+        public void LoadInspectionReportAddSave(ResultModel<AddOutPatientDataSaveBean> model) {
+            Toast.makeText(AddInspectionReportDataActivity.this, "添加成功", Toast.LENGTH_SHORT).show();
+            finish();
+        }
+
+        @Override
+        public void LoadInspectionReportAddSaveText(ResultModel<AddOutPatientDataSaveBean> model) {
+            Toast.makeText(AddInspectionReportDataActivity.this, "添加成功", Toast.LENGTH_SHORT).show();
+            finish();
+        }
+
+        @Override
+        public void showProgress() {
+
+        }
+
+        @Override
+        public void hideProgress() {
+
+        }
+
+        @Override
+        public void onViewFailure(ResultModel model) {
+            Toast.makeText(AddInspectionReportDataActivity.this, "丢失", Toast.LENGTH_SHORT).show();
+        }
+
+        @Override
+        public void onServerFailure(String e) {
+            Toast.makeText(AddInspectionReportDataActivity.this, "失败", Toast.LENGTH_SHORT).show();
+        }
+    });
+
 
 
     @OnClick(R.id.tv_commit)
     public void onViewClicked() {
-        if (TextUtils.isEmpty(mSymptomName)) {
+        if (TextUtils.isEmpty(mReportName)) {
             Toast.makeText(AddInspectionReportDataActivity.this, "有选项没有填写完整", Toast.LENGTH_SHORT).show();
             return;
         }
@@ -257,13 +263,18 @@ public class AddInspectionReportDataActivity extends BaseActivity {
                 mImageUpLoadPresenter.getImage();
             }
         } else {
-//            mSymptomatographyAddPresenter.getSymptomatographySaveText();
+            mInspectionReportAddPresenter.getInspectionReportSaveText();
         }
     }
 
-    @OnClick({ R.id.iv_quiz_pic})
+    @OnClick({ R.id.lav_report,R.id.iv_quiz_pic})
     public void onViewClicked(View view) {
         switch (view.getId()) {
+            case R.id.lav_report:
+                //报告单类型
+                Intent intentHos = new Intent(AddInspectionReportDataActivity.this, ReportFromListActivity.class);
+                startActivityForResult(intentHos, 0x000);
+                break;
 
             case R.id.iv_quiz_pic:
                 mRlCamera.setVisibility(View.GONE);
@@ -312,8 +323,10 @@ public class AddInspectionReportDataActivity extends BaseActivity {
                     loadAdpater(ListExtra);
                     break;
                 case 0x000:
-                    mSymptomName = data.getStringExtra("symptomName");
-                    mTv_symptom.setText(mSymptomName);
+                    mReportName = data.getStringExtra("reportName");
+                    mReportBianMa = data.getStringExtra("reportBianMa");
+                    Log.i("bianma====", mReportBianMa);
+                    mTvReportFrom.setText(mReportName);
                     break;
 
             }
@@ -398,40 +411,5 @@ public class AddInspectionReportDataActivity extends BaseActivity {
         }
     }
 
-    //日期的选择
-    private void tvSelectDate(final TextView tv) {
-        final DatePicker picker = new DatePicker(this);
-        picker.setCanLoop(false);
-        picker.setWheelModeEnable(true);
-        picker.setTopPadding(15);
-        picker.setRangeStart(1950, 1, 1);
-        picker.setRangeEnd(2050, 1, 11);
-        picker.setSelectedItem(2017, 10, 14);
-        picker.setWeightEnable(true);
-        picker.setOnDatePickListener(new DatePicker.OnYearMonthDayPickListener() {
-            @Override
-            public void onDatePicked(String year, String month, String day) {
-
-                tv.setText(year + "-" + month + "-" + day);
-            }
-        });
-        picker.setOnWheelListener(new DatePicker.OnWheelListener() {
-            @Override
-            public void onYearWheeled(int index, String year) {
-                picker.setTitleText(year + "-" + picker.getSelectedMonth() + "-" + picker.getSelectedDay());
-            }
-
-            @Override
-            public void onMonthWheeled(int index, String month) {
-                picker.setTitleText(picker.getSelectedYear() + "-" + month + "-" + picker.getSelectedDay());
-            }
-
-            @Override
-            public void onDayWheeled(int index, String day) {
-                picker.setTitleText(picker.getSelectedYear() + "-" + picker.getSelectedMonth() + "-" + day);
-            }
-        });
-        picker.show();
-    }
 
 }

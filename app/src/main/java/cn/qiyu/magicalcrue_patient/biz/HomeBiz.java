@@ -15,6 +15,9 @@ public interface HomeBiz {
 
     void getDoctorTeamInfor(String patientId,OnLoginListener onLoginListener);
 
+    //获取首页Banner图
+    void getHomeBanner(String type,OnLoginListener onLoginListener);
+
     interface OnLoginListener<T> {
 
         /**

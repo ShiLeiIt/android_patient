@@ -44,7 +44,11 @@
     <string name="scaleDetails">量表详情</string>
     <string name="question">提问</string>
     <string name="doctorNotice">医生公告</string>
+    <string name="doctorNoticeDetails">公告详情</string>
     <string name="systemNotice">系统公告</string>
+    <string name="systemMessages">系统消息</string>
+
+
     <string name="visitDialogue">随访对话</string>
     <string name="quizEtNum">0/500字</string>
     <string name="quizText">门诊手册拍照上传</string>
@@ -65,6 +69,7 @@
     <string name="symptomatraphy">症状记录</string>
     <string name="symptom">症状</string>
     <string name="inspectionReport">检查报告单</string>
+    <string name="report">报告单</string>
     <string name="addInspectionReport">添加检查报告单</string>
     <string name="symptomaDescriptions">症状描述</string>
     <string name="doctor">医生</string>

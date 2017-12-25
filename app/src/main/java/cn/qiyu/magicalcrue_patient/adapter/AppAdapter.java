@@ -1,6 +1,7 @@
 package cn.qiyu.magicalcrue_patient.adapter;
 
 import android.content.Context;;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,8 +10,12 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 
 
+import java.util.List;
 
 import cn.qiyu.magicalcrue_patient.R;
+import cn.qiyu.magicalcrue_patient.activity.BannerDetailActivity;
+import cn.qiyu.magicalcrue_patient.model.HomeBannerBean;
+import cn.qiyu.magicalcrue_patient.utils.DisplayHelper;
 
 
 /**
@@ -22,9 +27,11 @@ public class AppAdapter extends BaseAdapter {
     private static final String TAG = "AppAdapter";
 
     private final LayoutInflater mInflater;
-    private int [] lists;
-    public AppAdapter(Context context, int []   lists) {
+    private List<HomeBannerBean> lists;
+    private Context mContext;
+    public AppAdapter(Context context, List<HomeBannerBean>   lists) {
         this.lists = lists;
+        this.mContext = context;
         // 在构造函数中初始化对象 减少创建次数
         mInflater = LayoutInflater.from(context);
     }
@@ -36,7 +43,7 @@ public class AppAdapter extends BaseAdapter {
      */
     @Override
     public int getCount() {
-        return lists.length;
+        return lists.size();
     }
 
     /**
@@ -46,8 +53,8 @@ public class AppAdapter extends BaseAdapter {
      * @return
      */
     @Override
-    public Integer getItem(int i) {
-        return lists[i];
+    public HomeBannerBean getItem(int i) {
+        return lists.get(i);
     }
 
     /**
@@ -88,7 +95,7 @@ public class AppAdapter extends BaseAdapter {
             holder = (ViewHolder) view.getTag();
         }
         // 5. 获取数据源中的每一项数据
-        int item = getItem(i);
+        HomeBannerBean item = getItem(i);
 
         // 6. 设置holder中每一行的数据
         holder.setItem(item);
@@ -108,7 +115,7 @@ public class AppAdapter extends BaseAdapter {
     class ViewHolder {
         ImageView icon;
         // 声明当前这一项需要的数据
-        int item;
+        HomeBannerBean item;
 
         /**
          * 在构造函数中加载控件对象
@@ -118,7 +125,14 @@ public class AppAdapter extends BaseAdapter {
         ViewHolder(View view) {
             // 查找当前这一项布局文件中的控件对象
             icon = (ImageView) view.findViewById(R.id.adapter_iv_item);
-
+            view.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(mContext, BannerDetailActivity.class);
+                    intent.putExtra("url", item.getJumpUrl());
+                    mContext.startActivity(intent);
+                }
+            });
         }
 
         /**
@@ -126,7 +140,7 @@ public class AppAdapter extends BaseAdapter {
          *
          * @param item
          */
-        void setItem(int item) {
+        void setItem(HomeBannerBean item) {
             this.item = item;
         }
 
@@ -135,7 +149,7 @@ public class AppAdapter extends BaseAdapter {
          */
         void refreshView() {
             // 将数据源与控件进行绑定
-            icon.setImageResource(item);
+            DisplayHelper.loadGlide(mContext,item.getFilePath(),icon);
         }
     }
 }

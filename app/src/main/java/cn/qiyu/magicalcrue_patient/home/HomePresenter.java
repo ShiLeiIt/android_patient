@@ -71,8 +71,26 @@ public class HomePresenter {
             mNumView.onServerFailure(e);
          }
      });
-
  }
+ //获取首页Banner
+    public void getHomeBanner(){
+        mHomeBiz.getHomeBanner(mNumView.getType(), new HomeBiz.OnLoginListener() {
+            @Override
+            public void onResponse(ResultModel model) {
+                if (model.getResult() == 0) {
+                    mNumView.LoadHomeBanner(model);
+                } else {
+                    mNumView.onViewFailure(model);
+                }
+            }
+
+            @Override
+            public void onFailure(String e) {
+                mNumView.onServerFailure(e);
+
+            }
+        });
+    }
 
 
 }

@@ -46,10 +46,16 @@ public class AllScaleFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_all_scale, container, false);
-        mMyScalePresenter.VisitScaleData();
+
         ButterKnife.bind(this, view);
         getLoad();
         return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        mMyScalePresenter.VisitScaleData();
     }
 
     MyScalePresenter mMyScalePresenter = new MyScalePresenter(new MyScaleView() {

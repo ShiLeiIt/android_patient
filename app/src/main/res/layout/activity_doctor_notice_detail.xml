@@ -27,7 +27,7 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:layout_gravity="center_horizontal"
-            android:text="@string/doctorNotice"
+            android:text="@string/doctorNoticeDetails"
             android:textColor="@color/app_userInfor"
             android:textSize="18sp"/>
     </RelativeLayout>

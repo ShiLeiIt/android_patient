@@ -155,6 +155,8 @@ public class PatientDataActivity extends BaseActivity {
         }
         //出生日期
         mTvSelectDate.setText(mPatientInfor.getBirthday());
+//        Log.i("chusheng==",mPatientInfor.getBirthday());
+
         mTvEighteen.setText(mPatientInfor.getIDcardNo());
         mTvFlowers.setText(mPatientInfor.getUserMobile());
         mTvSelectCitiy.setText(mPatientInfor.getNativeName());
@@ -162,6 +164,8 @@ public class PatientDataActivity extends BaseActivity {
         mTvRelationName.setText(mPatientInfor.getRelationshipName());
         mEtActionsName.setText(mPatientInfor.getAttending_doctor());
         mTvFirstVisitTime.setText(mPatientInfor.getFirstVisitTime());
+//        Log.i("shouz==",mPatientInfor.getFirstVisitTime());
+
         mTvDiseases.setText(mPatientInfor.getDisease_name());
     }
 
@@ -299,7 +303,6 @@ public class PatientDataActivity extends BaseActivity {
                 onBackPressed();
                 break;
             case R.id.tv_save_userinfor:
-
 
                 mPatientInforPresenter.getPatientInforCom();
 //                Toast.makeText(this, "信息填写不完整", Toast.LENGTH_SHORT).show();

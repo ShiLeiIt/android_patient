@@ -7,12 +7,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-
-    tools:context=".activity.NewFollowupReportActivity">
+    tools:context=".activity.NewCourseActivity">
     <include layout="@layout/layout_titlebar"/>
-    <WebView
-        android:id="@+id/wb_course"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
 
 </LinearLayout>

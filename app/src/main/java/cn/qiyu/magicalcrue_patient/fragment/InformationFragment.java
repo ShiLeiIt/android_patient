@@ -20,6 +20,7 @@ import butterknife.OnClick;
 import cn.qiyu.magicalcrue_patient.R;
 import cn.qiyu.magicalcrue_patient.activity.DoctorNoticeListActivity;
 import cn.qiyu.magicalcrue_patient.activity.FollowUpMessageDetailActivity;
+import cn.qiyu.magicalcrue_patient.activity.SystemMessagesActivity;
 import cn.qiyu.magicalcrue_patient.information.InformationPresenter;
 import cn.qiyu.magicalcrue_patient.information.InformationView;
 import cn.qiyu.magicalcrue_patient.model.InfoDoctorNoticeListBean;
@@ -154,6 +155,7 @@ public class InformationFragment extends Fragment {
                 startActivity(new Intent(getActivity(), FollowUpMessageDetailActivity.class));
                 break;
             case R.id.rl_system_notice:
+                startActivity(new Intent(getActivity(), SystemMessagesActivity.class));
                 break;
             case R.id.rl_doctor_notice:
                 startActivity(new Intent(getActivity(), DoctorNoticeListActivity.class));

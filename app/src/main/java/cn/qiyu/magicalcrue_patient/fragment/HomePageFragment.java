@@ -33,12 +33,14 @@ import cn.qiyu.magicalcrue_patient.activity.CourseActivity;
 import cn.qiyu.magicalcrue_patient.activity.MainActivity;
 import cn.qiyu.magicalcrue_patient.activity.MedicalActivity;
 import cn.qiyu.magicalcrue_patient.activity.MyScaleActivity;
+import cn.qiyu.magicalcrue_patient.activity.NewCourseActivity;
 import cn.qiyu.magicalcrue_patient.activity.NewFollowupReportActivity;
 import cn.qiyu.magicalcrue_patient.activity.OffLineActivity;
 import cn.qiyu.magicalcrue_patient.adapter.AppAdapter;
 import cn.qiyu.magicalcrue_patient.home.HomeNumView;
 import cn.qiyu.magicalcrue_patient.home.HomePresenter;
 import cn.qiyu.magicalcrue_patient.model.DoctorTeamBean;
+import cn.qiyu.magicalcrue_patient.model.HomeBannerBean;
 import cn.qiyu.magicalcrue_patient.model.HomeNumBean;
 import cn.qiyu.magicalcrue_patient.model.ResultModel;
 import cn.qiyu.magicalcrue_patient.utils.DisplayHelper;
@@ -154,12 +156,12 @@ public class HomePageFragment extends Fragment implements View.OnClickListener, 
 
         //banner图listView加载
         mLv_sv = (ListView) view.findViewById(R.id.lv_home_image);
-        mLv_sv.setAdapter((new AppAdapter(view.getContext(), ADVERTISING)));
-        ListViewUtility.setListViewHeightBasedOnChildren(mLv_sv);
+
         //通过本地获取患者uuid
 
         homePresenter.HomeLoadNumData();
         homePresenter.getDoctorTeamInfo();
+        homePresenter.getHomeBanner();
 
         ButterKnife.bind(this, view);
         //这里设置fragment 点击事件就是我给你发的Demo
@@ -230,7 +232,7 @@ public class HomePageFragment extends Fragment implements View.OnClickListener, 
                 break;
             //患教课程
             case R.id.ll_tv_course:
-                getActivity().startActivityForResult(new Intent(getActivity(), CourseActivity.class), 1111);
+                getActivity().startActivityForResult(new Intent(getActivity(), NewCourseActivity.class), 1111);
                 break;
             //待付款
             case R.id.ll_tv_unscramble:
@@ -375,6 +377,19 @@ public class HomePageFragment extends Fragment implements View.OnClickListener, 
                 DisplayHelper.loadGlide(getActivity(), path, civ[i]);
             }
             }
+        //获取Banner
+        @Override
+        public String getType() {
+            return "patientHomeBanner";
+        }
+
+        @Override
+        public void LoadHomeBanner(ResultModel<List<HomeBannerBean>> model) {
+
+            mLv_sv.setAdapter((new AppAdapter(getActivity(), model.getData())));
+            ListViewUtility.setListViewHeightBasedOnChildren(mLv_sv);
+
+        }
     });
 
 

@@ -6,6 +6,7 @@ import cn.qiyu.magicalcrue_patient.base.BaseBiz;
 import cn.qiyu.magicalcrue_patient.biz.CaseHistoryBiz;
 import cn.qiyu.magicalcrue_patient.biz.CommentVisitDialogueBiz;
 import cn.qiyu.magicalcrue_patient.model.AddOutPatientDataSaveBean;
+import cn.qiyu.magicalcrue_patient.model.CaseHistoryNumBean;
 import cn.qiyu.magicalcrue_patient.model.Comment;
 import cn.qiyu.magicalcrue_patient.model.DischargeBean;
 import cn.qiyu.magicalcrue_patient.model.HospitalListBean;
@@ -158,6 +159,25 @@ public class CaseHistoryBizImpl extends BaseBiz implements CaseHistoryBiz {
 
             @Override
             public void onFailure(Call<ResultModel<List<InspectionReportBean>>> call, Throwable throwable) {
+                onLoginListener.onFailure(throwable.getMessage());
+            }
+        });
+    }
+    //获取病历数目
+    @Override
+    public void getCaseHistoryNum(String patientUuid, final OnLoginListener onLoginListener) {
+        mApiService.getCaseHistoryNum(patientUuid).enqueue(new Callback<ResultModel<CaseHistoryNumBean>>() {
+            @Override
+            public void onResponse(Call<ResultModel<CaseHistoryNumBean>> call, Response<ResultModel<CaseHistoryNumBean>> response) {
+                if (response.isSuccessful()) {
+                    onLoginListener.onResponse(response.body());
+                } else {
+                    onLoginListener.onFailure(response.body().getMessage());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResultModel<CaseHistoryNumBean>> call, Throwable throwable) {
                 onLoginListener.onFailure(throwable.getMessage());
             }
         });

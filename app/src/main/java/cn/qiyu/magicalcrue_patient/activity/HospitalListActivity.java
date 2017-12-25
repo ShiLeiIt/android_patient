@@ -2,20 +2,16 @@ package cn.qiyu.magicalcrue_patient.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
-import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
@@ -23,7 +19,6 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.qiyu.magicalcrue_patient.R;
 import cn.qiyu.magicalcrue_patient.base.BaseActivity;
-import cn.qiyu.magicalcrue_patient.model.DiseasesBean;
 import cn.qiyu.magicalcrue_patient.model.HospitalListBean;
 import cn.qiyu.magicalcrue_patient.model.HospitalOfficeListBean;
 import cn.qiyu.magicalcrue_patient.model.ResultModel;
@@ -41,6 +36,8 @@ public class HospitalListActivity extends BaseActivity {
     ImageView mIvHospitalListBack;
     @Bind(R.id.rlv_hospital_list)
     RecyclerView mRlvHospitalList;
+    @Bind(R.id.tv_title)
+    TextView mTvTitle;
     private String mHospitalName;
     private RecyclerAdpter mRecyclerAdpter;
 
@@ -60,13 +57,18 @@ public class HospitalListActivity extends BaseActivity {
         initData();
     }
 
-
     private void init() {
 
         mRlvHospitalList.addItemDecoration(new RecycleViewDivider(HospitalListActivity.this, LinearLayoutManager.HORIZONTAL, R.drawable.relation_bg));
         mIsHospital = getIntent().getStringExtra("isHospital");
+        if (mIsHospital.equals("0")) {
+            mTvTitle.setText(R.string.medical);
+        } else {
+            mTvTitle.setText("科室");
+        }
 
     }
+
     //科室列表
     CaseHistoryPresenter caseHistoryPresenter = new CaseHistoryPresenter(new CaseHistoryHospitalOfficeListView() {
         @Override
@@ -171,7 +173,7 @@ public class HospitalListActivity extends BaseActivity {
                     }
                 } else {
                     intent.putExtra("HospitalName", mHospitalName);
-                    intent.putExtra("HospitalId",String.valueOf(mHospitalId));
+                    intent.putExtra("HospitalId", String.valueOf(mHospitalId));
                     setResult(RESULT_OK, intent);
                     finish();
                 }
@@ -192,7 +194,6 @@ public class HospitalListActivity extends BaseActivity {
 
         }
     }
-
 
 
     class ViewHolder extends RecyclerView.ViewHolder {
@@ -224,7 +225,7 @@ public class HospitalListActivity extends BaseActivity {
         }
     }
 
-    public class RecyclerAdpter extends RecyclerView.Adapter<HospitalListActivity.ViewHolder> {
+    public class RecyclerAdpter extends RecyclerView.Adapter<ViewHolder> {
 
 
         public RecyclerAdpter(List<HospitalListBean> mlist) {
@@ -232,13 +233,13 @@ public class HospitalListActivity extends BaseActivity {
         }
 
         @Override
-        public HospitalListActivity.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            return new HospitalListActivity.ViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.listview_patient_relation_item, null));
+        public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+            return new ViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.listview_patient_relation_item, null));
         }
 
 
         @Override
-        public void onBindViewHolder(final HospitalListActivity.ViewHolder holder, final int position) {
+        public void onBindViewHolder(final ViewHolder holder, final int position) {
             holder.setItem(mList.get(position));
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -298,7 +299,7 @@ public class HospitalListActivity extends BaseActivity {
         }
     }
 
-    public class RecyclerOfficeAdpter extends RecyclerView.Adapter<HospitalListActivity.ViewHolderOffice> {
+    public class RecyclerOfficeAdpter extends RecyclerView.Adapter<ViewHolderOffice> {
         private List<HospitalOfficeListBean> mlist;
 
         public RecyclerOfficeAdpter(List<HospitalOfficeListBean> mlist) {
@@ -306,14 +307,14 @@ public class HospitalListActivity extends BaseActivity {
         }
 
         @Override
-        public HospitalListActivity.ViewHolderOffice onCreateViewHolder(ViewGroup parent, int viewType) {
+        public ViewHolderOffice onCreateViewHolder(ViewGroup parent, int viewType) {
 
-            return new HospitalListActivity.ViewHolderOffice(LayoutInflater.from(parent.getContext()).inflate(R.layout.listview_patient_relation_item, null));
+            return new ViewHolderOffice(LayoutInflater.from(parent.getContext()).inflate(R.layout.listview_patient_relation_item, null));
 
         }
 
         @Override
-        public void onBindViewHolder(final HospitalListActivity.ViewHolderOffice holder, final int position) {
+        public void onBindViewHolder(final ViewHolderOffice holder, final int position) {
             holder.setItem(mlist.get(position));
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override

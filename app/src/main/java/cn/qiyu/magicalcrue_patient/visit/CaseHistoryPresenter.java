@@ -17,6 +17,7 @@ public class CaseHistoryPresenter {
     private CaseHistoryPharcyRdListView mCaseHistoryPharcyRdListView;
     private CaseHistorySymgyListView mCaseHistorySymgyListView;
     private CaseHistoryInspectionRtListView mHistoryInspectionRtListView;
+    private CaseHistoryNumView mCaseHistoryNumView;
 
 
 
@@ -52,6 +53,13 @@ public class CaseHistoryPresenter {
     public CaseHistoryPresenter(CaseHistoryInspectionRtListView caseHistoryInspectionRtListView){
         mCaseHistoryBiz = new CaseHistoryBizImpl();
         mHistoryInspectionRtListView = caseHistoryInspectionRtListView;
+    }
+
+
+    //获取病历数目
+    public CaseHistoryPresenter(CaseHistoryNumView caseHistoryNumView){
+        mCaseHistoryBiz = new CaseHistoryBizImpl();
+        mCaseHistoryNumView = caseHistoryNumView;
     }
 
 
@@ -183,6 +191,24 @@ public class CaseHistoryPresenter {
         });
 
 
+    }
+    //获取所有病历数目
+    public void getCaseHistoryNum(){
+        mCaseHistoryBiz.getCaseHistoryNum(mCaseHistoryNumView.getPatientUuid(), new CaseHistoryBiz.OnLoginListener() {
+            @Override
+            public void onResponse(ResultModel model) {
+                if (model.getResult() == 0) {
+                    mCaseHistoryNumView.LoadCaseHistoryNum(model);
+                } else {
+                    mCaseHistoryNumView.onViewFailure(model);
+                }
+            }
+
+            @Override
+            public void onFailure(String e) {
+            mCaseHistoryNumView.onServerFailure(e);
+            }
+        });
     }
 
 

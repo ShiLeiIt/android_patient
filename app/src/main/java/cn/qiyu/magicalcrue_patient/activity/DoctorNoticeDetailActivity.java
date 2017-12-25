@@ -9,6 +9,10 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import cn.qiyu.magicalcrue_patient.R;
 
+/**
+ * 医生公告详情
+ */
+
 
 public class DoctorNoticeDetailActivity extends AppCompatActivity {
 
@@ -24,6 +28,7 @@ public class DoctorNoticeDetailActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         Intent intent=getIntent();
         tvNoticeDetailTitle.setText(intent.getStringExtra("title"));
+
         tvNoticeDetailContext.setText(intent.getStringExtra("context"));
     }
 }

@@ -11,510 +11,539 @@
 
     <LinearLayout
         android:orientation="vertical"
+        android:background="@color/view_bg"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="45dp"
-        android:gravity="center_vertical"
-        >
 
-        <ImageView
-            android:id="@+id/iv_patient_back"
-            android:layout_width="31dp"
-            android:layout_height="31dp"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="6dp"
-            android:src="@drawable/iv_back"/>
+        <RelativeLayout
+            android:background="@color/app_white"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:gravity="center_vertical"
+            >
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:layout_gravity="center_horizontal"
-            android:text="@string/patientData"
-            android:textColor="#000"
-            android:textSize="18sp"/>
+            <ImageView
+                android:id="@+id/iv_patient_back"
+                android:layout_width="31dp"
+                android:layout_height="31dp"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="6dp"
+                android:src="@drawable/iv_back"/>
 
-        <TextView
-            android:id="@+id/tv_save_userinfor"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="15dp"
-            android:text="@string/save"
-            android:textColor="#333333"
-            android:textSize="14sp"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_gravity="center_horizontal"
+                android:text="@string/patientData"
+                android:textColor="#000"
+                android:textSize="18sp"/>
 
-    </RelativeLayout>
+            <TextView
+                android:id="@+id/tv_save_userinfor"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="15dp"
+                android:text="@string/save"
+                android:textColor="#333333"
+                android:textSize="14sp"/>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:background="#f7f7f7"
-        android:orientation="horizontal">
+        </RelativeLayout>
 
-        <TextView
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="40dp"
 
-            android:layout_marginLeft="20dp"
-            android:gravity="center_vertical"
-            android:text="基本信息"
-            android:textColor="@color/app_userInfor"
-            android:textSize="14sp"/>
-    </LinearLayout>
+            android:orientation="horizontal">
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/view_bg"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginLeft="20dp"
+                android:gravity="center_vertical"
+                android:text="基本信息"
+                android:textColor="@color/app_userInfor"
+                android:textSize="14sp"/>
+        </LinearLayout>
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:focusable="true"
-        android:focusableInTouchMode="true">
-
-        <TextView
-            android:id="@+id/tv_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="20dp"
-            android:text="@string/real_name"
-            android:textColor="@color/app_userInfor"
-            android:textSize="14sp"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_toRightOf="@id/tv_name"
-            android:text="(便于医生联络)"
-            android:textColor="@color/app_gray"/>
-
-        <ImageView
-            android:id="@+id/iv_name_arrows"
-            android:layout_width="23dp"
-            android:layout_height="23dp"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="3dp"
-            android:layout_marginRight="7dp"
-            android:src="@drawable/mine_arrows"/>
-
-        <EditText
-            android:id="@+id/tv_real_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_toLeftOf="@id/iv_name_arrows"
-            android:background="@null"
-            android:focusable="true"
-            android:gravity="right|center_vertical"
-            android:maxLines="1"
-            android:textCursorDrawable="@null"
-            android:hint="钱多多"
-            android:textColor="@color/app_gray"
-            android:textColorHint="@color/app_gray"
-            android:textSize="12sp"/>
-
-    </RelativeLayout>
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/view_bg"/>
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="50dp">
-        <TextView
-            android:id="@+id/tv_gender"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="20dp"
-            android:text="@string/gender"
-            android:textColor="@color/app_userInfor"
-            android:textSize="14sp"/>
-        <ImageView
-            android:id="@+id/iv_girl"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="40dp"
-            android:layout_toRightOf="@id/tv_gender"
-            android:src="@drawable/check_box_normal"/>
-        <TextView
-            android:id="@+id/tv_girl_s"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="6dp"
-            android:layout_toRightOf="@id/iv_girl"
-            android:text="@string/girl"
-            android:textColor="@color/app_gray"
-            android:textSize="12sp"/>
-
-
-        <ImageView
-            android:id="@+id/iv_boy"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="40dp"
-            android:layout_toRightOf="@id/tv_girl_s"
-            android:src="@drawable/check_box_select"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="6dp"
-            android:layout_toRightOf="@id/iv_boy"
-            android:text="@string/boy"
-            android:textColor="@color/app_gray"
-            android:textSize="12sp"/>
-    </RelativeLayout>
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/view_bg"/>
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="50dp">
-
-        <TextView
-            android:id="@+id/tv_Date"
-            android:layout_width="60dp"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="20dp"
-            android:text="@string/birth_date"
-            android:textColor="@color/app_userInfor"
-            android:textSize="14sp"/>
-
-        <TextView
-            android:id="@+id/tv_select_Date"
+        <View
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="10dp"
-            android:layout_toRightOf="@id/tv_Date"
-            android:text="@string/please_select"
-            android:textColor="@color/app_gray"/>
+            android:layout_height="1dp"
+            android:background="@color/view_bg"/>
 
-    </RelativeLayout>
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/view_bg"/>
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="50dp">
-
-        <TextView
-            android:id="@+id/tv_identity"
-            android:layout_width="60dp"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="20dp"
-            android:layout_marginStart="20dp"
-            android:text="@string/identityCard"
-            android:textColor="@color/app_userInfor"
-            android:textSize="14sp"/>
-
-        <EditText
-            android:id="@+id/tv_eighteen"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="10dp"
-            android:layout_toRightOf="@id/tv_identity"
-            android:maxLength="18"
-            android:maxLines="1"
-            android:focusable="true"
-            android:textCursorDrawable="@null"
-            android:digits="0123456789xyzXYZ"
-            android:background="@null"
-            android:textColorHint = "@color/app_gray"
-            android:hint="请输入18位身份证号"
-            android:textColor="@color/app_gray"
-            android:textSize="12sp"/>
-    </RelativeLayout>
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/view_bg"/>
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="50dp">
-
-        <TextView
-            android:id="@+id/tv_phone"
-            android:layout_width="60dp"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="20dp"
-            android:layout_marginStart="20dp"
-            android:text="@string/phone"
-            android:textColor="@color/app_userInfor"
-            android:textSize="14sp"/>
-
-        <EditText
-            android:id="@+id/tv_flowers"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="10dp"
-            android:textSize="12sp"
-            android:maxLines="1"
-            android:maxLength="11"
-            android:background="@null"
-            android:digits="0123456789"
-            android:textCursorDrawable="@null"
-            android:layout_toRightOf="@id/tv_phone"
-            android:hint="@string/flowers"
-            android:textColorHint = "@color/app_gray"
-            android:textColor="@color/app_gray"/>
-    </RelativeLayout>
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/view_bg"/>
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="50dp">
-
-        <TextView
-            android:id="@+id/tv_citiy"
-            android:layout_width="60dp"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="20dp"
-            android:layout_marginStart="20dp"
-            android:text="@string/location_citiy"
-            android:textColor="@color/app_userInfor"
-            android:textSize="14sp"/>
-
-        <TextView
-            android:id="@+id/tv_select_citiy"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="10dp"
-            android:layout_toRightOf="@id/tv_citiy"
-            android:text="@string/please_select"
-            android:textColor="@color/app_gray"/>
-    </RelativeLayout>
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/view_bg"/>
-    <RelativeLayout
-        android:id="@+id/rl_patient_relation"
-        android:layout_width="match_parent"
-        android:layout_height="50dp">
-
-        <TextView
-            android:id="@+id/tv_patient_relation"
+        <RelativeLayout
+            android:background="@color/app_white"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-         android:gravity="center_vertical"
-            android:layout_marginLeft="20dp"
-            android:layout_marginStart="20dp"
-            android:text="@string/patientRelation"
-            android:textColor="@color/app_userInfor"
-            android:textSize="14sp"/>
-
-
-        <ImageView
-            android:id="@+id/iv_relation_arrows"
-            android:layout_width="23dp"
-            android:layout_height="23dp"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="3dp"
-            android:layout_marginRight="7dp"
-            android:src="@drawable/mine_arrows"/>
-        <TextView
-            android:id="@+id/tv_relation_name"
-            android:hint="李依琳"
-            android:gravity="right|center_vertical"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:maxLines="1"
-            android:background="@null"
             android:focusable="true"
-            android:textSize="12sp"
-            android:layout_toLeftOf="@id/iv_relation_arrows"
-            android:textColorHint="@color/app_gray"
-            android:textColor="@color/app_gray"/>
-    </RelativeLayout>
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/view_bg"/>
-    <LinearLayout
-        android:orientation="horizontal"
-        android:background="#f7f7f7"
-        android:layout_width="match_parent"
-        android:layout_height="40dp">
-    <TextView
-        android:text="病情信息"
-        android:textColor="@color/app_userInfor"
-        android:background="#f7f7f7"
-        android:layout_marginLeft="20dp"
-        android:textSize="14sp"
-        android:gravity="center_vertical"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"/>
-    </LinearLayout>
+            android:focusableInTouchMode="true">
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:focusable="true"
-        android:focusableInTouchMode="true">
+            <TextView
+                android:id="@+id/tv_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="20dp"
+                android:text="@string/real_name"
+                android:textColor="@color/app_userInfor"
+                android:textSize="14sp"/>
 
-        <TextView
-            android:id="@+id/tv_actions"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="20dp"
-            android:text="@string/actionsDoctorName"
-            android:textColor="@color/app_userInfor"
-            android:textSize="14sp"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@id/tv_name"
+                android:text="(便于医生联络)"
+                android:textColor="@color/app_gray"/>
 
-        <ImageView
-            android:id="@+id/iv_doctor_name_arrows"
-            android:layout_width="23dp"
-            android:layout_height="23dp"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="3dp"
-            android:layout_marginRight="7dp"
-            android:src="@drawable/mine_arrows"/>
+            <ImageView
+                android:id="@+id/iv_name_arrows"
+                android:layout_width="23dp"
+                android:layout_height="23dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="3dp"
+                android:layout_marginRight="7dp"
+                android:src="@drawable/mine_arrows"/>
 
-        <EditText
-            android:id="@+id/et_actions_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_toLeftOf="@id/iv_doctor_name_arrows"
-            android:background="@null"
+            <EditText
+                android:id="@+id/tv_real_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toLeftOf="@id/iv_name_arrows"
+                android:background="@null"
+                android:focusable="true"
+                android:gravity="right|center_vertical"
+                android:maxLines="1"
+                android:textCursorDrawable="@null"
+                android:hint="钱多多"
+                android:textColor="@color/app_gray"
+                android:textColorHint="@color/app_gray"
+                android:textSize="12sp"/>
+
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/view_bg"/>
+
+        <RelativeLayout
+            android:background="@color/app_white"
+            android:layout_width="match_parent"
+            android:layout_height="50dp">
+
+            <TextView
+                android:id="@+id/tv_gender"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="20dp"
+                android:text="@string/gender"
+                android:textColor="@color/app_userInfor"
+                android:textSize="14sp"/>
+
+            <ImageView
+                android:id="@+id/iv_girl"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="40dp"
+                android:layout_toRightOf="@id/tv_gender"
+                android:src="@drawable/check_box_normal"/>
+
+            <TextView
+                android:id="@+id/tv_girl_s"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="6dp"
+                android:layout_toRightOf="@id/iv_girl"
+                android:text="@string/girl"
+                android:textColor="@color/app_gray"
+                android:textSize="12sp"/>
+
+
+            <ImageView
+                android:id="@+id/iv_boy"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="40dp"
+                android:layout_toRightOf="@id/tv_girl_s"
+                android:src="@drawable/check_box_select"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="6dp"
+                android:layout_toRightOf="@id/iv_boy"
+                android:text="@string/boy"
+                android:textColor="@color/app_gray"
+                android:textSize="12sp"/>
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/view_bg"/>
+
+        <RelativeLayout
+            android:background="@color/app_white"
+            android:layout_width="match_parent"
+            android:layout_height="50dp">
+
+            <TextView
+                android:id="@+id/tv_Date"
+                android:layout_width="60dp"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="20dp"
+                android:text="@string/birth_date"
+                android:textColor="@color/app_userInfor"
+                android:textSize="14sp"/>
+
+            <TextView
+                android:id="@+id/tv_select_Date"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="10dp"
+                android:layout_toRightOf="@id/tv_Date"
+                android:text="@string/please_select"
+                android:textColor="@color/app_gray"/>
+
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/view_bg"/>
+
+        <RelativeLayout
+            android:background="@color/app_white"
+            android:layout_width="match_parent"
+            android:layout_height="50dp">
+
+            <TextView
+                android:id="@+id/tv_identity"
+                android:layout_width="60dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="20dp"
+                android:layout_marginStart="20dp"
+                android:text="@string/identityCard"
+                android:textColor="@color/app_userInfor"
+                android:textSize="14sp"/>
+
+            <EditText
+                android:id="@+id/tv_eighteen"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="10dp"
+                android:layout_toRightOf="@id/tv_identity"
+                android:maxLength="18"
+                android:maxLines="1"
+                android:focusable="true"
+                android:textCursorDrawable="@null"
+                android:digits="0123456789xyzXYZ"
+                android:background="@null"
+                android:textColorHint="@color/app_gray"
+                android:hint="请输入18位身份证号"
+                android:textColor="@color/app_gray"
+                android:textSize="12sp"/>
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/view_bg"/>
+
+        <RelativeLayout
+            android:background="@color/app_white"
+            android:layout_width="match_parent"
+            android:layout_height="50dp">
+
+            <TextView
+                android:id="@+id/tv_phone"
+                android:layout_width="60dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="20dp"
+                android:layout_marginStart="20dp"
+                android:text="@string/phone"
+                android:textColor="@color/app_userInfor"
+                android:textSize="14sp"/>
+
+            <EditText
+                android:id="@+id/tv_flowers"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="10dp"
+                android:textSize="12sp"
+                android:maxLines="1"
+                android:maxLength="11"
+                android:background="@null"
+                android:digits="0123456789"
+                android:textCursorDrawable="@null"
+                android:layout_toRightOf="@id/tv_phone"
+                android:hint="@string/flowers"
+                android:textColorHint="@color/app_gray"
+                android:textColor="@color/app_gray"/>
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/view_bg"/>
+
+        <RelativeLayout
+            android:background="@color/app_white"
+            android:layout_width="match_parent"
+            android:layout_height="50dp">
+
+            <TextView
+                android:id="@+id/tv_citiy"
+                android:layout_width="60dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="20dp"
+                android:layout_marginStart="20dp"
+                android:text="@string/location_citiy"
+                android:textColor="@color/app_userInfor"
+                android:textSize="14sp"/>
+
+            <TextView
+                android:id="@+id/tv_select_citiy"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="10dp"
+                android:layout_toRightOf="@id/tv_citiy"
+                android:text="@string/please_select"
+                android:textColor="@color/app_gray"/>
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/view_bg"/>
+
+        <RelativeLayout
+            android:background="@color/app_white"
+            android:id="@+id/rl_patient_relation"
+            android:layout_width="match_parent"
+            android:layout_height="50dp">
+
+            <TextView
+                android:id="@+id/tv_patient_relation"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:gravity="center_vertical"
+                android:layout_marginLeft="20dp"
+                android:layout_marginStart="20dp"
+                android:text="@string/patientRelation"
+                android:textColor="@color/app_userInfor"
+                android:textSize="14sp"/>
+
+
+            <ImageView
+                android:id="@+id/iv_relation_arrows"
+                android:layout_width="23dp"
+                android:layout_height="23dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="3dp"
+                android:layout_marginRight="7dp"
+                android:src="@drawable/mine_arrows"/>
+
+            <TextView
+                android:id="@+id/tv_relation_name"
+                android:hint="李依琳"
+                android:gravity="right|center_vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:maxLines="1"
+                android:background="@null"
+                android:focusable="true"
+                android:textSize="12sp"
+                android:layout_toLeftOf="@id/iv_relation_arrows"
+                android:textColorHint="@color/app_gray"
+                android:textColor="@color/app_gray"/>
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/view_bg"/>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:background="#f7f7f7"
+            android:layout_width="match_parent"
+            android:layout_height="40dp">
+
+            <TextView
+                android:text="病情信息"
+                android:textColor="@color/app_userInfor"
+                android:background="#f7f7f7"
+                android:layout_marginLeft="20dp"
+                android:textSize="14sp"
+                android:gravity="center_vertical"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"/>
+        </LinearLayout>
+
+        <RelativeLayout
+            android:background="@color/app_white"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
             android:focusable="true"
-            android:textCursorDrawable="@null"
-            android:gravity="right|center_vertical"
-            android:hint="李依琳"
-            android:maxLines="1"
-            android:textColor="@color/app_gray"
-            android:textColorHint="@color/app_gray"
-            android:textSize="12sp"/>
-    </RelativeLayout>
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/view_bg"/>
+            android:focusableInTouchMode="true">
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:focusable="true"
-        android:focusableInTouchMode="true"
-        android:layout_height="50dp">
+            <TextView
+                android:id="@+id/tv_actions"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="20dp"
+                android:text="@string/actionsDoctorName"
+                android:textColor="@color/app_userInfor"
+                android:textSize="14sp"/>
 
-        <TextView
-            android:id="@+id/tv_first_visit"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="20dp"
-            android:text="@string/firstVisitTime"
-            android:textColor="@color/app_userInfor"
-            android:textSize="14sp"/>
+            <ImageView
+                android:id="@+id/iv_doctor_name_arrows"
+                android:layout_width="23dp"
+                android:layout_height="23dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="3dp"
+                android:layout_marginRight="7dp"
+                android:src="@drawable/mine_arrows"/>
 
-        <ImageView
-            android:id="@+id/iv_first_arrows"
-            android:layout_width="23dp"
-            android:layout_height="23dp"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="3dp"
-            android:layout_marginRight="7dp"
-            android:src="@drawable/mine_arrows"/>
+            <EditText
+                android:id="@+id/et_actions_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toLeftOf="@id/iv_doctor_name_arrows"
+                android:background="@null"
+                android:focusable="true"
+                android:textCursorDrawable="@null"
+                android:gravity="right|center_vertical"
+                android:hint="李依琳"
+                android:maxLines="1"
+                android:textColor="@color/app_gray"
+                android:textColorHint="@color/app_gray"
+                android:textSize="12sp"/>
+        </RelativeLayout>
 
-        <TextView
-            android:id="@+id/tv_first_visit_time"
-            android:text="2017-11-20"
-            android:gravity="right|center_vertical"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:maxLines="1"
-            android:background="@null"
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/view_bg"/>
+
+        <RelativeLayout
+            android:background="@color/app_white"
+            android:layout_width="match_parent"
             android:focusable="true"
-            android:textSize="12sp"
-            android:layout_toLeftOf="@id/iv_first_arrows"
-            android:textColorHint="@color/app_gray"
-            android:textColor="@color/app_gray"/>
-    </RelativeLayout>
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/view_bg"/>
+            android:focusableInTouchMode="true"
+            android:layout_height="50dp">
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:focusable="true"
-        android:focusableInTouchMode="true"
-        android:layout_marginBottom="10dp"
-        android:layout_height="40dp">
+            <TextView
+                android:id="@+id/tv_first_visit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="20dp"
+                android:text="@string/firstVisitTime"
+                android:textColor="@color/app_userInfor"
+                android:textSize="14sp"/>
 
-        <TextView
-            android:id="@+id/tv_diseases_t"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="20dp"
-            android:text="@string/diseases"
-            android:textColor="@color/app_userInfor"
-            android:textSize="14sp"/>
+            <ImageView
+                android:id="@+id/iv_first_arrows"
+                android:layout_width="23dp"
+                android:layout_height="23dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="3dp"
+                android:layout_marginRight="7dp"
+                android:src="@drawable/mine_arrows"/>
 
-        <ImageView
-            android:id="@+id/iv_diseases_arrows"
-            android:layout_width="23dp"
-            android:layout_height="23dp"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="3dp"
-            android:layout_marginRight="7dp"
-            android:src="@drawable/mine_arrows"/>
+            <TextView
+                android:id="@+id/tv_first_visit_time"
+                android:text="2017-11-20"
+                android:gravity="right|center_vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:maxLines="1"
+                android:background="@null"
+                android:focusable="true"
+                android:textSize="12sp"
+                android:layout_toLeftOf="@id/iv_first_arrows"
+                android:textColorHint="@color/app_gray"
+                android:textColor="@color/app_gray"/>
+        </RelativeLayout>
 
-        <TextView
-            android:id="@+id/tv_diseases"
-            android:text="食道癌"
-            android:gravity="right|center_vertical"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:maxLines="1"
-            android:background="@null"
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/view_bg"/>
+
+        <RelativeLayout
+            android:background="@color/app_white"
+            android:layout_width="match_parent"
             android:focusable="true"
-            android:textSize="12sp"
-            android:layout_toLeftOf="@id/iv_diseases_arrows"
-            android:textColorHint="@color/app_gray"
-            android:textColor="@color/app_gray"/>
-    </RelativeLayout>
+            android:focusableInTouchMode="true"
+            android:layout_marginBottom="10dp"
+            android:layout_height="40dp">
+
+            <TextView
+                android:id="@+id/tv_diseases_t"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="20dp"
+                android:text="@string/diseases"
+                android:textColor="@color/app_userInfor"
+                android:textSize="14sp"/>
+
+            <ImageView
+                android:id="@+id/iv_diseases_arrows"
+                android:layout_width="23dp"
+                android:layout_height="23dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="3dp"
+                android:layout_marginRight="7dp"
+                android:src="@drawable/mine_arrows"/>
+
+            <TextView
+                android:id="@+id/tv_diseases"
+                android:text="食道癌"
+                android:gravity="right|center_vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:maxLines="1"
+                android:background="@null"
+                android:focusable="true"
+                android:textSize="12sp"
+                android:layout_toLeftOf="@id/iv_diseases_arrows"
+                android:textColorHint="@color/app_gray"
+                android:textColor="@color/app_gray"/>
+        </RelativeLayout>
 
     </LinearLayout>
 

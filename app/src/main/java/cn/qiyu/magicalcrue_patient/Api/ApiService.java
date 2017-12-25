@@ -1,16 +1,16 @@
 package cn.qiyu.magicalcrue_patient.Api;
 
-import java.io.File;
 import java.util.List;
 
 import cn.qiyu.magicalcrue_patient.model.AddOutPatientDataSaveBean;
+import cn.qiyu.magicalcrue_patient.model.CaseHistoryNumBean;
 import cn.qiyu.magicalcrue_patient.model.CityBean;
 import cn.qiyu.magicalcrue_patient.model.Comment;
 import cn.qiyu.magicalcrue_patient.model.DischargeBean;
 import cn.qiyu.magicalcrue_patient.model.DiseasesBean;
-import cn.qiyu.magicalcrue_patient.model.DoctorInfoBean;
 import cn.qiyu.magicalcrue_patient.model.DoctorTeamBean;
 import cn.qiyu.magicalcrue_patient.model.FollowUpMessageDetaild;
+import cn.qiyu.magicalcrue_patient.model.HomeBannerBean;
 import cn.qiyu.magicalcrue_patient.model.HomeNumBean;
 import cn.qiyu.magicalcrue_patient.model.HospitalListBean;
 import cn.qiyu.magicalcrue_patient.model.HospitalOfficeListBean;
@@ -28,11 +28,9 @@ import cn.qiyu.magicalcrue_patient.model.RegisterLoginBean;
 import cn.qiyu.magicalcrue_patient.model.RegisterLoginVerBean;
 import cn.qiyu.magicalcrue_patient.model.ResultModel;
 import cn.qiyu.magicalcrue_patient.model.ScaleDetailBean;
-import cn.qiyu.magicalcrue_patient.model.ScaleDetailsCommitBean;
 import cn.qiyu.magicalcrue_patient.model.SymptomatographyBean;
 import cn.qiyu.magicalcrue_patient.model.UserInfor;
 import cn.qiyu.magicalcrue_patient.model.VisitDialogueQuizBean;
-import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.http.Field;
@@ -119,15 +117,15 @@ public interface ApiService {
     //科室列表信息
     String API_HOSPITALOFFICE_LIST = "hospital/officeList";
     //门诊信息保存
-    String API_OUTPATIENT_INFO_SAVE ="medicalRecord/setOutpatientDepartmen";
+    String API_OUTPATIENT_INFO_SAVE = "medicalRecord/setOutpatientDepartmen";
     //出院小结信息保存
-    String API_LEAVEHOSPITAL_INFO_SAVE ="medicalRecord/setHospitalizationHistory";
+    String API_LEAVEHOSPITAL_INFO_SAVE = "medicalRecord/setHospitalizationHistory";
     //用药记录方案信息获取
-    String API_PHARMACY_PALN_RECORD ="medicalRecord/getDurgRecord";
+    String API_PHARMACY_PALN_RECORD = "medicalRecord/getDurgRecord";
     //用药方案记录添加
     String API_PHARMACY_RECROD_SAVE = "medicalRecord/setDurgRecord";
     //获取用药方式
-    String API_PHARMACY_WAY="dictionaries/getDictionariesList";
+    String API_PHARMACY_WAY = "dictionaries/getDictionariesList";
     //身体症状记录列表
     String API_SYMPTOMATOGRAPHY_LIST = "medicalRecord/getSymptomRecord";
     //身体症状记录添加
@@ -136,10 +134,10 @@ public interface ApiService {
     String API_INSPECTION_REPORT_OBTAIN = "medicalRecord/getInspectRecord";
     //检查报告单添加
     String API_INSPECTION_REPORT_SAVE = "medicalRecord/setInspectRecord";
-
-
-
-
+    //获取患者病历数统计
+    String API_CASEHISTORY_NUM = "medicalRecord/getMedicalTotalByPatientId";
+    //首页Banner地址
+    String API_HOME_BANNER = "common/patientHomeBanner";
 
 
     /**
@@ -409,7 +407,6 @@ public interface ApiService {
             @Field("pagecount") String pageCount);
 
 
-
     /**
      * 科室列表信息
      */
@@ -445,6 +442,7 @@ public interface ApiService {
             @Field("office_id") String officeId,
             @Field("doctor_name") String doctorName,
             @Field("summary") String summary);
+
     /**
      * 添加出院小结信息带图片
      */
@@ -473,7 +471,7 @@ public interface ApiService {
             @Field("hospitalization_office_id") String hospitalizationOfficeId,
             @Field("doctor_name") String doctorName,
             @Field("summary") String summary
-           );
+    );
 
 
     /**
@@ -510,7 +508,7 @@ public interface ApiService {
             @Field("drug_name") String drugName,
             @Field("usaged") String usaged,
             @Field("amount") String amount,
-            @Field("remarks") String remarks );
+            @Field("remarks") String remarks);
 
     /**
      * 获取用药方式
@@ -544,7 +542,6 @@ public interface ApiService {
             @Field("imageList") String imageList);
 
 
-
     /**
      * 添加症状记录不带图片
      */
@@ -555,7 +552,6 @@ public interface ApiService {
             @Field("symptom_code") String symptomCode,
             @Field("symptom") String symptom,
             @Field("remarks") String remarks);
-
 
 
     /**
@@ -590,7 +586,27 @@ public interface ApiService {
             @Field("inspection_date") String inspectionDate,
             @Field("type_id") String typeId,
             @Field("inspection_description") String inspectionDescription
-           );
+    );
+
+
+
+
+
+    /**
+     * 统计患者病历数目
+     */
+    @POST(API_CASEHISTORY_NUM)
+    @FormUrlEncoded
+    Call<ResultModel<CaseHistoryNumBean>> getCaseHistoryNum(
+            @Field("patientId") String patientUuid);
+
+    /**
+     * 首页Banner
+     */
+    @POST(API_HOME_BANNER)
+    @FormUrlEncoded
+    Call<ResultModel<List<HomeBannerBean>>> getHomeBanner(
+            @Field("type") String type);
 
 
 }

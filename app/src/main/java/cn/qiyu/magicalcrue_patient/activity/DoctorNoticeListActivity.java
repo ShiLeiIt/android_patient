@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -150,10 +151,19 @@ public class DoctorNoticeListActivity extends BaseActivity {
             mtextview[1].setText(mModel.getTitle());
 //            Toast.makeText(getActivity(), "shijina=="+mModel.getCreate_time(), Toast.LENGTH_SHORT).show();
             int status = mModel.getStatus();
-            if (status == 0) {
-                mIvMsgUnread.setImageResource(R.drawable.doctor_notice_msg_unread);
-            } else {
-                mIvMsgUnread.setImageResource(R.drawable.doctor_notice_read);
+            Log.i("status====", status+"");
+            switch (status) {
+                case 0:
+                    mIvMsgUnread.setImageResource(R.drawable.doctor_notice_msg_unread);
+                    mtextview[0].setText("未读");
+                    break;
+                case 1:
+                    mtextview[0].setText("已读");
+                    mIvMsgUnread.setImageResource(R.drawable.doctor_notice_read);
+                    break;
+
+
+
             }
         }
     }

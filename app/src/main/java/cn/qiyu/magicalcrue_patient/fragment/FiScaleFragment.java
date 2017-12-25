@@ -45,9 +45,16 @@ public class FiScaleFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_fi_scale, container, false);
         ButterKnife.bind(this, view);
-        mScalePresenter.VisitScaleData();
+
         getLoad();
         return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        mScalePresenter.VisitScaleData();
+
     }
 
     MyScalePresenter mScalePresenter = new MyScalePresenter(new MyScaleView() {

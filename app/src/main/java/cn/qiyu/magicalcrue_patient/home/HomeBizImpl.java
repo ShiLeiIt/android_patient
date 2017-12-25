@@ -4,12 +4,14 @@ import android.util.Log;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import cn.qiyu.magicalcrue_patient.Api.ApiService;
 import cn.qiyu.magicalcrue_patient.base.BaseBiz;
 import cn.qiyu.magicalcrue_patient.biz.HomeBiz;
 import cn.qiyu.magicalcrue_patient.fragment.HomePageFragment;
 import cn.qiyu.magicalcrue_patient.model.DoctorTeamBean;
+import cn.qiyu.magicalcrue_patient.model.HomeBannerBean;
 import cn.qiyu.magicalcrue_patient.model.HomeDoctorBean;
 import cn.qiyu.magicalcrue_patient.model.HomeNumBean;
 import cn.qiyu.magicalcrue_patient.model.ResultModel;
@@ -85,12 +87,28 @@ public class HomeBizImpl extends BaseBiz implements HomeBiz {
             }
         });
     }
+    //获取首页Banner
+    @Override
+    public void getHomeBanner(String type, final OnLoginListener onLoginListener) {
+        mApiService.getHomeBanner(type).enqueue(new Callback<ResultModel<List<HomeBannerBean>>>() {
+            @Override
+            public void onResponse(Call<ResultModel<List<HomeBannerBean>>> call, Response<ResultModel<List<HomeBannerBean>>> response) {
+                if (response.isSuccessful()) {
+                    onLoginListener.onResponse(response.body());
+                    Log.i("banner===","chenggong");
+                } else {
+                    Log.i("banner===","shibai");
+                    onLoginListener.onFailure(response.body().getMessage());
+                }
+            }
+            @Override
+            public void onFailure(Call<ResultModel<List<HomeBannerBean>>> call, Throwable throwable) {
+                Log.i("banner===","qingqiushibai");
+                onLoginListener.onFailure(throwable.getMessage());
+            }
+        });
 
-
-
-
-
-
+    }
 
 
 }

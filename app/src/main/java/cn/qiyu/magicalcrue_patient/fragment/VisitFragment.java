@@ -36,6 +36,8 @@ import cn.qiyu.magicalcrue_patient.activity.InspectionReportInfoListActivity;
 import cn.qiyu.magicalcrue_patient.activity.LeaveHospitalInfoListActivity;
 import cn.qiyu.magicalcrue_patient.activity.MainActivity;
 import cn.qiyu.magicalcrue_patient.activity.MyScaleActivity;
+import cn.qiyu.magicalcrue_patient.activity.NewCourseActivity;
+import cn.qiyu.magicalcrue_patient.activity.NewFollowupReportActivity;
 import cn.qiyu.magicalcrue_patient.activity.OutpatientInformationListActivity;
 import cn.qiyu.magicalcrue_patient.activity.PatientDataActivity;
 import cn.qiyu.magicalcrue_patient.activity.PharmacyPlanRecordInfoListActivity;
@@ -47,6 +49,7 @@ import cn.qiyu.magicalcrue_patient.mine.MineInforView;
 import cn.qiyu.magicalcrue_patient.mine.MinePresenter;
 import cn.qiyu.magicalcrue_patient.model.DoctorInfoBean;
 import cn.qiyu.magicalcrue_patient.model.DoctorTeamBean;
+import cn.qiyu.magicalcrue_patient.model.HomeBannerBean;
 import cn.qiyu.magicalcrue_patient.model.HomeNumBean;
 import cn.qiyu.magicalcrue_patient.model.PatientInfor;
 import cn.qiyu.magicalcrue_patient.model.ResultModel;
@@ -269,6 +272,16 @@ public class VisitFragment extends Fragment implements View.OnClickListener {
                 DisplayHelper.loadGlide(getActivity(), path, civ[i]);
             }
         }
+        //首页Banner
+        @Override
+        public String getType() {
+            return null;
+        }
+
+        @Override
+        public void LoadHomeBanner(ResultModel<List<HomeBannerBean>> model) {
+
+        }
 
         @Override
         public void showProgress() {
@@ -351,32 +364,37 @@ public class VisitFragment extends Fragment implements View.OnClickListener {
                             case 1:
                                 //病历
                                 startActivity(new Intent(getActivity(), CaseHistoryActivity.class));
-//                        Toast.makeText(getActivity(), "对话", Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(getActivity(), "病历", Toast.LENGTH_SHORT).show();
 
                                 break;
                             case 2:
-//                        Toast.makeText(getActivity(), "随访报告", Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(getActivity(), "症状", Toast.LENGTH_SHORT).show();
+                                Intent intentS = new Intent(getActivity(), SymgraphyInfoListActivity.class);
+                                startActivity(intentS);
                                 break;
                             case 3:
-//                        Toast.makeText(getActivity(), "随访报告", Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(getActivity(), "用药", Toast.LENGTH_SHORT).show();
+                                Intent intentP = new Intent(getActivity(), PharmacyPlanRecordInfoListActivity.class);
+                                startActivity(intentP);
                                 break;
                             case 4:
                                 startActivity(new Intent(getActivity(), MyScaleActivity.class));
 //                                Toast.makeText(getActivity(), "量表", Toast.LENGTH_SHORT).show();
-//
                                 break;
                             case 5:
+                                startActivity(new Intent(getActivity(),NewFollowupReportActivity.class));
 //                                Toast.makeText(getActivity(), "随访报告", Toast.LENGTH_SHORT).show();
                                 break;
                             case 6:
 
-//                        Toast.makeText(getActivity(), "随访报告", Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(getActivity(), "患教课程", Toast.LENGTH_SHORT).show();
+                                getActivity().startActivityForResult(new Intent(getActivity(), NewCourseActivity.class), 1111);
                                 break;
                             case 7:
-//                        Toast.makeText(getActivity(), "随访报告", Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(getActivity(), "急救", Toast.LENGTH_SHORT).show();
                                 break;
                             case 8:
-//                        Toast.makeText(getActivity(), "随访报告", Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(getActivity(), "套餐", Toast.LENGTH_SHORT).show();
                                 break;
 
                         }
@@ -417,7 +435,6 @@ public class VisitFragment extends Fragment implements View.OnClickListener {
         super.onDestroyView();
         ButterKnife.unbind(this);
     }
-
 
 
     @Override

@@ -18,6 +18,11 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.qiyu.magicalcrue_patient.R;
 import cn.qiyu.magicalcrue_patient.base.BaseActivity;
+import cn.qiyu.magicalcrue_patient.model.CaseHistoryNumBean;
+import cn.qiyu.magicalcrue_patient.model.ResultModel;
+import cn.qiyu.magicalcrue_patient.utils.PreUtils;
+import cn.qiyu.magicalcrue_patient.visit.CaseHistoryNumView;
+import cn.qiyu.magicalcrue_patient.visit.CaseHistoryPresenter;
 
 /**
  * Created by ShiLei on 2017/12/18.
@@ -74,7 +79,7 @@ public class CaseHistoryActivity extends BaseActivity implements View.OnClickLis
         mTvOutpatient = (TextView) mRlOutpatient.findViewById(R.id.tv_case_history_list_item);
         mTvOutpatientNum = (TextView) mRlOutpatient.findViewById(R.id.tv_case_history_num);
         mTvOutpatient.setText(R.string.outpatientData);
-        mTvOutpatientNum.setText("0份");
+
         mIvOutpatient.setImageResource(R.drawable.outpatient);
         mRlOutpatient.setOnClickListener(this);
         //出院小结
@@ -85,7 +90,7 @@ public class CaseHistoryActivity extends BaseActivity implements View.OnClickLis
 
         mIvOutpatient.setImageResource(R.drawable.leave_hospital);
         mTvLeaveHospital.setText(R.string.leaveHospital);
-        mTvLeaveHospitalNum.setText("0份");
+
         mRlLeaveHospital.setOnClickListener(this);
 
         //检查报告单
@@ -95,7 +100,7 @@ public class CaseHistoryActivity extends BaseActivity implements View.OnClickLis
         mTvExamineNum = (TextView) mRlExamine.findViewById(R.id.tv_case_history_num);
         mIvExamine.setImageResource(R.drawable.examine);
         mTvExamine.setText(R.string.examinationReportSheet);
-        mTvExamineNum.setText("0份");
+
         mRlExamine.setOnClickListener(this);
 
         //用药方案
@@ -105,7 +110,7 @@ public class CaseHistoryActivity extends BaseActivity implements View.OnClickLis
         mTvPharmacyNum = (TextView) mRlPharmacy.findViewById(R.id.tv_case_history_num);
         mIvPharmacy.setImageResource(R.drawable.pharmacy);
         mTvPharmacy.setText(R.string.therapeuticRegimen);
-        mTvPharmacyNum.setText("0份");
+
         mRlPharmacy.setOnClickListener(this);
         //身体症状记录
         mRlSymptomatography = (RelativeLayout) mViewCaseHistory.findViewById(R.id.icl_symptomatography);
@@ -114,8 +119,62 @@ public class CaseHistoryActivity extends BaseActivity implements View.OnClickLis
         mTvSymptomatographyNum = (TextView) mRlSymptomatography.findViewById(R.id.tv_case_history_num);
         mIvSymptomatography.setImageResource(R.drawable.symptomatography);
         mTvSymptomatography.setText(R.string.symptomatography);
-        mTvSymptomatographyNum.setText("0份");
+
         mRlSymptomatography.setOnClickListener(this);
+
+    }
+
+    CaseHistoryPresenter mCaseHistoryPresenter = new CaseHistoryPresenter(new CaseHistoryNumView() {
+        @Override
+        public String getPatientUuid() {
+            return (String) PreUtils.getParam(CaseHistoryActivity.this, "patientuuid", "0");
+        }
+
+        @Override
+        public void LoadCaseHistoryNum(ResultModel<CaseHistoryNumBean> model) {
+            int outpatientCount = model.getData().getOutpatientCount();//门诊资料数
+            mTvOutpatientNum.setText(outpatientCount+"份");
+            int hospitalizationCount = model.getData().getHospitalizationCount();//出院小结数
+            mTvLeaveHospitalNum.setText(hospitalizationCount+"份");
+            int inspectCount = model.getData().getInspectCount();//检查报告数
+            mTvExamineNum.setText(inspectCount+"份");
+            int durgRecordCount = model.getData().getDurgRecordCount();//用药方案记录
+            mTvPharmacyNum.setText(durgRecordCount+"份");
+            int symtomReordCount = model.getData().getSymtomReordCount();//身体症状记录
+            mTvSymptomatographyNum.setText(symtomReordCount+"份");
+        }
+
+        @Override
+        public void showProgress() {
+
+        }
+
+        @Override
+        public void hideProgress() {
+
+        }
+
+        @Override
+        public void onViewFailure(ResultModel model) {
+
+        }
+
+        @Override
+        public void onServerFailure(String e) {
+
+        }
+    });
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                mCaseHistoryPresenter.getCaseHistoryNum();
+            }
+        });
+
     }
 
     @OnClick(R.id.tv_commit)
