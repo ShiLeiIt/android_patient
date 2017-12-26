@@ -152,6 +152,8 @@
         <activity android:name=".activity.NewCourseActivity"/>
         <!--系统消息-->
         <activity android:name=".activity.SystemMessagesActivity"/>
+        <!--医生个人主页-->
+        <activity android:name=".activity.DoctorInformationActivity"/>
 
 
 

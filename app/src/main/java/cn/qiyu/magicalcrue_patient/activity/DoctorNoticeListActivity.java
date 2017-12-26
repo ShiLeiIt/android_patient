@@ -24,9 +24,10 @@ import cn.qiyu.magicalcrue_patient.base.BaseActivity;
 import cn.qiyu.magicalcrue_patient.fragment.InformationFragment;
 import cn.qiyu.magicalcrue_patient.information.InformationPresenter;
 import cn.qiyu.magicalcrue_patient.information.InformationView;
-import cn.qiyu.magicalcrue_patient.model.InfoDoctorNoticeListBean;
+import cn.qiyu.magicalcrue_patient.model.InfoUserNoticeListBean;
 import cn.qiyu.magicalcrue_patient.model.InformationBean;
 import cn.qiyu.magicalcrue_patient.model.ResultModel;
+import cn.qiyu.magicalcrue_patient.utils.PreUtils;
 import cn.qiyu.magicalcrue_patient.view.RecycleViewDivider;
 
 /**
@@ -40,6 +41,9 @@ public class DoctorNoticeListActivity extends BaseActivity {
     RecyclerView mRclDoctorNotice;
     @Bind(R.id.swipeLayout)
     SwipeRefreshLayout mSwipeLayout;
+    private String mMessageUuid;
+
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -47,15 +51,15 @@ public class DoctorNoticeListActivity extends BaseActivity {
         setContentView(R.layout.activity_doctor_notice_list);
         ButterKnife.bind(this);
         mRclDoctorNotice.addItemDecoration(new RecycleViewDivider(DoctorNoticeListActivity.this, LinearLayoutManager.HORIZONTAL, R.drawable.recycleview_tieku));
-        mInformationPresenter.InformationDoctorNoticeList();
+
         getLoad();
     }
 
     InformationPresenter mInformationPresenter = new InformationPresenter(new InformationView() {
         @Override
-        public String getDoctorUuid() {
-//            return (String) PreUtils.getParam(getActivity(), "doctorUuid", "");
-            return "95bbb5cb43ec43b58b464e89be63a585";
+        public String getUserUuid() {
+            return (String) PreUtils.getParam(DoctorNoticeListActivity.this, "uuid", "0");
+//            return "95bbb5cb43ec43b58b464e89be63a585";
         }
 
         @Override
@@ -69,22 +73,20 @@ public class DoctorNoticeListActivity extends BaseActivity {
         }
 
         @Override
-        public void getDoctorNoticeList(ResultModel<List<InfoDoctorNoticeListBean>> model) {
+        public void getDoctorNoticeList(ResultModel<List<InfoUserNoticeListBean>> model) {
             mSwipeLayout.setRefreshing(false);
 
             mRclDoctorNotice.setAdapter(new DoctorNoticeListActivity.RecyclerAdpter(model.getData()));
             mRclDoctorNotice.setLayoutManager(new LinearLayoutManager(DoctorNoticeListActivity.this));
         }
 
-        @Override
-        public String getUserUuid() {
-            return null;
-        }
+
 
         @Override
         public void getInformationList(ResultModel<InformationBean> model) {
 
         }
+
 
         @Override
         public void showProgress() {
@@ -117,12 +119,18 @@ public class DoctorNoticeListActivity extends BaseActivity {
         super.onDestroy();
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mInformationPresenter.InformationDoctorNoticeList();
+    }
+
     class ViewHolder extends RecyclerView.ViewHolder {
         @Bind({R.id.tv_doctor_notice_status, R.id.tv_doctor_notic_title, R.id.tv_doctor_notice_date})
         TextView[] mtextview;
         @Bind(R.id.msg_unread)
         ImageView mIvMsgUnread;
-        InfoDoctorNoticeListBean mModel;
+        InfoUserNoticeListBean mModel;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -132,15 +140,19 @@ public class DoctorNoticeListActivity extends BaseActivity {
                 public void onClick(View v) {
                 //条目点击
                     Intent intent = new Intent(DoctorNoticeListActivity.this, DoctorNoticeDetailActivity.class);
+                    mMessageUuid = mModel.getUuid();
+                    Log.i("msgUuid==", mMessageUuid);
                     intent.putExtra("title", mModel.getTitle());
                     intent.putExtra("context", mModel.getContent());
+                    intent.putExtra("messageUuid", mMessageUuid);
                     startActivity(intent);
+
                 }
             });
 
         }
 
-        void setItem(InfoDoctorNoticeListBean item) {
+        void setItem(InfoUserNoticeListBean item) {
             this.mModel = item;
         }
 
@@ -150,8 +162,8 @@ public class DoctorNoticeListActivity extends BaseActivity {
             mtextview[2].setText(create_time);
             mtextview[1].setText(mModel.getTitle());
 //            Toast.makeText(getActivity(), "shijina=="+mModel.getCreate_time(), Toast.LENGTH_SHORT).show();
-            int status = mModel.getStatus();
-            Log.i("status====", status+"");
+           int status = mModel.getStatus();
+            Log.i("status====", status +"");
             switch (status) {
                 case 0:
                     mIvMsgUnread.setImageResource(R.drawable.doctor_notice_msg_unread);
@@ -162,16 +174,14 @@ public class DoctorNoticeListActivity extends BaseActivity {
                     mIvMsgUnread.setImageResource(R.drawable.doctor_notice_read);
                     break;
 
-
-
             }
         }
     }
 
     class RecyclerAdpter extends RecyclerView.Adapter<DoctorNoticeListActivity.ViewHolder> {
-        private List<InfoDoctorNoticeListBean> mlist;
+        private List<InfoUserNoticeListBean> mlist;
 
-        public RecyclerAdpter(List<InfoDoctorNoticeListBean> mlist) {
+        public RecyclerAdpter(List<InfoUserNoticeListBean> mlist) {
             this.mlist = mlist;
         }
 

@@ -106,7 +106,6 @@ public class MineFragment extends Fragment implements View.OnClickListener {
             }
         });
 
-
         tv_list_patient.setText("患者基本资料");
         iv_list_patient.setImageResource(R.drawable.mine_patient);
         TextView tv_list_case = (TextView) view_case.findViewById(R.id.tv_list_item);

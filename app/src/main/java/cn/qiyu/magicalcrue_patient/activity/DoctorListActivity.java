@@ -1,6 +1,7 @@
 package cn.qiyu.magicalcrue_patient.activity;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -8,9 +9,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
@@ -20,7 +23,7 @@ import cn.qiyu.magicalcrue_patient.Api.ApiService;
 import cn.qiyu.magicalcrue_patient.MyApplication;
 import cn.qiyu.magicalcrue_patient.R;
 import cn.qiyu.magicalcrue_patient.base.BaseActivity;
-import cn.qiyu.magicalcrue_patient.model.DoctorInfoBean;
+import cn.qiyu.magicalcrue_patient.model.DoctorTeamListBean;
 import cn.qiyu.magicalcrue_patient.utils.DisplayHelper;
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -36,6 +39,8 @@ public class DoctorListActivity extends BaseActivity {
     ImageView mIvPatientRelationBack;
     @Bind(R.id.rlv_odctor_team)
     RecyclerView mRlvOdctorTeam;
+    private ArrayList<DoctorTeamListBean> mList = new ArrayList<>();
+    private List<DoctorTeamListBean> mList1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,9 +51,12 @@ public class DoctorListActivity extends BaseActivity {
     }
 
     private void init() {
-        List<DoctorInfoBean> list = (List<DoctorInfoBean>) getIntent().getSerializableExtra("list");
-        if (list != null) {
-            mRlvOdctorTeam.setAdapter(new RecyclerAdpter(list));
+        mList1 = (List<DoctorTeamListBean>) getIntent().getSerializableExtra("list");
+        List<DoctorTeamListBean> listQyj = (List<DoctorTeamListBean>) getIntent().getSerializableExtra("listQyj");
+        mList.addAll(mList1);
+        mList.addAll(listQyj);
+        if (mList1 != null) {
+            mRlvOdctorTeam.setAdapter(new RecyclerAdpter(mList));
             mRlvOdctorTeam.setLayoutManager(new LinearLayoutManager(DoctorListActivity.this));
         } else {
             Toast.makeText(this, "请关联医生", Toast.LENGTH_SHORT).show();
@@ -73,20 +81,31 @@ public class DoctorListActivity extends BaseActivity {
     class ViewHolder extends RecyclerView.ViewHolder {
 
         TextView doctorname, hospitalName, profile, jobtitle;
-        DoctorInfoBean mModel;
+        DoctorTeamListBean mModel;
         CircleImageView ircleImageView;
+        private final View mViewBg;
 
-        public ViewHolder(View itemView) {
+
+        public ViewHolder(final View itemView) {
             super(itemView);
+            mViewBg = itemView.findViewById(R.id.view_bg);
             doctorname = (TextView) itemView.findViewById(R.id.tv_user_doctor_name);
             jobtitle = (TextView) itemView.findViewById(R.id.tv_user_jobTitle);
             hospitalName = (TextView) itemView.findViewById(R.id.tv_user_hospitalName);
             profile = (TextView) itemView.findViewById(R.id.tv_user_profile);
             ircleImageView = (CircleImageView) itemView.findViewById(R.id.iv_user_icon);
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(DoctorListActivity.this, DoctorInformationActivity.class);
+                    intent.putExtra("doctorUuid", mModel.getUuid());
+                    startActivity(intent);
+                }
+            });
         }
 
 
-        void setItem(DoctorInfoBean item) {
+        void setItem(DoctorTeamListBean item) {
             this.mModel = item;
         }
 
@@ -104,19 +123,16 @@ public class DoctorListActivity extends BaseActivity {
                     String path = ApiService.GET_IMAGE_ICON + mModel.getPhoto_path();
                     DisplayHelper.loadGlide(DoctorListActivity.this, path, ircleImageView);
                 } else {
-                    ircleImageView.setImageResource(R.mipmap.ic_launcher);
+                    ircleImageView.setImageResource(R.drawable.banner);
                 }
             }
-
         }
     }
         public  class RecyclerAdpter extends RecyclerView.Adapter<ViewHolder> {
-            private List<DoctorInfoBean> mlist;
-
-            public RecyclerAdpter(List<DoctorInfoBean> mlist) {
+            private List<DoctorTeamListBean> mlist;
+            public RecyclerAdpter(List<DoctorTeamListBean> mlist) {
                 this.mlist = mlist;
             }
-
             @Override
             public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
@@ -125,16 +141,17 @@ public class DoctorListActivity extends BaseActivity {
 
             @Override
             public void onBindViewHolder(ViewHolder holder, int position) {
+                //如果DoctorList
+                if (mList1.size()-1 == position) {
+                    holder.mViewBg.setVisibility(View.VISIBLE);
+                }
                 holder.setItem(mlist.get(position));
                 holder.refreshView();
             }
 
             @Override
             public int getItemCount() {
-
                     return mlist.size();
-
-
             }
         }
 

@@ -455,7 +455,14 @@ public class MineUserInforActivity extends BaseActivity implements View.OnClickL
             } else if (requestCode == CAMERA) { //拍照
                 //照相返回的
                 Bitmap bitmap = Utils.getLoacalBitmap(mAbsolutePath);
-                mCivHead.setImageBitmap(bitmap);
+                if (bitmap != null) {
+                    Bitmap smallBitmap = Utils.zoomBitmap(bitmap, bitmap.getWidth() / SCALE, bitmap.getHeight() / SCALE);
+                    //释放原始图片占用的内存，防止out of memory异常发生
+                    bitmap.recycle();
+                    mCivHead.setImageBitmap(smallBitmap);
+                    mPicPopupWindow.dismiss();
+                }
+
             } else if (requestCode == REQUEST_SELECT_PHOTO) {
                 //相册返回的
                 // 外界的程序访问ContentProvider所提供数据 可以通过ContentResolver接口
@@ -485,6 +492,7 @@ public class MineUserInforActivity extends BaseActivity implements View.OnClickL
                         //释放原始图片占用的内存，防止out of memory异常发生
                         bitmap.recycle();
                         mCivHead.setImageBitmap(smallBitmap);
+                        mPicPopupWindow.dismiss();
                     }
                 } catch (IOException e) {
                     e.printStackTrace();

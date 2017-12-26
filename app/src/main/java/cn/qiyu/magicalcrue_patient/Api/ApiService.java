@@ -15,7 +15,7 @@ import cn.qiyu.magicalcrue_patient.model.HomeNumBean;
 import cn.qiyu.magicalcrue_patient.model.HospitalListBean;
 import cn.qiyu.magicalcrue_patient.model.HospitalOfficeListBean;
 import cn.qiyu.magicalcrue_patient.model.ImageUpLoadBean;
-import cn.qiyu.magicalcrue_patient.model.InfoDoctorNoticeListBean;
+import cn.qiyu.magicalcrue_patient.model.InfoUserNoticeListBean;
 import cn.qiyu.magicalcrue_patient.model.InformationBean;
 import cn.qiyu.magicalcrue_patient.model.InspectionReportBean;
 import cn.qiyu.magicalcrue_patient.model.MyScaleBean;
@@ -58,6 +58,7 @@ public interface ApiService {
     String API_LOGIN = "api/login/";
     //首页数目获取
     String API_HOME_NUM = "patientInfo/getUserMessageInfo";
+    //通过患者Uuid获取医生工作组
     String API_HOME_DOCTOR = "doctorinfoTeam/getDoctorTeamUserListByPatientId";
     //患者关系
     String API_PATIENT_RELATION = "dictionaries/getDictionariesList";
@@ -97,7 +98,7 @@ public interface ApiService {
     //量表提交
     String API_SCALE_COMMIT = "common/saveQuestionnaireOption";
     //消息界面，医生公告列表
-    String API_DOCTOR_NOTICE_LIST = "message/doctorNoticeList";
+    String API_DOCTOR_NOTICE_LIST = "message/userNoticeList";
     //消息列表
     String API_INFORMATION_LIST = "message/messageHome";
     //随访对话详情
@@ -138,6 +139,11 @@ public interface ApiService {
     String API_CASEHISTORY_NUM = "medicalRecord/getMedicalTotalByPatientId";
     //首页Banner地址
     String API_HOME_BANNER = "common/patientHomeBanner";
+    //医生公告列表已读
+    String API_DOCTOR_NOTICE_READ = "message/setDoctorNoticeReaded";
+    //消息界面随访消息已读(Num显示为零)
+    String API_FOLLOW_UP_MESSAGE_READ = "message/setUserMessageReaded";
+
 
 
     /**
@@ -291,9 +297,9 @@ public interface ApiService {
      */
     @POST(API_DOCTOR_NOTICE_LIST)
     @FormUrlEncoded
-    Call<ResultModel<List<InfoDoctorNoticeListBean>>> getDoctorNoticeList(@Field("doctorId") String doctorUuid,
-                                                                          @Field("page") String page,
-                                                                          @Field("pagecount") String pagecount);
+    Call<ResultModel<List<InfoUserNoticeListBean>>> getUserNoticeList(@Field("userUUid") String userUuid,
+                                                                        @Field("page") String page,
+                                                                        @Field("pagecount") String pagecount);
 
     /**
      * 消息界面列表
@@ -607,6 +613,25 @@ public interface ApiService {
     @FormUrlEncoded
     Call<ResultModel<List<HomeBannerBean>>> getHomeBanner(
             @Field("type") String type);
+
+    /**
+     * 医生公告已读
+     */
+    @POST(API_DOCTOR_NOTICE_READ)
+    @FormUrlEncoded
+    Call<ResultModel> getDoctorNoticeRead(
+            @Field("userId") String userUuid,
+            @Field("messageId") String messageUuid
+            );
+
+    /**
+     * 随访对话已读（num为零）
+     */
+    @POST(API_FOLLOW_UP_MESSAGE_READ)
+    @FormUrlEncoded
+    Call<ResultModel> getFollowUpMsgRead(
+            @Field("userId") String userUuid);
+
 
 
 }

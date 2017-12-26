@@ -1,14 +1,9 @@
 package cn.qiyu.magicalcrue_patient.information;
 
 import java.util.List;
-
 import cn.qiyu.magicalcrue_patient.base.BaseBiz;
-import cn.qiyu.magicalcrue_patient.biz.HomeBiz;
 import cn.qiyu.magicalcrue_patient.biz.InformationBiz;
-import cn.qiyu.magicalcrue_patient.model.DoctorTeamBean;
-import cn.qiyu.magicalcrue_patient.model.FollowUpMessageDetaild;
-import cn.qiyu.magicalcrue_patient.model.HomeNumBean;
-import cn.qiyu.magicalcrue_patient.model.InfoDoctorNoticeListBean;
+import cn.qiyu.magicalcrue_patient.model.InfoUserNoticeListBean;
 import cn.qiyu.magicalcrue_patient.model.InformationBean;
 import cn.qiyu.magicalcrue_patient.model.ResultModel;
 import retrofit2.Call;
@@ -23,10 +18,10 @@ public class InformationBizImpl extends BaseBiz implements InformationBiz {
 
     //消息界面医生公告列表
     @Override
-    public void getDoctorNoticeList(String doctorUuid, String page, String pagecount, final OnLoginListener onLoginListener) {
-        mApiService.getDoctorNoticeList(doctorUuid, page, pagecount).enqueue(new Callback<ResultModel<List<InfoDoctorNoticeListBean>>>() {
+    public void getUserNoticeList(String doctorUuid, String page, String pagecount, final OnLoginListener onLoginListener) {
+        mApiService.getUserNoticeList(doctorUuid, page, pagecount).enqueue(new Callback<ResultModel<List<InfoUserNoticeListBean>>>() {
             @Override
-            public void onResponse(Call<ResultModel<List<InfoDoctorNoticeListBean>>> call, Response<ResultModel<List<InfoDoctorNoticeListBean>>> response) {
+            public void onResponse(Call<ResultModel<List<InfoUserNoticeListBean>>> call, Response<ResultModel<List<InfoUserNoticeListBean>>> response) {
                 if (response.isSuccessful()) {
                     onLoginListener.onResponse(response.body());
                 } else {
@@ -36,7 +31,7 @@ public class InformationBizImpl extends BaseBiz implements InformationBiz {
             }
 
             @Override
-            public void onFailure(Call<ResultModel<List<InfoDoctorNoticeListBean>>> call, Throwable throwable) {
+            public void onFailure(Call<ResultModel<List<InfoUserNoticeListBean>>> call, Throwable throwable) {
                 onLoginListener.onFailure(throwable.getMessage());
             }
         });
@@ -57,6 +52,43 @@ public class InformationBizImpl extends BaseBiz implements InformationBiz {
 
             @Override
             public void onFailure(Call<ResultModel<InformationBean>> call, Throwable throwable) {
+                onLoginListener.onFailure(throwable.getMessage());
+            }
+        });
+    }
+    //获取医生公告列表已读
+    @Override
+    public void getDoctorNoticeRead(String userUuid, String messageUuid, final OnLoginListener onLoginListener) {
+        mApiService.getDoctorNoticeRead(userUuid,messageUuid).enqueue(new Callback<ResultModel>() {
+            @Override
+            public void onResponse(Call<ResultModel> call, Response<ResultModel> response) {
+                if (response.isSuccessful()) {
+                    onLoginListener.onResponse(response.body());
+                } else {
+                    onLoginListener.onFailure(response.body().getMessage());
+                }
+            }
+            @Override
+            public void onFailure(Call<ResultModel> call, Throwable throwable) {
+                onLoginListener.onFailure(throwable.getMessage());
+            }
+        });
+    }
+    //随访消息已读（Num为零）
+    @Override
+    public void getFollowUpMsgRead(String userUuid, final OnLoginListener onLoginListener) {
+        mApiService.getFollowUpMsgRead(userUuid).enqueue(new Callback<ResultModel>() {
+            @Override
+            public void onResponse(Call<ResultModel> call, Response<ResultModel> response) {
+                if (response.isSuccessful()) {
+                    onLoginListener.onResponse(response.body());
+                } else {
+                    onLoginListener.onFailure(response.body().getMessage());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResultModel> call, Throwable throwable) {
                 onLoginListener.onFailure(throwable.getMessage());
             }
         });

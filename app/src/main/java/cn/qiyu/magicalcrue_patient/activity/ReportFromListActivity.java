@@ -54,7 +54,7 @@ public class ReportFromListActivity extends BaseActivity {
     }
 
     private void init() {
-        mTvTitle.setText(R.string.report);
+        mTvTitle.setText(R.string.selectReport);
         mRlvHospitalList.addItemDecoration(new RecycleViewDivider(ReportFromListActivity.this, LinearLayoutManager.HORIZONTAL, R.drawable.relation_bg));
     }
 

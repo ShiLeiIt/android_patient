@@ -6,11 +6,12 @@ import java.io.Serializable;
  * Created by ShiLei on 2017/11/24.
  */
 
-public class DoctorInfoBean implements Serializable {
+public class DoctorTeamListBean implements Serializable {
 
 
     /**
      * create_time : 2017-11-16 11:01:23
+     * photoPathImg : http://file.mircalcure.com/formalFile/20171214/1ecfa68f47684c80baefa9ca4400d3f5_1.jpg
      * sex : 0
      * beginwork : 2017-11-06
      * jobTitle : 副主任医师
@@ -19,13 +20,13 @@ public class DoctorInfoBean implements Serializable {
      * hospital_id : 167
      * uuid : 95bbb5cb43ec43b58b464e89be63a585
      * doctor_name_pingyin : baijingtong
-     * photo_path : 085f6e307bbf4b04bde980227b8ad8d5
+     * photo_path : 1ecfa68f47684c80baefa9ca4400d3f5
      * register_id : 397fd99407c241e79c998179e91d08cf
      * is_delete : 0
      * doctorRole : groupDoctor
      * doctor_name_jp : BJT
-     * office_id : 0
-     * jpush_id : ""
+     * office_id : db4331b09834414fa3dbe9ff3aaf4b65
+     * jpush_id : 1507bfd3f7c2338d296
      * appType : 1
      * id : 449
      * findings_audit :
@@ -35,6 +36,7 @@ public class DoctorInfoBean implements Serializable {
      */
 
     private String create_time;
+    private String photoPathImg;
     private int sex;
     private String beginwork;
     private String jobTitle;
@@ -56,6 +58,23 @@ public class DoctorInfoBean implements Serializable {
     private String doctor_name;
     private String job_title;
     private int status;
+    /**
+     * education : --请选择--
+     * nation : --请选择--
+     * marriage : 0
+     * is_complete : 1
+     * native_place_cd : 0
+     * profile : 奇遇记金牌医学顾问
+     * create_user : 1
+     */
+
+    private String education;
+    private String nation;
+    private int marriage;
+    private int is_complete;
+    private String native_place_cd;
+    private String profile;
+    private String create_user;
 
     public String getCreate_time() {
         return create_time;
@@ -63,6 +82,14 @@ public class DoctorInfoBean implements Serializable {
 
     public void setCreate_time(String create_time) {
         this.create_time = create_time;
+    }
+
+    public String getPhotoPathImg() {
+        return photoPathImg;
+    }
+
+    public void setPhotoPathImg(String photoPathImg) {
+        this.photoPathImg = photoPathImg;
     }
 
     public int getSex() {
@@ -231,6 +258,62 @@ public class DoctorInfoBean implements Serializable {
 
     public void setStatus(int status) {
         this.status = status;
+    }
+
+    public String getEducation() {
+        return education;
+    }
+
+    public void setEducation(String education) {
+        this.education = education;
+    }
+
+    public String getNation() {
+        return nation;
+    }
+
+    public void setNation(String nation) {
+        this.nation = nation;
+    }
+
+    public int getMarriage() {
+        return marriage;
+    }
+
+    public void setMarriage(int marriage) {
+        this.marriage = marriage;
+    }
+
+    public int getIs_complete() {
+        return is_complete;
+    }
+
+    public void setIs_complete(int is_complete) {
+        this.is_complete = is_complete;
+    }
+
+    public String getNative_place_cd() {
+        return native_place_cd;
+    }
+
+    public void setNative_place_cd(String native_place_cd) {
+        this.native_place_cd = native_place_cd;
+    }
+
+    public String getProfile() {
+        return profile;
+    }
+
+    public void setProfile(String profile) {
+        this.profile = profile;
+    }
+
+    public String getCreate_user() {
+        return create_user;
+    }
+
+    public void setCreate_user(String create_user) {
+        this.create_user = create_user;
     }
 }
 

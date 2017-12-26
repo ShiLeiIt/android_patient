@@ -21,6 +21,8 @@ import butterknife.OnClick;
 import cn.qiyu.magicalcrue_patient.R;
 import cn.qiyu.magicalcrue_patient.adapter.ListItemAdapter;
 import cn.qiyu.magicalcrue_patient.base.BaseActivity;
+import cn.qiyu.magicalcrue_patient.information.InformationFollowUpRdView;
+import cn.qiyu.magicalcrue_patient.information.InformationPresenter;
 import cn.qiyu.magicalcrue_patient.model.FollowUpMessageDetaild;
 import cn.qiyu.magicalcrue_patient.model.ResultModel;
 import cn.qiyu.magicalcrue_patient.utils.PreUtils;
@@ -59,8 +61,41 @@ public class FollowUpMessageDetailActivity extends BaseActivity {
         screenHeight = this.getWindowManager().getDefaultDisplay().getHeight();
         //阀值设置为屏幕高度的1/3
         keyHeight = screenHeight / 3;
+        mInformationPresenter.getFollowUpMsgRead();
 
     }
+    //消息已读
+    InformationPresenter mInformationPresenter = new InformationPresenter(new InformationFollowUpRdView() {
+        @Override
+        public String getUserUuid() {
+            return (String)PreUtils.getParam(FollowUpMessageDetailActivity.this,"uuid","0");
+        }
+
+        @Override
+        public void LoadFollowUpMsgRead(ResultModel model) {
+
+        }
+
+        @Override
+        public void showProgress() {
+
+        }
+
+        @Override
+        public void hideProgress() {
+
+        }
+
+        @Override
+        public void onViewFailure(ResultModel model) {
+
+        }
+
+        @Override
+        public void onServerFailure(String e) {
+
+        }
+    });
 
     FollowUpDialoguePresenter mFollowUpDialoguePresenter = new FollowUpDialoguePresenter(new FollowUpDialogueView() {
         @Override

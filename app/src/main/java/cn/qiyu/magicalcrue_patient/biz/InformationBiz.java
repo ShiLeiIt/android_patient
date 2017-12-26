@@ -8,13 +8,17 @@ import cn.qiyu.magicalcrue_patient.model.ResultModel;
  */
 
 public interface InformationBiz {
-    //医生公告列表
-    void getDoctorNoticeList(String doctorUuid, String page, String pagecount, OnLoginListener onLoginListener);
+    //用户公告列表
+    void getUserNoticeList(String userUuid, String page, String pagecount, OnLoginListener onLoginListener);
 
     //消息列表
     void getInformationList(String userUuid, OnLoginListener onLoginListener);
 
+    //医生公告列表已读
+    void getDoctorNoticeRead(String userUuid,String messageUuid,OnLoginListener onLoginListener);
 
+    //随访对话已读（Num为零）
+    void getFollowUpMsgRead(String userUuid,OnLoginListener onLoginListener);
 
     interface OnLoginListener<T> {
 

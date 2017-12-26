@@ -47,8 +47,8 @@ import cn.qiyu.magicalcrue_patient.home.HomeNumView;
 import cn.qiyu.magicalcrue_patient.home.HomePresenter;
 import cn.qiyu.magicalcrue_patient.mine.MineInforView;
 import cn.qiyu.magicalcrue_patient.mine.MinePresenter;
-import cn.qiyu.magicalcrue_patient.model.DoctorInfoBean;
 import cn.qiyu.magicalcrue_patient.model.DoctorTeamBean;
+import cn.qiyu.magicalcrue_patient.model.DoctorTeamListBean;
 import cn.qiyu.magicalcrue_patient.model.HomeBannerBean;
 import cn.qiyu.magicalcrue_patient.model.HomeNumBean;
 import cn.qiyu.magicalcrue_patient.model.PatientInfor;
@@ -87,12 +87,13 @@ public class VisitFragment extends Fragment implements View.OnClickListener {
     private TextView mTv_patient_name;
     private CircleImageView[] civ;
     private ImageView mIv_visit_arrows;
-    private List<DoctorInfoBean> mDoctorTeamList;
+    private List<DoctorTeamListBean> mDoctorTeamList;
     private TextView mTv_mere_updata;
     private String mErrorCode;
     private ImageView mIv_patientInfor;
     private String mNamewe = "";
     private Dialog mDialog;
+    private List<DoctorTeamListBean> mQyjDoctorList;
 
 
     @Nullable
@@ -223,7 +224,6 @@ public class VisitFragment extends Fragment implements View.OnClickListener {
 
         @Override
         public String patientUuid() {
-            Log.i("patientuuid-=-=-=-=-", (String) PreUtils.getParam(getActivity(), "patientuuid", "0"));
             return (String) PreUtils.getParam(getActivity(), "patientuuid", "0");
         }
 
@@ -242,10 +242,14 @@ public class VisitFragment extends Fragment implements View.OnClickListener {
         public void LoadDoctorTeamInfor(ResultModel<DoctorTeamBean> model) {
             String teamName = model.getData().getTeam_name();
             mDoctorTeamList = model.getData().getDoctorTeamList();
+            mQyjDoctorList = model.getData().getQyjDoctorList();
 
+//            mDoctorTeamList.addAll(model.getData().getQyjDoctorList());
             mTv_doc_tem_name.setText(teamName);
             int DoctorIcon = 0;
+            Log.i("size====", model.getData().getDoctorTeamList().size()+"");
             switch (model.getData().getDoctorTeamList().size()) {
+
                 case 1:
                     DoctorIcon = 1;
                     break;
@@ -444,6 +448,7 @@ public class VisitFragment extends Fragment implements View.OnClickListener {
                 Intent intent = new Intent(getActivity(), DoctorListActivity.class);
                 Bundle bundle = new Bundle();
                 bundle.putSerializable("list", (Serializable) mDoctorTeamList);
+                bundle.putSerializable("listQyj", (Serializable) mQyjDoctorList);
                 intent.putExtras(bundle);
                 startActivity(intent);
                 break;
@@ -451,6 +456,7 @@ public class VisitFragment extends Fragment implements View.OnClickListener {
                 Intent intent1 = new Intent(getActivity(), DoctorListActivity.class);
                 Bundle bundle1 = new Bundle();
                 bundle1.putSerializable("list", (Serializable) mDoctorTeamList);
+                bundle1.putSerializable("listQyj", (Serializable) mQyjDoctorList);
                 intent1.putExtras(bundle1);
                 startActivity(intent1);
                 break;

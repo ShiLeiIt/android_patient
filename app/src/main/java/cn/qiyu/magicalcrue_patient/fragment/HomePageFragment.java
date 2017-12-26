@@ -159,7 +159,7 @@ public class HomePageFragment extends Fragment implements View.OnClickListener, 
 
         //通过本地获取患者uuid
 
-        homePresenter.HomeLoadNumData();
+
         homePresenter.getDoctorTeamInfo();
         homePresenter.getHomeBanner();
 
@@ -193,6 +193,11 @@ public class HomePageFragment extends Fragment implements View.OnClickListener, 
 
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        homePresenter.HomeLoadNumData();
+    }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEvent(String event) {
@@ -283,10 +288,12 @@ public class HomePageFragment extends Fragment implements View.OnClickListener, 
 //            EventBus.getDefault().post(mErrorCode);
 //            MainActivity activity = (MainActivity) getActivity();
 //            activity.changFragment("我的");
+            Toast.makeText(getActivity(), "失败11", Toast.LENGTH_SHORT).show();
         }
 
         @Override
         public void onServerFailure(String e) {
+            Toast.makeText(getActivity(), "失败-=-=-", Toast.LENGTH_SHORT).show();
 
         }
         @Override
@@ -303,6 +310,9 @@ public class HomePageFragment extends Fragment implements View.OnClickListener, 
 //                Toast.makeText(getActivity(), ""+numBean.getMessage(), Toast.LENGTH_SHORT).show();
             if (numBean.getData() != null) {
                 mTv_topleft_visit.setText(String.valueOf(numBean.getData().getFollowDay()));
+
+
+
                 mTv_topleft_inquiry.setText(String.valueOf(numBean.getData().getConstructionCount()));
                 mTv_topleft_report.setText(String.valueOf(numBean.getData().getFollowUpCount()));
                 mTv_topleft_record.setText(String.valueOf(numBean.getData().getStatusRecord()));

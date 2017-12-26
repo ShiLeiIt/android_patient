@@ -1,82 +1,71 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:paddingBottom="10dp"
-    android:orientation="vertical"
-    android:layout_marginTop="20dp"
-    android:paddingTop="10dp"
-    android:background="@color/app_white">
-
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:paddingBottom="10dp"
+              android:orientation="vertical"
+              android:background="@color/app_white">
     <LinearLayout
 
+        android:layout_marginTop="20dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="20dp"
         android:orientation="vertical"
         >
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-
             <de.hdodenhof.circleimageview.CircleImageView
+                android:layout_marginLeft="14dp"
                 android:id="@+id/iv_avatar"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
+                android:scaleType="centerCrop"
                 android:layout_alignParentTop="true"
-                android:layout_marginLeft="14dp"
-                android:scaleType="centerCrop"/>
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true" />
 
             <TextView
+                android:textColor="@color/app_userInfor"
                 android:id="@+id/tv_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginLeft="11dp"
+                android:layout_marginLeft="1dp"
                 android:layout_toRightOf="@id/iv_avatar"
-                android:maxLength="6"
-                android:textColor="@color/app_userInfor"
-                android:textSize="14dp"/>
+                android:textSize="14dp" />
 
             <TextView
+                android:background="@drawable/edit_message_relation"
                 android:id="@+id/tv_patient_relation"
-                android:layout_width="50dp"
+                android:layout_width="59dp"
                 android:layout_height="16dp"
                 android:layout_gravity="center"
                 android:layout_marginLeft="5dp"
-                android:background="@drawable/edit_message_relation"
                 android:gravity="center"
                 android:textColor="@color/relation"
-                android:textSize="11sp"/>
-
+                android:textSize="11dp" />
             <RelativeLayout
                 android:id="@+id/ll_list_item"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
-
                 <TextView
-                    android:id="@+id/tv_message_establish_time"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_marginRight="15dp"
                     android:layout_marginTop="5dp"
+                    android:id="@+id/tv_message_establish_time"
+                    android:textSize="11dp"
                     android:text="2016-12-12"
                     android:textColor="@color/app_gray"
-                    android:textSize="11sp"/>
+                    android:layout_marginRight="15dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
             </RelativeLayout>
 
         </LinearLayout>
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/app_white"
             android:orientation="horizontal">
-
             <View
                 android:layout_width="30dp"
                 android:layout_height="30dp"
@@ -84,15 +73,15 @@
                 android:layout_alignParentStart="true"
                 android:layout_alignParentTop="true"
                 android:layout_marginLeft="14dp"
-                android:visibility="invisible"/>
-
-
+                android:visibility="invisible" />
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
                 <TextView
+                    android:textColor="@color/app_userInfor"
+                    android:paddingRight="14dp"
                     android:id="@+id/tv_content"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -100,9 +89,7 @@
                     android:layout_marginLeft="1dp"
                     android:layout_marginTop="3dp"
                     android:layout_toRightOf="@id/iv_avatar"
-                    android:paddingRight="14dp"
-                    android:textColor="@color/app_userInfor"
-                    android:textSize="14dp"/>
+                    android:textSize="14dp" />
 
                 <cn.qiyu.magicalcrue_patient.view.NoScrollGridView
                     android:id="@+id/grid_view_item"
@@ -116,28 +103,13 @@
                     android:gravity="center"
                     android:horizontalSpacing="2.5dp"
                     android:numColumns="4"
-                    android:stretchMode="columnWidth"/>
-
-              <RelativeLayout
-                  android:layout_width="250dp"
-                  android:layout_height="wrap_content">
-                  <android.support.v7.widget.RecyclerView
-                      android:id="@+id/rv_comment"
-                      android:layout_width="match_parent"
-                      android:layout_height="wrap_content"
-                      android:layout_marginLeft="5dp"
-                      android:layout_marginTop="10dp"
-                      android:gravity="center"/>
-              </RelativeLayout>
-
+                    android:stretchMode="columnWidth" />
             </LinearLayout>
         </LinearLayout>
-
         <RelativeLayout
-
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="30dp"
-            >
+            android:orientation="horizontal">
 
             <LinearLayout
                 android:id="@+id/ll_message_reply_in"
@@ -149,14 +121,14 @@
                     android:layout_width="20dp"
                     android:layout_height="20dp"
                     android:layout_gravity="center"
-                    android:src="@drawable/message_dialogue"/>
+                    android:src="@drawable/message_dialogue" />
 
                 <TextView
+                    android:textColor="@color/app_userInfor"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:text="回复"
-                    android:textColor="@color/quizEtHint"/>
+                    android:text="回复" />
             </LinearLayout>
 
             <LinearLayout
@@ -167,15 +139,48 @@
                 <ImageView
                     android:layout_width="20dp"
                     android:layout_height="20dp"
-                    android:layout_gravity="center"/>
+                    android:layout_gravity="center"
+                    android:src="@drawable/mine_collect" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:text="收藏"/>
+                    android:text="收藏" />
+            </LinearLayout>
+        </RelativeLayout>
+        <LinearLayout
+            android:background="@color/app_white"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <View
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginLeft="14dp"
+                android:visibility="invisible" />
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <RelativeLayout
+                    android:layout_width="250dp"
+                    android:layout_height="wrap_content"
+                    >
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/rv_comment"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:gravity="center" />
+                </RelativeLayout>
             </LinearLayout>
 
-        </RelativeLayout>
+        </LinearLayout>
+
+
     </LinearLayout>
 </LinearLayout>

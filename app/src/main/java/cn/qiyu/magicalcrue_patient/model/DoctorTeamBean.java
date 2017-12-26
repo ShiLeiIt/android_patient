@@ -18,22 +18,50 @@ public class DoctorTeamBean {
      * status : 0
      * is_delete : 0
      */
-
     private int id;
     private String create_user;
     private String doctor_name;
     private String uuid;
     private String team_name;
+    private String doctor_id;
+    private String create_time;
     private int status;
     private int is_delete;
-    private List<DoctorInfoBean> doctorTeamList;
+    private List<DoctorTeamListBean> doctorTeamList;
+    private List<DoctorTeamListBean> qyjDoctorList;
 
-    public List<DoctorInfoBean> getDoctorTeamList() {
+
+
+    public List<DoctorTeamListBean> getQyjDoctorList() {
+        return qyjDoctorList;
+    }
+
+    public void setQyjDoctorList(List<DoctorTeamListBean> qyjDoctorList) {
+        this.qyjDoctorList = qyjDoctorList;
+    }
+
+    public List<DoctorTeamListBean> getDoctorTeamList() {
         return doctorTeamList;
     }
 
-    public void setDoctorTeamList(List<DoctorInfoBean> doctorTeamList) {
+    public void setDoctorTeamList(List<DoctorTeamListBean> doctorTeamList) {
         this.doctorTeamList = doctorTeamList;
+    }
+
+    public String getDoctor_id() {
+        return doctor_id;
+    }
+
+    public void setDoctor_id(String doctor_id) {
+        this.doctor_id = doctor_id;
+    }
+
+    public String getCreate_time() {
+        return create_time;
+    }
+
+    public void setCreate_time(String create_time) {
+        this.create_time = create_time;
     }
 
     public int getId() {

@@ -21,9 +21,10 @@ import cn.qiyu.magicalcrue_patient.R;
 import cn.qiyu.magicalcrue_patient.activity.DoctorNoticeListActivity;
 import cn.qiyu.magicalcrue_patient.activity.FollowUpMessageDetailActivity;
 import cn.qiyu.magicalcrue_patient.activity.SystemMessagesActivity;
+import cn.qiyu.magicalcrue_patient.information.InformationFollowUpRdView;
 import cn.qiyu.magicalcrue_patient.information.InformationPresenter;
 import cn.qiyu.magicalcrue_patient.information.InformationView;
-import cn.qiyu.magicalcrue_patient.model.InfoDoctorNoticeListBean;
+import cn.qiyu.magicalcrue_patient.model.InfoUserNoticeListBean;
 import cn.qiyu.magicalcrue_patient.model.InformationBean;
 import cn.qiyu.magicalcrue_patient.model.ResultModel;
 import cn.qiyu.magicalcrue_patient.utils.PreUtils;
@@ -71,15 +72,43 @@ public class InformationFragment extends Fragment {
         ButterKnife.bind(this, view);
         mUuid = (String) PreUtils.getParam(getActivity(), "uuid", "0");
         Log.i("userUuid===", mUuid);
-        mInformationPresenter.InformationListShow();
+
         return view;
     }
 
-    InformationPresenter mInformationPresenter = new InformationPresenter(new InformationView() {
+    InformationPresenter mPresenter = new InformationPresenter(new InformationFollowUpRdView() {
         @Override
-        public String getDoctorUuid() {
-            return null;
+        public String getUserUuid() {
+            return mUuid;
         }
+
+        @Override
+        public void LoadFollowUpMsgRead(ResultModel model) {
+        }
+
+        @Override
+        public void showProgress() {
+
+        }
+
+        @Override
+        public void hideProgress() {
+
+        }
+
+        @Override
+        public void onViewFailure(ResultModel model) {
+
+        }
+
+        @Override
+        public void onServerFailure(String e) {
+
+        }
+    });
+
+    InformationPresenter mInformationPresenter = new InformationPresenter(new InformationView() {
+
 
         @Override
         public String getPage() {
@@ -92,7 +121,7 @@ public class InformationFragment extends Fragment {
         }
 
         @Override
-        public void getDoctorNoticeList(ResultModel<List<InfoDoctorNoticeListBean>> model) {
+        public void getDoctorNoticeList(ResultModel<List<InfoUserNoticeListBean>> model) {
 
         }
 
@@ -101,6 +130,7 @@ public class InformationFragment extends Fragment {
             return mUuid;
         }
 
+
         @Override
         public void getInformationList(ResultModel<InformationBean> model) {
             if (model!=null) {
@@ -108,6 +138,13 @@ public class InformationFragment extends Fragment {
             mTvDoctorNoticeTitle.setText(model.getData().getNoticeData().getTitle());
             mTvDoctorNoticeContent.setText(model.getData().getNoticeData().getContent());
             mTvDoctorNoticeNum.setText(String.valueOf(model.getData().getNoticeData().getNum()));
+                if (model.getData().getNoticeData().getNum() == 0) {
+                    mTvDoctorNoticeNum.setVisibility(View.INVISIBLE);
+                } else {
+                    mTvDoctorNoticeNum.setVisibility(View.VISIBLE);
+                }
+
+
             //系统公告
             mTvSystemNoticeTitle.setText(model.getData().getMessageData().getTitle());
             mTvSystemNoticeContent.setText(model.getData().getMessageData().getContent());
@@ -116,9 +153,13 @@ public class InformationFragment extends Fragment {
             mTvDialogueTitle.setText(model.getData().getFollowData().getTitle());
             mTvDialogueContent.setText(model.getData().getFollowData().getContent());
             mTvDialogueNum.setText(String.valueOf(model.getData().getFollowData().getNum()));
+                if (model.getData().getFollowData().getNum() == 0) {
+                    mTvDialogueNum.setVisibility(View.INVISIBLE);
+                } else {
+                    mTvDialogueNum.setVisibility(View.VISIBLE);
+                }
             }
         }
-
         @Override
         public void showProgress() {
 
@@ -161,6 +202,21 @@ public class InformationFragment extends Fragment {
                 startActivity(new Intent(getActivity(), DoctorNoticeListActivity.class));
                 break;
         }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                mInformationPresenter.InformationListShow();
+                mPresenter.getFollowUpMsgRead();
+
+            }
+        });
+//
+//        Toast.makeText(getActivity(), "显示", Toast.LENGTH_SHORT).show();
     }
 
     /**

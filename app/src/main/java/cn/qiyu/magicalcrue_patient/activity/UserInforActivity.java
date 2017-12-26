@@ -459,6 +459,7 @@ public class UserInforActivity extends BaseActivity implements View.OnClickListe
 //                matrix.postRotate(bitmapDegree);
 //                Bitmap returnBm = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
                 mCivHead.setImageBitmap(bitmap);
+                mPicPopupWindow.dismiss();
             } else if (requestCode == REQUEST_SELECT_PHOTO) {
                 //相册返回的
                 // 外界的程序访问ContentProvider所提供数据 可以通过ContentResolver接口
@@ -487,6 +488,7 @@ public class UserInforActivity extends BaseActivity implements View.OnClickListe
                     //TODO:此处会造成内存溢出，目前未做处理
                     Bitmap bitmap = MediaStore.Images.Media.getBitmap(resolver, originalUri);
                     mCivHead.setImageBitmap(bitmap);
+                    mPicPopupWindow.dismiss();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }

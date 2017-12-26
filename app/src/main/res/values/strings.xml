@@ -69,7 +69,7 @@
     <string name="symptomatraphy">症状记录</string>
     <string name="symptom">症状</string>
     <string name="inspectionReport">检查报告单</string>
-    <string name="report">报告单</string>
+    <string name="selectReport">选择报告单类型</string>
     <string name="addInspectionReport">添加检查报告单</string>
     <string name="symptomaDescriptions">症状描述</string>
     <string name="doctor">医生</string>

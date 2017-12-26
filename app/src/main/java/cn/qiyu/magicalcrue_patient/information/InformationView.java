@@ -5,7 +5,8 @@ import java.util.List;
 import cn.qiyu.magicalcrue_patient.base.BaseView;
 import cn.qiyu.magicalcrue_patient.model.DoctorTeamBean;
 import cn.qiyu.magicalcrue_patient.model.HomeNumBean;
-import cn.qiyu.magicalcrue_patient.model.InfoDoctorNoticeListBean;
+
+import cn.qiyu.magicalcrue_patient.model.InfoUserNoticeListBean;
 import cn.qiyu.magicalcrue_patient.model.InformationBean;
 import cn.qiyu.magicalcrue_patient.model.ResultModel;
 
@@ -14,13 +15,12 @@ import cn.qiyu.magicalcrue_patient.model.ResultModel;
  */
 
 public interface InformationView extends BaseView {
-    String getDoctorUuid();
     String getPage();
     String getPagecount();
-    void getDoctorNoticeList(ResultModel<List<InfoDoctorNoticeListBean>> model);
+    void getDoctorNoticeList(ResultModel<List<InfoUserNoticeListBean>> model);
 
     String getUserUuid();
-
     void getInformationList(ResultModel<InformationBean> model);
+
 
 }
