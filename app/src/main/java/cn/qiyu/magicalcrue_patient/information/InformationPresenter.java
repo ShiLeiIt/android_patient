@@ -14,6 +14,8 @@ public class InformationPresenter {
     private InformationView mInformationView;
     private InformationDoNoRdView mInformationDoNoRdView;
     private InformationFollowUpRdView mInformationFollowUpRdView;
+    private InformationSysMsgView mInformationSysMsgView;
+    private InformationSysMsgRdView mInformationSysMsgRdView;
     private InformationBiz mInformationBiz;
 
     public InformationPresenter(InformationView informationView){
@@ -29,6 +31,16 @@ public class InformationPresenter {
     public InformationPresenter(InformationFollowUpRdView informationFollowUpRdView){
         mInformationBiz = new InformationBizImpl();
         mInformationFollowUpRdView = informationFollowUpRdView;
+    }
+    //系统消息列表
+    public InformationPresenter(InformationSysMsgView informationSysMsgView){
+        mInformationBiz = new InformationBizImpl();
+        mInformationSysMsgView = informationSysMsgView;
+    }
+    //系统消息已读
+    public InformationPresenter(InformationSysMsgRdView informationSysMsgRdView){
+        mInformationBiz = new InformationBizImpl();
+        mInformationSysMsgRdView = informationSysMsgRdView;
     }
 
 
@@ -104,9 +116,42 @@ public class InformationPresenter {
            }
        });
     }
+    //获取系统消息列表
+    public void getSystemMessageList(){
+        mInformationBiz.getSystemMessageList(mInformationSysMsgView.getUserUuid(), mInformationSysMsgView.getPage(), mInformationSysMsgView.getPagecount(), new InformationBiz.OnLoginListener() {
+            @Override
+            public void onResponse(ResultModel model) {
+                if (model.getResult() == 0) {
+                    mInformationSysMsgView.getSystemMessageList(model);
+                } else {
+                    mInformationSysMsgView.onViewFailure(model);
+                }
+            }
 
+            @Override
+            public void onFailure(String e) {
+            mInformationSysMsgView.onServerFailure(e);
+            }
+        });
+    }
 
-
+    //系统消息已读
+    public  void getSystemMsgRead(){
+        mInformationBiz.getSystemMsgRead(mInformationSysMsgRdView.getMessageId(), new InformationBiz.OnLoginListener() {
+            @Override
+            public void onResponse(ResultModel model) {
+                if (model.getResult() == 0) {
+                    mInformationSysMsgRdView.getSystemMessageRead(model);
+                } else {
+                    mInformationSysMsgRdView.onViewFailure(model);
+                }
+            }
+            @Override
+            public void onFailure(String e) {
+                mInformationSysMsgRdView.onServerFailure(e);
+            }
+        });
+    }
 
 
 }

@@ -24,7 +24,7 @@ import retrofit2.Response;
  */
 
 public class HomeBizImpl extends BaseBiz implements HomeBiz {
-
+    //首页数目
     @Override
     public void getUserMessageInfo(String userId, final OnLoginListener onLoginListener) {
         mApiService.getUserMessageInfo(userId).enqueue(new Callback<ResultModel<HomeNumBean>>() {

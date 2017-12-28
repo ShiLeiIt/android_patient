@@ -25,7 +25,7 @@ public class LoadingDialog extends Dialog {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.dialog_loading);
         tv = (TextView)this.findViewById(R.id.tv);
-        tv.setText("加载中");
+        tv.setText("正在保存...");
         LinearLayout linearLayout = (LinearLayout)this.findViewById(R.id.LinearLayout);
         linearLayout.getBackground().setAlpha(210);
     }

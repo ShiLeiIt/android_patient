@@ -35,8 +35,6 @@ import cn.qiyu.magicalcrue_patient.view.RecycleViewDivider;
  */
 
 public class DoctorNoticeListActivity extends BaseActivity {
-    @Bind(R.id.iv_course_back)
-    ImageView mIvCourseBack;
     @Bind(R.id.rcl_doctor_notice)
     RecyclerView mRclDoctorNotice;
     @Bind(R.id.swipeLayout)
@@ -51,7 +49,6 @@ public class DoctorNoticeListActivity extends BaseActivity {
         setContentView(R.layout.activity_doctor_notice_list);
         ButterKnife.bind(this);
         mRclDoctorNotice.addItemDecoration(new RecycleViewDivider(DoctorNoticeListActivity.this, LinearLayoutManager.HORIZONTAL, R.drawable.recycleview_tieku));
-
         getLoad();
     }
 
@@ -126,10 +123,8 @@ public class DoctorNoticeListActivity extends BaseActivity {
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
-        @Bind({R.id.tv_doctor_notice_status, R.id.tv_doctor_notic_title, R.id.tv_doctor_notice_date})
+        @Bind({R.id.tv_doctor_notice_num, R.id.tv_doctor_notic_title, R.id.tv_doctor_notice_date,R.id.tv_doctor_notice_content})
         TextView[] mtextview;
-        @Bind(R.id.msg_unread)
-        ImageView mIvMsgUnread;
         InfoUserNoticeListBean mModel;
 
         public ViewHolder(View itemView) {
@@ -142,6 +137,7 @@ public class DoctorNoticeListActivity extends BaseActivity {
                     Intent intent = new Intent(DoctorNoticeListActivity.this, DoctorNoticeDetailActivity.class);
                     mMessageUuid = mModel.getUuid();
                     Log.i("msgUuid==", mMessageUuid);
+                    intent.putExtra("isSystemMsg", "isDoctorNotice");
                     intent.putExtra("title", mModel.getTitle());
                     intent.putExtra("context", mModel.getContent());
                     intent.putExtra("messageUuid", mMessageUuid);
@@ -160,18 +156,17 @@ public class DoctorNoticeListActivity extends BaseActivity {
         void refreshView() {
             String create_time = mModel.getCreate_time();
             mtextview[2].setText(create_time);
+            mtextview[3].setText(mModel.getContent());
             mtextview[1].setText(mModel.getTitle());
 //            Toast.makeText(getActivity(), "shijina=="+mModel.getCreate_time(), Toast.LENGTH_SHORT).show();
            int status = mModel.getStatus();
             Log.i("status====", status +"");
             switch (status) {
                 case 0:
-                    mIvMsgUnread.setImageResource(R.drawable.doctor_notice_msg_unread);
-                    mtextview[0].setText("未读");
+                    mtextview[0].setVisibility(View.VISIBLE);
                     break;
                 case 1:
-                    mtextview[0].setText("已读");
-                    mIvMsgUnread.setImageResource(R.drawable.doctor_notice_read);
+                    mtextview[0].setVisibility(View.INVISIBLE);
                     break;
 
             }
@@ -202,6 +197,7 @@ public class DoctorNoticeListActivity extends BaseActivity {
             return mlist.size();
         }
     }
+
 
     public void getLoad() {
 

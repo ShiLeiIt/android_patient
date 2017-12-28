@@ -119,15 +119,21 @@
         <!--添加门诊资料-->
         <activity android:name=".activity.AddOutpatientDataActivity"/>
         <!--门诊资料-->
-        <activity android:name=".activity.OutpatientInformationListActivity"/>
+        <activity android:name=".activity.OutpatientInformationListActivity"
+                  android:launchMode="singleTop"
+            />
         <!--出院小结-->
-        <activity android:name=".activity.LeaveHospitalInfoListActivity"/>
+        <activity android:name=".activity.LeaveHospitalInfoListActivity"
+                  android:launchMode="singleTop"
+            />
         <!--医院列表-->
         <activity android:name=".activity.HospitalListActivity"/>
         <!--添加出院小结-->
         <activity android:name=".activity.AddLeaveHospitalDataActivity"/>
         <!--用药方案记录-->
-        <activity android:name=".activity.PharmacyPlanRecordInfoListActivity"/>
+        <activity android:name=".activity.PharmacyPlanRecordInfoListActivity"
+                  android:launchMode="singleTop"
+            />
         <!--添加用药方案-->
         <activity android:name=".activity.AddPharmacyRecordDataActivity"/>
         <!--用药方式列表-->
@@ -139,9 +145,13 @@
         <!--添加身体症状-->
         <activity android:name=".activity.AddSymgraphyDataActivity"/>
         <!--身体症状类型列表-->
-        <activity android:name=".activity.SymptomListActivity"/>
+        <activity android:name=".activity.SymptomListActivity"
+                  android:launchMode="singleTop"
+            />
         <!--检查报告单-->
-        <activity android:name=".activity.InspectionReportInfoListActivity"/>
+        <activity android:name=".activity.InspectionReportInfoListActivity"
+                  android:launchMode="singleTop"
+            />
         <!--添加检查报告单-->
         <activity android:name=".activity.AddInspectionReportDataActivity"/>
         <!--新对话-->
@@ -154,6 +164,7 @@
         <activity android:name=".activity.SystemMessagesActivity"/>
         <!--医生个人主页-->
         <activity android:name=".activity.DoctorInformationActivity"/>
+
 
 
 

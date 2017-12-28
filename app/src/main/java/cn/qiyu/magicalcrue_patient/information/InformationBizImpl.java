@@ -4,6 +4,7 @@ import java.util.List;
 import cn.qiyu.magicalcrue_patient.base.BaseBiz;
 import cn.qiyu.magicalcrue_patient.biz.InformationBiz;
 import cn.qiyu.magicalcrue_patient.model.InfoUserNoticeListBean;
+import cn.qiyu.magicalcrue_patient.model.InfoUserSystemMsgListBean;
 import cn.qiyu.magicalcrue_patient.model.InformationBean;
 import cn.qiyu.magicalcrue_patient.model.ResultModel;
 import retrofit2.Call;
@@ -35,6 +36,26 @@ public class InformationBizImpl extends BaseBiz implements InformationBiz {
                 onLoginListener.onFailure(throwable.getMessage());
             }
         });
+    }
+    //消息界面系统消息列表
+    @Override
+    public void getSystemMessageList(String userUuid, String page, String pagecount, final OnLoginListener onLoginListener) {
+        mApiService.getSystemMessageList(userUuid,page,pagecount).enqueue(new Callback<ResultModel<List<InfoUserSystemMsgListBean>>>() {
+            @Override
+            public void onResponse(Call<ResultModel<List<InfoUserSystemMsgListBean>>> call, Response<ResultModel<List<InfoUserSystemMsgListBean>>> response) {
+                if (response.isSuccessful()) {
+                    onLoginListener.onResponse(response.body());
+                } else {
+                    onLoginListener.onFailure(response.body().getMessage());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResultModel<List<InfoUserSystemMsgListBean>>> call, Throwable throwable) {
+                onLoginListener.onFailure(throwable.getMessage());
+            }
+        });
+
     }
 
     //获取消息界面
@@ -89,6 +110,25 @@ public class InformationBizImpl extends BaseBiz implements InformationBiz {
 
             @Override
             public void onFailure(Call<ResultModel> call, Throwable throwable) {
+                onLoginListener.onFailure(throwable.getMessage());
+            }
+        });
+    }
+    //系统消息已读
+    @Override
+    public void getSystemMsgRead(String messageUuid, final OnLoginListener onLoginListener) {
+        mApiService.getSystemMsgRead(messageUuid).enqueue(new Callback<ResultModel<InfoUserSystemMsgListBean>>() {
+            @Override
+            public void onResponse(Call<ResultModel<InfoUserSystemMsgListBean>> call, Response<ResultModel<InfoUserSystemMsgListBean>> response) {
+                if (response.isSuccessful()) {
+                    onLoginListener.onResponse(response.body());
+                } else {
+                    onLoginListener.onFailure(response.body().getMessage());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResultModel<InfoUserSystemMsgListBean>> call, Throwable throwable) {
                 onLoginListener.onFailure(throwable.getMessage());
             }
         });

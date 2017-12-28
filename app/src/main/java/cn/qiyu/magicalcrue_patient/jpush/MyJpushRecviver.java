@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
 
@@ -12,14 +13,27 @@ import org.greenrobot.eventbus.EventBus;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.List;
+
 import cn.jpush.android.api.JPushInterface;
 import cn.qiyu.magicalcrue_patient.activity.DoctorListActivity;
 import cn.qiyu.magicalcrue_patient.activity.DoctorNoticeDetailActivity;
 import cn.qiyu.magicalcrue_patient.activity.DoctorNoticeListActivity;
 import cn.qiyu.magicalcrue_patient.activity.FollowUpMessageDetailActivity;
+import cn.qiyu.magicalcrue_patient.activity.InspectionReportInfoListActivity;
+import cn.qiyu.magicalcrue_patient.activity.LeaveHospitalInfoListActivity;
 import cn.qiyu.magicalcrue_patient.activity.MainActivity;
 import cn.qiyu.magicalcrue_patient.activity.MyScaleActivity;
+import cn.qiyu.magicalcrue_patient.activity.OutpatientInformationListActivity;
+import cn.qiyu.magicalcrue_patient.activity.PharmacyPlanRecordInfoListActivity;
+import cn.qiyu.magicalcrue_patient.activity.ScaleDetailActivity;
+import cn.qiyu.magicalcrue_patient.activity.SymgraphyInfoListActivity;
+import cn.qiyu.magicalcrue_patient.model.MyScaleBean;
+import cn.qiyu.magicalcrue_patient.model.ResultModel;
+import cn.qiyu.magicalcrue_patient.model.ScaleDetailBean;
 import cn.qiyu.magicalcrue_patient.utils.PreUtils;
+import cn.qiyu.magicalcrue_patient.visit.MyScalePresenter;
+import cn.qiyu.magicalcrue_patient.visit.MyScaleView;
 
 /**
  * Created by dev on 2017/11/27.
@@ -27,13 +41,21 @@ import cn.qiyu.magicalcrue_patient.utils.PreUtils;
 
 public class MyJpushRecviver extends BroadcastReceiver {
     private static final String TAG = "MyJpushRecviver";
-//    private int mTypeId;
+    private String mMedicalType;
+    private String mPaperUserID;
+    private String mServiecId;
+    private Context mContext;
+
+    //    private int mTypeId;
 
 
     @Override
     public void onReceive(Context context, Intent intent) {
 
         Bundle bundle = intent.getExtras();
+        this.mContext = context;
+
+
 
         if (JPushInterface.ACTION_REGISTRATION_ID.equals(intent.getAction())) {
             /**
@@ -60,8 +82,8 @@ public class MyJpushRecviver extends BroadcastReceiver {
                 messageJson = value.replace("\\", "");
                 JSONObject jsonObject = new JSONObject(messageJson);
                 int mTypeId = jsonObject.getInt("typeId");
-                Log.i(TAG, "mTypeId "+mTypeId);
-//                EventBus.getDefault().post(mTypeId+"");
+                Log.i(TAG, "mTypeId----------------- "+mTypeId);
+                EventBus.getDefault().post(mTypeId+"");
             }
             catch (JSONException e) {
                 e.printStackTrace();
@@ -143,9 +165,18 @@ public class MyJpushRecviver extends BroadcastReceiver {
                 String value = json.getString("androidNotification extras key");
                 js = value.replace("\\", "");
                 JSONObject jsonObject = new JSONObject(js);
+
                 int mTypeId = jsonObject.getInt("typeId");
-                int paperUserID = jsonObject.getInt("paperUserID");
-                Log.i("paperUserID==", paperUserID+"");
+                if (js.contains("medicalType")) {
+                    mMedicalType = jsonObject.getString("medicalType");
+                    Log.i(TAG,"medicalType===="+ mMedicalType + "");
+                }
+                if (js.contains("paperUserID")) {
+                    mServiecId = jsonObject.getString("serviecId");
+                    mPaperUserID = jsonObject.getString("paperUserID");
+                }
+
+
                 switch (mTypeId) {
                     case 1:
                         //跳转随访对话
@@ -160,6 +191,8 @@ public class MyJpushRecviver extends BroadcastReceiver {
                         break;
                     case 4:
                         //跳转医生公告页面
+                        Log.i("tyid====4", mTypeId + "");
+                        Toast.makeText(context, ""+mTypeId, Toast.LENGTH_SHORT).show();
                         Intent intentMain = new Intent(context, DoctorNoticeListActivity.class);
                         intentMain.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                         intentMain.putExtra("doctorNotice", "doctorNotice");
@@ -169,6 +202,45 @@ public class MyJpushRecviver extends BroadcastReceiver {
                     case 5:
                         break;
                     case 6:
+                        if (mMedicalType.equals("1001")) {
+                            //跳转病历门诊信息界面
+                            Intent intentO = new Intent(context, OutpatientInformationListActivity.class);
+                            intentO.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                            intentO.putExtras(bundle);
+                            intentO.putExtra("outPatient", "outPatient");
+                            context.startActivity(intentO);
+
+                        } else if (mMedicalType.equals("1002")) {
+                            //跳转到出院小结信息界面
+                            Intent intentL = new Intent(context, LeaveHospitalInfoListActivity.class);
+                            intentL.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                            intentL.putExtra("leaveHospital", "leaveHospital");
+                            intentL.putExtras(bundle);
+                            context.startActivity(intentL);
+
+                        } else if (mMedicalType.equals("1003")) {
+                            //跳转到检查报告单界面
+                            Intent intentI = new Intent(context, InspectionReportInfoListActivity.class);
+                            intentI.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                            intentI.putExtras(bundle);
+                            context.startActivity(intentI);
+
+                        } else if (mMedicalType.equals("1006")) {
+                            //跳转到用药记录方案信息界面
+                            Intent intentP = new Intent(context, PharmacyPlanRecordInfoListActivity.class);
+                            intentP.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                            intentP.putExtras(bundle);
+                            context.startActivity(intentP);
+
+                        }else {
+                            //跳转到身体症状记录信息界面
+                            Intent intentS = new Intent(context, SymgraphyInfoListActivity.class);
+                            intentS.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                            intentS.putExtras(bundle);
+                            context.startActivity(intentS);
+
+                        }
+
                         break;
                     case 7:
                         break;
@@ -177,12 +249,7 @@ public class MyJpushRecviver extends BroadcastReceiver {
                     case 9:
                         break;
                     case 10:
-                        //跳转到医生量表页面
-                        Intent intentScale = new Intent(context, MyScaleActivity.class);
-                        intentScale.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                        intentScale.putExtra("doctorScale", "doctorScale");
-                        intentScale.putExtras(bundle);
-                        context.startActivity(intentScale);
+                        mScalePresenter.VisitScaleDetailsData();
                         break;
                 }
 
@@ -200,6 +267,91 @@ public class MyJpushRecviver extends BroadcastReceiver {
             Log.e(TAG, "收到了自定义消息消息extra是5:");
         }
     }
+
+    MyScalePresenter mScalePresenter = new MyScalePresenter(new MyScaleView() {
+        @Override
+        public String getPatientUuid() {
+            return null;
+        }
+
+        @Override
+        public String getStatus() {
+            return null;
+        }
+
+        @Override
+        public String getPage() {
+            return null;
+        }
+
+        @Override
+        public String getPagecount() {
+            return null;
+        }
+
+        @Override
+        public void LoadDate(ResultModel<List<MyScaleBean>> model) {
+
+        }
+
+        @Override
+        public String paperId() {
+            return mServiecId;
+        }
+
+        @Override
+        public String paperUserId() {
+            return mPaperUserID;
+        }
+
+        @Override
+        public String userId() {
+            return (String) PreUtils.getParam(mContext, "patientuuid", "0");
+        }
+
+        @Override
+        public void LoadScaleDetailsData(ResultModel<ScaleDetailBean> model) {
+            //跳转到医生量表页面
+            Intent intentScale = new Intent(mContext, ScaleDetailActivity.class);
+            intentScale.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            intentScale.putExtra("doctorScale", "doctorScale");
+            intentScale.putExtra("scaleDetail", model.getData());
+            intentScale.putExtra("paperUserID", mPaperUserID);
+            mContext.startActivity(intentScale);
+
+        }
+
+        @Override
+        public String getQuestionArr() {
+            return null;
+        }
+
+        @Override
+        public void LoadScaleDetailsCommit(ResultModel model) {
+
+        }
+
+        @Override
+        public void showProgress() {
+
+        }
+
+        @Override
+        public void hideProgress() {
+
+        }
+
+        @Override
+        public void onViewFailure(ResultModel model) {
+
+        }
+
+        @Override
+        public void onServerFailure(String e) {
+
+        }
+    });
+
 
     // 打印所有的 intent extra 数据
     private static String printBundle(Bundle bundle) {

@@ -2,6 +2,7 @@ package cn.qiyu.magicalcrue_patient.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
@@ -187,6 +188,14 @@ public class ScaleDetailActivity extends BaseActivity {
                     mCommitJa = JSONArray.toJSONString(commitOptionList);
                     if (null != mCommitJa) {
                         Log.e("1111", mCommitJa);
+                    }
+                }
+                //必须选中答案才能提交
+                for (int i = 0; i < commitOptionList.size(); i++) {
+                    ScaleDetailsCommitBean scaleDetailsCommitBean = commitOptionList.get(i);
+                    if (TextUtils.isEmpty(scaleDetailsCommitBean.getOptionID()) && TextUtils.isEmpty(scaleDetailsCommitBean.getResult())) {
+                        Toast.makeText(this, "请填写选项", Toast.LENGTH_SHORT).show();
+                        return;
                     }
                 }
                 mScalePresenter.VisitScaleDetailsCommit();

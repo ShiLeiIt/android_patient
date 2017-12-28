@@ -19,7 +19,7 @@ import cn.qiyu.magicalcrue_patient.model.Comment;
 
 public class Comment2ViewHolder extends RecyclerView.ViewHolder {
         private Comment comment;
-        @Bind({R.id.tv_comment_name2,R.id.tv_comment_content2})
+        @Bind({R.id.tv_comment_name2,R.id.tv_comment_content2,R.id.tv_comment_name3})
         TextView [] textView;
 
         public Comment2ViewHolder(View itemView) {
@@ -33,7 +33,8 @@ public class Comment2ViewHolder extends RecyclerView.ViewHolder {
         }
         //刷新
         void refreshView() {
-            textView[0].setText("医生回复：（"+comment.getUserName()+"）");
+            textView[0].setText(comment.getUserName());
             textView[1].setText(comment.getContent());
+            textView[2].setText("医生");
         }
 }

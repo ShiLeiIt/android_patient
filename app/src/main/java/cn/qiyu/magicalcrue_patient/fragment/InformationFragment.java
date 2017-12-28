@@ -12,6 +12,10 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
 import java.util.List;
 
 import butterknife.Bind;
@@ -72,7 +76,8 @@ public class InformationFragment extends Fragment {
         ButterKnife.bind(this, view);
         mUuid = (String) PreUtils.getParam(getActivity(), "uuid", "0");
         Log.i("userUuid===", mUuid);
-
+        //注册EventBus，在开始的位置
+        EventBus.getDefault().register(this);
         return view;
     }
 
@@ -186,7 +191,22 @@ public class InformationFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         ButterKnife.unbind(this);
+        EventBus.getDefault().unregister(this);
     }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEvent(String event) {
+        //已经好了，你发的什么，这里接收的就是什么，类型要一致
+        String doctorUuidUrl = event;
+        if (doctorUuidUrl.length() > 2) {
+
+        } else {
+
+            mInformationPresenter.InformationListShow();
+        }
+
+    }
+
 
     @OnClick({R.id.rl_visit_dialogue, R.id.rl_system_notice, R.id.rl_doctor_notice})
     public void onViewClicked(View view) {

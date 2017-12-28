@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -22,6 +23,7 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import java.io.Serializable;
 import java.util.List;
 
 import butterknife.Bind;
@@ -30,6 +32,8 @@ import cn.qiyu.magicalcrue_patient.Api.ApiService;
 import cn.qiyu.magicalcrue_patient.R;
 import cn.qiyu.magicalcrue_patient.activity.AllServeActivity;
 import cn.qiyu.magicalcrue_patient.activity.CourseActivity;
+import cn.qiyu.magicalcrue_patient.activity.DoctorListActivity;
+import cn.qiyu.magicalcrue_patient.activity.FollowUpMessageDetailActivity;
 import cn.qiyu.magicalcrue_patient.activity.MainActivity;
 import cn.qiyu.magicalcrue_patient.activity.MedicalActivity;
 import cn.qiyu.magicalcrue_patient.activity.MyScaleActivity;
@@ -40,6 +44,7 @@ import cn.qiyu.magicalcrue_patient.adapter.AppAdapter;
 import cn.qiyu.magicalcrue_patient.home.HomeNumView;
 import cn.qiyu.magicalcrue_patient.home.HomePresenter;
 import cn.qiyu.magicalcrue_patient.model.DoctorTeamBean;
+import cn.qiyu.magicalcrue_patient.model.DoctorTeamListBean;
 import cn.qiyu.magicalcrue_patient.model.HomeBannerBean;
 import cn.qiyu.magicalcrue_patient.model.HomeNumBean;
 import cn.qiyu.magicalcrue_patient.model.ResultModel;
@@ -94,6 +99,9 @@ public class HomePageFragment extends Fragment implements View.OnClickListener, 
     private String mPatientuuid;
     private String mErrorCode;
     private ScrollView sv_home;
+    private RelativeLayout mRlDoctorTeam;
+    private List<DoctorTeamListBean> mDoctorTeamList;
+    private List<DoctorTeamListBean> mQyjDoctorList;
 
     @Nullable
     @Override
@@ -106,6 +114,8 @@ public class HomePageFragment extends Fragment implements View.OnClickListener, 
         EventBus.getDefault().register(this);
 //        LLImageView viewById = (LLImageView) view.findViewById(R.id.iv_doctor_icon);
         mTv_doctor_name = (TextView) view.findViewById(R.id.tv_mydocter);
+        //医生工作组
+        mRlDoctorTeam = (RelativeLayout) view.findViewById(R.id.rl_doctor_team_home);
         LLTextView llTvVisit = (LLTextView) view.findViewById(R.id.ll_tv_visit);//加入随访
         LLTextView llTvInquiry = (LLTextView) view.findViewById(R.id.ll_inquiry);//在线问诊
         LLTextView llTvReport = (LLTextView) view.findViewById(R.id.ll_tv_report);//随访报告
@@ -130,6 +140,7 @@ public class HomePageFragment extends Fragment implements View.OnClickListener, 
         mTvAllserve = (TextView) view.findViewById(R.id.ll_tv_all_serve);
 
         sv_home = (ScrollView) view.findViewById(R.id.sv_home);
+        mRlDoctorTeam.setOnClickListener(this);
         llTvDiaglog.setOnClickListener(this);
         llTvScale.setOnClickListener(this);
         llTvNewReport.setOnClickListener(this);
@@ -160,13 +171,10 @@ public class HomePageFragment extends Fragment implements View.OnClickListener, 
         //通过本地获取患者uuid
 
 
-        homePresenter.getDoctorTeamInfo();
-        homePresenter.getHomeBanner();
-
+        mHomePresenter.getDoctorTeamInfo();
+        mHomePresenter.getHomeBanner();
+        mHomePresenter.HomeLoadNumData();
         ButterKnife.bind(this, view);
-        //这里设置fragment 点击事件就是我给你发的Demo
-
-        Log.i("patientuuid---", (String) PreUtils.getParam(getActivity(), "patientuuid", "0"));
 
 //        Intent intent = getActivity().getIntent();
 //        int type = intent.getIntExtra("type", 0);
@@ -196,27 +204,32 @@ public class HomePageFragment extends Fragment implements View.OnClickListener, 
     @Override
     public void onResume() {
         super.onResume();
-        homePresenter.HomeLoadNumData();
+        mHomePresenter.HomeLoadNumData();
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEvent(String event) {
         //已经好了，你发的什么，这里接收的就是什么，类型要一致
         String doctorUuidUrl = event;
-        String[] split = doctorUuidUrl.split("=");
-        if (split == null || split.length < 1) {
-            return;
-        }
-        if (doctorUuidUrl.contains("http://www.mircalcure.com/index.html?doctor")) {
-            mDoctorUuid = split[1].trim();
-            //将医生uuid保存
-            PreUtils.setParam(getActivity(),"dcotorUuid",mDoctorUuid);
-            Log.i("doctorUuid=======", mDoctorUuid);
-            homePresenter.getDoctorQRcode();
-            Toast.makeText(getActivity(), "医生随访二维码，等待医生审核", Toast.LENGTH_SHORT).show();
+        if (doctorUuidUrl.length() > 2) {
+            String[] split = doctorUuidUrl.split("=");
+            if (split == null || split.length < 1) {
+                return;
+            }
+            if (doctorUuidUrl.contains("http://www.mircalcure.com/index.html?doctor")) {
+                mDoctorUuid = split[1].trim();
+                //将医生uuid保存
+                PreUtils.setParam(getActivity(), "dcotorUuid", mDoctorUuid);
+                Log.i("doctorUuid=======", mDoctorUuid);
+                mHomePresenter.getDoctorQRcode();
+                Toast.makeText(getActivity(), "医生随访二维码，等待医生审核", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(getActivity(), "非医生随访二维码", Toast.LENGTH_SHORT).show();
+            }
         } else {
-            Toast.makeText(getActivity(), "非医生随访二维码", Toast.LENGTH_SHORT).show();
+            mHomePresenter.HomeLoadNumData();
         }
+
     }
 
     @Override
@@ -224,8 +237,9 @@ public class HomePageFragment extends Fragment implements View.OnClickListener, 
         switch (v.getId()) {
             //新对话
             case R.id.ll_tv_diaglogue:
-                MainActivity activity = (MainActivity) getActivity();
-                activity.changFragment("消息");
+//                MainActivity activity = (MainActivity) getActivity();
+//                activity.changFragment("消息");
+                startActivity(new Intent(getActivity(), FollowUpMessageDetailActivity.class));
                 break;
             //新的量表
             case R.id.ll_tv_scale:
@@ -261,11 +275,20 @@ public class HomePageFragment extends Fragment implements View.OnClickListener, 
             case R.id.richscan:
                 initPermission();
                 break;
+            //跳转医生工作组列表界面
+            case R.id.rl_doctor_team_home:
+                Intent intent = new Intent(getActivity(), DoctorListActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("list", (Serializable) mDoctorTeamList);
+                bundle.putSerializable("listQyj", (Serializable) mQyjDoctorList);
+                intent.putExtras(bundle);
+                startActivity(intent);
+                break;
         }
 
     }
 
-    HomePresenter homePresenter = new HomePresenter(new HomeNumView() {
+    HomePresenter mHomePresenter = new HomePresenter(new HomeNumView() {
         @Override
         public void showProgress() {
 
@@ -279,7 +302,8 @@ public class HomePageFragment extends Fragment implements View.OnClickListener, 
         @Override
         public void onViewFailure(ResultModel model) {
 //            //通过这mErrorCode来判断是否绑定医生
-//            mErrorCode = model.getErrorCode();
+            mErrorCode = model.getErrorCode();
+
 //
 //            Toast.makeText(getActivity(), "ccccode"+ model.getErrorCode(), Toast.LENGTH_SHORT).show();
             //通过EventBus传值到VisitFragment中
@@ -311,14 +335,19 @@ public class HomePageFragment extends Fragment implements View.OnClickListener, 
             if (numBean.getData() != null) {
                 mTv_topleft_visit.setText(String.valueOf(numBean.getData().getFollowDay()));
 
-
-
                 mTv_topleft_inquiry.setText(String.valueOf(numBean.getData().getConstructionCount()));
                 mTv_topleft_report.setText(String.valueOf(numBean.getData().getFollowUpCount()));
                 mTv_topleft_record.setText(String.valueOf(numBean.getData().getStatusRecord()));
+                Log.i("duihua==", numBean.getData().getConstructionCount() + "");
+                Log.i("duihua1==", numBean.getData().getFollowUpCount() + "");
+                Log.i("duihua2==", numBean.getData().getStatusRecord() + "");
 
                 mTv_diaglog.setText(String.valueOf(numBean.getData().getNewDialogueCount()));
+                Log.i("duihua3==", numBean.getData().getNewDialogueCount() + "");
+
                 mTv_scale.setText(String.valueOf(numBean.getData().getNwePaperCount()));
+                Log.i("duihua4===", numBean.getData().getNwePaperCount() + "");
+
                 mTv_newReport.setText(String.valueOf(numBean.getData().getNewFollowUpCount()));
 
                     mTv_course.setText(String.valueOf(numBean.getData().getCourseCount()));
@@ -356,6 +385,8 @@ public class HomePageFragment extends Fragment implements View.OnClickListener, 
 //            model.getErrorCode();
             String DcotorName = model.getData().getDoctor_name();
             String TeamName = model.getData().getTeam_name();
+            mDoctorTeamList = model.getData().getDoctorTeamList();
+            mQyjDoctorList = model.getData().getQyjDoctorList();
             //医生名字与团队
             mTvMydocter.setText(DcotorName);
             mTvMydocterTeam.setText(TeamName);

@@ -54,8 +54,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="40dp"
-
+            android:layout_height="45dp"
             android:orientation="horizontal">
 
             <TextView
@@ -76,7 +75,7 @@
         <RelativeLayout
             android:background="@color/app_white"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="45dp"
             android:focusable="true"
             android:focusableInTouchMode="true">
 
@@ -110,7 +109,7 @@
 
             <EditText
                 android:id="@+id/tv_real_name"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_toLeftOf="@id/iv_name_arrows"
@@ -134,7 +133,7 @@
         <RelativeLayout
             android:background="@color/app_white"
             android:layout_width="match_parent"
-            android:layout_height="50dp">
+            android:layout_height="45dp">
 
             <TextView
                 android:id="@+id/tv_gender"
@@ -146,14 +145,15 @@
                 android:textColor="@color/app_userInfor"
                 android:textSize="14sp"/>
 
-            <ImageView
+            <CheckBox
                 android:id="@+id/iv_girl"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
+                style="@style/CustomCheckboxTheme"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="40dp"
                 android:layout_toRightOf="@id/tv_gender"
-                android:src="@drawable/check_box_normal"/>
+                />
 
             <TextView
                 android:id="@+id/tv_girl_s"
@@ -167,14 +167,15 @@
                 android:textSize="12sp"/>
 
 
-            <ImageView
+            <CheckBox
+                style="@style/CustomCheckboxTheme"
                 android:id="@+id/iv_boy"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="40dp"
                 android:layout_toRightOf="@id/tv_girl_s"
-                android:src="@drawable/check_box_select"/>
+                />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -195,7 +196,7 @@
         <RelativeLayout
             android:background="@color/app_white"
             android:layout_width="match_parent"
-            android:layout_height="50dp">
+            android:layout_height="45dp">
 
             <TextView
                 android:id="@+id/tv_Date"
@@ -227,7 +228,7 @@
         <RelativeLayout
             android:background="@color/app_white"
             android:layout_width="match_parent"
-            android:layout_height="50dp">
+            android:layout_height="45dp">
 
             <TextView
                 android:id="@+id/tv_identity"
@@ -268,7 +269,7 @@
         <RelativeLayout
             android:background="@color/app_white"
             android:layout_width="match_parent"
-            android:layout_height="50dp">
+            android:layout_height="45dp">
 
             <TextView
                 android:id="@+id/tv_phone"
@@ -308,7 +309,7 @@
         <RelativeLayout
             android:background="@color/app_white"
             android:layout_width="match_parent"
-            android:layout_height="50dp">
+            android:layout_height="45dp">
 
             <TextView
                 android:id="@+id/tv_citiy"
@@ -342,7 +343,7 @@
             android:background="@color/app_white"
             android:id="@+id/rl_patient_relation"
             android:layout_width="match_parent"
-            android:layout_height="50dp">
+            android:layout_height="45dp">
 
             <TextView
                 android:id="@+id/tv_patient_relation"
@@ -391,7 +392,7 @@
             android:orientation="horizontal"
             android:background="#f7f7f7"
             android:layout_width="match_parent"
-            android:layout_height="40dp">
+            android:layout_height="45dp">
 
             <TextView
                 android:text="病情信息"
@@ -407,7 +408,7 @@
         <RelativeLayout
             android:background="@color/app_white"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="45dp"
             android:focusable="true"
             android:focusableInTouchMode="true">
 
@@ -433,7 +434,7 @@
 
             <EditText
                 android:id="@+id/et_actions_name"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_toLeftOf="@id/iv_doctor_name_arrows"
@@ -458,7 +459,7 @@
             android:layout_width="match_parent"
             android:focusable="true"
             android:focusableInTouchMode="true"
-            android:layout_height="50dp">
+            android:layout_height="45dp">
 
             <TextView
                 android:id="@+id/tv_first_visit"
@@ -484,7 +485,7 @@
                 android:id="@+id/tv_first_visit_time"
                 android:text="2017-11-20"
                 android:gravity="right|center_vertical"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:maxLines="1"
@@ -502,12 +503,13 @@
             android:background="@color/view_bg"/>
 
         <RelativeLayout
+            android:id="@+id/rl_diseases"
             android:background="@color/app_white"
             android:layout_width="match_parent"
             android:focusable="true"
             android:focusableInTouchMode="true"
             android:layout_marginBottom="10dp"
-            android:layout_height="40dp">
+            android:layout_height="45dp">
 
             <TextView
                 android:id="@+id/tv_diseases_t"

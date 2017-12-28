@@ -16,6 +16,7 @@ import cn.qiyu.magicalcrue_patient.model.HospitalListBean;
 import cn.qiyu.magicalcrue_patient.model.HospitalOfficeListBean;
 import cn.qiyu.magicalcrue_patient.model.ImageUpLoadBean;
 import cn.qiyu.magicalcrue_patient.model.InfoUserNoticeListBean;
+import cn.qiyu.magicalcrue_patient.model.InfoUserSystemMsgListBean;
 import cn.qiyu.magicalcrue_patient.model.InformationBean;
 import cn.qiyu.magicalcrue_patient.model.InspectionReportBean;
 import cn.qiyu.magicalcrue_patient.model.MyScaleBean;
@@ -99,6 +100,9 @@ public interface ApiService {
     String API_SCALE_COMMIT = "common/saveQuestionnaireOption";
     //消息界面，医生公告列表
     String API_DOCTOR_NOTICE_LIST = "message/userNoticeList";
+    //消息界面，系统消息列表
+    String API_SYSTEM_MESSAGE_LIST = "message/userMessageList";
+
     //消息列表
     String API_INFORMATION_LIST = "message/messageHome";
     //随访对话详情
@@ -143,16 +147,18 @@ public interface ApiService {
     String API_DOCTOR_NOTICE_READ = "message/setDoctorNoticeReaded";
     //消息界面随访消息已读(Num显示为零)
     String API_FOLLOW_UP_MESSAGE_READ = "message/setUserMessageReaded";
+    //消息界面系统消息已读
+    String API_SYSTEMMSG_READ = "message/getMessageDetail";
 
 
 
     /**
-     * @param patientId
+     * @param userUuid
      * @return 首页数字信息
      */
     @POST(API_HOME_NUM)
     @FormUrlEncoded
-    Call<ResultModel<HomeNumBean>> getUserMessageInfo(@Field("patientId") String patientId);
+    Call<ResultModel<HomeNumBean>> getUserMessageInfo(@Field("userId") String userUuid);
 
     @POST(API_HOME_DOCTOR)
     @FormUrlEncoded
@@ -300,6 +306,16 @@ public interface ApiService {
     Call<ResultModel<List<InfoUserNoticeListBean>>> getUserNoticeList(@Field("userUUid") String userUuid,
                                                                         @Field("page") String page,
                                                                         @Field("pagecount") String pagecount);
+
+    /**
+     * 消息，系统消息列表
+     */
+    @POST(API_SYSTEM_MESSAGE_LIST)
+    @FormUrlEncoded
+    Call<ResultModel<List<InfoUserSystemMsgListBean>>> getSystemMessageList(@Field("userUUid") String userUuid,
+                                                                                  @Field("page") String page,
+                                                                                  @Field("pagecount") String pagecount);
+
 
     /**
      * 消息界面列表
@@ -631,6 +647,15 @@ public interface ApiService {
     @FormUrlEncoded
     Call<ResultModel> getFollowUpMsgRead(
             @Field("userId") String userUuid);
+
+
+    /**
+     * 系统消息已读
+     */
+    @POST(API_SYSTEMMSG_READ)
+    @FormUrlEncoded
+    Call<ResultModel<InfoUserSystemMsgListBean>> getSystemMsgRead(
+            @Field("messageId") String messageId);
 
 
 

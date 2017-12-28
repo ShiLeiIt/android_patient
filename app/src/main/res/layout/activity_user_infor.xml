@@ -197,15 +197,15 @@
             android:textColor="@color/app_userInfor"
             android:textSize="14sp"/>
 
-        <ImageView
-
+        <CheckBox
             android:id="@+id/iv_girl"
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:layout_centerVertical="true"
+            style="@style/CustomCheckboxTheme"
             android:layout_marginLeft="40dp"
             android:layout_toRightOf="@id/tv_gender"
-            android:src="@drawable/check_box_normal"/>
+            />
 
         <TextView
             android:id="@+id/tv_girl_s"
@@ -219,7 +219,8 @@
             android:textSize="12sp"/>
 
 
-        <ImageView
+        <CheckBox
+            style="@style/CustomCheckboxTheme"
             android:id="@+id/iv_boy"
             android:layout_width="20dp"
             android:layout_height="20dp"

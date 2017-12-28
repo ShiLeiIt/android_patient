@@ -43,10 +43,12 @@
     <string name="myScale">我的量表</string>
     <string name="scaleDetails">量表详情</string>
     <string name="question">提问</string>
+    <string name="doctorNoticeList">医生公告列表</string>
     <string name="doctorNotice">医生公告</string>
     <string name="doctorNoticeDetails">公告详情</string>
     <string name="systemNotice">系统公告</string>
     <string name="systemMessages">系统消息</string>
+    <string name="systemMessagesDetails">系统消息详情</string>
 
 
     <string name="visitDialogue">随访对话</string>

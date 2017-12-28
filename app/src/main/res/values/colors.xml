@@ -19,6 +19,7 @@
     <color name="btSend">#3AB5AC</color>
     <color name="caseHistoryUpdate">#4BC27E</color>
     <color name="addFont">#32A78C</color>
+    <color name="replyText">#58BECB</color>
 
     //扫描框
     <color name="viewfinder_mask">#60000000</color>

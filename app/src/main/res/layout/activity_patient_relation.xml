@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:orientation="vertical"
-              android:background="@color/app_white"
+              android:background="@color/view_bg"
               android:layout_width="match_parent"
               android:layout_height="match_parent">
     <RelativeLayout
+        android:background="@color/app_white"
         android:layout_width="match_parent"
         android:layout_height="45dp"
         android:gravity="center_vertical"
@@ -36,6 +37,7 @@
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rlv_patient_relation"
+        android:background="@color/app_white"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 

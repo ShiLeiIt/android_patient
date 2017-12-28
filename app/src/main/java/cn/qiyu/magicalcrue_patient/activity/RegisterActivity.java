@@ -78,7 +78,7 @@ public class RegisterActivity extends BaseActivity {
                     startActivity(intentUser);
                     break;
                 case "2":
-                    Intent intentPatient = new Intent(RegisterActivity.this, PatientDataActivity.class);
+                    Intent intentPatient = new Intent(RegisterActivity.this, PatientDataRegisterActivity.class);
                     startActivity(intentPatient);
                     break;
                 default:
@@ -144,7 +144,7 @@ public class RegisterActivity extends BaseActivity {
                     PreUtils.setParam(RegisterActivity.this, "userid", String.valueOf(model.getData().getId()));
 //                        Toast.makeText(RegisterActivity.this, "患者信息界面", Toast.LENGTH_SHORT).show();
                     Toast.makeText(RegisterActivity.this, "注册成功", Toast.LENGTH_SHORT).show();
-                    Intent intentPatient = new Intent(RegisterActivity.this, PatientDataActivity.class);
+                    Intent intentPatient = new Intent(RegisterActivity.this, PatientDataRegisterActivity.class);
                     startActivity(intentPatient);
 
                 } else {

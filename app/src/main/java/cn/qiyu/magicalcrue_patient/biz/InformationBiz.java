@@ -11,6 +11,9 @@ public interface InformationBiz {
     //用户公告列表
     void getUserNoticeList(String userUuid, String page, String pagecount, OnLoginListener onLoginListener);
 
+    //系统消息
+    void getSystemMessageList(String userUuid, String page, String pagecount, OnLoginListener onLoginListener);
+
     //消息列表
     void getInformationList(String userUuid, OnLoginListener onLoginListener);
 
@@ -19,6 +22,10 @@ public interface InformationBiz {
 
     //随访对话已读（Num为零）
     void getFollowUpMsgRead(String userUuid,OnLoginListener onLoginListener);
+
+    //系统消息已读
+    void getSystemMsgRead(String messageUuid,OnLoginListener onLoginListener);
+
 
     interface OnLoginListener<T> {
 

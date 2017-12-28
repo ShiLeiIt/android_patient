@@ -23,6 +23,7 @@ import android.util.Base64;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
+import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -99,11 +100,11 @@ public class UserInforActivity extends BaseActivity implements View.OnClickListe
     @Bind(R.id.tv_gender)
     TextView mTvGender;
     @Bind(R.id.iv_girl)
-    ImageView mIvGirl;
+    CheckBox mIvGirl;
     @Bind(R.id.tv_girl_s)
     TextView mTvGirlS;
     @Bind(R.id.iv_boy)
-    ImageView mIvBoy;
+    CheckBox mIvBoy;
     @Bind(R.id.tv_Date)
     TextView mTvDate;
     @Bind(R.id.tv_select_Date)
@@ -150,33 +151,12 @@ public class UserInforActivity extends BaseActivity implements View.OnClickListe
     }
 
     private void initTo() {
-        mIvGirl.setTag(0);
+
         mPicPopupWindow = new SelectPicPopupWindow(UserInforActivity.this, this);
 
     }
 
-//    private void init() {
-//        mPicPopupWindow = new SelectPicPopupWindow(UserInforActivity.this, this);
-//
-//        mIvGirl.setTag(0);
-//        mTvRealName.setText(mUserInfor.getName());
-//        mTvSelectCitiy.setText(mUserInfor.getNativeName());
-//        //性别
-//        String sex = mUserInfor.getSex();
-//        if (sex.equals("0")) {
-//            mIvBoy.setImageResource(R.drawable.check_box_select);
-//            mIvGirl.setImageResource(R.drawable.check_box_normal);
-//        } else {
-//            mIvGirl.setImageResource(R.drawable.check_box_select);
-//            mIvBoy.setImageResource(R.drawable.check_box_normal);
-//        }
-//        mTvSelectDate.setText(mUserInfor.getBirthday());
-//    }
 
-    private void showToast(String msg) {
-        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
-
-    }
 
 
     //图片上传服务器
@@ -258,15 +238,15 @@ public class UserInforActivity extends BaseActivity implements View.OnClickListe
 
         @Override
         public String getSex() {
-            if (((Integer) (mIvGirl.getTag())) == 1) {
+            if (mIvGirl.isChecked()) {
                 return "1";
+            } else {
+                return "0";
             }
-            return "0";
         }
 
         @Override
         public String getNative_place_cd() {
-
             return mAddresscode;
         }
 
@@ -337,17 +317,22 @@ public class UserInforActivity extends BaseActivity implements View.OnClickListe
                 startActivityForResult(new Intent(UserInforActivity.this, SeclectCityActivity.class), 0x001);
                 break;
             case R.id.iv_girl:
-                mIvGirl.setTag(1);
-                mIvBoy.setTag(0);
-                mIvGirl.setImageResource(R.drawable.check_box_select);
-                mIvBoy.setImageResource(R.drawable.check_box_normal);
-//                Toast.makeText(this, "" + ((Integer) (mIvGirl.getTag())), Toast.LENGTH_SHORT).show();
+                if (mIvGirl.isChecked()) {
+                    mIvGirl.setChecked(true);
+                    mIvBoy.setChecked(false);
+                } else {
+                    mIvBoy.setChecked(false);
+                    mIvGirl.setChecked(false);
+                }
                 break;
             case R.id.iv_boy:
-                mIvBoy.setTag(1);
-                mIvGirl.setTag(0);
-                mIvBoy.setImageResource(R.drawable.check_box_select);
-                mIvGirl.setImageResource(R.drawable.check_box_normal);
+                if (mIvBoy.isChecked()) {
+                    mIvBoy.setChecked(true);
+                    mIvGirl.setChecked(false);
+                } else {
+                    mIvGirl.setChecked(false);
+                    mIvBoy.setChecked(false);
+                }
 
                 break;
             case R.id.tv_select_Date:

@@ -18,6 +18,7 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
+import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -88,11 +89,11 @@ public class MineUserInforActivity extends BaseActivity implements View.OnClickL
     @Bind(R.id.tv_gender)
     TextView mTvGender;
     @Bind(R.id.iv_girl)
-    ImageView mIvGirl;
+    CheckBox mIvGirl;
     @Bind(R.id.tv_girl_s)
     TextView mTvGirlS;
     @Bind(R.id.iv_boy)
-    ImageView mIvBoy;
+    CheckBox mIvBoy;
     @Bind(R.id.tv_Date)
     TextView mTvDate;
     @Bind(R.id.tv_select_Date)
@@ -151,18 +152,19 @@ public class MineUserInforActivity extends BaseActivity implements View.OnClickL
         //性别
         String sex = mUserInfor.getSex();
         if (sex.equals("0")) {
-            mIvBoy.setImageResource(R.drawable.check_box_select);
-            mIvGirl.setImageResource(R.drawable.check_box_normal);
+            mIvBoy.setChecked(true);
+            mIvGirl.setChecked(false);
         } else {
-            mIvGirl.setImageResource(R.drawable.check_box_select);
-            mIvBoy.setImageResource(R.drawable.check_box_normal);
+            mIvGirl.setChecked(true);
+            mIvBoy.setChecked(false);
+
         }
         mTvSelectDate.setText(mUserInfor.getBirthday());
         //头像保存
         String mFileId = (String)PreUtils.getParam(MineUserInforActivity.this, "mFileId", "");
         if (!mFileId.equals("")) {
             Log.i("mFileId============", mFileId);
-            String path = ApiService.GET_IMAGE_ICON +mFileId ;
+            String path = ApiService.GET_IMAGE_ICON + mFileId;
             DisplayHelper.loadGlide(MineUserInforActivity.this, path, mCivHead);
         }
     }
@@ -180,21 +182,18 @@ public class MineUserInforActivity extends BaseActivity implements View.OnClickL
             if (mFileName != null) {
 //                mRequestFile = RequestBody.create(MediaType.parse("multipart/form-data"), mFileName);
                 mRequestFile = RequestBody.create(MediaType.parse("image/png"), mFileName);
-                Log.i("mFileName======", mFileName + "");
+            }else {
+                //进行用户信息保存到服务器
+                mUserInforEdtPresenter.getUserInforEdt();
 
-
-
-            } else {
-                Toast.makeText(MineUserInforActivity.this, "请选择头像", Toast.LENGTH_SHORT).show();
             }
-
             return mRequestFile;
         }
 
 
         @Override
         public void getImageUpLoad(ImageUpLoadBean imageUpLoadBean) {
-            Toast.makeText(MineUserInforActivity.this, ""+imageUpLoadBean.getMessage(), Toast.LENGTH_SHORT).show();
+//            Toast.makeText(MineUserInforActivity.this, ""+imageUpLoadBean.getMessage(), Toast.LENGTH_SHORT).show();
 //            Log.i("fileId==", imageUpLoadBean.getFileId());
 
             mFileId = imageUpLoadBean.getFileId();
@@ -219,13 +218,13 @@ public class MineUserInforActivity extends BaseActivity implements View.OnClickL
 
         @Override
         public void onViewFailure(ImageUpLoadBean model) {
-            Toast.makeText(MineUserInforActivity.this, ""+model.getMessage(), Toast.LENGTH_SHORT).show();
+//            Toast.makeText(MineUserInforActivity.this, ""+model.getMessage(), Toast.LENGTH_SHORT).show();
 
         }
 
         @Override
         public void onServerFailure(String e) {
-            Toast.makeText(MineUserInforActivity.this, ""+e, Toast.LENGTH_SHORT).show();
+//            Toast.makeText(MineUserInforActivity.this, ""+e, Toast.LENGTH_SHORT).show();
 
         }
     });
@@ -254,10 +253,11 @@ public class MineUserInforActivity extends BaseActivity implements View.OnClickL
 
         @Override
         public String getSex() {
-            if (((Integer) (mIvGirl.getTag())) == 1) {
+            if (mIvGirl.isChecked()) {
                 return "1";
+            } else {
+                return "0";
             }
-            return "0";
         }
 
         @Override
@@ -274,10 +274,9 @@ public class MineUserInforActivity extends BaseActivity implements View.OnClickL
 //
 //            PreUtils.setParam(MineUserInforActivity.this, "userperfect", 2);
             mTvSelectCitiy.setText(getIntent().getStringExtra("addressname"));
+            Toast.makeText(MineUserInforActivity.this, "保存成功", Toast.LENGTH_SHORT).show();
             finish();
 
-//            Intent intent = new Intent(MineUserInforActivity.this, PatientDataActivity.class);
-//            startActivity(intent);
 
 
         }
@@ -340,18 +339,23 @@ public class MineUserInforActivity extends BaseActivity implements View.OnClickL
                 startActivityForResult(new Intent(MineUserInforActivity.this, SeclectCityActivity.class), 0x001);
                 break;
             case R.id.iv_girl:
-                mIvGirl.setTag(1);
-                mIvBoy.setTag(0);
-                mIvGirl.setImageResource(R.drawable.check_box_select);
-                mIvBoy.setImageResource(R.drawable.check_box_normal);
-//                Toast.makeText(this, "" + ((Integer) (mIvGirl.getTag())), Toast.LENGTH_SHORT).show();
+                if (mIvGirl.isChecked()) {
+                    mIvGirl.setChecked(true);
+                    mIvBoy.setChecked(false);
+                } else {
+                    mIvBoy.setChecked(false);
+                    mIvGirl.setChecked(false);
+
+                }
                 break;
             case R.id.iv_boy:
-                mIvBoy.setTag(1);
-                mIvGirl.setTag(0);
-                mIvBoy.setImageResource(R.drawable.check_box_select);
-                mIvGirl.setImageResource(R.drawable.check_box_normal);
-
+                if (mIvBoy.isChecked()) {
+                    mIvBoy.setChecked(true);
+                    mIvGirl.setChecked(false);
+                } else {
+                    mIvGirl.setChecked(false);
+                    mIvBoy.setChecked(false);
+                }
                 break;
             case R.id.tv_select_Date:
                 tvSelectDate();

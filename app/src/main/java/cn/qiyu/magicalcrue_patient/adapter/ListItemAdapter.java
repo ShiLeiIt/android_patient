@@ -109,13 +109,13 @@ public class ListItemAdapter extends BaseAdapter {
         //实体类
         itemEntity = items.get(position);
         //回复title
-        holder.tv_title.setText(itemEntity.getPatient_name());
+        holder.tv_title.setText("  "+itemEntity.getUser_name());
         //回复内容
         holder.tv_content.setText(itemEntity.getComplaint());
         //回复时间
         holder.tv_create_time.setText(itemEntity.getCreate_time());
         //回复者姓名
-        holder.tv_relation.setText("患者");
+        holder.tv_relation.setText(itemEntity.getRelationshipName());
         // 回复列表
 
 

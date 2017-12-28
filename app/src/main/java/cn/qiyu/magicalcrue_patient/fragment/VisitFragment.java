@@ -249,7 +249,6 @@ public class VisitFragment extends Fragment implements View.OnClickListener {
             int DoctorIcon = 0;
             Log.i("size====", model.getData().getDoctorTeamList().size()+"");
             switch (model.getData().getDoctorTeamList().size()) {
-
                 case 1:
                     DoctorIcon = 1;
                     break;

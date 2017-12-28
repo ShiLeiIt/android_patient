@@ -1,38 +1,56 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
      android:layout_width="match_parent"
-              android:orientation="vertical"
+    android:orientation="vertical"
     android:layout_height="match_parent">
-
     <LinearLayout
         android:layout_gravity="center_horizontal"
         android:layout_width="350dp"
-        android:layout_marginRight="13dp"
-        android:layout_marginLeft="13dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginLeft="10dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="10dp"
         android:background="#fde7d4"
         android:orientation="vertical">
-
+       <LinearLayout
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:orientation="horizontal">
+           <TextView
+               android:layout_marginLeft="10dp"
+               android:id="@+id/tv_comment_name2"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:layout_marginTop="8dp"
+               android:textColor="@color/replyText"
+               android:textSize="14dp" />
+           <TextView
+               android:gravity="center"
+               android:background="@drawable/shape_doctor_type"
+               android:layout_marginLeft="5dp"
+               android:id="@+id/tv_comment_name3"
+               android:layout_width="40dp"
+               android:layout_height="wrap_content"
+               android:layout_marginTop="8dp"
+               android:textColor="@color/replyText"
+               android:textSize="13dp" />
+           <TextView
+               android:text=":"
+               android:layout_marginLeft="5dp"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:layout_marginTop="8dp"
+               android:textColor="@color/replyText"
+               android:textSize="14dp" />
+       </LinearLayout>
         <TextView
-            android:id="@+id/tv_comment_name2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
-            android:layout_marginTop="8dp"
-            android:text="医生回复:(陈启明)"
-            android:textColor="@color/reply"
-            android:textSize="14dp"/>
-
-        <TextView
             android:id="@+id/tv_comment_content2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="17dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="10dp"
-            android:text="你这个症状之前没有遇到过，非常罕见"
+            android:layout_marginTop="5dp"
             android:textColor="#666666"
-            android:textSize="12dp"/>
+            android:textSize="12dp" />
     </LinearLayout>
 </LinearLayout>
