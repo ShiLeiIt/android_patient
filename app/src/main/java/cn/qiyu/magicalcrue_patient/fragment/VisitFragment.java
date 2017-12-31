@@ -16,6 +16,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
@@ -40,6 +41,7 @@ import cn.qiyu.magicalcrue_patient.activity.NewCourseActivity;
 import cn.qiyu.magicalcrue_patient.activity.NewFollowupReportActivity;
 import cn.qiyu.magicalcrue_patient.activity.OutpatientInformationListActivity;
 import cn.qiyu.magicalcrue_patient.activity.PatientDataActivity;
+import cn.qiyu.magicalcrue_patient.activity.PatientDataRegisterActivity;
 import cn.qiyu.magicalcrue_patient.activity.PharmacyPlanRecordInfoListActivity;
 import cn.qiyu.magicalcrue_patient.activity.SymgraphyInfoListActivity;
 import cn.qiyu.magicalcrue_patient.activity.UserInforActivity;
@@ -59,6 +61,7 @@ import cn.qiyu.magicalcrue_patient.utils.PreUtils;
 import cn.qiyu.magicalcrue_patient.utils.Utils;
 import cn.qiyu.magicalcrue_patient.view.LLTextView;
 import cn.qiyu.magicalcrue_patient.view.MyGridView;
+import cn.qiyu.magicalcrue_patient.zxing.activity.CaptureActivity;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
@@ -94,7 +97,9 @@ public class VisitFragment extends Fragment implements View.OnClickListener {
     private String mNamewe = "";
     private Dialog mDialog;
     private List<DoctorTeamListBean> mQyjDoctorList;
-
+    private LinearLayout mLlUnbindDoctor;
+    private LinearLayout mLlBindDoctor;
+    private ImageView mIvUnbindDoctor;
 
     @Nullable
     @Override
@@ -104,6 +109,14 @@ public class VisitFragment extends Fragment implements View.OnClickListener {
         View view = inflater.inflate(R.layout.fragment_visit, container, false);
         //注册EventBus，在开始的位置 ok
 //        EventBus.getDefault().register(this);
+        //为绑定显示二维码
+        mLlUnbindDoctor = (LinearLayout) view.findViewById(R.id.ll_unbind_doctor);
+        //绑定显示医生
+        mLlBindDoctor = (LinearLayout) view.findViewById(R.id.ll_bind_doctor);
+        mIvUnbindDoctor = (ImageView) view.findViewById(R.id.iv_unbind_doctor);
+
+
+
 
         mGridView = (MyGridView) view.findViewById(R.id.gridview);
         LLTextView llTvVisit = (LLTextView) view.findViewById(R.id.ll_tv_visit);//加入随访
@@ -300,28 +313,48 @@ public class VisitFragment extends Fragment implements View.OnClickListener {
         public void onViewFailure(ResultModel model) {
             mErrorCode = model.getErrorCode();
             if (mErrorCode.equals("1001")) {
-                Toast.makeText(getActivity(), "您还未加入任何随访,请扫描医生二维码", Toast.LENGTH_SHORT).show();
-                String[] permissions = Utils.checkPermission(getActivity());
-                if (permissions.length == 0) {
-
-//                    startActivity(new Intent(getActivity(), CaptureActivity.class));
-                } else {
-                    //申请权限
-                    ActivityCompat.requestPermissions(getActivity(), permissions, 100);
-                }
+//                Toast.makeText(getActivity(), "您还未加入任何随访,请扫描医生二维码", Toast.LENGTH_SHORT).show();
+                mLlUnbindDoctor.setVisibility(View.VISIBLE);
+                mLlBindDoctor.setVisibility(View.GONE);
+                mTv_mere_updata.setVisibility(View.INVISIBLE);
+                mIvUnbindDoctor.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        initPermission();
+                    }
+                });
+//                String[] permissions = Utils.checkPermission(getActivity());
+//                if (permissions.length == 0) {
+//
+////                    startActivity(new Intent(getActivity(), CaptureActivity.class));
+//                } else {
+//                    //申请权限
+//                    ActivityCompat.requestPermissions(getActivity(), permissions, 100);
+//                }
 //                initPermission();
 
 
             } else if (mErrorCode.equals("1002")) {
-                Toast.makeText(getActivity(), "您已经加入随访了，请等待您的主治医生审核", Toast.LENGTH_SHORT).show();
-
+//                Toast.makeText(getActivity(), "您已经加入随访了，请等待您的主治医生审核", Toast.LENGTH_SHORT).show();
+                mLlUnbindDoctor.setVisibility(View.VISIBLE);
+                mLlBindDoctor.setVisibility(View.GONE);
+                mTv_mere_updata.setVisibility(View.INVISIBLE);
+                mIvUnbindDoctor.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Toast.makeText(getActivity(), "您已经加入随访\n请等待你的主诊医生审核\n审核通过后正常使用", Toast.LENGTH_LONG).show();
+                    }
+                });
             } else {
+                mLlBindDoctor.setVisibility(View.VISIBLE);
+                mLlUnbindDoctor.setVisibility(View.GONE);
+                mTv_mere_updata.setVisibility(View.VISIBLE);
                 String userperfect = String.valueOf(PreUtils.getParam(getActivity(), "userperfect", 0));
                 if (userperfect.equals("1")) {
                     startActivity(new Intent(getActivity(), UserInforActivity.class));
 
                 } else if (userperfect.equals("2")) {
-                    startActivity(new Intent(getActivity(), PatientDataActivity.class));
+                    startActivity(new Intent(getActivity(), PatientDataRegisterActivity.class));
                 }
             }
 //            Toast.makeText(getActivity(), "code======" + mErrorCode, Toast.LENGTH_SHORT).show();
@@ -425,6 +458,7 @@ public class VisitFragment extends Fragment implements View.OnClickListener {
         String[] permissions = Utils.checkPermission(getActivity());
         if (permissions.length == 0) {
             //权限都申请了,是否登录
+            startActivity(new Intent(getActivity(), CaptureActivity.class));
 
         } else {
             //申请权限

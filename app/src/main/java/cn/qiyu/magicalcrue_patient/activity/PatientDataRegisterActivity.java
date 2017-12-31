@@ -100,9 +100,8 @@ public class PatientDataRegisterActivity extends BaseActivity {
     private String mRelationNameBianma;
     private String mUuid;
     private String mDiseaseId;
-    private PatientInfor mPatientInfor;
-    private String mVisitFragment;
-    private Intent mIntent;
+
+
     private LoadingDialog mLoadingDialog;
 
     @Override
@@ -124,17 +123,10 @@ public class PatientDataRegisterActivity extends BaseActivity {
     }
 
 
-
-
     PatientInforPresenter mPatientInforPresenter = new PatientInforPresenter(new PatientInforView() {
         @Override
         public String getPatientUuid() {
-            if (null != mIntent.getStringExtra("visitFragment")) {
-                Log.i("patientuuid==", (String) PreUtils.getParam(PatientDataRegisterActivity.this, "patientuuid", ""));
-                return (String) PreUtils.getParam(PatientDataRegisterActivity.this, "patientuuid", "");
-
-            }
-            return "";
+            return (String) PreUtils.getParam(PatientDataRegisterActivity.this, "patientuuid", "");
         }
 
         @Override
@@ -174,9 +166,9 @@ public class PatientDataRegisterActivity extends BaseActivity {
 
         @Override
         public String getNative_place_cd() {
-            if (null == mAddresscode)
-                return mPatientInfor.getNative_place_cd();
+
             return mAddresscode;
+
         }
 
         @Override
@@ -196,11 +188,10 @@ public class PatientDataRegisterActivity extends BaseActivity {
 
         @Override
         public String getDisease_id() {
-            if (null == mDiseaseId) {
-                return mPatientInfor.getDisease_id();
-            }
+
             return mDiseaseId;
         }
+
         @Override
         public String getAppFirstVisitTime() {
             return "";
@@ -213,10 +204,10 @@ public class PatientDataRegisterActivity extends BaseActivity {
             PreUtils.setParam(PatientDataRegisterActivity.this, "patientMobile", rlBean.getData().getMobile());
             PreUtils.setParam(PatientDataRegisterActivity.this, "userperfect", 3);
 
-                ActivityManagerTool.getActivityManager().finish(PatientDataRegisterActivity.this);
-                Intent intent = new Intent(PatientDataRegisterActivity.this, MainActivity.class);
-                startActivity(intent);
-                finish();
+            ActivityManagerTool.getActivityManager().finish(PatientDataRegisterActivity.this);
+            Intent intent = new Intent(PatientDataRegisterActivity.this, MainActivity.class);
+            startActivity(intent);
+            finish();
         }
 
         @Override
@@ -232,12 +223,12 @@ public class PatientDataRegisterActivity extends BaseActivity {
 
         @Override
         public void onViewFailure(ResultModel model) {
-
+            Toast.makeText(PatientDataRegisterActivity.this, "shibai====", Toast.LENGTH_SHORT).show();
         }
 
         @Override
         public void onServerFailure(String e) {
-
+            Toast.makeText(PatientDataRegisterActivity.this, "shibai", Toast.LENGTH_SHORT).show();
         }
     });
 
@@ -246,7 +237,7 @@ public class PatientDataRegisterActivity extends BaseActivity {
             R.id.iv_boy, R.id.tv_select_Date, R.id.tv_eighteen, R.id.tv_flowers, R.id.tv_select_citiy,
             R.id.iv_relation_arrows,
             R.id.iv_doctor_name_arrows, R.id.et_actions_name, R.id.iv_first_arrows, R.id.tv_first_visit_time, R.id.rl_patient_relation,
-            R.id.iv_diseases_arrows, R.id.tv_diseases,R.id.rl_diseases})
+            R.id.iv_diseases_arrows, R.id.tv_diseases, R.id.rl_diseases})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.iv_patient_back:
@@ -262,7 +253,7 @@ public class PatientDataRegisterActivity extends BaseActivity {
                         TextUtils.isEmpty(mEtActionsName.getText().toString()) ||
                         TextUtils.isEmpty(mTvFirstVisitTime.getText().toString()) ||
                         TextUtils.isEmpty(mTvDiseases.getText().toString())) {
-                mPatientInforPresenter.getPatientInforCom();
+                    mPatientInforPresenter.getPatientInforCom();
                 } else {
                     Toast.makeText(this, "信息填写不完整", Toast.LENGTH_SHORT).show();
                 }

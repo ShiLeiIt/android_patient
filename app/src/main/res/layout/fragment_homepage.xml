@@ -7,15 +7,16 @@
              android:orientation="vertical">
 
     <LinearLayout
-        android:background="@color/app_white"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@color/app_white">
 
         <ScrollView
             android:id="@+id/sv_home"
-            android:background="@color/app_white"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:background="@color/app_white"
+            android:fillViewport="true"
             android:scrollbars="none">
 
             <LinearLayout
@@ -24,9 +25,9 @@
                 android:orientation="vertical">
 
                 <RelativeLayout
-                    android:background="@color/app_white"
                     android:layout_width="match_parent"
-                    android:layout_height="45dp">
+                    android:layout_height="45dp"
+                    android:background="@color/app_white">
 
                     <ImageView
                         android:id="@+id/richscan"
@@ -34,7 +35,8 @@
                         android:layout_height="22dp"
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="10dp"
-                        android:src="@drawable/richscan"/>
+                        android:src="@drawable/richscan"
+                        android:visibility="invisible"/>
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -45,271 +47,271 @@
                         android:textColor="#353535"
                         android:textSize="18dp"/>
                 </RelativeLayout>
+
                 <LinearLayout
                     android:id="@+id/ll_unbind_doctor"
-                    android:orientation="vertical"
-                    android:visibility="gone"
                     android:layout_width="match_parent"
-                    android:layout_height="200dp">
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:visibility="gone">
+
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
-                    <TextView
-                        android:id="@+id/tv_unbind_doctor"
-                        android:layout_marginTop="10dp"
-                        android:textColor="@color/app_gray"
-                        android:layout_centerHorizontal="true"
-                        android:text="您还没有加入任何随访"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
+
+                        <TextView
+                            android:id="@+id/tv_unbind_doctor"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerHorizontal="true"
+                            android:layout_marginTop="10dp"
+                            android:text="您还没有加入任何随访"
+                            android:textColor="@color/app_gray"/>
 
 
                         <ImageView
                             android:id="@+id/iv_unbind_doctor"
-                            android:layout_below="@id/tv_unbind_doctor"
-                            android:src="@drawable/unbind_qr_code"
-                            android:layout_marginTop="20dp"
-                            android:layout_centerHorizontal="true"
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"/>
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/tv_unbind_doctor"
+                            android:layout_centerHorizontal="true"
+                            android:layout_marginTop="20dp"
+                            android:src="@drawable/unbind_qr_code"/>
+
                         <TextView
-                            android:layout_below="@id/iv_unbind_doctor"
-                            android:textColor="@color/app_gray"
                             android:id="@+id/tv_unbind_doctor1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/iv_unbind_doctor"
                             android:layout_centerHorizontal="true"
                             android:layout_marginTop="20dp"
                             android:text="请联系您的主诊医生"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"/>
+                            android:textColor="@color/app_gray"/>
+
                         <TextView
-                            android:layout_below="@id/tv_unbind_doctor1"
-                            android:textColor="@color/app_gray"
-                            android:layout_marginTop="5dp"
-                            android:layout_centerHorizontal="true"
-                            android:text="索要随访二维码，点击当前按钮扫码绑定"
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"/>
-
-
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/tv_unbind_doctor1"
+                            android:layout_centerHorizontal="true"
+                            android:layout_marginTop="5dp"
+                            android:text="索要随访二维码，点击当前按钮扫码绑定"
+                            android:textColor="@color/app_gray"/>
                     </RelativeLayout>
-                    
-
-
                 </LinearLayout>
+
                 <LinearLayout
-                    android:orientation="vertical"
-                    android:visibility="visible"
                     android:id="@+id/ll_bind_doctor"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                <RelativeLayout
-                    android:id="@+id/rl_doctor_team_home"
-                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/app_white"
-                    android:layout_marginTop="23dp">
+                    android:orientation="vertical"
+                    android:visibility="visible">
 
-                    <ImageView
-                        android:id="@+id/iv_box"
-                        android:layout_width="56dp"
-                        android:layout_height="60dp"
-                        android:layout_marginLeft="30dp"
-                        android:focusable="true"
-                        android:src="@drawable/home_box"/>
+                    <RelativeLayout
+                        android:id="@+id/rl_doctor_team_home"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="23dp"
+                        android:background="@color/app_white">
+
+                        <ImageView
+                            android:id="@+id/iv_box"
+                            android:layout_width="56dp"
+                            android:layout_height="60dp"
+                            android:layout_marginLeft="30dp"
+                            android:focusable="true"
+                            android:src="@drawable/home_box"/>
+
+                        <LinearLayout
+                            android:id="@+id/ll_mydocter"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentTop="true"
+                            android:layout_toEndOf="@+id/iv_box"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/tv_mydocter"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="11dp"
+                                android:layout_toRightOf="@+id/iv_box"
+                                android:text="我的医生"
+                                android:textColor="#666666"/>
+
+                            <TextView
+                                android:id="@+id/tv_mydocter_team"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="2dp"
+                                android:text="张俊祥的医生团队"
+                                android:textColor="#666666"
+                                android:textSize="12dp"/>
+                        </LinearLayout>
+
+                        <de.hdodenhof.circleimageview.CircleImageView
+                            android:id="@+id/iv_doctor_icon_one"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:layout_below="@id/ll_mydocter"
+                            android:layout_marginLeft="4dp"
+                            android:layout_marginTop="1dp"
+                            android:layout_toRightOf="@+id/iv_box"/>
+
+                        <de.hdodenhof.circleimageview.CircleImageView
+                            android:id="@+id/iv_doctor_icon_two"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:layout_below="@id/ll_mydocter"
+                            android:layout_marginLeft="4dp"
+                            android:layout_marginTop="1dp"
+                            android:layout_toRightOf="@+id/iv_doctor_icon_one"/>
+
+                        <de.hdodenhof.circleimageview.CircleImageView
+                            android:id="@+id/iv_doctor_icon_three"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:layout_below="@id/ll_mydocter"
+                            android:layout_marginLeft="4dp"
+                            android:layout_marginTop="1dp"
+                            android:layout_toRightOf="@+id/iv_doctor_icon_two"/>
+
+                        <de.hdodenhof.circleimageview.CircleImageView
+                            android:id="@+id/iv_doctor_icon_four"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:layout_below="@id/ll_mydocter"
+                            android:layout_marginLeft="4dp"
+                            android:layout_marginTop="1dp"
+                            android:layout_toRightOf="@+id/iv_doctor_icon_three"/>
+
+                        <de.hdodenhof.circleimageview.CircleImageView
+                            android:id="@+id/iv_doctor_icon_five"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:layout_below="@id/ll_mydocter"
+                            android:layout_marginLeft="4dp"
+                            android:layout_marginTop="1dp"
+                            android:layout_toRightOf="@+id/iv_doctor_icon_four"/>
+
+                    </RelativeLayout>
 
                     <LinearLayout
-                        android:id="@+id/ll_mydocter"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentTop="true"
-                        android:layout_toEndOf="@+id/iv_box"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_marginTop="10dp"
+                        android:background="@color/app_white"
+                        android:gravity="center_vertical"
                         android:orientation="horizontal">
 
-                        <TextView
-                            android:id="@+id/tv_mydocter"
+                        <cn.qiyu.magicalcrue_patient.view.LLTextView
+                            android:id="@+id/ll_tv_visit"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="11dp"
-                            android:layout_toRightOf="@+id/iv_box"
-                            android:text="我的医生"
-                            android:textColor="#666666"/>
+                            android:layout_marginLeft="20dp"
+                            android:layout_weight="1"
+                            app:bottomName="加入随访"
+                            app:topLeftName="12"
+                            app:topRightName="天"/>
 
-                        <TextView
-                            android:id="@+id/tv_mydocter_team"
-                            android:textColor="#666666"
+                        <cn.qiyu.magicalcrue_patient.view.LLTextView
+                            android:id="@+id/ll_inquiry"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="2dp"
-                            android:text="张俊祥的医生团队"
-                            android:textSize="12dp"/>
+                            android:layout_weight="1"
+                            app:bottomName="在线问诊"
+
+                            app:topLeftName="85"
+                            app:topRightName="次"/>
+
+                        <cn.qiyu.magicalcrue_patient.view.LLTextView
+                            android:id="@+id/ll_tv_report"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            app:bottomName="随访报告"
+
+                            app:topLeftName="6"
+                            app:topRightName="份"/>
+
+                        <cn.qiyu.magicalcrue_patient.view.LLTextView
+                            android:id="@+id/ll_tv_record"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="29dp"
+                            android:layout_weight="1"
+                            app:bottomName="病情记录"
+                            app:topLeftName="15"
+                            app:topRightName="条"/>
                     </LinearLayout>
 
-                    <de.hdodenhof.circleimageview.CircleImageView
-                        android:id="@+id/iv_doctor_icon_one"
-                        android:layout_width="30dp"
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="30dp"
-                        android:layout_below="@id/ll_mydocter"
-                        android:layout_marginLeft="4dp"
-                        android:layout_marginTop="1dp"
-                        android:layout_toRightOf="@+id/iv_box"/>
-                    <de.hdodenhof.circleimageview.CircleImageView
-                        android:id="@+id/iv_doctor_icon_two"
-                        android:layout_width="30dp"
+                        android:layout_marginTop="10dp"
+                        android:background="@color/app_white"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:paddingLeft="30dp">
+
+                        <cn.qiyu.magicalcrue_patient.view.LLTextViewNew
+                            android:id="@+id/ll_tv_diaglogue"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            app:topLeftName="11"
+                            app:topRightName="条新对话"/>
+
+                        <cn.qiyu.magicalcrue_patient.view.LLTextViewNew
+                            android:id="@+id/ll_tv_scale"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            app:topLeftName="1"
+                            app:topRightName="份新量表"/>
+
+                        <cn.qiyu.magicalcrue_patient.view.LLTextViewNew
+                            android:id="@+id/ll_tv_new_report"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            app:topLeftName="1"
+                            app:topRightName="份新随访报告"/>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="30dp"
-                        android:layout_below="@id/ll_mydocter"
-                        android:layout_marginLeft="4dp"
-                        android:layout_marginTop="1dp"
-                        android:layout_toRightOf="@+id/iv_doctor_icon_one"/>
-                    <de.hdodenhof.circleimageview.CircleImageView
-                        android:id="@+id/iv_doctor_icon_three"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:layout_below="@id/ll_mydocter"
-                        android:layout_marginLeft="4dp"
-                        android:layout_marginTop="1dp"
-                        android:layout_toRightOf="@+id/iv_doctor_icon_two"/>
-                    <de.hdodenhof.circleimageview.CircleImageView
-                        android:id="@+id/iv_doctor_icon_four"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:layout_below="@id/ll_mydocter"
-                        android:layout_marginLeft="4dp"
-                        android:layout_marginTop="1dp"
-                        android:layout_toRightOf="@+id/iv_doctor_icon_three"/>
-                    <de.hdodenhof.circleimageview.CircleImageView
-                        android:id="@+id/iv_doctor_icon_five"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:layout_below="@id/ll_mydocter"
-                        android:layout_marginLeft="4dp"
-                        android:layout_marginTop="1dp"
-                        android:layout_toRightOf="@+id/iv_doctor_icon_four"/>
+                        android:layout_marginTop="6dp"
+                        android:background="@color/app_white"
+                        android:orientation="horizontal"
+                        android:paddingLeft="30dp">
 
-                </RelativeLayout>
+                        <cn.qiyu.magicalcrue_patient.view.LLTextViewNew
+                            android:id="@+id/ll_tv_course"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            app:topLeftName="0"
+                            app:topRightName="个患教课程"/>
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:layout_marginTop="10dp"
-                    android:background="@color/app_white"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal">
+                        <cn.qiyu.magicalcrue_patient.view.LLTextViewNew
+                            android:id="@+id/ll_tv_unscramble"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:visibility="gone"
+                            app:topLeftName="0"
+                            app:topRightName="个待付款"/>
 
-                    <cn.qiyu.magicalcrue_patient.view.LLTextView
-                        android:id="@+id/ll_tv_visit"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="20dp"
-                        android:layout_weight="1"
-                        app:bottomName="加入随访"
-                        app:topLeftName="12"
-                        app:topRightName="天"/>
-
-                    <cn.qiyu.magicalcrue_patient.view.LLTextView
-                        android:id="@+id/ll_inquiry"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        app:bottomName="在线问诊"
-
-                        app:topLeftName="85"
-                        app:topRightName="次"/>
-
-                    <cn.qiyu.magicalcrue_patient.view.LLTextView
-                        android:id="@+id/ll_tv_report"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        app:bottomName="随访报告"
-
-                        app:topLeftName="6"
-                        app:topRightName="份"/>
-
-                    <cn.qiyu.magicalcrue_patient.view.LLTextView
-                        android:id="@+id/ll_tv_record"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginRight="29dp"
-                        android:layout_weight="1"
-                        app:bottomName="病情记录"
-                        app:topLeftName="15"
-                        app:topRightName="条"/>
+                        <cn.qiyu.magicalcrue_patient.view.LLTextViewNew
+                            android:id="@+id/ll_tv_suggest"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            app:topLeftName=""
+                            app:topRightName=""/>
+                    </LinearLayout>
                 </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="30dp"
-                   android:paddingLeft="30dp"
-                    android:layout_marginTop="10dp"
-                    android:background="@color/app_white"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal">
-
-                    <cn.qiyu.magicalcrue_patient.view.LLTextViewNew
-                        android:id="@+id/ll_tv_diaglogue"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        app:topLeftName="11"
-                        app:topRightName="条新对话"/>
-
-                    <cn.qiyu.magicalcrue_patient.view.LLTextViewNew
-                        android:id="@+id/ll_tv_scale"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        app:topLeftName="1"
-                        app:topRightName="份新量表"/>
-
-                    <cn.qiyu.magicalcrue_patient.view.LLTextViewNew
-                        android:id="@+id/ll_tv_new_report"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        app:topLeftName="1"
-                        app:topRightName="份新随访报告"/>
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="30dp"
-                    android:paddingLeft="30dp"
-                    android:layout_marginTop="6dp"
-                    android:background="@color/app_white"
-                    android:orientation="horizontal">
-
-                    <cn.qiyu.magicalcrue_patient.view.LLTextViewNew
-                        android:id="@+id/ll_tv_course"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        app:topLeftName="0"
-                        app:topRightName="个患教课程"/>
-
-                    <cn.qiyu.magicalcrue_patient.view.LLTextViewNew
-                        android:id="@+id/ll_tv_unscramble"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        app:topLeftName="0"
-                        android:visibility="gone"
-                        app:topRightName="个待付款"/>
-
-                    <cn.qiyu.magicalcrue_patient.view.LLTextViewNew
-                        android:id="@+id/ll_tv_suggest"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        app:topLeftName=""
-                        app:topRightName=""/>
-                </LinearLayout>
-                </LinearLayout>
-
-
-
-
-
 
 
                 <View style="@style/view_rule16"/>
@@ -395,10 +397,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:cacheColorHint="#00000000"
-                    android:listSelector="#00000000"
                     android:divider="#00000000"
+                    android:dividerHeight="10dp"
                     android:focusable="false"
-                    android:dividerHeight="10dp"/>
+                    android:listSelector="#00000000"/>
             </LinearLayout>
         </ScrollView>
 

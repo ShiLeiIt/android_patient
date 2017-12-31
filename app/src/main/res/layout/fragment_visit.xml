@@ -52,7 +52,70 @@
             android:layout_width="match_parent"
             android:layout_height="0.5dp"
             android:background="#f7f7f7"/>
+        <LinearLayout
+            android:id="@+id/ll_unbind_doctor"
+            android:layout_marginTop="30dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="gone">
 
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/tv_unbind_doctor"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="10dp"
+                    android:text="您还没有加入任何随访"
+                    android:textColor="@color/app_gray"/>
+
+
+                <ImageView
+                    android:id="@+id/iv_unbind_doctor"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/tv_unbind_doctor"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="20dp"
+                    android:src="@drawable/unbind_qr_code"/>
+
+                <TextView
+                    android:id="@+id/tv_unbind_doctor1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/iv_unbind_doctor"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="20dp"
+                    android:text="请联系您的主诊医生"
+                    android:textColor="@color/app_gray"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/tv_unbind_doctor1"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="5dp"
+                    android:text="索要随访二维码，点击当前按钮扫码绑定"
+                    android:textColor="@color/app_gray"/>
+            </RelativeLayout>
+        </LinearLayout>
+
+
+
+
+
+
+
+        <LinearLayout
+            android:id="@+id/ll_bind_doctor"
+            android:visibility="visible"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
         <RelativeLayout
             android:id="@+id/rl_patient_infor_visit"
             android:layout_width="match_parent"
@@ -238,6 +301,7 @@
                 android:stretchMode="columnWidth"/>
         </LinearLayout>
 
+        </LinearLayout>
 
     </LinearLayout>
 </FrameLayout>

@@ -1,5 +1,6 @@
 package com.lidong.photopicker;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -7,7 +8,10 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.FileProvider;
+
+import com.lidong.photopicker.utils.Utils;
 
 import java.io.File;
 import java.io.IOException;
@@ -51,23 +55,29 @@ public class ImageCaptureManager {
 
 
     public Intent dispatchTakePictureIntent() throws IOException {
-        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        // Ensure that there's a camera activity to handle the intent
-        if (takePictureIntent.resolveActivity(mContext.getPackageManager()) != null) {
-            // Create the File where the photo should go
-            File photoFile = createImageFile();
-            // Continue only if the File was successfully created
-            if (photoFile != null) {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                    Uri uriForFile = FileProvider.getUriForFile(mContext, "cn.qiyu.magicalcrue_patient.fileprovider", photoFile);
-                    takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, uriForFile);
-                } else {
-                    takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(photoFile));
+
+            Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+            // Ensure that there's a camera activity to handle the intent
+            if (takePictureIntent.resolveActivity(mContext.getPackageManager()) != null) {
+                // Create the File where the photo should go
+                File photoFile = createImageFile();
+                // Continue only if the File was successfully created
+                if (photoFile != null) {
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                        Uri uriForFile = FileProvider.getUriForFile(mContext, "cn.qiyu.magicalcrue_patient.fileprovider", photoFile);
+                        takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, uriForFile);
+                    } else {
+                        takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(photoFile));
+                    }
                 }
             }
-        }
-        return takePictureIntent;
+
+            return takePictureIntent;
+
+
     }
+
+
 
 
     public void galleryAddPic() {

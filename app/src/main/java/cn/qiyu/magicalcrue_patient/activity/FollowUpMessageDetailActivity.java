@@ -3,6 +3,7 @@ package cn.qiyu.magicalcrue_patient.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AbsListView;
@@ -21,9 +22,14 @@ import butterknife.OnClick;
 import cn.qiyu.magicalcrue_patient.R;
 import cn.qiyu.magicalcrue_patient.adapter.ListItemAdapter;
 import cn.qiyu.magicalcrue_patient.base.BaseActivity;
+import cn.qiyu.magicalcrue_patient.home.HomeNumView;
+import cn.qiyu.magicalcrue_patient.home.HomePresenter;
 import cn.qiyu.magicalcrue_patient.information.InformationFollowUpRdView;
 import cn.qiyu.magicalcrue_patient.information.InformationPresenter;
+import cn.qiyu.magicalcrue_patient.model.DoctorTeamBean;
 import cn.qiyu.magicalcrue_patient.model.FollowUpMessageDetaild;
+import cn.qiyu.magicalcrue_patient.model.HomeBannerBean;
+import cn.qiyu.magicalcrue_patient.model.HomeNumBean;
 import cn.qiyu.magicalcrue_patient.model.ResultModel;
 import cn.qiyu.magicalcrue_patient.utils.PreUtils;
 import cn.qiyu.magicalcrue_patient.visit.FollowUpDialoguePresenter;
@@ -49,6 +55,7 @@ public class FollowUpMessageDetailActivity extends BaseActivity {
     private int screenHeight = 0;
     //软件盘弹起后所占高度阀值
     private int keyHeight = 0;
+    private String mErrorCode;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,6 +71,80 @@ public class FollowUpMessageDetailActivity extends BaseActivity {
         mInformationPresenter.getFollowUpMsgRead();
 
     }
+
+    HomePresenter mHomePresenter = new HomePresenter(new HomeNumView() {
+        @Override
+        public String getUserId() {
+            return "";
+        }
+
+        @Override
+        public void LoadDate(ResultModel<HomeNumBean> numBean) {
+
+        }
+
+        @Override
+        public String patientUuid() {
+            return (String)PreUtils.getParam(FollowUpMessageDetailActivity.this,"patientuuid","0");
+        }
+
+        @Override
+        public String DoctorUuid() {
+            return null;
+        }
+
+        @Override
+        public void getDoctorQRcode(ResultModel model) {
+
+
+        }
+
+        @Override
+        public void LoadDoctorTeamInfor(ResultModel<DoctorTeamBean> model) {
+
+        }
+
+        @Override
+        public String getType() {
+            return null;
+        }
+
+        @Override
+        public void LoadHomeBanner(ResultModel<List<HomeBannerBean>> model) {
+
+        }
+
+        @Override
+        public void showProgress() {
+
+        }
+
+        @Override
+        public void hideProgress() {
+
+        }
+
+        @Override
+        public void onViewFailure(ResultModel model) {
+            mErrorCode = model.getErrorCode();
+            if (mErrorCode.equals("1001")) {
+                mTvConditionQuiz.setVisibility(View.INVISIBLE);
+            } else if (mErrorCode.equals("1002")) {
+                mTvConditionQuiz.setVisibility(View.INVISIBLE);
+            } else {
+                mTvConditionQuiz.setVisibility(View.VISIBLE);
+            }
+            Log.i("errorId==============", mErrorCode);
+
+        }
+
+        @Override
+        public void onServerFailure(String e) {
+
+        }
+    });
+
+
     //消息已读
     InformationPresenter mInformationPresenter = new InformationPresenter(new InformationFollowUpRdView() {
         @Override
@@ -174,6 +255,8 @@ public class FollowUpMessageDetailActivity extends BaseActivity {
             @Override
             public void run() {
                 mFollowUpDialoguePresenter.getFollowUpDialogue();
+                //为了判断是否绑定随访
+                mHomePresenter.getDoctorTeamInfo();
             }
         });
         getWindow().getDecorView().addOnLayoutChangeListener(new View.OnLayoutChangeListener() {

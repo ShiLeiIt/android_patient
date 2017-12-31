@@ -9,10 +9,12 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.view.ScrollingView;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
@@ -102,6 +104,9 @@ public class HomePageFragment extends Fragment implements View.OnClickListener, 
     private RelativeLayout mRlDoctorTeam;
     private List<DoctorTeamListBean> mDoctorTeamList;
     private List<DoctorTeamListBean> mQyjDoctorList;
+    private LinearLayout mLlUnbindDoctor;
+    private LinearLayout mLlBindDoctor;
+    private ImageView mIvUnbindDoctor;
 
     @Nullable
     @Override
@@ -113,6 +118,14 @@ public class HomePageFragment extends Fragment implements View.OnClickListener, 
         //注册EventBus，在开始的位置
         EventBus.getDefault().register(this);
 //        LLImageView viewById = (LLImageView) view.findViewById(R.id.iv_doctor_icon);
+        //为绑定显示二维码
+        mLlUnbindDoctor = (LinearLayout) view.findViewById(R.id.ll_unbind_doctor);
+        //绑定显示医生
+        mLlBindDoctor = (LinearLayout) view.findViewById(R.id.ll_bind_doctor);
+        mIvUnbindDoctor = (ImageView) view.findViewById(R.id.iv_unbind_doctor);
+//        mIvUnbindDoctor.setOnClickListener(this);
+
+
         mTv_doctor_name = (TextView) view.findViewById(R.id.tv_mydocter);
         //医生工作组
         mRlDoctorTeam = (RelativeLayout) view.findViewById(R.id.rl_doctor_team_home);
@@ -189,8 +202,20 @@ public class HomePageFragment extends Fragment implements View.OnClickListener, 
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         sv_home.scrollTo(0,0);
-        mIv_richsan.setFocusableInTouchMode(true);
-        mIv_richsan.requestFocus();
+        sv_home.setDescendantFocusability(ViewGroup.FOCUS_BEFORE_DESCENDANTS);
+        sv_home.setFocusable(true);
+        sv_home.setFocusableInTouchMode(true);
+//        sv_home.setOnTouchListener(new View.OnTouchListener() {
+//            @Override
+//            public boolean onTouch(View v, MotionEvent event) {
+//                v.requestFocusFromTouch();
+//                return false;
+//            }
+//        });
+
+
+//        mIv_richsan.setFocusableInTouchMode(true);
+//        mIv_richsan.requestFocus();
     }
 
     @Override
@@ -284,6 +309,7 @@ public class HomePageFragment extends Fragment implements View.OnClickListener, 
                 intent.putExtras(bundle);
                 startActivity(intent);
                 break;
+
         }
 
     }
@@ -303,6 +329,36 @@ public class HomePageFragment extends Fragment implements View.OnClickListener, 
         public void onViewFailure(ResultModel model) {
 //            //通过这mErrorCode来判断是否绑定医生
             mErrorCode = model.getErrorCode();
+            Log.i("MerrorCode=-=-=-", mErrorCode);
+            if (mErrorCode.equals("1001")) {
+                mLlUnbindDoctor.setVisibility(View.VISIBLE);
+                mLlBindDoctor.setVisibility(View.GONE);
+                mIv_richsan.setVisibility(View.VISIBLE);
+                mIvUnbindDoctor.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        initPermission();
+                    }
+                });
+
+            } else if (mErrorCode.equals("1002")) {
+                mLlUnbindDoctor.setVisibility(View.VISIBLE);
+                mLlBindDoctor.setVisibility(View.GONE);
+                mIv_richsan.setVisibility(View.VISIBLE);
+
+                mIvUnbindDoctor.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Toast.makeText(getActivity(), "您已经加入随访\n请等待你的主诊医生审核\n审核通过后正常使用", Toast.LENGTH_LONG).show();
+                    }
+                });
+
+            } else {
+                mLlBindDoctor.setVisibility(View.VISIBLE);
+                mLlUnbindDoctor.setVisibility(View.GONE);
+                mIv_richsan.setVisibility(View.INVISIBLE);
+            }
+
 
 //
 //            Toast.makeText(getActivity(), "ccccode"+ model.getErrorCode(), Toast.LENGTH_SHORT).show();
@@ -312,12 +368,12 @@ public class HomePageFragment extends Fragment implements View.OnClickListener, 
 //            EventBus.getDefault().post(mErrorCode);
 //            MainActivity activity = (MainActivity) getActivity();
 //            activity.changFragment("我的");
-            Toast.makeText(getActivity(), "失败11", Toast.LENGTH_SHORT).show();
+//            Toast.makeText(getActivity(), "失败11", Toast.LENGTH_SHORT).show();
         }
 
         @Override
         public void onServerFailure(String e) {
-            Toast.makeText(getActivity(), "失败-=-=-", Toast.LENGTH_SHORT).show();
+//            Toast.makeText(getActivity(), "失败-=-=-", Toast.LENGTH_SHORT).show();
 
         }
         @Override
@@ -338,15 +394,15 @@ public class HomePageFragment extends Fragment implements View.OnClickListener, 
                 mTv_topleft_inquiry.setText(String.valueOf(numBean.getData().getConstructionCount()));
                 mTv_topleft_report.setText(String.valueOf(numBean.getData().getFollowUpCount()));
                 mTv_topleft_record.setText(String.valueOf(numBean.getData().getStatusRecord()));
-                Log.i("duihua==", numBean.getData().getConstructionCount() + "");
-                Log.i("duihua1==", numBean.getData().getFollowUpCount() + "");
-                Log.i("duihua2==", numBean.getData().getStatusRecord() + "");
+//                Log.i("duihua==", numBean.getData().getConstructionCount() + "");
+//                Log.i("duihua1==", numBean.getData().getFollowUpCount() + "");
+//                Log.i("duihua2==", numBean.getData().getStatusRecord() + "");
 
                 mTv_diaglog.setText(String.valueOf(numBean.getData().getNewDialogueCount()));
-                Log.i("duihua3==", numBean.getData().getNewDialogueCount() + "");
+//                Log.i("duihua3==", numBean.getData().getNewDialogueCount() + "");
 
                 mTv_scale.setText(String.valueOf(numBean.getData().getNwePaperCount()));
-                Log.i("duihua4===", numBean.getData().getNwePaperCount() + "");
+//                Log.i("duihua4===", numBean.getData().getNwePaperCount() + "");
 
                 mTv_newReport.setText(String.valueOf(numBean.getData().getNewFollowUpCount()));
 
@@ -355,14 +411,14 @@ public class HomePageFragment extends Fragment implements View.OnClickListener, 
 //                    mTv_doctor_name.setText(numBean.getData().get);
 
             } else {
-                Toast.makeText(getActivity(), "1111", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getActivity(), "1111", Toast.LENGTH_SHORT).show();
             }
 
         }
 
         @Override
         public String patientUuid() {
-            Log.i("patientuuid------", (String) PreUtils.getParam(getActivity(), "patientuuid", "0"));
+//            Log.i("patientuuid------", (String) PreUtils.getParam(getActivity(), "patientuuid", "0"));
             return (String) PreUtils.getParam(getActivity(), "patientuuid", "0");
 //            return "29bbe608070b4fd5aadda5999d46f9d7";
         }

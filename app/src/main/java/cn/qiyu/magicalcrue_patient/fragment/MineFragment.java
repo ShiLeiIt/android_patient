@@ -13,15 +13,23 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.List;
+
 import cn.qiyu.magicalcrue_patient.Api.ApiService;
 import cn.qiyu.magicalcrue_patient.R;
 import cn.qiyu.magicalcrue_patient.activity.CaseHistoryActivity;
+import cn.qiyu.magicalcrue_patient.activity.FollowUpMessageDetailActivity;
 import cn.qiyu.magicalcrue_patient.activity.MinePatientDataActivity;
 import cn.qiyu.magicalcrue_patient.activity.MineUserInforActivity;
 import cn.qiyu.magicalcrue_patient.activity.PatientDataActivity;
 import cn.qiyu.magicalcrue_patient.activity.UserInforActivity;
+import cn.qiyu.magicalcrue_patient.home.HomeNumView;
+import cn.qiyu.magicalcrue_patient.home.HomePresenter;
 import cn.qiyu.magicalcrue_patient.mine.MineInforView;
 import cn.qiyu.magicalcrue_patient.mine.MinePresenter;
+import cn.qiyu.magicalcrue_patient.model.DoctorTeamBean;
+import cn.qiyu.magicalcrue_patient.model.HomeBannerBean;
+import cn.qiyu.magicalcrue_patient.model.HomeNumBean;
 import cn.qiyu.magicalcrue_patient.model.PatientInfor;
 import cn.qiyu.magicalcrue_patient.model.ResultModel;
 import cn.qiyu.magicalcrue_patient.model.UserInfor;
@@ -52,6 +60,8 @@ public class MineFragment extends Fragment implements View.OnClickListener {
     private String tagName = "";
     private TextView mTv_phoneNume;
     private PatientInfor mData;
+
+
 
 
     @Nullable
@@ -149,6 +159,7 @@ public class MineFragment extends Fragment implements View.OnClickListener {
 
         mMinePresenter.getUserBasicInfor();
         mMinePresenter.getPatientBasicInfor();
+
         //跳转患者信息界面
         mIv_patient_back.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -259,6 +270,8 @@ public class MineFragment extends Fragment implements View.OnClickListener {
     });
 
 
+
+
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -279,6 +292,12 @@ public class MineFragment extends Fragment implements View.OnClickListener {
 
         }
     }
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (isVisibleToUser) {
 
+        }
+    }
 
 }

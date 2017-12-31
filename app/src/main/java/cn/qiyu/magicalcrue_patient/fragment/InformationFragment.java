@@ -25,12 +25,21 @@ import cn.qiyu.magicalcrue_patient.R;
 import cn.qiyu.magicalcrue_patient.activity.DoctorNoticeListActivity;
 import cn.qiyu.magicalcrue_patient.activity.FollowUpMessageDetailActivity;
 import cn.qiyu.magicalcrue_patient.activity.SystemMessagesActivity;
+import cn.qiyu.magicalcrue_patient.home.HomeNumView;
+import cn.qiyu.magicalcrue_patient.home.HomePresenter;
 import cn.qiyu.magicalcrue_patient.information.InformationFollowUpRdView;
 import cn.qiyu.magicalcrue_patient.information.InformationPresenter;
 import cn.qiyu.magicalcrue_patient.information.InformationView;
+import cn.qiyu.magicalcrue_patient.mine.MineInforView;
+import cn.qiyu.magicalcrue_patient.mine.MinePresenter;
+import cn.qiyu.magicalcrue_patient.model.DoctorTeamBean;
+import cn.qiyu.magicalcrue_patient.model.HomeBannerBean;
+import cn.qiyu.magicalcrue_patient.model.HomeNumBean;
 import cn.qiyu.magicalcrue_patient.model.InfoUserNoticeListBean;
 import cn.qiyu.magicalcrue_patient.model.InformationBean;
+import cn.qiyu.magicalcrue_patient.model.PatientInfor;
 import cn.qiyu.magicalcrue_patient.model.ResultModel;
+import cn.qiyu.magicalcrue_patient.model.UserInfor;
 import cn.qiyu.magicalcrue_patient.utils.PreUtils;
 
 
@@ -66,6 +75,8 @@ public class InformationFragment extends Fragment {
     @Bind(R.id.rl_doctor_notice)
     RelativeLayout mRlDoctorNotice;
     private String mUuid;
+    private String mPatientuuid;
+    private String mErrorCode;
 
     @Nullable
     @Override
@@ -75,9 +86,13 @@ public class InformationFragment extends Fragment {
 
         ButterKnife.bind(this, view);
         mUuid = (String) PreUtils.getParam(getActivity(), "uuid", "0");
-        Log.i("userUuid===", mUuid);
+        mPatientuuid = (String) PreUtils.getParam(getActivity(), "patientuuid", "0");
+//        Log.i("userUuid===", mUuid);
         //注册EventBus，在开始的位置
         EventBus.getDefault().register(this);
+
+
+
         return view;
     }
 
@@ -103,6 +118,7 @@ public class InformationFragment extends Fragment {
 
         @Override
         public void onViewFailure(ResultModel model) {
+
 
         }
 
@@ -154,6 +170,11 @@ public class InformationFragment extends Fragment {
             mTvSystemNoticeTitle.setText(model.getData().getMessageData().getTitle());
             mTvSystemNoticeContent.setText(model.getData().getMessageData().getContent());
             mTvSystemNoticeNum.setText(String.valueOf(model.getData().getMessageData().getNum()));
+                if (model.getData().getMessageData().getNum() == 0) {
+                    mTvSystemNoticeNum.setVisibility(View.INVISIBLE);
+                } else {
+                    mTvSystemNoticeNum.setVisibility(View.VISIBLE);
+                }
             //随访对话
             mTvDialogueTitle.setText(model.getData().getFollowData().getTitle());
             mTvDialogueContent.setText(model.getData().getFollowData().getContent());
@@ -178,6 +199,7 @@ public class InformationFragment extends Fragment {
         @Override
         public void onViewFailure(ResultModel model) {
 
+
         }
 
         @Override
@@ -185,6 +207,8 @@ public class InformationFragment extends Fragment {
 
         }
     });
+
+
 
 
     @Override
@@ -213,7 +237,9 @@ public class InformationFragment extends Fragment {
         switch (view.getId()) {
             case R.id.rl_visit_dialogue:
                 //跳转随访对话
-                startActivity(new Intent(getActivity(), FollowUpMessageDetailActivity.class));
+                Intent intent = new Intent(getActivity(), FollowUpMessageDetailActivity.class);
+                intent.putExtra("errorCode", mErrorCode);
+                startActivity(intent);
                 break;
             case R.id.rl_system_notice:
                 startActivity(new Intent(getActivity(), SystemMessagesActivity.class));
@@ -233,6 +259,8 @@ public class InformationFragment extends Fragment {
                 mInformationPresenter.InformationListShow();
                 mPresenter.getFollowUpMsgRead();
 
+
+
             }
         });
 //
@@ -250,6 +278,7 @@ public class InformationFragment extends Fragment {
         if (isVisibleToUser) {
             if (mInformationPresenter!=null) {
                 mInformationPresenter.InformationListShow();
+
             }
         }
     }

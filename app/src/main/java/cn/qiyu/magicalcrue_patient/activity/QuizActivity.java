@@ -374,7 +374,8 @@ public class QuizActivity extends BaseActivity {
     VisitDialogueQuizPresenter mVisitDialogueQuizPresenter = new VisitDialogueQuizPresenter(new VisitDialogueQuizView() {
         @Override
         public String getDoctorUuid() {
-            return "95bbb5cb43ec43b58b464e89be63a585";
+//            return "95bbb5cb43ec43b58b464e89be63a585";
+            return (String) PreUtils.getParam(QuizActivity.this, "doctorUuid", "0");
         }
 
         @Override
@@ -426,6 +427,7 @@ public class QuizActivity extends BaseActivity {
         @Override
         public void onViewFailure(ResultModel model) {
             Toast.makeText(QuizActivity.this, "" + model.getMessage(), Toast.LENGTH_SHORT).show();
+
 
         }
 

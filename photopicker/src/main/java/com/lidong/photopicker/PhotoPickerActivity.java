@@ -1,5 +1,6 @@
 package com.lidong.photopicker;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
@@ -9,6 +10,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.provider.MediaStore;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
@@ -25,6 +27,7 @@ import android.widget.GridView;
 import android.widget.Toast;
 
 import com.lidong.photopicker.intent.PhotoPreviewIntent;
+import com.lidong.photopicker.utils.Utils;
 
 import java.io.File;
 import java.io.IOException;
@@ -169,10 +172,12 @@ public class PhotoPickerActivity extends AppCompatActivity{
         btnPreview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                PhotoPreviewIntent intent = new PhotoPreviewIntent(mCxt);
-                intent.setCurrentItem(0);
-                intent.setPhotoPaths(resultList);
-                startActivityForResult(intent, PhotoPreviewActivity.REQUEST_PREVIEW);
+
+                    PhotoPreviewIntent intent = new PhotoPreviewIntent(mCxt);
+                    intent.setCurrentItem(0);
+                    intent.setPhotoPaths(resultList);
+                    startActivityForResult(intent, PhotoPreviewActivity.REQUEST_PREVIEW);
+
             }
         });
 
@@ -339,8 +344,10 @@ public class PhotoPickerActivity extends AppCompatActivity{
      */
     private void showCameraAction() {
         try {
-            Intent intent = captureManager.dispatchTakePictureIntent();
-            startActivityForResult(intent, ImageCaptureManager.REQUEST_TAKE_PHOTO);
+
+                Intent intent = captureManager.dispatchTakePictureIntent();
+                startActivityForResult(intent, ImageCaptureManager.REQUEST_TAKE_PHOTO);
+
         } catch (IOException e) {
             Toast.makeText(mCxt, R.string.msg_no_camera, Toast.LENGTH_SHORT).show();
             e.printStackTrace();

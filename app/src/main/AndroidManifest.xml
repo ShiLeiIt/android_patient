@@ -28,7 +28,11 @@
 
 
     <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
+
+
+
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.CAMERA"/>
     <uses-permission android:name="android.permission.VIBRATE"/>
@@ -110,9 +114,11 @@
         <activity
             android:name="com.lidong.photopicker.PhotoPickerActivity"
             android:screenOrientation="portrait"
+
             android:theme="@style/PhotoPickerTheme" />
         <activity
             android:name="com.lidong.photopicker.PhotoPreviewActivity"
+
             android:theme="@style/PhotoPickerTheme" />
         <!--病历列表-->
         <activity android:name=".activity.CaseHistoryActivity"/>

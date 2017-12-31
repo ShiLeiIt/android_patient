@@ -124,6 +124,8 @@ public class CaseHistoryActivity extends BaseActivity implements View.OnClickLis
 
     }
 
+
+
     CaseHistoryPresenter mCaseHistoryPresenter = new CaseHistoryPresenter(new CaseHistoryNumView() {
         @Override
         public String getPatientUuid() {
