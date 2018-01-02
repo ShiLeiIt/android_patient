@@ -180,8 +180,8 @@ public class MineUserInforActivity extends BaseActivity implements View.OnClickL
         @Override
         public RequestBody getImageUpLoadFileId() {
             if (mFileName != null) {
-//                mRequestFile = RequestBody.create(MediaType.parse("multipart/form-data"), mFileName);
-                mRequestFile = RequestBody.create(MediaType.parse("image/png"), mFileName);
+                mRequestFile = RequestBody.create(MediaType.parse("multipart/form-data"), mFileName);
+//                mRequestFile = RequestBody.create(MediaType.parse("image/png"), mFileName);
             }else {
                 //进行用户信息保存到服务器
                 mUserInforEdtPresenter.getUserInforEdt();
@@ -459,8 +459,10 @@ public class MineUserInforActivity extends BaseActivity implements View.OnClickL
             } else if (requestCode == CAMERA) { //拍照
                 //照相返回的
                 Bitmap bitmap = Utils.getLoacalBitmap(mAbsolutePath);
-                if (bitmap != null) {
-                    Bitmap smallBitmap = Utils.zoomBitmap(bitmap, bitmap.getWidth() / SCALE, bitmap.getHeight() / SCALE);
+                int bitmapDegree = Utils.readPictureDegree(mAbsolutePath);
+                Bitmap bitmap1 = Utils.rotaingImageView(bitmapDegree, bitmap);
+                if (bitmap1 != null) {
+                    Bitmap smallBitmap = Utils.zoomBitmap(bitmap1, bitmap1.getWidth() / SCALE, bitmap1.getHeight() / SCALE);
                     //释放原始图片占用的内存，防止out of memory异常发生
                     bitmap.recycle();
                     mCivHead.setImageBitmap(smallBitmap);
