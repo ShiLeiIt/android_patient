@@ -468,9 +468,9 @@ public class HomePageFragment extends Fragment implements View.OnClickListener, 
             }
             for (int i = 0; i < DoctorIcon; i++) {
                 String path = "";
-                if (null == model.getData().getDoctorTeamList().get(i).getPhoto_path())
+                if (null == model.getData().getDoctorTeamList().get(i).getPhotoPathImg())
                     path = "";
-                else path = ApiService.GET_IMAGE_ICON + model.getData().getDoctorTeamList().get(i).getPhoto_path();
+                else path =  model.getData().getDoctorTeamList().get(i).getPhotoPathImg();
                 DisplayHelper.loadGlide(getActivity(), path, civ[i]);
             }
             }

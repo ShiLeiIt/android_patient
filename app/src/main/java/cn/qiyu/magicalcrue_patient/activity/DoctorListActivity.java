@@ -120,8 +120,7 @@ public class DoctorListActivity extends BaseActivity {
 //                else
 //                    profile.setText("暂无");
                 if (mModel.getPhoto_path() != null) {
-                    String path = ApiService.GET_IMAGE_ICON + mModel.getPhoto_path();
-                    DisplayHelper.loadGlide(DoctorListActivity.this, path, ircleImageView);
+                    DisplayHelper.loadGlide(DoctorListActivity.this, mModel.getPhotoPathImg(), ircleImageView);
                 } else {
                     ircleImageView.setImageResource(R.drawable.banner);
                 }
