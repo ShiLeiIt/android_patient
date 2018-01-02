@@ -121,6 +121,7 @@ public class UserInforActivity extends BaseActivity implements View.OnClickListe
      */
     public static final int REQUEST_CAMERA_PERM = 101;
     public static final String PHOTO_PATH = "photo_path";
+    private static final int SCALE = 5;//照片缩小比例
 
     private FileOutputStream mFileOutputStream;
     private File mFileName;
@@ -437,14 +438,17 @@ public class UserInforActivity extends BaseActivity implements View.OnClickListe
             } else if (requestCode == CAMERA) { //拍照
                 //照相返回的
                 Bitmap bitmap = Utils.getLoacalBitmap(mAbsolutePath);
-//                // 得到图片的旋转角度
-//                int bitmapDegree = Utils.getBitmapDegree(mAbsolutePath);
-//                // 根据旋转角度，生成旋转矩阵
-//                Matrix matrix = new Matrix();
-//                matrix.postRotate(bitmapDegree);
-//                Bitmap returnBm = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
-                mCivHead.setImageBitmap(bitmap);
-                mPicPopupWindow.dismiss();
+                int bitmapDegree = Utils.readPictureDegree(mAbsolutePath);
+                Bitmap bitmap1 = Utils.rotaingImageView(bitmapDegree, bitmap);
+                if (bitmap1 != null) {
+                    Bitmap smallBitmap = Utils.zoomBitmap(bitmap1, bitmap1.getWidth() / SCALE, bitmap1.getHeight() / SCALE);
+                    //释放原始图片占用的内存，防止out of memory异常发生
+                    bitmap.recycle();
+                    mCivHead.setImageBitmap(smallBitmap);
+                    mPicPopupWindow.dismiss();
+                }
+//                mCivHead.setImageBitmap(bitmap);
+//                mPicPopupWindow.dismiss();
             } else if (requestCode == REQUEST_SELECT_PHOTO) {
                 //相册返回的
                 // 外界的程序访问ContentProvider所提供数据 可以通过ContentResolver接口
