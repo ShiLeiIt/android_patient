@@ -44,7 +44,10 @@ import retrofit2.http.Part;
  * Created by Administrator on 2017/11/13.
  */
 
-public interface ApiService {
+public interface
+
+
+ApiService {
     /**
      * 每一个 api 地址都以 / 结尾
      */

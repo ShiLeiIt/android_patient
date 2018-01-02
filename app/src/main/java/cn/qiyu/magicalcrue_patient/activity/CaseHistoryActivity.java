@@ -228,23 +228,35 @@ public class CaseHistoryActivity extends BaseActivity implements View.OnClickLis
         switch (v.getId()) {
             //出院小结
             case R.id.tv_leave_hospital:
-                Toast.makeText(CaseHistoryActivity.this, "出院小结", Toast.LENGTH_SHORT).show();
+                Intent intentOne = new Intent(CaseHistoryActivity.this, LeaveHospitalInfoListActivity.class);
+                intentOne.putExtra("leaveHospital", "leaveHospital");
+                startActivity(intentOne);
+//                Toast.makeText(CaseHistoryActivity.this, "出院小结", Toast.LENGTH_SHORT).show();
                 break;
             //检查报告单
             case R.id.tv_examine:
-                Toast.makeText(CaseHistoryActivity.this, "检查报告单", Toast.LENGTH_SHORT).show();
+                Intent intentTwo = new Intent(CaseHistoryActivity.this, InspectionReportInfoListActivity.class);
+                startActivity(intentTwo);
+//                Toast.makeText(CaseHistoryActivity.this, "检查报告单", Toast.LENGTH_SHORT).show();
                 break;
             //门诊资料
             case R.id.tv_outpatient:
-                Toast.makeText(CaseHistoryActivity.this, "门诊资料", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(CaseHistoryActivity.this, "门诊资料", Toast.LENGTH_SHORT).show();
+                Intent intentThree = new Intent(CaseHistoryActivity.this, OutpatientInformationListActivity.class);
+                intentThree.putExtra("outPatient", "outPatient");
+                startActivity(intentThree);
                 break;
             //症状记录
             case R.id.tv_symptomatography:
-                Toast.makeText(CaseHistoryActivity.this, "症状记录", Toast.LENGTH_SHORT).show();
+                Intent intentFour = new Intent(CaseHistoryActivity.this, SymgraphyInfoListActivity.class);
+                startActivity(intentFour);
+//                Toast.makeText(CaseHistoryActivity.this, "症状记录", Toast.LENGTH_SHORT).show();
                 break;
             //用药方案
             case R.id.tv_pharmacy:
-                Toast.makeText(CaseHistoryActivity.this, "用药方案", Toast.LENGTH_SHORT).show();
+                Intent intentFive= new Intent(CaseHistoryActivity.this, PharmacyPlanRecordInfoListActivity.class);
+                startActivity(intentFive);
+//                Toast.makeText(CaseHistoryActivity.this, "用药方案", Toast.LENGTH_SHORT).show();
                 break;
 
             case R.id.iv_update_delete:

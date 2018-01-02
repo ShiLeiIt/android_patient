@@ -244,18 +244,19 @@ public class PatientDataRegisterActivity extends BaseActivity {
                 onBackPressed();
                 break;
             case R.id.tv_save_userinfor:
-                if (TextUtils.isEmpty(mEtActionsName.getText().toString()) ||
-                        TextUtils.isEmpty(mTvSelectDate.getText().toString()) ||
-                        TextUtils.isEmpty(mTvEighteen.getText().toString()) ||
-                        TextUtils.isEmpty(mTvFlowers.getText().toString()) ||
-                        TextUtils.isEmpty(mTvSelectCitiy.getText().toString()) ||
+                if (TextUtils.isEmpty(mTvRealName.getText().toString()) ||
+                        mTvSelectDate.getText().toString().equals("请选择")||
+                       mTvEighteen.getText().toString().equals("请输入18位身份证号") ||
+                       mTvFlowers.getText().toString().equals("11位手机号") ||
+                        mTvSelectCitiy.getText().toString().equals("请选择") ||
                         TextUtils.isEmpty(mTvRelationName.getText().toString()) ||
-                        TextUtils.isEmpty(mEtActionsName.getText().toString()) ||
+                        TextUtils.isEmpty(mEtActionsName.getText().toString())||
                         TextUtils.isEmpty(mTvFirstVisitTime.getText().toString()) ||
                         TextUtils.isEmpty(mTvDiseases.getText().toString())) {
-                    mPatientInforPresenter.getPatientInforCom();
-                } else {
                     Toast.makeText(this, "信息填写不完整", Toast.LENGTH_SHORT).show();
+
+                } else {
+                    mPatientInforPresenter.getPatientInforCom();
                 }
                 break;
             case R.id.tv_real_name:

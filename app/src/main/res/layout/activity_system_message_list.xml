@@ -21,6 +21,7 @@
         android:id="@+id/swipeLayout" >
         <android.support.v7.widget.RecyclerView
             android:id="@+id/rcl_system_message"
+            android:background="@color/view_bg"
             android:gravity="center"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>

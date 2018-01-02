@@ -118,7 +118,7 @@
                 android:gravity="right|center_vertical"
                 android:maxLines="1"
                 android:textCursorDrawable="@null"
-                android:hint="钱多多"
+                android:hint=""
                 android:textColor="@color/app_gray"
                 android:textColorHint="@color/app_gray"
                 android:textSize="12sp"/>
@@ -369,7 +369,7 @@
 
             <TextView
                 android:id="@+id/tv_relation_name"
-                android:hint="李依琳"
+                android:hint=""
                 android:gravity="right|center_vertical"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -442,7 +442,7 @@
                 android:focusable="true"
                 android:textCursorDrawable="@null"
                 android:gravity="right|center_vertical"
-                android:hint="李依琳"
+                android:hint=""
                 android:maxLines="1"
                 android:textColor="@color/app_gray"
                 android:textColorHint="@color/app_gray"
@@ -483,7 +483,7 @@
 
             <TextView
                 android:id="@+id/tv_first_visit_time"
-                android:text="2017-11-20"
+                android:text=""
                 android:gravity="right|center_vertical"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -533,7 +533,7 @@
 
             <TextView
                 android:id="@+id/tv_diseases"
-                android:text="食道癌"
+                android:text=""
                 android:gravity="right|center_vertical"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

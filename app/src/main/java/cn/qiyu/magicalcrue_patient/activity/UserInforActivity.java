@@ -151,7 +151,7 @@ public class UserInforActivity extends BaseActivity implements View.OnClickListe
     }
 
     private void initTo() {
-
+        mIvBoy.setChecked(true);
         mPicPopupWindow = new SelectPicPopupWindow(UserInforActivity.this, this);
 
     }
@@ -277,12 +277,12 @@ public class UserInforActivity extends BaseActivity implements View.OnClickListe
 
         @Override
         public void onViewFailure(ResultModel model) {
-            Toast.makeText(UserInforActivity.this, "" + model.getMessage(), Toast.LENGTH_SHORT).show();
+//            Toast.makeText(UserInforActivity.this, "" + model.getMessage(), Toast.LENGTH_SHORT).show();
         }
 
         @Override
         public void onServerFailure(String e) {
-            Toast.makeText(UserInforActivity.this, "" + e, Toast.LENGTH_SHORT).show();
+//            Toast.makeText(UserInforActivity.this, "" + e, Toast.LENGTH_SHORT).show();
         }
     });
 
