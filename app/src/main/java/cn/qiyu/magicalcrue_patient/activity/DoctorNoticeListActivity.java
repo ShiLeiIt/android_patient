@@ -55,7 +55,7 @@ public class DoctorNoticeListActivity extends BaseActivity {
     InformationPresenter mInformationPresenter = new InformationPresenter(new InformationView() {
         @Override
         public String getUserUuid() {
-            return (String) PreUtils.getParam(DoctorNoticeListActivity.this, "uuid", "0");
+            return (String) PreUtils.getParam(DoctorNoticeListActivity.this, "doctorUuid", "0");
 //            return "95bbb5cb43ec43b58b464e89be63a585";
         }
 
