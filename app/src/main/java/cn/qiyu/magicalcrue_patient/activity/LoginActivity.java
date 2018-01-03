@@ -1,48 +1,33 @@
 package cn.qiyu.magicalcrue_patient.activity;
 
 import android.content.Intent;
-import android.icu.math.BigDecimal;
 import android.os.Bundle;
 import android.os.CountDownTimer;
-import android.os.Handler;
-import android.os.Message;
-import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
-import org.greenrobot.eventbus.ThreadMode;
-
-import java.util.Set;
-
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.jpush.android.api.JPushInterface;
-import cn.jpush.android.api.TagAliasCallback;
-import cn.qiyu.magicalcrue_patient.MyApplication;
 import cn.qiyu.magicalcrue_patient.R;
 import cn.qiyu.magicalcrue_patient.base.BaseActivity;
 import cn.qiyu.magicalcrue_patient.model.RegisterLoginBean;
 import cn.qiyu.magicalcrue_patient.model.ResultModel;
 import cn.qiyu.magicalcrue_patient.register_login.RegisterPresenter;
 import cn.qiyu.magicalcrue_patient.register_login.RegisterVmView;
-import cn.qiyu.magicalcrue_patient.utils.ExampleUtil;
 import cn.qiyu.magicalcrue_patient.utils.PreUtils;
 import cn.qiyu.magicalcrue_patient.utils.Utils;
 
 /**
- * 注册登录页面
+ * 登录页面
  */
-public class RegisterActivity extends BaseActivity {
+public class LoginActivity extends BaseActivity {
 
     @Bind(R.id.iv_register_del)
     ImageView mIvRegisterDel;
@@ -64,7 +49,7 @@ public class RegisterActivity extends BaseActivity {
     public boolean tag = true;
     private RegisterPresenter mRegisterPresenter;
     private long mExitTime;
-    private String TAG= RegisterActivity.this+"";
+    private String TAG= LoginActivity.this+"";
     private String mJpushId;
     private String mLogin;
 
@@ -73,27 +58,30 @@ public class RegisterActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
         ButterKnife.bind(this);
-        String uuid = (String) PreUtils.getParam(RegisterActivity.this, "uuid", "0");
+        String uuid = (String) PreUtils.getParam(LoginActivity.this, "uuid", "0");
 
 
-//        Log.i("userperfect-=", (String) PreUtils.getParam(RegisterActivity.this, "userperfect", "0"));
+        String login = getIntent().getStringExtra("login");
+        if (login.equals("login")) {
+            mIv_login.setVisibility(View.VISIBLE);
+            mIvRegister.setVisibility(View.GONE);
+        }
 
-
-    if(null!=uuid){
+        if(null!=uuid){
         if (!TextUtils.isEmpty(uuid) && !uuid.equals("0")) {
-            switch (String.valueOf(PreUtils.getParam(RegisterActivity.this, "userperfect", 0))) {
+            switch (String.valueOf(PreUtils.getParam(LoginActivity.this, "userperfect", 0))) {
                 case "1":
-                    Intent intentUser = new Intent(RegisterActivity.this, UserInforActivity.class);
+                    Intent intentUser = new Intent(LoginActivity.this, UserInforActivity.class);
                     startActivity(intentUser);
                     break;
                 case "2":
-                    Intent intentPatient = new Intent(RegisterActivity.this, PatientDataRegisterActivity.class);
+                    Intent intentPatient = new Intent(LoginActivity.this, PatientDataRegisterActivity.class);
                     startActivity(intentPatient);
                     break;
                 default:
-                    mJpushId = JPushInterface.getRegistrationID(RegisterActivity.this);
+                    mJpushId = JPushInterface.getRegistrationID(LoginActivity.this);
                     Log.i("jpushId-=-=-=----", mJpushId);
-                    Intent intentMain = new Intent(RegisterActivity.this, MainActivity.class);
+                    Intent intentMain = new Intent(LoginActivity.this, MainActivity.class);
                     startActivity(intentMain);
                     finish();
                     break;
@@ -116,7 +104,7 @@ public class RegisterActivity extends BaseActivity {
 
             @Override
             public void getVerifyMessage(ResultModel rlBean) {
-                Toast.makeText(RegisterActivity.this, rlBean.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(LoginActivity.this, rlBean.getMessage(), Toast.LENGTH_SHORT).show();
 
             }
 
@@ -127,7 +115,7 @@ public class RegisterActivity extends BaseActivity {
 
             @Override
             public String getJpushId() {
-                mJpushId = JPushInterface.getRegistrationID(RegisterActivity.this);
+                mJpushId = JPushInterface.getRegistrationID(LoginActivity.this);
                 Log.i("jpushId==========", mJpushId);
                 return mJpushId;
 //                return "";
@@ -137,37 +125,37 @@ public class RegisterActivity extends BaseActivity {
             public void getRegisterLogin(ResultModel<RegisterLoginBean> model) {
                 int userPerfect = model.getData().getUserPerfect();
                 if (userPerfect == 1) {
-                    PreUtils.setParam(RegisterActivity.this, "uuid", model.getData().getUuid());
-                    PreUtils.setParam(RegisterActivity.this, "userperfect", model.getData().getUserPerfect());
-                    PreUtils.setParam(RegisterActivity.this, "userid", String.valueOf(model.getData().getId()));
-                    PreUtils.setParam(RegisterActivity.this, "token", model.getData().getToken());
+                    PreUtils.setParam(LoginActivity.this, "uuid", model.getData().getUuid());
+                    PreUtils.setParam(LoginActivity.this, "userperfect", model.getData().getUserPerfect());
+                    PreUtils.setParam(LoginActivity.this, "userid", String.valueOf(model.getData().getId()));
+                    PreUtils.setParam(LoginActivity.this, "token", model.getData().getToken());
 //                        Toast.makeText(RegisterActivity.this, "用户信息界面", Toast.LENGTH_SHORT).show();
-                    Toast.makeText(RegisterActivity.this, "注册成功", Toast.LENGTH_SHORT).show();
-                    Intent intentUser = new Intent(RegisterActivity.this, UserInforActivity.class);
+                    Toast.makeText(LoginActivity.this, "注册成功", Toast.LENGTH_SHORT).show();
+                    Intent intentUser = new Intent(LoginActivity.this, UserInforActivity.class);
                     startActivity(intentUser);
 
                 } else if (userPerfect == 2) {
-                    PreUtils.setParam(RegisterActivity.this, "uuid", model.getData().getUuid());
-                    PreUtils.setParam(RegisterActivity.this, "userperfect", model.getData().getUserPerfect());
-                    PreUtils.setParam(RegisterActivity.this, "token", model.getData().getToken());
-                    PreUtils.setParam(RegisterActivity.this, "userid", String.valueOf(model.getData().getId()));
+                    PreUtils.setParam(LoginActivity.this, "uuid", model.getData().getUuid());
+                    PreUtils.setParam(LoginActivity.this, "userperfect", model.getData().getUserPerfect());
+                    PreUtils.setParam(LoginActivity.this, "token", model.getData().getToken());
+                    PreUtils.setParam(LoginActivity.this, "userid", String.valueOf(model.getData().getId()));
 //                        Toast.makeText(RegisterActivity.this, "患者信息界面", Toast.LENGTH_SHORT).show();
-                    Toast.makeText(RegisterActivity.this, "注册成功", Toast.LENGTH_SHORT).show();
-                    Intent intentPatient = new Intent(RegisterActivity.this, PatientDataRegisterActivity.class);
+                    Toast.makeText(LoginActivity.this, "注册成功", Toast.LENGTH_SHORT).show();
+                    Intent intentPatient = new Intent(LoginActivity.this, PatientDataRegisterActivity.class);
                     startActivity(intentPatient);
 
                 } else {
-                    PreUtils.setParam(RegisterActivity.this, "userid", String.valueOf(model.getData().getId()));
-                    PreUtils.setParam(RegisterActivity.this, "userperfect", 0);
-                    PreUtils.setParam(RegisterActivity.this, "uuid", model.getData().getUuid());
-                    PreUtils.setParam(RegisterActivity.this, "patientuuid", model.getData().getMedical_record_uuid());
-                    PreUtils.setParam(RegisterActivity.this, "token", model.getData().getToken());
+                    PreUtils.setParam(LoginActivity.this, "userid", String.valueOf(model.getData().getId()));
+                    PreUtils.setParam(LoginActivity.this, "userperfect", 0);
+                    PreUtils.setParam(LoginActivity.this, "uuid", model.getData().getUuid());
+                    PreUtils.setParam(LoginActivity.this, "patientuuid", model.getData().getMedical_record_uuid());
+                    PreUtils.setParam(LoginActivity.this, "token", model.getData().getToken());
 
 //                    PreUtils.setParam(RegisterActivity.this, "userid", String.valueOf(model.getData().getId()));
 
-                    Toast.makeText(RegisterActivity.this, "注册成功", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(LoginActivity.this, "注册成功", Toast.LENGTH_SHORT).show();
 //                    mJpushId = JPushInterface.getRegistrationID(RegisterActivity.this);
-                    Intent intentPatient = new Intent(RegisterActivity.this, MainActivity.class);
+                    Intent intentPatient = new Intent(LoginActivity.this, MainActivity.class);
                     startActivity(intentPatient);
                     finish();
                 }
@@ -184,12 +172,12 @@ public class RegisterActivity extends BaseActivity {
 
             @Override
             public void onViewFailure(ResultModel model) {
-                Toast.makeText(RegisterActivity.this, "" + model.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(LoginActivity.this, "" + model.getMessage(), Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void onServerFailure(String e) {
-                Toast.makeText(RegisterActivity.this, e, Toast.LENGTH_SHORT).show();
+                Toast.makeText(LoginActivity.this, e, Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -203,7 +191,7 @@ public class RegisterActivity extends BaseActivity {
         super.onDestroy();
     }
 
-    @OnClick({R.id.iv_register_del, R.id.edit_phone, R.id.tv_send_auth_code, R.id.iv_register_auth, R.id.tv_deal, R.id.iv_register})
+    @OnClick({R.id.iv_register_del, R.id.edit_phone, R.id.tv_send_auth_code, R.id.iv_register_auth, R.id.tv_deal, R.id.iv_login})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.iv_register_del:
@@ -218,7 +206,7 @@ public class RegisterActivity extends BaseActivity {
 //                mEditAuthCode.setEnabled(true);
                     mRegisterPresenter.RegisterLoadMesData();
                 } else {
-                    Toast.makeText(RegisterActivity.this, "请输入正确的手机号码", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(LoginActivity.this, "请输入正确的手机号码", Toast.LENGTH_SHORT).show();
                 }
                 break;
             case R.id.iv_register_auth:
@@ -232,7 +220,7 @@ public class RegisterActivity extends BaseActivity {
                 break;
             case R.id.tv_deal:
                 break;
-            case R.id.iv_register:
+            case R.id.iv_login:
                 if (TextUtils.isEmpty(mEditPhone.getText())) {
                     Toast.makeText(this, "请输入手机号", Toast.LENGTH_SHORT).show();
                 } else if (TextUtils.isEmpty(mEditAuthCode.getText())) {

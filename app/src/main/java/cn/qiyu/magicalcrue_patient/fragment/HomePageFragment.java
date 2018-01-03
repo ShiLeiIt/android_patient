@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.view.ScrollingView;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -229,7 +230,22 @@ public class HomePageFragment extends Fragment implements View.OnClickListener, 
     @Override
     public void onResume() {
         super.onResume();
+        mHomePresenter.getDoctorTeamInfo();
+        mHomePresenter.getHomeBanner();
         mHomePresenter.HomeLoadNumData();
+//        if (!TextUtils.isEmpty(mErrorCode)) {
+//
+//        if (mErrorCode.equals("1001")) {
+//
+//        } else if (mErrorCode.equals("1002")) {
+//
+//        } else {
+//            mLlBindDoctor.setVisibility(View.VISIBLE);
+//            mLlUnbindDoctor.setVisibility(View.GONE);
+//            mIv_richsan.setVisibility(View.INVISIBLE);
+//        }
+//        }
+
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)

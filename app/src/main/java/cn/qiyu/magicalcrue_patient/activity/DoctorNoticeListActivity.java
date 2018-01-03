@@ -55,8 +55,7 @@ public class DoctorNoticeListActivity extends BaseActivity {
     InformationPresenter mInformationPresenter = new InformationPresenter(new InformationView() {
         @Override
         public String getUserUuid() {
-            return (String) PreUtils.getParam(DoctorNoticeListActivity.this, "doctorUuid", "0");
-//            return "95bbb5cb43ec43b58b464e89be63a585";
+            return (String) PreUtils.getParam(DoctorNoticeListActivity.this, "uuid", "0");
         }
 
         @Override
@@ -72,7 +71,7 @@ public class DoctorNoticeListActivity extends BaseActivity {
         @Override
         public void getDoctorNoticeList(ResultModel<List<InfoUserNoticeListBean>> model) {
             mSwipeLayout.setRefreshing(false);
-
+//            Toast.makeText(DoctorNoticeListActivity.this, "成功==-==-"+model.getData().size(), Toast.LENGTH_SHORT).show();
             mRclDoctorNotice.setAdapter(new DoctorNoticeListActivity.RecyclerAdpter(model.getData()));
             mRclDoctorNotice.setLayoutManager(new LinearLayoutManager(DoctorNoticeListActivity.this));
         }

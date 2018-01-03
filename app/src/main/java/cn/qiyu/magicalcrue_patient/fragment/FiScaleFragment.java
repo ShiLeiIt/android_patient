@@ -39,6 +39,7 @@ public class FiScaleFragment extends Fragment {
     SwipeRefreshLayout mSwipeLayout;
     private int mPaperUserID;
     private String mQuestionUUid;
+    private int mStatus;
 
     @Nullable
     @Override
@@ -108,6 +109,7 @@ public class FiScaleFragment extends Fragment {
             Intent intent = new Intent(getActivity(), ScaleDetailShowActivity.class);
             intent.putExtra("scaleDetail", model.getData());
             intent.putExtra("paperUserID", String.valueOf(mPaperUserID));
+            intent.putExtra("mStatus", String.valueOf(mStatus));
 //            Log.i("paperUserID---------=", model.getData().getUserID());
             startActivity(intent);
         }
@@ -163,6 +165,7 @@ public class FiScaleFragment extends Fragment {
                 public void onClick(View v) {
                     mQuestionUUid = mModel.getPaperID();
                     mPaperUserID = mModel.getPaperUserID();
+                    mStatus = mModel.getStatus();
                     Log.i("paperUserID", mPaperUserID + "");
                     mScalePresenter.VisitScaleDetailsData();
 

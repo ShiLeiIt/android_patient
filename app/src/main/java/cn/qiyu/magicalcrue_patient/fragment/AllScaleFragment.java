@@ -41,6 +41,7 @@ public class AllScaleFragment extends Fragment {
     SwipeRefreshLayout mSwipeLayout;
     private int mPaperUserID;
     private String mQuestionUUid;
+    private int mStatus;
 
     @Nullable
     @Override
@@ -106,6 +107,7 @@ public class AllScaleFragment extends Fragment {
             Intent intent = new Intent(getActivity(), ScaleDetailShowActivity.class);
             intent.putExtra("scaleDetail", model.getData());
             intent.putExtra("paperUserID", String.valueOf(mPaperUserID));
+            intent.putExtra("mStatus", String.valueOf(mStatus));
 //            Log.i("paperUserID---------=", model.getData().getUserID());
             startActivity(intent);
         }
@@ -159,6 +161,7 @@ public class AllScaleFragment extends Fragment {
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    mStatus = mModel.getStatus();
                     mQuestionUUid = mModel.getPaperID();
                     mPaperUserID = mModel.getPaperUserID();
                     Log.i("paperUserID", mPaperUserID + "");

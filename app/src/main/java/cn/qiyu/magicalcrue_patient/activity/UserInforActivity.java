@@ -179,7 +179,7 @@ public class UserInforActivity extends BaseActivity implements View.OnClickListe
         public void getImageUpLoad(ImageUpLoadBean imageUpLoadBean) {
             //
 
-            Log.i("picid==", imageUpLoadBean.getFileId());
+//            Log.i("picid==", imageUpLoadBean.getFileId());
 
             mFileId = imageUpLoadBean.getFileId();
             PreUtils.setParam(UserInforActivity.this,"mFileId",mFileId);
@@ -257,7 +257,7 @@ public class UserInforActivity extends BaseActivity implements View.OnClickListe
 //
             PreUtils.setParam(UserInforActivity.this, "userperfect", 2);
             mTvSelectCitiy.setText(getIntent().getStringExtra("addressname"));
-            Intent intent = new Intent(UserInforActivity.this, PatientDataActivity.class);
+            Intent intent = new Intent(UserInforActivity.this, PatientDataRegisterActivity.class);
             startActivity(intent);
 
 

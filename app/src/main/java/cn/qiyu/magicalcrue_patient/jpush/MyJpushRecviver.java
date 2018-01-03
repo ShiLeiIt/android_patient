@@ -192,7 +192,7 @@ public class MyJpushRecviver extends BroadcastReceiver {
                     case 4:
                         //跳转医生公告页面
                         Log.i("tyid====4", mTypeId + "");
-                        Toast.makeText(context, ""+mTypeId, Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(context, ""+mTypeId, Toast.LENGTH_SHORT).show();
                         Intent intentMain = new Intent(context, DoctorNoticeListActivity.class);
                         intentMain.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                         intentMain.putExtra("doctorNotice", "doctorNotice");
@@ -218,7 +218,7 @@ public class MyJpushRecviver extends BroadcastReceiver {
                             intentL.putExtras(bundle);
                             context.startActivity(intentL);
 
-                        } else if (mMedicalType.equals("1003")) {
+                        } else if (mMedicalType.equals("1022")) {
                             //跳转到检查报告单界面
                             Intent intentI = new Intent(context, InspectionReportInfoListActivity.class);
                             intentI.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -243,6 +243,9 @@ public class MyJpushRecviver extends BroadcastReceiver {
 
                         break;
                     case 7:
+                    //加入随访
+
+
                         break;
                     case 8:
                         break;

@@ -60,7 +60,7 @@ public class ScaleDetailActivity extends BaseActivity {
     MyScalePresenter mScalePresenter = new MyScalePresenter(new MyScaleView() {
         @Override
         public String getPatientUuid() {
-            Log.i("patientuuid===----==", (String) PreUtils.getParam(ScaleDetailActivity.this, "patientuuid", "0"));
+//            Log.i("patientuuid===----==", (String) PreUtils.getParam(ScaleDetailActivity.this, "patientuuid", "0"));
             return (String) PreUtils.getParam(ScaleDetailActivity.this, "patientuuid", "0");
         }
 

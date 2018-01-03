@@ -19,12 +19,17 @@ import butterknife.ButterKnife;
 import cn.qiyu.magicalcrue_patient.R;
 import cn.qiyu.magicalcrue_patient.base.BaseActivity;
 import cn.qiyu.magicalcrue_patient.information.InformationPresenter;
+import cn.qiyu.magicalcrue_patient.information.InformationSysMsgRdView;
 import cn.qiyu.magicalcrue_patient.information.InformationSysMsgView;
 import cn.qiyu.magicalcrue_patient.model.InfoUserNoticeListBean;
 import cn.qiyu.magicalcrue_patient.model.InfoUserSystemMsgListBean;
+import cn.qiyu.magicalcrue_patient.model.MyScaleBean;
 import cn.qiyu.magicalcrue_patient.model.ResultModel;
+import cn.qiyu.magicalcrue_patient.model.ScaleDetailBean;
 import cn.qiyu.magicalcrue_patient.utils.PreUtils;
 import cn.qiyu.magicalcrue_patient.view.RecycleViewDivider;
+import cn.qiyu.magicalcrue_patient.visit.MyScalePresenter;
+import cn.qiyu.magicalcrue_patient.visit.MyScaleView;
 
 /**
  * Created by ShiLei on 2017/12/25.
@@ -41,6 +46,8 @@ public class SystemMessagesActivity extends BaseActivity {
     @Bind(R.id.swipeLayout)
     SwipeRefreshLayout mSwipeLayout;
     private String mMessageUuid;
+    private String mPaperId;
+    private String mPaperUserID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -105,6 +112,122 @@ public class SystemMessagesActivity extends BaseActivity {
         mRclSystemMessage.addItemDecoration(new RecycleViewDivider(SystemMessagesActivity.this, LinearLayoutManager.HORIZONTAL, R.drawable.recycleview_tieku));
         getLoad();
     }
+    MyScalePresenter mScalePresenter = new MyScalePresenter(new MyScaleView() {
+        @Override
+        public String getPatientUuid() {
+            return null;
+        }
+
+        @Override
+        public String getStatus() {
+            return null;
+        }
+
+        @Override
+        public String getPage() {
+            return null;
+        }
+
+        @Override
+        public String getPagecount() {
+            return null;
+        }
+
+        @Override
+        public void LoadDate(ResultModel<List<MyScaleBean>> model) {
+
+        }
+
+        @Override
+        public String paperId() {
+            return mPaperId;
+        }
+
+        @Override
+        public String paperUserId() {
+            return mPaperUserID;
+        }
+
+        @Override
+        public String userId() {
+            return (String) PreUtils.getParam(SystemMessagesActivity.this, "patientuuid", "0");
+        }
+
+        @Override
+        public void LoadScaleDetailsData(ResultModel<ScaleDetailBean> model) {
+            //跳转到医生量表页面
+            Intent intentScale = new Intent(SystemMessagesActivity.this, ScaleDetailActivity.class);
+            intentScale.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            intentScale.putExtra("doctorScale", "doctorScale");
+            intentScale.putExtra("scaleDetail", model.getData());
+            intentScale.putExtra("paperUserID", mPaperUserID);
+            startActivity(intentScale);
+
+        }
+
+        @Override
+        public String getQuestionArr() {
+            return null;
+        }
+
+        @Override
+        public void LoadScaleDetailsCommit(ResultModel model) {
+
+        }
+
+        @Override
+        public void showProgress() {
+
+        }
+
+        @Override
+        public void hideProgress() {
+
+        }
+
+        @Override
+        public void onViewFailure(ResultModel model) {
+
+        }
+
+        @Override
+        public void onServerFailure(String e) {
+
+        }
+    });
+    //系统消息已读
+    InformationPresenter mPresenter = new InformationPresenter(new InformationSysMsgRdView() {
+        @Override
+        public String getMessageId() {
+            return mMessageUuid;
+        }
+
+        @Override
+        public void getSystemMessageRead(ResultModel<InfoUserSystemMsgListBean> model) {
+
+        }
+
+        @Override
+        public void showProgress() {
+
+        }
+
+        @Override
+        public void hideProgress() {
+
+        }
+
+        @Override
+        public void onViewFailure(ResultModel model) {
+
+        }
+
+        @Override
+        public void onServerFailure(String e) {
+
+        }
+    });
+
 
     class ViewHolder extends RecyclerView.ViewHolder {
         @Bind({R.id.tv_doctor_notice_num, R.id.tv_doctor_notic_title, R.id.tv_doctor_notice_date,R.id.tv_doctor_notice_content})
@@ -120,14 +243,57 @@ public class SystemMessagesActivity extends BaseActivity {
                 @Override
                 public void onClick(View v) {
                     //条目点击
-                    Intent intent = new Intent(SystemMessagesActivity.this, DoctorNoticeDetailActivity.class);
+                    int service_type = mModel.getService_type();
+                    String service_uuid = mModel.getService_uuid();
+                    //设置系统消息为已读
                     mMessageUuid = mModel.getUuid();
-                    Log.i("msgUuid==", mMessageUuid);
-                    intent.putExtra("isSystemMsg", "isSystemMsg");
-                    intent.putExtra("title", mModel.getTitle());
-                    intent.putExtra("context", mModel.getContent());
-                    intent.putExtra("messageUuid", mMessageUuid);
-                    startActivity(intent);
+                    mPresenter.getSystemMsgRead();
+//                    Log.i("paperID===", mPaperId);
+//                    Log.i("PaperUserID===", mPaperUserID);
+                    switch (service_type) {
+                        //量表详情
+                        case 1018:
+                            mPaperId = service_uuid.substring(0, service_uuid.indexOf("&"));
+                            mPaperUserID = service_uuid.substring(service_uuid.indexOf("&"));
+                            mScalePresenter.VisitScaleDetailsData();
+                            break;
+                        case 1001:
+                            //跳转病历门诊信息界面
+                            Intent intentO = new Intent(SystemMessagesActivity.this, OutpatientInformationListActivity.class);
+                            intentO.putExtra("outPatient", "outPatient");
+                           startActivity(intentO);
+                            break;
+                        case 1002:
+                            //跳转到出院小结信息界面
+                            Intent intentL = new Intent(SystemMessagesActivity.this, LeaveHospitalInfoListActivity.class);
+                            intentL.putExtra("leaveHospital", "leaveHospital");
+                           startActivity(intentL);
+                            break;
+                        case 1022:
+                            //跳转到检查报告单界面
+                            Intent intentI = new Intent(SystemMessagesActivity.this, InspectionReportInfoListActivity.class);
+                            startActivity(intentI);
+                            break;
+                        case 1006:
+                            //跳转到用药记录方案信息界面
+                            Intent intentP = new Intent(SystemMessagesActivity.this, PharmacyPlanRecordInfoListActivity.class);
+                            startActivity(intentP);
+                            break;
+                        case 1007:
+                            //跳转到身体症状记录信息界面
+                            Intent intentS = new Intent(SystemMessagesActivity.this, SymgraphyInfoListActivity.class);
+                            startActivity(intentS);
+                            break;
+
+                    }
+//                    Intent intent = new Intent(SystemMessagesActivity.this, DoctorNoticeDetailActivity.class);
+//                    mMessageUuid = mModel.getUuid();
+//                    Log.i("msgUuid==", mMessageUuid);
+//                    intent.putExtra("isSystemMsg", "isSystemMsg");
+//                    intent.putExtra("title", mModel.getTitle());
+//                    intent.putExtra("context", mModel.getContent());
+//                    intent.putExtra("messageUuid", mMessageUuid);
+//                    startActivity(intent);
 
                 }
             });

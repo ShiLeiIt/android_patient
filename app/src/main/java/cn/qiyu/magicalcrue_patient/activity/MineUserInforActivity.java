@@ -161,12 +161,12 @@ public class MineUserInforActivity extends BaseActivity implements View.OnClickL
         }
         mTvSelectDate.setText(mUserInfor.getBirthday());
         //头像保存
-        String mFileId = (String)PreUtils.getParam(MineUserInforActivity.this, "mFileId", "");
-        if (!mFileId.equals("")) {
-            Log.i("mFileId============", mFileId);
-            String path = ApiService.GET_IMAGE_ICON + mFileId;
+//        String mFileId = (String)PreUtils.getParam(MineUserInforActivity.this, "mFileId", "");
+//        if (!mFileId.equals("")) {
+//            Log.i("mFileId============", mFileId);
+            String path = ApiService.GET_IMAGE_ICON + mUserInfor.getPhotoPath();
             DisplayHelper.loadGlide(MineUserInforActivity.this, path, mCivHead);
-        }
+//        }
     }
 
     private void showToast(String msg) {

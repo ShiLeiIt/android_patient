@@ -13,15 +13,19 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.greenrobot.eventbus.EventBus;
+
 import java.util.List;
 
 import cn.qiyu.magicalcrue_patient.Api.ApiService;
 import cn.qiyu.magicalcrue_patient.R;
 import cn.qiyu.magicalcrue_patient.activity.CaseHistoryActivity;
 import cn.qiyu.magicalcrue_patient.activity.FollowUpMessageDetailActivity;
+import cn.qiyu.magicalcrue_patient.activity.LoginActivity;
 import cn.qiyu.magicalcrue_patient.activity.MinePatientDataActivity;
 import cn.qiyu.magicalcrue_patient.activity.MineUserInforActivity;
 import cn.qiyu.magicalcrue_patient.activity.PatientDataActivity;
+import cn.qiyu.magicalcrue_patient.activity.RegisterActivity;
 import cn.qiyu.magicalcrue_patient.activity.UserInforActivity;
 import cn.qiyu.magicalcrue_patient.home.HomeNumView;
 import cn.qiyu.magicalcrue_patient.home.HomePresenter;
@@ -151,6 +155,9 @@ public class MineFragment extends Fragment implements View.OnClickListener {
 //                PreUtils.clearUserInfomation(getActivity());
                 PreUtils.setParam(getActivity(), "userperfect", 0);
                 PreUtils.setParam(getActivity(), "uuid", "");
+                Intent intent = new Intent(getActivity(), LoginActivity.class);
+                intent.putExtra("login", "login");
+                startActivity(intent);
 //                PreUtils.setParam(getActivity(),"jpushId","");
                 ActivityManagerTool.getActivityManager().exit();
             }
@@ -269,8 +276,12 @@ public class MineFragment extends Fragment implements View.OnClickListener {
         }
     });
 
-
-
+    @Override
+    public void onResume() {
+        super.onResume();
+        tagName = "3";
+        mMinePresenter.getUserBasicInfor();
+    }
 
     @Override
     public void onClick(View v) {

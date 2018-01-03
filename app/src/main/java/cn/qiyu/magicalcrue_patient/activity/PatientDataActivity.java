@@ -214,7 +214,7 @@ public class PatientDataActivity extends BaseActivity {
 
         @Override
         public String getNative_place_cd() {
-            if (null == mAddresscode)
+            if (null == mAddresscode )
                 return mPatientInfor.getNative_place_cd();
             return mAddresscode;
         }

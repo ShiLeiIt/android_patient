@@ -171,6 +171,8 @@
         <!--医生个人主页-->
         <activity android:name=".activity.DoctorInformationActivity"/>
         <activity android:name=".activity.PatientDataRegisterActivity"/>
+        <!--登录界面-->
+        <activity android:name=".activity.LoginActivity"/>
 
 
 
