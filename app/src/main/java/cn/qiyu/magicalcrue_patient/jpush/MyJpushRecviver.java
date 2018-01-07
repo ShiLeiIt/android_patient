@@ -223,6 +223,7 @@ public class MyJpushRecviver extends BroadcastReceiver {
                             Intent intentI = new Intent(context, InspectionReportInfoListActivity.class);
                             intentI.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                             intentI.putExtras(bundle);
+
                             context.startActivity(intentI);
 
                         } else if (mMedicalType.equals("1006")) {
@@ -238,13 +239,16 @@ public class MyJpushRecviver extends BroadcastReceiver {
                             intentS.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                             intentS.putExtras(bundle);
                             context.startActivity(intentS);
-
                         }
 
                         break;
                     case 7:
                     //加入随访
-
+                        Intent intentS = new Intent(context, MainActivity.class);
+                        EventBus.getDefault().post("isAudit");
+                        intentS.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        //intentS.putExtra("audit","isAudit");
+                        context.startActivity(intentS);
 
                         break;
                     case 8:

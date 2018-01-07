@@ -22,6 +22,8 @@ public class PreUtils {
 		editor.putString("token","");
 		editor.putString("userperfect","");
 		editor.putString("userid","");
+		editor.putString("patientuuid", "");
+		editor.putString("doctorUuid", "");
 		editor.commit();
 
 	}

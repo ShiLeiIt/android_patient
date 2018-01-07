@@ -135,7 +135,10 @@
         <!--医院列表-->
         <activity android:name=".activity.HospitalListActivity"/>
         <!--添加出院小结-->
-        <activity android:name=".activity.AddLeaveHospitalDataActivity"/>
+        <activity android:name=".activity.AddLeaveHospitalDataActivity"
+                  android:windowSoftInputMode="adjustResize"
+
+            />
         <!--用药方案记录-->
         <activity android:name=".activity.PharmacyPlanRecordInfoListActivity"
                   android:launchMode="singleTop"

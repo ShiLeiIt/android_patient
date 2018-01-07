@@ -2,7 +2,10 @@ package cn.qiyu.magicalcrue_patient.activity;
 
 import android.app.Dialog;
 import android.content.Intent;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentActivity;
 
@@ -18,6 +21,8 @@ import android.widget.Toast;
 
 import com.startsmake.mainnavigatetabbar.widget.MainNavigateTabBar;
 
+import org.greenrobot.eventbus.EventBus;
+
 import cn.qiyu.magicalcrue_patient.MyApplication;
 import cn.qiyu.magicalcrue_patient.R;
 import cn.qiyu.magicalcrue_patient.base.BaseActivity;
@@ -25,6 +30,7 @@ import cn.qiyu.magicalcrue_patient.fragment.HomePageFragment;
 import cn.qiyu.magicalcrue_patient.fragment.InformationFragment;
 import cn.qiyu.magicalcrue_patient.fragment.MineFragment;
 import cn.qiyu.magicalcrue_patient.fragment.VisitFragment;
+import cn.qiyu.magicalcrue_patient.utils.NotificationsUtils;
 import cn.qiyu.magicalcrue_patient.utils.PreUtils;
 
 import static android.R.attr.type;
@@ -65,10 +71,17 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
         mNavigateTabBar.addTab(MineFragment.class, new MainNavigateTabBar.TabParam(R.drawable.tab_mine_normal, R.drawable.tab_mine_select, TAG_PAGE_PERSON));
         mNavigateTabBar.setCurrentSelectedTab(R.drawable.tab_mine_select);
-
+        //注册EventBus，在开始的位置
+        //EventBus.getDefault().register(this);
 
     }
 
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        //注册EventBus，在开始的位置
+        //EventBus.getDefault().register(this);
+    }
 
     //
     public void changFragment(String title) {
@@ -167,6 +180,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         p1.width = (int) (dm.widthPixels * 1.0);
         p1.alpha = 1.0f;
         dialog1Window.setAttributes(p1);
+
     }
 
 
@@ -223,5 +237,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 //        }
 
 //    }
+
+
 }
 

@@ -1,19 +1,15 @@
 package cn.qiyu.magicalcrue_patient.fragment;
 
-import android.app.Activity;
 import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.view.ScrollingView;
-import android.text.TextUtils;
+import android.support.v7.widget.CardView;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewTreeObserver;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -31,13 +27,11 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import cn.qiyu.magicalcrue_patient.Api.ApiService;
 import cn.qiyu.magicalcrue_patient.R;
 import cn.qiyu.magicalcrue_patient.activity.AllServeActivity;
 import cn.qiyu.magicalcrue_patient.activity.CourseActivity;
 import cn.qiyu.magicalcrue_patient.activity.DoctorListActivity;
 import cn.qiyu.magicalcrue_patient.activity.FollowUpMessageDetailActivity;
-import cn.qiyu.magicalcrue_patient.activity.MainActivity;
 import cn.qiyu.magicalcrue_patient.activity.MedicalActivity;
 import cn.qiyu.magicalcrue_patient.activity.MyScaleActivity;
 import cn.qiyu.magicalcrue_patient.activity.NewCourseActivity;
@@ -55,10 +49,8 @@ import cn.qiyu.magicalcrue_patient.utils.DisplayHelper;
 import cn.qiyu.magicalcrue_patient.utils.ListViewUtility;
 import cn.qiyu.magicalcrue_patient.utils.PreUtils;
 import cn.qiyu.magicalcrue_patient.utils.Utils;
-import cn.qiyu.magicalcrue_patient.view.LLImageView;
 import cn.qiyu.magicalcrue_patient.view.LLTextView;
 import cn.qiyu.magicalcrue_patient.view.LLTextViewNew;
-import cn.qiyu.magicalcrue_patient.view.ListViewForScrollView;
 import cn.qiyu.magicalcrue_patient.zxing.activity.CaptureActivity;
 import de.hdodenhof.circleimageview.CircleImageView;
 import pub.devrel.easypermissions.AppSettingsDialog;
@@ -74,8 +66,10 @@ public class HomePageFragment extends Fragment implements View.OnClickListener, 
     TextView mTvMydocter;
     @Bind(R.id.tv_mydocter_team)
     TextView mTvMydocterTeam;
-    @Bind({R.id.iv_doctor_icon_one,R.id.iv_doctor_icon_two,R.id.iv_doctor_icon_three,R.id.iv_doctor_icon_four,R.id.iv_doctor_icon_five})
+    @Bind({R.id.iv_doctor_icon_one, R.id.iv_doctor_icon_two, R.id.iv_doctor_icon_three, R.id.iv_doctor_icon_four, R.id.iv_doctor_icon_five})
     CircleImageView[] civ;
+    @Bind(R.id.cv_home)
+    CardView mCvHome;
 
     //打开扫描界面请求码
     private int REQUEST_CODE = 0x01;
@@ -108,14 +102,13 @@ public class HomePageFragment extends Fragment implements View.OnClickListener, 
     private LinearLayout mLlUnbindDoctor;
     private LinearLayout mLlBindDoctor;
     private ImageView mIvUnbindDoctor;
-
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater,
                              @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_homepage, container, false);
-
+        ButterKnife.bind(this, view);
         //注册EventBus，在开始的位置
         EventBus.getDefault().register(this);
 //        LLImageView viewById = (LLImageView) view.findViewById(R.id.iv_doctor_icon);
@@ -162,7 +155,6 @@ public class HomePageFragment extends Fragment implements View.OnClickListener, 
 //        llTvUnscramble.setOnClickListener(this);
 
 
-
         mTvCourse.setOnClickListener(this);
         mTvMedical.setOnClickListener(this);
         mTvOffline.setOnClickListener(this);
@@ -188,7 +180,7 @@ public class HomePageFragment extends Fragment implements View.OnClickListener, 
         mHomePresenter.getDoctorTeamInfo();
         mHomePresenter.getHomeBanner();
         mHomePresenter.HomeLoadNumData();
-        ButterKnife.bind(this, view);
+
 
 //        Intent intent = getActivity().getIntent();
 //        int type = intent.getIntExtra("type", 0);
@@ -196,13 +188,14 @@ public class HomePageFragment extends Fragment implements View.OnClickListener, 
 //            MainActivity activity = (MainActivity) getActivity();
 //            activity.changFragment("消息");
 //        }
+        mCvHome.setRadius(10);
         return view;
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        sv_home.scrollTo(0,0);
+        sv_home.scrollTo(0, 0);
         sv_home.setDescendantFocusability(ViewGroup.FOCUS_BEFORE_DESCENDANTS);
         sv_home.setFocusable(true);
         sv_home.setFocusableInTouchMode(true);
@@ -233,6 +226,7 @@ public class HomePageFragment extends Fragment implements View.OnClickListener, 
         mHomePresenter.getDoctorTeamInfo();
         mHomePresenter.getHomeBanner();
         mHomePresenter.HomeLoadNumData();
+
 //        if (!TextUtils.isEmpty(mErrorCode)) {
 //
 //        if (mErrorCode.equals("1001")) {
@@ -248,27 +242,35 @@ public class HomePageFragment extends Fragment implements View.OnClickListener, 
 
     }
 
+
+
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEvent(String event) {
         //已经好了，你发的什么，这里接收的就是什么，类型要一致
-        String doctorUuidUrl = event;
-        if (doctorUuidUrl.length() > 2) {
-            String[] split = doctorUuidUrl.split("=");
-            if (split == null || split.length < 1) {
-                return;
-            }
-            if (doctorUuidUrl.contains("http://www.mircalcure.com/index.html?doctor")) {
-                mDoctorUuid = split[1].trim();
-                //将医生uuid保存
-                PreUtils.setParam(getActivity(), "doctorUuid", mDoctorUuid);
-                Log.i("doctorUuid=======", mDoctorUuid);
-                mHomePresenter.getDoctorQRcode();
-                Toast.makeText(getActivity(), "医生随访二维码，等待医生审核", Toast.LENGTH_SHORT).show();
-            } else {
-                Toast.makeText(getActivity(), "非医生随访二维码", Toast.LENGTH_SHORT).show();
-            }
-        } else {
+        if (event.equals("isAudit")) {
             mHomePresenter.HomeLoadNumData();
+            mHomePresenter.getDoctorTeamInfo();
+
+        } else {
+            String doctorUuidUrl = event;
+            if (doctorUuidUrl.length() > 2) {
+                String[] split = doctorUuidUrl.split("=");
+                if (split == null || split.length < 1) {
+                    return;
+                }
+                if (doctorUuidUrl.contains("http://www.mircalcure.com/index.html?doctor")) {
+                    mDoctorUuid = split[1].trim();
+                    //将医生uuid保存
+                    PreUtils.setParam(getActivity(), "doctorUuid", mDoctorUuid);
+                    Log.i("doctorUuid=======", mDoctorUuid);
+                    mHomePresenter.getDoctorQRcode();
+                    Toast.makeText(getActivity(), "医生随访二维码，等待医生审核", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(getActivity(), "非医生随访二维码", Toast.LENGTH_SHORT).show();
+                }
+            } else {
+                mHomePresenter.HomeLoadNumData();
+            }
         }
 
     }
@@ -392,12 +394,13 @@ public class HomePageFragment extends Fragment implements View.OnClickListener, 
 //            Toast.makeText(getActivity(), "失败-=-=-", Toast.LENGTH_SHORT).show();
 
         }
+
         @Override
         public String getUserId() {
             Log.i("userUuid", (String) PreUtils.getParam(getActivity(), "uuid", "0"));
 //                return "5d9976d752c541c5a4608bc2758c54d7";
             //用户uuid
-            return (String) PreUtils.getParam(getActivity(),"uuid","0");
+            return (String) PreUtils.getParam(getActivity(), "uuid", "0");
 
         }
 
@@ -422,10 +425,12 @@ public class HomePageFragment extends Fragment implements View.OnClickListener, 
 
                 mTv_newReport.setText(String.valueOf(numBean.getData().getNewFollowUpCount()));
 
-                    mTv_course.setText(String.valueOf(numBean.getData().getCourseCount()));
+                mTv_course.setText(String.valueOf(numBean.getData().getCourseCount()));
 //                mTv_unScra.setText(String.valueOf(numBean.getData().getPendingPaymentCount()));
 //                    mTv_doctor_name.setText(numBean.getData().get);
-
+            /*    mLlUnbindDoctor.setVisibility(View.GONE);
+                mLlBindDoctor.setVisibility(View.VISIBLE);
+                mIv_richsan.setVisibility(View.GONE);*/
             } else {
 //                Toast.makeText(getActivity(), "1111", Toast.LENGTH_SHORT).show();
             }
@@ -486,10 +491,11 @@ public class HomePageFragment extends Fragment implements View.OnClickListener, 
                 String path = "";
                 if (null == model.getData().getDoctorTeamList().get(i).getPhotoPathImg())
                     path = "";
-                else path =  model.getData().getDoctorTeamList().get(i).getPhotoPathImg();
+                else path = model.getData().getDoctorTeamList().get(i).getPhotoPathImg();
                 DisplayHelper.loadGlide(getActivity(), path, civ[i]);
             }
-            }
+        }
+
         //获取Banner
         @Override
         public String getType() {

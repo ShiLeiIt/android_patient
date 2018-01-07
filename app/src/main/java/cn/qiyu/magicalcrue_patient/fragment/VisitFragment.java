@@ -168,11 +168,13 @@ public class VisitFragment extends Fragment implements View.OnClickListener {
     MinePresenter mMinePresenter = new MinePresenter(new MineInforView() {
         @Override
         public String getUserUuid() {
+            Log.i("小白", "getUserUuid: "+(String) PreUtils.getParam(getActivity(), "uuid", "0"));
             return (String) PreUtils.getParam(getActivity(), "uuid", "0");
         }
 
         @Override
         public String getPatientBasicUuid() {
+            Log.i("小白", "getUserUuid: "+(String) PreUtils.getParam(getActivity(), "patientuuid", "0"));
             return (String) PreUtils.getParam(getActivity(), "patientuuid", "0");
         }
 
@@ -220,6 +222,9 @@ public class VisitFragment extends Fragment implements View.OnClickListener {
     HomePresenter homePresenter = new HomePresenter(new HomeNumView() {
         @Override
         public String getUserId() {
+            Log.i("小白", "getUserId: "+(String) PreUtils.getParam(getActivity(), "uuid", "0"));
+
+
             return (String) PreUtils.getParam(getActivity(), "uuid", "0");
         }
 

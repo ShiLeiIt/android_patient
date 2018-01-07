@@ -23,6 +23,7 @@ public class LLTextView extends LinearLayout {
     private TextView mTopLeft;
     private TextView mTopRight;
     private TextView mBottom;
+    private  int topColor;
     public LLTextView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
         mContext = context;
@@ -40,6 +41,8 @@ public class LLTextView extends LinearLayout {
                 case R.styleable.LLTextView_bottomName:
                     mBottomName = typedArray.getString(attr);
                     break;
+                case R.styleable.LLTextView_topTestColor:
+                    topColor=typedArray.getColor(attr,0);
             }
         }
         typedArray.recycle();
@@ -53,5 +56,9 @@ public class LLTextView extends LinearLayout {
         mTopLeft.setText(TextUtils.isEmpty(mTopLeftName)?"": mTopLeftName);
         mTopRight.setText(TextUtils.isEmpty(mTopRightName)?"": mTopRightName);
         mBottom.setText(TextUtils.isEmpty(mBottomName)?"": mBottomName);
+        mTopLeft.setTextColor(topColor);
+        mTopRight.setTextColor(topColor);
+
     }
+
 }

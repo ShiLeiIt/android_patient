@@ -29,6 +29,8 @@ import cn.qiyu.magicalcrue_patient.activity.RegisterActivity;
 import cn.qiyu.magicalcrue_patient.activity.UserInforActivity;
 import cn.qiyu.magicalcrue_patient.home.HomeNumView;
 import cn.qiyu.magicalcrue_patient.home.HomePresenter;
+import cn.qiyu.magicalcrue_patient.mine.LogoutPresenter;
+import cn.qiyu.magicalcrue_patient.mine.LogoutView;
 import cn.qiyu.magicalcrue_patient.mine.MineInforView;
 import cn.qiyu.magicalcrue_patient.mine.MinePresenter;
 import cn.qiyu.magicalcrue_patient.model.DoctorTeamBean;
@@ -152,14 +154,16 @@ public class MineFragment extends Fragment implements View.OnClickListener {
         mIv_setting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                PreUtils.clearUserInfomation(getActivity());
-                PreUtils.setParam(getActivity(), "userperfect", 0);
-                PreUtils.setParam(getActivity(), "uuid", "");
+                PreUtils.clearUserInfomation(getActivity());
+
+//                PreUtils.setParam(getActivity(), "userperfect", 0);
+//                PreUtils.setParam(getActivity(), "uuid", "");
                 Intent intent = new Intent(getActivity(), LoginActivity.class);
                 intent.putExtra("login", "login");
                 startActivity(intent);
 //                PreUtils.setParam(getActivity(),"jpushId","");
-                ActivityManagerTool.getActivityManager().exit();
+                logoutPresenter.getLogout();
+
             }
         });
 
@@ -204,6 +208,49 @@ public class MineFragment extends Fragment implements View.OnClickListener {
         return view;
 
     }
+
+    LogoutPresenter logoutPresenter = new LogoutPresenter(new LogoutView() {
+        @Override
+        public String getUserUuid() {
+            return (String)PreUtils.getParam(getActivity(),"uuid","0");
+        }
+
+        @Override
+        public String getType() {
+            return "1";
+        }
+
+        @Override
+        public void Logout(ResultModel model) {
+            getActivity().finish();
+//            ActivityManagerTool.getActivityManager().exit();
+//            Toast.makeText(getActivity(), "退出成功", Toast.LENGTH_SHORT).show();
+            Log.i("tuichu====", "退出成功");
+        }
+
+        @Override
+        public void showProgress() {
+
+        }
+
+        @Override
+        public void hideProgress() {
+
+        }
+
+        @Override
+        public void onViewFailure(ResultModel model) {
+            Log.i("tuichu===111=", "退出");
+//            Toast.makeText(getActivity(), "111111"+model.getMessage(), Toast.LENGTH_SHORT).show();
+
+        }
+
+        @Override
+        public void onServerFailure(String e) {
+            Log.i("tuichu===222=", "退出s");
+//            Toast.makeText(getActivity(), "22222"+e, Toast.LENGTH_SHORT).show();
+        }
+    });
 
     MinePresenter mMinePresenter = new MinePresenter(new MineInforView() {
         @Override

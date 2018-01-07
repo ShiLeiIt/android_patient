@@ -111,6 +111,8 @@ ApiService {
     //随访对话详情
     String GET_FOLLOW_UP_DIALOGUELIST = "patientInfo/getFollowUpDialogueList";
     //评论随访对话
+
+
     String API_COMMENT_VISIT_DIALOGUE = "patientInfo/setConsultationComment";
     //评论列表
     String API_COMMENT_LIST = "patientInfo/getCommentList";
@@ -152,6 +154,8 @@ ApiService {
     String API_FOLLOW_UP_MESSAGE_READ = "message/setUserMessageReaded";
     //消息界面系统消息已读
     String API_SYSTEMMSG_READ = "message/getMessageDetail";
+    //退出登录
+    String API_LOGOUT = "patientInfo/userLogout";
 
 
 
@@ -660,6 +664,12 @@ ApiService {
     Call<ResultModel<InfoUserSystemMsgListBean>> getSystemMsgRead(
             @Field("messageId") String messageId);
 
-
+    /**
+     * 退出登录
+     */
+    @POST(API_LOGOUT)
+    @FormUrlEncoded
+    Call<ResultModel> getLogout(
+            @Field("uuid") String userUuid, @Field("type") String type);
 
 }

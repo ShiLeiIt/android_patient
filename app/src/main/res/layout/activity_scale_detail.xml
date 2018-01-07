@@ -19,6 +19,7 @@
             android:id="@+id/iv_exit_mine"
             android:layout_width="31dp"
             android:layout_height="31dp"
+            android:visibility="gone"
             android:layout_centerVertical="true"
             android:layout_marginLeft="6dp"
             android:src="@drawable/iv_back"/>

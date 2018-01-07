@@ -4,6 +4,7 @@
         <attr name="topLeftName" format="string" />
         <attr name="topRightName" format="string" />
         <attr name="bottomName" format="string" />
+        <attr name="topTestColor" format="color"/>
     </declare-styleable>
 
 

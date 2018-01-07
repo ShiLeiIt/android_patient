@@ -52,6 +52,8 @@ public class LeaveHospitalInfoListActivity extends BaseActivity {
 
     }
 
+
+
     CaseHistoryPresenter mCaseHistoryPresenter = new CaseHistoryPresenter(new CaseHistoryView() {
         @Override
         public String getPatientUuid() {

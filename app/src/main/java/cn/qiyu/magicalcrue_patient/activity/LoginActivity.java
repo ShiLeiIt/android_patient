@@ -1,8 +1,10 @@
 package cn.qiyu.magicalcrue_patient.activity;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.provider.Settings;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -17,10 +19,13 @@ import butterknife.OnClick;
 import cn.jpush.android.api.JPushInterface;
 import cn.qiyu.magicalcrue_patient.R;
 import cn.qiyu.magicalcrue_patient.base.BaseActivity;
+import cn.qiyu.magicalcrue_patient.mine.LogoutPresenter;
+import cn.qiyu.magicalcrue_patient.mine.LogoutView;
 import cn.qiyu.magicalcrue_patient.model.RegisterLoginBean;
 import cn.qiyu.magicalcrue_patient.model.ResultModel;
 import cn.qiyu.magicalcrue_patient.register_login.RegisterPresenter;
 import cn.qiyu.magicalcrue_patient.register_login.RegisterVmView;
+import cn.qiyu.magicalcrue_patient.utils.NotificationsUtils;
 import cn.qiyu.magicalcrue_patient.utils.PreUtils;
 import cn.qiyu.magicalcrue_patient.utils.Utils;
 
@@ -58,6 +63,7 @@ public class LoginActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
         ButterKnife.bind(this);
+       // Toast.makeText(this, "1111111", Toast.LENGTH_SHORT).show();
         String uuid = (String) PreUtils.getParam(LoginActivity.this, "uuid", "0");
 
 
@@ -65,6 +71,7 @@ public class LoginActivity extends BaseActivity {
         if (login.equals("login")) {
             mIv_login.setVisibility(View.VISIBLE);
             mIvRegister.setVisibility(View.GONE);
+
         }
 
         if(null!=uuid){
@@ -89,6 +96,8 @@ public class LoginActivity extends BaseActivity {
         }
 
     }
+
+
 
         //构造CountDownTimer对象
         mTimeCount = new TimeCount(60000, 1000);
