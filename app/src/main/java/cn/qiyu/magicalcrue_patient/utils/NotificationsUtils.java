@@ -10,7 +10,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 /**
- * Created by ShiLei on 2018/1/7.
+ * Created by Administrator on 2018/1/8.
  */
 
 public class NotificationsUtils {
@@ -34,17 +34,15 @@ public class NotificationsUtils {
             Field opPostNotificationValue = appOpsClass.getDeclaredField(OP_POST_NOTIFICATION);
 
             int value = (Integer) opPostNotificationValue.get(Integer.class);
-            try {
-                return ((Integer) checkOpNoThrowMethod.invoke(mAppOps, value, uid, pkg) == AppOpsManager.MODE_ALLOWED);
-            } catch (InvocationTargetException e) {
-                e.printStackTrace();
-            }
+            return ((Integer) checkOpNoThrowMethod.invoke(mAppOps, value, uid, pkg) == AppOpsManager.MODE_ALLOWED);
 
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         } catch (NoSuchMethodException e) {
             e.printStackTrace();
         } catch (NoSuchFieldException e) {
+            e.printStackTrace();
+        } catch (InvocationTargetException e) {
             e.printStackTrace();
         } catch (IllegalAccessException e) {
             e.printStackTrace();

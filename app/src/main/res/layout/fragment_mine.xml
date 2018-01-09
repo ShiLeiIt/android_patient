@@ -17,6 +17,7 @@
             android:background="#C6C6">
 
             <ImageView
+                android:visibility="invisible"
                 android:id="@+id/iv_mine_setting"
                 android:layout_width="23dp"
                 android:layout_height="22dp"
@@ -110,6 +111,15 @@
         <include
             android:id="@+id/il_service"
             layout="@layout/mine_list_item"/>
-
+        <View style="@style/view_rule16"/>
+        <TextView
+            android:background="@color/app_white"
+            android:id="@+id/tv_exit_app"
+            android:textSize="18dp"
+            android:gravity="center"
+            android:textColor="#666666"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:text="退出登录"/>
     </LinearLayout>
 </FrameLayout>

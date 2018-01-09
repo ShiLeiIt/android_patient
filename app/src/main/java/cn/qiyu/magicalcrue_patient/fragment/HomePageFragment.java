@@ -36,6 +36,7 @@ import cn.qiyu.magicalcrue_patient.activity.MedicalActivity;
 import cn.qiyu.magicalcrue_patient.activity.MyScaleActivity;
 import cn.qiyu.magicalcrue_patient.activity.NewCourseActivity;
 import cn.qiyu.magicalcrue_patient.activity.NewFollowupReportActivity;
+import cn.qiyu.magicalcrue_patient.activity.NotificationDialogActivity;
 import cn.qiyu.magicalcrue_patient.activity.OffLineActivity;
 import cn.qiyu.magicalcrue_patient.adapter.AppAdapter;
 import cn.qiyu.magicalcrue_patient.home.HomeNumView;
@@ -109,6 +110,7 @@ public class HomePageFragment extends Fragment implements View.OnClickListener, 
 
         View view = inflater.inflate(R.layout.fragment_homepage, container, false);
         ButterKnife.bind(this, view);
+
         //注册EventBus，在开始的位置
         EventBus.getDefault().register(this);
 //        LLImageView viewById = (LLImageView) view.findViewById(R.id.iv_doctor_icon);
@@ -189,6 +191,13 @@ public class HomePageFragment extends Fragment implements View.OnClickListener, 
 //            activity.changFragment("消息");
 //        }
         mCvHome.setRadius(10);
+        Boolean user_first = (Boolean) PreUtils.getParam(getActivity(),"user_first",true);
+        if(user_first){//第一次
+
+            PreUtils.setParam(getActivity(),"user_first",false);
+            startActivity(new Intent(getActivity(),NotificationDialogActivity.class));
+            //Toast.makeText(getActivity(), "第一次", Toast.LENGTH_SHORT).show();
+        }
         return view;
     }
 

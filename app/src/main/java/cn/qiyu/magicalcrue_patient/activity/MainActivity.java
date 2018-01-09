@@ -2,15 +2,10 @@ package cn.qiyu.magicalcrue_patient.activity;
 
 import android.app.Dialog;
 import android.content.Intent;
-import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
-import android.provider.Settings;
 import android.support.annotation.Nullable;
-import android.support.v4.app.FragmentActivity;
 
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.Window;
@@ -21,19 +16,12 @@ import android.widget.Toast;
 
 import com.startsmake.mainnavigatetabbar.widget.MainNavigateTabBar;
 
-import org.greenrobot.eventbus.EventBus;
-
-import cn.qiyu.magicalcrue_patient.MyApplication;
 import cn.qiyu.magicalcrue_patient.R;
 import cn.qiyu.magicalcrue_patient.base.BaseActivity;
 import cn.qiyu.magicalcrue_patient.fragment.HomePageFragment;
 import cn.qiyu.magicalcrue_patient.fragment.InformationFragment;
 import cn.qiyu.magicalcrue_patient.fragment.MineFragment;
 import cn.qiyu.magicalcrue_patient.fragment.VisitFragment;
-import cn.qiyu.magicalcrue_patient.utils.NotificationsUtils;
-import cn.qiyu.magicalcrue_patient.utils.PreUtils;
-
-import static android.R.attr.type;
 
 /**
  * Created by Administrator on 2017/11/13.

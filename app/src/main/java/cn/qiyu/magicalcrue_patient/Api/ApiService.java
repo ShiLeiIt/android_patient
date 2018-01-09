@@ -52,9 +52,9 @@ ApiService {
      * 每一个 api 地址都以 / 结尾
      */
     //正式服务器
-//    String BASE_URL = "http://api2.mircalcure.com/zlapi/";
+   String BASE_URL = "http://api2.mircalcure.com/zlapi/";
     //测试服务器
-    String BASE_URL = "http://118.178.135.207:9008/zlapi/";
+    //String BASE_URL = "http://118.178.135.207:9008/zlapi/";
     String IMAGE_BASE_URL = "http://upload2.mircalcure.com/tumourfile/";
 
     String IMAGE_URL = BASE_URL + "image/";

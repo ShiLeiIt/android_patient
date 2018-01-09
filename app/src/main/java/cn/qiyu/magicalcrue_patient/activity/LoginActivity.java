@@ -1,10 +1,8 @@
 package cn.qiyu.magicalcrue_patient.activity;
 
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
-import android.provider.Settings;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -19,13 +17,10 @@ import butterknife.OnClick;
 import cn.jpush.android.api.JPushInterface;
 import cn.qiyu.magicalcrue_patient.R;
 import cn.qiyu.magicalcrue_patient.base.BaseActivity;
-import cn.qiyu.magicalcrue_patient.mine.LogoutPresenter;
-import cn.qiyu.magicalcrue_patient.mine.LogoutView;
 import cn.qiyu.magicalcrue_patient.model.RegisterLoginBean;
 import cn.qiyu.magicalcrue_patient.model.ResultModel;
 import cn.qiyu.magicalcrue_patient.register_login.RegisterPresenter;
 import cn.qiyu.magicalcrue_patient.register_login.RegisterVmView;
-import cn.qiyu.magicalcrue_patient.utils.NotificationsUtils;
 import cn.qiyu.magicalcrue_patient.utils.PreUtils;
 import cn.qiyu.magicalcrue_patient.utils.Utils;
 

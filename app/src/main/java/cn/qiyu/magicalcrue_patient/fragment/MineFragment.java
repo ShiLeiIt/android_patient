@@ -1,9 +1,9 @@
 package cn.qiyu.magicalcrue_patient.fragment;
 
+import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.app.Fragment;;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,38 +11,28 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import org.greenrobot.eventbus.EventBus;
-
-import java.util.List;
-
+import butterknife.Bind;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 import cn.qiyu.magicalcrue_patient.Api.ApiService;
 import cn.qiyu.magicalcrue_patient.R;
 import cn.qiyu.magicalcrue_patient.activity.CaseHistoryActivity;
-import cn.qiyu.magicalcrue_patient.activity.FollowUpMessageDetailActivity;
 import cn.qiyu.magicalcrue_patient.activity.LoginActivity;
 import cn.qiyu.magicalcrue_patient.activity.MinePatientDataActivity;
 import cn.qiyu.magicalcrue_patient.activity.MineUserInforActivity;
-import cn.qiyu.magicalcrue_patient.activity.PatientDataActivity;
-import cn.qiyu.magicalcrue_patient.activity.RegisterActivity;
-import cn.qiyu.magicalcrue_patient.activity.UserInforActivity;
-import cn.qiyu.magicalcrue_patient.home.HomeNumView;
-import cn.qiyu.magicalcrue_patient.home.HomePresenter;
 import cn.qiyu.magicalcrue_patient.mine.LogoutPresenter;
 import cn.qiyu.magicalcrue_patient.mine.LogoutView;
 import cn.qiyu.magicalcrue_patient.mine.MineInforView;
 import cn.qiyu.magicalcrue_patient.mine.MinePresenter;
-import cn.qiyu.magicalcrue_patient.model.DoctorTeamBean;
-import cn.qiyu.magicalcrue_patient.model.HomeBannerBean;
-import cn.qiyu.magicalcrue_patient.model.HomeNumBean;
 import cn.qiyu.magicalcrue_patient.model.PatientInfor;
 import cn.qiyu.magicalcrue_patient.model.ResultModel;
 import cn.qiyu.magicalcrue_patient.model.UserInfor;
-import cn.qiyu.magicalcrue_patient.utils.ActivityManagerTool;
 import cn.qiyu.magicalcrue_patient.utils.DisplayHelper;
 import cn.qiyu.magicalcrue_patient.utils.PreUtils;
 import de.hdodenhof.circleimageview.CircleImageView;
+
+;
 
 /**
  * Created by Administrator on 2017/11/13.
@@ -51,6 +41,8 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class MineFragment extends Fragment implements View.OnClickListener {
 
+    @Bind(R.id.tv_exit_app)
+    TextView mTvExitApp;
     private ImageView mIv_patient_back;
     private ImageView mIv_case_history_back;
     private ImageView mIv_order_back;
@@ -68,13 +60,24 @@ public class MineFragment extends Fragment implements View.OnClickListener {
     private PatientInfor mData;
 
 
-
-
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater,
                              @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_mine, container, false);
+        ButterKnife.bind(this, view);
+        TextView viewById = (TextView) view.findViewById(R.id.tv_exit_app);
+        viewById.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                PreUtils.clearUserInfomation(getActivity());
+                Intent intent = new Intent(getActivity(), LoginActivity.class);
+                intent.putExtra("login", "login");
+                getActivity().startActivity(intent);
+                getActivity().finish();
+
+            }
+        });
         RelativeLayout rl_title_mine = (RelativeLayout) view.findViewById(R.id.rl_title_mine);
 
         RelativeLayout view_patient = (RelativeLayout) view.findViewById(R.id.il_patient);
@@ -158,9 +161,7 @@ public class MineFragment extends Fragment implements View.OnClickListener {
 
 //                PreUtils.setParam(getActivity(), "userperfect", 0);
 //                PreUtils.setParam(getActivity(), "uuid", "");
-                Intent intent = new Intent(getActivity(), LoginActivity.class);
-                intent.putExtra("login", "login");
-                startActivity(intent);
+
 //                PreUtils.setParam(getActivity(),"jpushId","");
                 logoutPresenter.getLogout();
 
@@ -205,6 +206,7 @@ public class MineFragment extends Fragment implements View.OnClickListener {
 
             }
         });
+
         return view;
 
     }
@@ -212,7 +214,7 @@ public class MineFragment extends Fragment implements View.OnClickListener {
     LogoutPresenter logoutPresenter = new LogoutPresenter(new LogoutView() {
         @Override
         public String getUserUuid() {
-            return (String)PreUtils.getParam(getActivity(),"uuid","0");
+            return (String) PreUtils.getParam(getActivity(), "uuid", "0");
         }
 
         @Override
@@ -350,6 +352,7 @@ public class MineFragment extends Fragment implements View.OnClickListener {
 
         }
     }
+
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
@@ -358,4 +361,9 @@ public class MineFragment extends Fragment implements View.OnClickListener {
         }
     }
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        ButterKnife.unbind(this);
+    }
 }

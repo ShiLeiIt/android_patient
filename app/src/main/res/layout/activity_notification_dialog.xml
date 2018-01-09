@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="290dp"
+    android:layout_height="wrap_content"
+    tools:context="cn.qiyu.magicalcrue_patient.activity.NotificationDialogActivity">
+    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical">
+        <TextView android:gravity="center" android:layout_marginLeft="20dp" android:textColor="@color/app_black" android:textSize="16sp" android:text="提示" android:layout_width="match_parent" android:layout_height="50dp" />
+        <View style="@style/view_rule" />
+        - <RelativeLayout android:layout_width="match_parent" android:layout_height="wrap_content">
+        <TextView android:layout_marginTop="10dp" android:layout_marginBottom="10dp" android:layout_width="wrap_content" android:layout_marginLeft="20dp" android:layout_marginRight="20dp" android:layout_height="wrap_content" android:textColor="@color/app_black" android:text="建议将奇遇记加入系统通知，您将收到医生发给您的时实消息。" />
+        <View style="@style/view_rule" />
+    </RelativeLayout>
+        <View style="@style/view_rule" />
+        - <LinearLayout android:layout_width="match_parent" android:layout_height="50dp" android:layout_gravity="bottom">
+        <TextView android:id="@+id/tv_into_notification"  android:clickable="true" android:layout_weight="1" android:layout_width="wrap_content" android:layout_height="match_parent" android:gravity="center" android:text="去加入" android:textColor="@color/app_black" />
+        <View android:layout_width="1dp" android:layout_height="match_parent" android:background="@color/app_gray" />
+        <TextView android:id="@+id/tv_exit_notification"  android:clickable="true" android:layout_weight="1" android:layout_width="wrap_content" android:layout_height="match_parent" android:gravity="center" android:text="以后再说" android:textColor="@color/app_black" />
+    </LinearLayout>
+    </LinearLayout>
+
+</RelativeLayout>
