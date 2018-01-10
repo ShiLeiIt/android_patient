@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.List;
 
@@ -253,9 +254,10 @@ public class SystemMessagesActivity extends BaseActivity {
                     switch (service_type) {
                         //量表详情
                         case 1018:
-                            mPaperId = service_uuid.substring(0, service_uuid.indexOf("&"));
+                            Toast.makeText(SystemMessagesActivity.this, "请转至随访页面查看量表", Toast.LENGTH_SHORT).show();
+                         /*   mPaperId = service_uuid.substring(0, service_uuid.indexOf("&"));
                             mPaperUserID = service_uuid.substring(service_uuid.indexOf("&"));
-                            mScalePresenter.VisitScaleDetailsData();
+                            mScalePresenter.VisitScaleDetailsData();*/
                             break;
                         case 1001:
                             //跳转病历门诊信息界面
