@@ -48,6 +48,7 @@ import cn.qiyu.magicalcrue_patient.model.HomeNumBean;
 import cn.qiyu.magicalcrue_patient.model.ResultModel;
 import cn.qiyu.magicalcrue_patient.utils.DisplayHelper;
 import cn.qiyu.magicalcrue_patient.utils.ListViewUtility;
+import cn.qiyu.magicalcrue_patient.utils.NotificationsUtils;
 import cn.qiyu.magicalcrue_patient.utils.PreUtils;
 import cn.qiyu.magicalcrue_patient.utils.Utils;
 import cn.qiyu.magicalcrue_patient.view.LLTextView;
@@ -194,10 +195,14 @@ public class HomePageFragment extends Fragment implements View.OnClickListener, 
         Boolean user_first = (Boolean) PreUtils.getParam(getActivity(),"user_first",true);
         if(user_first){//第一次
 
-            PreUtils.setParam(getActivity(),"user_first",false);
-            startActivity(new Intent(getActivity(),NotificationDialogActivity.class));
-            //Toast.makeText(getActivity(), "第一次", Toast.LENGTH_SHORT).show();
-        }
+            if (!NotificationsUtils.isNotificationEnabled(getActivity())
+                    ) {
+
+                PreUtils.setParam(getActivity(), "user_first", false);
+                startActivity(new Intent(getActivity(),NotificationDialogActivity.class));
+                    }
+
+            }
         return view;
     }
 

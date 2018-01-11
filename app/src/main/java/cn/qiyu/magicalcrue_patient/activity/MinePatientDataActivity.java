@@ -362,7 +362,7 @@ public class MinePatientDataActivity extends BaseActivity {
                     mAddressname = data.getStringExtra("addressname");
                     mAddresscode = data.getStringExtra("addresscode");
                     mTvSelectCitiy.setText(mAddressname);
-                    Toast.makeText(this, mAddressname, Toast.LENGTH_SHORT).show();
+                   // Toast.makeText(this, mAddressname, Toast.LENGTH_SHORT).show();
                 }
             } else if (requestCode == 0x002) {
                 //患者关系列表返回的名字
