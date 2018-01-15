@@ -84,11 +84,11 @@
 
         <activity android:name=".activity.CourseActivity">
         </activity>
-        <activity android:name=".activity.MedicalActivity">
+        <activity android:name=".activity.LoveActionActivity">
         </activity>
-        <activity android:name=".activity.OffLineActivity">
+        <activity android:name=".activity.VisitActionActivity">
         </activity>
-        <activity android:name=".activity.AllServeActivity">
+        <activity android:name=".activity.MoreActivity">
         </activity>
         <activity android:name=".zxing.activity.CaptureActivity"/>
         <activity android:name=".activity.DoctorListActivity"/>
@@ -180,6 +180,7 @@
         <activity android:name=".activity.NotificationDialogActivity"
                   android:theme="@style/AppDialogActivity"
             />
+        <activity android:name=".activity.RemindActivity"/>
 
 
 

@@ -21,8 +21,11 @@
 
     <string name="course">患教课程</string>
     <string name="medical">医疗机构</string>
+    <string name="loveAction">关爱行动</string>
+    <string name="visitAction">随访行动</string>
     <string name="offline">线下沙龙</string>
     <string name="coupe">科普咨询</string>
+    <string name="more">更多</string>
     <string name="all_serve">全部服务</string>
 
     <string name="cancel">取消</string>
@@ -80,6 +83,7 @@
     <string name="remark">请在这里填写备注.(选填)</string>
     <string name="ruHospitalTime">入院时间</string>
     <string name="OutHospitalTime">出院时间</string>
+    <string name="remind">提醒</string>
 
 
     <string name="quizHint">你可以向随访医生团队咨询问题，请尽可能简练、准确的描述症状、部位等信息，方便医生给的准确建议。你也可以拍照进行上传</string>

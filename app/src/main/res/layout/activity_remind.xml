@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/app_white"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="cn.qiyu.magicalcrue_patient.activity.CourseActivity">
+    <include layout="@layout/layout_titlebar"/>
+    <View
+        android:background="@color/view_bg"
+        android:layout_width="match_parent"
+        android:layout_height="10dp"/>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rcl_remind"
+        android:gravity="center"
+        android:textColor="@color/app_black"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+</LinearLayout>

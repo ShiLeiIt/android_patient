@@ -44,6 +44,7 @@ import cn.qiyu.magicalcrue_patient.activity.OutpatientInformationListActivity;
 import cn.qiyu.magicalcrue_patient.activity.PatientDataActivity;
 import cn.qiyu.magicalcrue_patient.activity.PatientDataRegisterActivity;
 import cn.qiyu.magicalcrue_patient.activity.PharmacyPlanRecordInfoListActivity;
+import cn.qiyu.magicalcrue_patient.activity.RemindActivity;
 import cn.qiyu.magicalcrue_patient.activity.SymgraphyInfoListActivity;
 import cn.qiyu.magicalcrue_patient.activity.UserInforActivity;
 import cn.qiyu.magicalcrue_patient.home.HomeNumView;
@@ -74,13 +75,13 @@ public class VisitFragment extends Fragment implements View.OnClickListener {
 
     private static int ICON_HOME[] = {
             R.drawable.visit_dialogue, R.drawable.visit_case_history, R.drawable.visit_symptom, R.drawable.visit_pharmacy,
-            R.drawable.visit_scale, R.drawable.visit_report, R.drawable.visit_teaching, R.drawable.visit_first_aid,
-            R.drawable.visit_combo
+            R.drawable.visit_scale, R.drawable.visit_teaching,   R.drawable.visit_remind
+
     };
 
     private static String TITLE_INFO[] =
             {
-                    "对话", "病历", "症状", "用药", "量表", "随访报告", "患教", "急救", "套餐",
+                    "对话", "病历", "症状", "用药", "量表",  "患教",  "提醒",
             };
     private MyGridView mGridView;
     private TextView mTv_topleft_visit;
@@ -248,6 +249,7 @@ public class VisitFragment extends Fragment implements View.OnClickListener {
 
         @Override
         public String patientUuid() {
+            Log.i("小白", "getPatientUuid:"+(String) PreUtils.getParam(getActivity(), "patientuuid", "0"));
             return (String) PreUtils.getParam(getActivity(), "patientuuid", "0");
         }
 
@@ -383,7 +385,7 @@ public class VisitFragment extends Fragment implements View.OnClickListener {
     private void setGridView() {
         ArrayList<HashMap<String, Object>> meumList = new ArrayList<HashMap<String, Object>>();
 
-        for (int i = 0; i < 9; i++) {
+        for (int i = 0; i < 7; i++) {
             HashMap<String, Object> map = new HashMap<String, Object>();
             map.put("ItemImage", ICON_HOME[i]);
             map.put("ItemText", TITLE_INFO[i]);
@@ -431,19 +433,13 @@ public class VisitFragment extends Fragment implements View.OnClickListener {
 //                                Toast.makeText(getActivity(), "量表", Toast.LENGTH_SHORT).show();
                                 break;
                             case 5:
-                                startActivity(new Intent(getActivity(),NewFollowupReportActivity.class));
-//                                Toast.makeText(getActivity(), "随访报告", Toast.LENGTH_SHORT).show();
+//                                startActivity(new Intent(getActivity(),NewFollowupReportActivity.class));
+                                getActivity().startActivityForResult(new Intent(getActivity(), NewCourseActivity.class), 1111);
+//                                Toast.makeText(getActivity(), "患教课堂", Toast.LENGTH_SHORT).show();
                                 break;
                             case 6:
-
-//                        Toast.makeText(getActivity(), "患教课程", Toast.LENGTH_SHORT).show();
-                                getActivity().startActivityForResult(new Intent(getActivity(), NewCourseActivity.class), 1111);
-                                break;
-                            case 7:
-//                        Toast.makeText(getActivity(), "急救", Toast.LENGTH_SHORT).show();
-                                break;
-                            case 8:
-//                        Toast.makeText(getActivity(), "套餐", Toast.LENGTH_SHORT).show();
+//                                Toast.makeText(getActivity(), "提醒", Toast.LENGTH_SHORT).show();
+                                startActivity(new Intent(getActivity(), RemindActivity.class));
                                 break;
 
                         }
@@ -614,8 +610,6 @@ public class VisitFragment extends Fragment implements View.OnClickListener {
             public void onRefresh() {
                 homePresenter.HomeLoadNumData();
                 homePresenter.getDoctorTeamInfo();
-                mMinePresenter.getPatientBasicInfor();
-
             }
         });
     }

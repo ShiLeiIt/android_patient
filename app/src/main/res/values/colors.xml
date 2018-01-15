@@ -5,6 +5,7 @@
     <color name="colorAccent">#FF4081</color>
     <color name="comui_tab_text_color">#ff333333</color>
     <color name="app_gray">#999999</color>
+    <color name="add_remind">#00B8AD</color>
     <color name="app_white">#ffffff</color>
     <color name="app_black">#000000</color>
     <color name="app_userInfor">#353535</color>
@@ -12,6 +13,7 @@
     <color name="wheel_timebtn_nor">#54a3fa</color>
     <color name="wheel_timebtn_pre">#CCCCCC</color>
     <color name="view_bg">#f7f7f7</color>
+    <color name="vertical_bg">#e5e5e5</color>
     <color name="dialog_bg">#90FFFFFF</color>
     <color name="textNumBg">#E43535</color>
     <color name="quizEtHint">#666666</color>

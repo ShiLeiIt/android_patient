@@ -29,16 +29,16 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import cn.qiyu.magicalcrue_patient.R;
-import cn.qiyu.magicalcrue_patient.activity.AllServeActivity;
 import cn.qiyu.magicalcrue_patient.activity.CourseActivity;
 import cn.qiyu.magicalcrue_patient.activity.DoctorListActivity;
 import cn.qiyu.magicalcrue_patient.activity.FollowUpMessageDetailActivity;
-import cn.qiyu.magicalcrue_patient.activity.MedicalActivity;
+import cn.qiyu.magicalcrue_patient.activity.LoveActionActivity;
+import cn.qiyu.magicalcrue_patient.activity.MoreActivity;
 import cn.qiyu.magicalcrue_patient.activity.MyScaleActivity;
 import cn.qiyu.magicalcrue_patient.activity.NewCourseActivity;
 import cn.qiyu.magicalcrue_patient.activity.NewFollowupReportActivity;
 import cn.qiyu.magicalcrue_patient.activity.NotificationDialogActivity;
-import cn.qiyu.magicalcrue_patient.activity.OffLineActivity;
+import cn.qiyu.magicalcrue_patient.activity.VisitActionActivity;
 import cn.qiyu.magicalcrue_patient.adapter.AppAdapter;
 import cn.qiyu.magicalcrue_patient.home.HomeNumView;
 import cn.qiyu.magicalcrue_patient.home.HomePresenter;
@@ -90,9 +90,7 @@ public class HomePageFragment extends Fragment implements View.OnClickListener, 
     private TextView mTv_unScra;
     private TextView mTv_doctor_name;
     private TextView mTvCourse;
-    private TextView mTvMedical;
-    private TextView mTvOffline;
-    private TextView mTvAllserve;
+
     private int[] ADVERTISING = {R.drawable.banner, R.drawable.banner};
     private ImageView mIv_richsan;
     private String mDoctorUuid;
@@ -106,6 +104,9 @@ public class HomePageFragment extends Fragment implements View.OnClickListener, 
     private LinearLayout mLlBindDoctor;
     private ImageView mIvUnbindDoctor;
     private SwipeRefreshLayout mSwipeRefreshLayout;
+    private TextView mTvLoveAction;
+    private TextView mTvVisitAction;
+    private TextView mTvMore;
 
     @Nullable
     @Override
@@ -148,12 +149,12 @@ public class HomePageFragment extends Fragment implements View.OnClickListener, 
         mIv_richsan.setOnClickListener(this);
         //患教课程
         mTvCourse = (TextView) view.findViewById(R.id.ll_tv_course_new);
-        //医疗机构
-        mTvMedical = (TextView) view.findViewById(R.id.ll_tv_medical);
-        //线下沙龙
-        mTvOffline = (TextView) view.findViewById(R.id.ll_tv_offline);
-        //全部服务
-        mTvAllserve = (TextView) view.findViewById(R.id.ll_tv_all_serve);
+        //关爱行动
+        mTvLoveAction = (TextView) view.findViewById(R.id.ll_tv_love_action);
+        //随访行动
+        mTvVisitAction = (TextView) view.findViewById(R.id.ll_tv_visit_action);
+        //更多
+        mTvMore = (TextView) view.findViewById(R.id.ll_tv_more);
 
         sv_home = (ScrollView) view.findViewById(R.id.sv_home);
         mRlDoctorTeam.setOnClickListener(this);
@@ -165,9 +166,9 @@ public class HomePageFragment extends Fragment implements View.OnClickListener, 
 
 
         mTvCourse.setOnClickListener(this);
-        mTvMedical.setOnClickListener(this);
-        mTvOffline.setOnClickListener(this);
-        mTvAllserve.setOnClickListener(this);
+        mTvLoveAction.setOnClickListener(this);
+        mTvVisitAction.setOnClickListener(this);
+        mTvMore.setOnClickListener(this);
 
         mTv_topleft_visit = (TextView) llTvVisit.findViewById(R.id.tv_top_left);
         mTv_topleft_inquiry = (TextView) llTvInquiry.findViewById(R.id.tv_top_left);
@@ -307,17 +308,19 @@ public class HomePageFragment extends Fragment implements View.OnClickListener, 
             case R.id.ll_tv_course_new:
                 getActivity().startActivityForResult(new Intent(getActivity(), CourseActivity.class), 1111);
                 break;
-            //医疗机构
-            case R.id.ll_tv_medical:
-                getActivity().startActivityForResult(new Intent(getActivity(), MedicalActivity.class), 2222);
+            //关爱行动
+            case R.id.ll_tv_love_action:
+                getActivity().startActivityForResult(new Intent(getActivity(), LoveActionActivity.class), 2222);
                 break;
-            //线下沙龙
-            case R.id.ll_tv_offline:
-                getActivity().startActivityForResult(new Intent(getActivity(), OffLineActivity.class), 3333);
+
+            //随访行动
+            case R.id.ll_tv_visit_action:
+                getActivity().startActivityForResult(new Intent(getActivity(), VisitActionActivity.class), 3333);
                 break;
-            //全部服务
-            case R.id.ll_tv_all_serve:
-                getActivity().startActivityForResult(new Intent(getActivity(), AllServeActivity.class), 4444);
+
+            //更多
+            case R.id.ll_tv_more:
+                getActivity().startActivityForResult(new Intent(getActivity(), MoreActivity.class), 4444);
                 break;
             case R.id.richscan:
                 initPermission();

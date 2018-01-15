@@ -4,10 +4,15 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:background="@color/app_white"
     android:layout_height="match_parent"
+    android:background="@color/app_white"
     android:orientation="vertical"
-    tools:context="cn.qiyu.magicalcrue_patient.activity.AllServeActivity">
+    tools:context=".activity.VisitActionActivity">
     <include layout="@layout/layout_titlebar"/>
+    <WebView
+        android:id="@+id/wb_visit_action"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
 
 </LinearLayout>

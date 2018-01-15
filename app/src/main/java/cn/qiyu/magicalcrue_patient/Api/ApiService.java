@@ -20,6 +20,7 @@ import cn.qiyu.magicalcrue_patient.model.InfoUserSystemMsgListBean;
 import cn.qiyu.magicalcrue_patient.model.InformationBean;
 import cn.qiyu.magicalcrue_patient.model.InspectionReportBean;
 import cn.qiyu.magicalcrue_patient.model.MyScaleBean;
+import cn.qiyu.magicalcrue_patient.model.PatientCourseListBean;
 import cn.qiyu.magicalcrue_patient.model.PatientInfor;
 import cn.qiyu.magicalcrue_patient.model.PatientInforSaveBean;
 import cn.qiyu.magicalcrue_patient.model.PatientRelationBean;
@@ -27,6 +28,7 @@ import cn.qiyu.magicalcrue_patient.model.PharmacyBean;
 import cn.qiyu.magicalcrue_patient.model.PharmacyWaybean;
 import cn.qiyu.magicalcrue_patient.model.RegisterLoginBean;
 import cn.qiyu.magicalcrue_patient.model.RegisterLoginVerBean;
+import cn.qiyu.magicalcrue_patient.model.RemindListBean;
 import cn.qiyu.magicalcrue_patient.model.ResultModel;
 import cn.qiyu.magicalcrue_patient.model.ScaleDetailBean;
 import cn.qiyu.magicalcrue_patient.model.SymptomatographyBean;
@@ -52,7 +54,7 @@ ApiService {
      * 每一个 api 地址都以 / 结尾
      */
     //正式服务器
-   String BASE_URL = "http://api2.mircalcure.com/zlapi/";
+    String BASE_URL = "http://api2.mircalcure.com/zlapi/";
     //测试服务器
     //String BASE_URL = "http://118.178.135.207:9008/zlapi/";
     String IMAGE_BASE_URL = "http://upload2.mircalcure.com/tumourfile/";
@@ -156,6 +158,15 @@ ApiService {
     String API_SYSTEMMSG_READ = "message/getMessageDetail";
     //退出登录
     String API_LOGOUT = "patientInfo/userLogout";
+    //随访页面患教课堂列表 TODO
+    String API_PATIENT_COURSE_LIST = "course/patentCourseList";
+
+    //获取提醒的列表
+    String API_REMIND_LIST ="event/patientEventlist";
+
+
+
+
 
 
 
@@ -311,8 +322,8 @@ ApiService {
     @POST(API_DOCTOR_NOTICE_LIST)
     @FormUrlEncoded
     Call<ResultModel<List<InfoUserNoticeListBean>>> getUserNoticeList(@Field("userUUid") String userUuid,
-                                                                        @Field("page") String page,
-                                                                        @Field("pagecount") String pagecount);
+                                                                      @Field("page") String page,
+                                                                      @Field("pagecount") String pagecount);
 
     /**
      * 消息，系统消息列表
@@ -320,8 +331,8 @@ ApiService {
     @POST(API_SYSTEM_MESSAGE_LIST)
     @FormUrlEncoded
     Call<ResultModel<List<InfoUserSystemMsgListBean>>> getSystemMessageList(@Field("userUUid") String userUuid,
-                                                                                  @Field("page") String page,
-                                                                                  @Field("pagecount") String pagecount);
+                                                                            @Field("page") String page,
+                                                                            @Field("pagecount") String pagecount);
 
 
     /**
@@ -618,9 +629,6 @@ ApiService {
     );
 
 
-
-
-
     /**
      * 统计患者病历数目
      */
@@ -645,7 +653,7 @@ ApiService {
     Call<ResultModel> getDoctorNoticeRead(
             @Field("userId") String userUuid,
             @Field("messageId") String messageUuid
-            );
+    );
 
     /**
      * 随访对话已读（num为零）
@@ -671,5 +679,23 @@ ApiService {
     @FormUrlEncoded
     Call<ResultModel> getLogout(
             @Field("uuid") String userUuid, @Field("type") String type);
+
+
+    /**
+     * 随访患教课堂列表
+     */
+    @POST(API_PATIENT_COURSE_LIST)
+    @FormUrlEncoded
+    Call<ResultModel<List<PatientCourseListBean>>> getPatientCoureseList(
+            @Field("patient_id") String patientUuid, @Field("page") String page,@Field("pagecount") String pagecount);
+
+
+    /**
+     * 随访提醒列表
+     */
+    @POST(API_REMIND_LIST)
+    @FormUrlEncoded
+    Call<ResultModel<List<RemindListBean>>> getVisitRemindList(
+            @Field("patientId") String patientUuid, @Field("page") String page,@Field("pagecount") String pagecount);
 
 }
