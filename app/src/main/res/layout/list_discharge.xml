@@ -11,7 +11,7 @@
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/tv_discharge_date"
+            android:id="@+id/tv_create_date"
             android:layout_width="match_parent"
             android:layout_height="30dp"
             android:layout_marginLeft="13dp"
@@ -19,6 +19,7 @@
             android:textColor="@color/app_userInfor"
             android:gravity="center_vertical"
             android:textSize="12sp"
+
             />
 
         <LinearLayout
@@ -27,11 +28,18 @@
             android:background="@color/app_white"
             android:orientation="vertical"
             android:padding="16dp">
+            <TextView
+                android:id="@+id/tv_discharge_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/app_userInfor"
+                android:textSize="12sp"/>
 
             <TextView
                 android:id="@+id/tv_discharge_hospital_address"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
                 android:textColor="@color/app_userInfor"
                 android:textSize="12sp"/>
 

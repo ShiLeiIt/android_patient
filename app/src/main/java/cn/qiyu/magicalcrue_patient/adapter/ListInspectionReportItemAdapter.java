@@ -65,9 +65,13 @@ public class ListInspectionReportItemAdapter extends BaseAdapter {
             holder = new ViewHolder();
             convertView = View.inflate(mContext, R.layout.list_discharge, null);
 
+            //创建时间
+            holder.tv_create_date = (TextView) convertView
+                    .findViewById(R.id.tv_create_date);
+
             //门诊时间
-            holder.tv_date = (TextView) convertView
-                    .findViewById(R.id.tv_discharge_date);
+           holder.tv_date= (TextView)convertView.findViewById(R.id.tv_discharge_date);
+
             //报告单类型
             holder.tv_report_form = (TextView) convertView
                     .findViewById(R.id.tv_discharge_hospital_address);
@@ -94,15 +98,16 @@ public class ListInspectionReportItemAdapter extends BaseAdapter {
         itemEntity = items.get(position);
         // 时间
         String createTime = itemEntity.getCreate_time();
-        String substringTime = createTime.substring(0, 10);
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        Date now = new Date();
-        String date=dateFormat.format(now);
-        String nian = date.substring(0, 4) + "年";
-        String yue = date.substring(5, 7) + "月";
-        String ri = date.substring(8, 10) + "日";
+        String substringTime = createTime.substring(0, 16);
+//        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+//        Date now = new Date();
+//        String date=dateFormat.format(now);
+//        String nian = date.substring(0, 4) + "年";
+//        String yue = date.substring(5, 7) + "月";
+//        String ri = date.substring(8, 10) + "日";
 
-        holder.tv_date.setText(nian+yue+ri+"  "+"检查报告单");
+        holder.tv_create_date.setText(substringTime);
+        holder.tv_date.setVisibility(View.GONE);
         //报告单类型
         holder.tv_report_form.setText("报告单类型：  "+itemEntity.getTypeName());
         holder.dosage.setVisibility(View.GONE);
@@ -145,6 +150,7 @@ public class ListInspectionReportItemAdapter extends BaseAdapter {
      */
     static class  ViewHolder {
         private RecyclerView recyclerView;
+        private TextView tv_create_date;
         private TextView tv_date;
         private TextView tv_report_form;
         private TextView tv_context;

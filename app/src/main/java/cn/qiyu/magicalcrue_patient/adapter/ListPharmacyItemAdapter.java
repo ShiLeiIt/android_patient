@@ -63,6 +63,9 @@ public class ListPharmacyItemAdapter extends BaseAdapter {
         if (convertView == null) {
             holder = new ViewHolder();
             convertView = View.inflate(mContext, R.layout.list_discharge, null);
+            //创建时间
+            holder.tv_create_date = (TextView) convertView
+                    .findViewById(R.id.tv_create_date);
 
             //门诊时间
             holder.tv_date = (TextView) convertView
@@ -96,7 +99,7 @@ public class ListPharmacyItemAdapter extends BaseAdapter {
 
 
         String createTime = itemEntity.getCreate_time();
-        String substringTime = createTime.substring(0, 10);
+        String substringTime = createTime.substring(0, 16);
 
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         Date now = new Date();
@@ -106,7 +109,8 @@ public class ListPharmacyItemAdapter extends BaseAdapter {
         String ri = date.substring(8, 10) + "日";
 
 
-        holder.tv_date.setText(nian+yue+ri+"  "+itemEntity.getUsaged());
+        holder.tv_create_date.setText(substringTime);
+        holder.tv_date.setVisibility(View.GONE);
 
         //药名
         holder.tv_drug_name.setText("药名：  "+itemEntity.getDrug_name());
@@ -153,6 +157,7 @@ public class ListPharmacyItemAdapter extends BaseAdapter {
     static class  ViewHolder {
         private RecyclerView recyclerView;
         private TextView tv_date;
+        private TextView tv_create_date;
         private TextView tv_drug_name;
         private TextView tv_treatment_for;
         private TextView dosage;

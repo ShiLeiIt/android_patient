@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.CardView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -104,6 +105,8 @@ public class HomePageFragment extends Fragment implements View.OnClickListener, 
     private LinearLayout mLlUnbindDoctor;
     private LinearLayout mLlBindDoctor;
     private ImageView mIvUnbindDoctor;
+    private SwipeRefreshLayout mSwipeRefreshLayout;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater,
@@ -115,6 +118,9 @@ public class HomePageFragment extends Fragment implements View.OnClickListener, 
         //注册EventBus，在开始的位置
         EventBus.getDefault().register(this);
 //        LLImageView viewById = (LLImageView) view.findViewById(R.id.iv_doctor_icon);
+        //刷新
+        mSwipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipeRefreshLayout);
+
         //为绑定显示二维码
         mLlUnbindDoctor = (LinearLayout) view.findViewById(R.id.ll_unbind_doctor);
         //绑定显示医生
@@ -178,11 +184,10 @@ public class HomePageFragment extends Fragment implements View.OnClickListener, 
         mLv_sv = (ListView) view.findViewById(R.id.lv_home_image);
 
         //通过本地获取患者uuid
-
-
         mHomePresenter.getDoctorTeamInfo();
         mHomePresenter.getHomeBanner();
         mHomePresenter.HomeLoadNumData();
+        getLoad();
 
 
 //        Intent intent = getActivity().getIntent();
@@ -192,17 +197,17 @@ public class HomePageFragment extends Fragment implements View.OnClickListener, 
 //            activity.changFragment("消息");
 //        }
         mCvHome.setRadius(10);
-        Boolean user_first = (Boolean) PreUtils.getParam(getActivity(),"user_first",true);
-        if(user_first){//第一次
+        Boolean user_first = (Boolean) PreUtils.getParam(getActivity(), "user_first", true);
+        if (user_first) {//第一次
 
             if (!NotificationsUtils.isNotificationEnabled(getActivity())
                     ) {
 
                 PreUtils.setParam(getActivity(), "user_first", false);
-                startActivity(new Intent(getActivity(),NotificationDialogActivity.class));
-                    }
-
+                startActivity(new Intent(getActivity(), NotificationDialogActivity.class));
             }
+
+        }
         return view;
     }
 
@@ -240,22 +245,7 @@ public class HomePageFragment extends Fragment implements View.OnClickListener, 
         mHomePresenter.getDoctorTeamInfo();
         mHomePresenter.getHomeBanner();
         mHomePresenter.HomeLoadNumData();
-
-//        if (!TextUtils.isEmpty(mErrorCode)) {
-//
-//        if (mErrorCode.equals("1001")) {
-//
-//        } else if (mErrorCode.equals("1002")) {
-//
-//        } else {
-//            mLlBindDoctor.setVisibility(View.VISIBLE);
-//            mLlUnbindDoctor.setVisibility(View.GONE);
-//            mIv_richsan.setVisibility(View.INVISIBLE);
-//        }
-//        }
-
     }
-
 
 
     @Subscribe(threadMode = ThreadMode.MAIN)
@@ -278,7 +268,7 @@ public class HomePageFragment extends Fragment implements View.OnClickListener, 
                     PreUtils.setParam(getActivity(), "doctorUuid", mDoctorUuid);
                     Log.i("doctorUuid=======", mDoctorUuid);
                     mHomePresenter.getDoctorQRcode();
-                    Toast.makeText(getActivity(), "医生随访二维码，等待医生审核", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "您已经加入随访\n请等待你的主诊医生审核\n审核通过后正常使用", Toast.LENGTH_SHORT).show();
                 } else {
                     Toast.makeText(getActivity(), "非医生随访二维码", Toast.LENGTH_SHORT).show();
                 }
@@ -359,6 +349,7 @@ public class HomePageFragment extends Fragment implements View.OnClickListener, 
 
         @Override
         public void onViewFailure(ResultModel model) {
+            mSwipeRefreshLayout.setRefreshing(false);
 //            //通过这mErrorCode来判断是否绑定医生
             mErrorCode = model.getErrorCode();
             Log.i("MerrorCode=-=-=-", mErrorCode);
@@ -366,6 +357,7 @@ public class HomePageFragment extends Fragment implements View.OnClickListener, 
                 mLlUnbindDoctor.setVisibility(View.VISIBLE);
                 mLlBindDoctor.setVisibility(View.GONE);
                 mIv_richsan.setVisibility(View.VISIBLE);
+//                Toast.makeText(getActivity(), "您还没有加入任何随访", Toast.LENGTH_LONG).show();
                 mIvUnbindDoctor.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -390,8 +382,6 @@ public class HomePageFragment extends Fragment implements View.OnClickListener, 
                 mLlUnbindDoctor.setVisibility(View.GONE);
                 mIv_richsan.setVisibility(View.INVISIBLE);
             }
-
-
 //
 //            Toast.makeText(getActivity(), "ccccode"+ model.getErrorCode(), Toast.LENGTH_SHORT).show();
             //通过EventBus传值到VisitFragment中
@@ -405,7 +395,8 @@ public class HomePageFragment extends Fragment implements View.OnClickListener, 
 
         @Override
         public void onServerFailure(String e) {
-//            Toast.makeText(getActivity(), "失败-=-=-", Toast.LENGTH_SHORT).show();
+            mSwipeRefreshLayout.setRefreshing(false);
+            Toast.makeText(getActivity(), "无网络", Toast.LENGTH_SHORT).show();
 
         }
 
@@ -420,33 +411,25 @@ public class HomePageFragment extends Fragment implements View.OnClickListener, 
 
         @Override
         public void LoadDate(ResultModel<HomeNumBean> numBean) {
-//                Toast.makeText(getActivity(), ""+numBean.getMessage(), Toast.LENGTH_SHORT).show();
+            //下拉刷新
+            mSwipeRefreshLayout.setRefreshing(false);
             if (numBean.getData() != null) {
                 mTv_topleft_visit.setText(String.valueOf(numBean.getData().getFollowDay()));
 
                 mTv_topleft_inquiry.setText(String.valueOf(numBean.getData().getConstructionCount()));
                 mTv_topleft_report.setText(String.valueOf(numBean.getData().getFollowUpCount()));
                 mTv_topleft_record.setText(String.valueOf(numBean.getData().getStatusRecord()));
-//                Log.i("duihua==", numBean.getData().getConstructionCount() + "");
-//                Log.i("duihua1==", numBean.getData().getFollowUpCount() + "");
-//                Log.i("duihua2==", numBean.getData().getStatusRecord() + "");
 
                 mTv_diaglog.setText(String.valueOf(numBean.getData().getNewDialogueCount()));
-//                Log.i("duihua3==", numBean.getData().getNewDialogueCount() + "");
 
                 mTv_scale.setText(String.valueOf(numBean.getData().getNwePaperCount()));
-//                Log.i("duihua4===", numBean.getData().getNwePaperCount() + "");
 
                 mTv_newReport.setText(String.valueOf(numBean.getData().getNewFollowUpCount()));
 
                 mTv_course.setText(String.valueOf(numBean.getData().getCourseCount()));
-//                mTv_unScra.setText(String.valueOf(numBean.getData().getPendingPaymentCount()));
-//                    mTv_doctor_name.setText(numBean.getData().get);
-            /*    mLlUnbindDoctor.setVisibility(View.GONE);
-                mLlBindDoctor.setVisibility(View.VISIBLE);
-                mIv_richsan.setVisibility(View.GONE);*/
+
             } else {
-//                Toast.makeText(getActivity(), "1111", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "服务器出差了", Toast.LENGTH_SHORT).show();
             }
 
         }
@@ -472,7 +455,7 @@ public class HomePageFragment extends Fragment implements View.OnClickListener, 
 
         @Override
         public void LoadDoctorTeamInfor(ResultModel<DoctorTeamBean> model) {
-
+            mSwipeRefreshLayout.setRefreshing(false);
 //            model.getErrorCode();
             String DcotorName = model.getData().getDoctor_name();
             String TeamName = model.getData().getTeam_name();
@@ -518,7 +501,7 @@ public class HomePageFragment extends Fragment implements View.OnClickListener, 
 
         @Override
         public void LoadHomeBanner(ResultModel<List<HomeBannerBean>> model) {
-
+            mSwipeRefreshLayout.setRefreshing(false);
             mLv_sv.setAdapter((new AppAdapter(getActivity(), model.getData())));
             ListViewUtility.setListViewHeightBasedOnChildren(mLv_sv);
 
@@ -582,6 +565,24 @@ public class HomePageFragment extends Fragment implements View.OnClickListener, 
         super.onDestroyView();
         ButterKnife.unbind(this);
     }
+
+    public void getLoad() {
+
+/*加载的渐变动画*/
+        mSwipeRefreshLayout.setColorSchemeResources(R.color.colorAccent,
+                R.color.colorPrimary,
+                R.color.colorPrimaryDark);
+        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                mHomePresenter.getDoctorTeamInfo();
+                mHomePresenter.getHomeBanner();
+                mHomePresenter.HomeLoadNumData();
+            }
+        });
+    }
+
+
     /**
      *
      * @param isVisibleToUser

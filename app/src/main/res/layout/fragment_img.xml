@@ -6,5 +6,12 @@
         android:id="@+id/pv_image"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
+    <ProgressBar
+        android:id="@+id/help_center_loading_prgbar"
+        style="@style/CustomProgressBar_Small"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:visibility="visible"/>
 
 </RelativeLayout>

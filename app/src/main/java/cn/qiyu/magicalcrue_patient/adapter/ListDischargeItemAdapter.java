@@ -70,6 +70,9 @@ public class ListDischargeItemAdapter extends BaseAdapter {
         if (convertView == null) {
             holder = new ViewHolder();
             convertView = View.inflate(mContext, R.layout.list_discharge, null);
+            //创建时间
+           holder.tv_create_date= (TextView) convertView
+                    .findViewById(R.id.tv_create_date);
 
             //门诊时间
             holder.tv_date = (TextView) convertView
@@ -99,14 +102,19 @@ public class ListDischargeItemAdapter extends BaseAdapter {
         itemEntity = items.get(position);
         // 时间
 
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy年MM月dd日");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         String date=dateFormat.format(itemEntity.getBe_hospitalized_date());
-        if (mIsOutPatient.equals("outPatient")) {
-            holder.tv_date.setText(date + "   门诊信息");
-        } else {
-            holder.tv_date.setText(date+"   出院小结");
-        }
 
+        String createTime = itemEntity.getCreate_time();
+        String substring = createTime.substring(0, 16);
+
+        if (mIsOutPatient.equals("outPatient")) {
+            holder.tv_create_date.setText(substring);
+        } else {
+            holder.tv_create_date.setText(substring);
+        }
+        //门诊时间
+        holder.tv_date.setText("门诊时间：  "+date);
         //地址
         holder.tv_hospital.setText("医院：  "+itemEntity.getHospitalName());
         //科室
@@ -177,6 +185,7 @@ public class ListDischargeItemAdapter extends BaseAdapter {
     static class  ViewHolder {
         private RecyclerView recyclerView;
         private TextView tv_date;
+        private TextView tv_create_date;
         private TextView tv_hospital;
         private TextView tv_administrative;
         private TextView tv_doctor_name;

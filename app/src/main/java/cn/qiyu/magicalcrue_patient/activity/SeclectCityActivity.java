@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -194,12 +195,14 @@ public class SeclectCityActivity extends BaseActivity {
                         code2 = mModel.getCode();
                         name2=mModel.getName();
                         isCity=false;
+
                     } else if (mModel.getLevelId() == 1) {
                         //市
                         addresscode_tow = mModel.getCode() + ",";
                         addressname_tow = mModel.getName() + "-";
                         mCityDistrictPresenter.getCity(mModel.getCode(), "2");
                         LevelId = mModel.getLevelId();
+
 
                     } else {
                         //保存显示

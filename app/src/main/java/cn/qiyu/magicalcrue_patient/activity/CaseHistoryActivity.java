@@ -119,7 +119,6 @@ public class CaseHistoryActivity extends BaseActivity implements View.OnClickLis
         mTvSymptomatographyNum = (TextView) mRlSymptomatography.findViewById(R.id.tv_case_history_num);
         mIvSymptomatography.setImageResource(R.drawable.symptomatography);
         mTvSymptomatography.setText(R.string.symptomatography);
-
         mRlSymptomatography.setOnClickListener(this);
 
     }

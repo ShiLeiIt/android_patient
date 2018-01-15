@@ -7,6 +7,7 @@ import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -100,6 +101,7 @@ public class VisitFragment extends Fragment implements View.OnClickListener {
     private LinearLayout mLlUnbindDoctor;
     private LinearLayout mLlBindDoctor;
     private ImageView mIvUnbindDoctor;
+    private SwipeRefreshLayout mRefreshLayout;
 
     @Nullable
     @Override
@@ -109,6 +111,8 @@ public class VisitFragment extends Fragment implements View.OnClickListener {
         View view = inflater.inflate(R.layout.fragment_visit, container, false);
         //注册EventBus，在开始的位置 ok
 //        EventBus.getDefault().register(this);
+        mRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipeRefreshLayout);
+
         //为绑定显示二维码
         mLlUnbindDoctor = (LinearLayout) view.findViewById(R.id.ll_unbind_doctor);
         //绑定显示医生
@@ -159,6 +163,7 @@ public class VisitFragment extends Fragment implements View.OnClickListener {
         homePresenter.HomeLoadNumData();
         homePresenter.getDoctorTeamInfo();
         mMinePresenter.getPatientBasicInfor();
+        getLoad();
 
 
         return view;
@@ -185,10 +190,10 @@ public class VisitFragment extends Fragment implements View.OnClickListener {
 
         @Override
         public void getPatientBasicInfor(ResultModel<PatientInfor> patientInforResultModel) {
+            mRefreshLayout.setRefreshing(false);
             String patient_user_name = patientInforResultModel.getData().getName();
             Log.i("patient_user_name", patient_user_name);
             mTv_patient_name.setText(patient_user_name);
-
             if (mNamewe.equals("123")) {
                 Intent intent = new Intent(getActivity(), PatientDataActivity.class);
                 intent.putExtra("patientInfor", patientInforResultModel.getData());
@@ -209,12 +214,12 @@ public class VisitFragment extends Fragment implements View.OnClickListener {
 
         @Override
         public void onViewFailure(ResultModel model) {
-
+            mRefreshLayout.setRefreshing(false);
         }
 
         @Override
         public void onServerFailure(String e) {
-
+            mRefreshLayout.setRefreshing(false);
         }
     });
 
@@ -230,6 +235,7 @@ public class VisitFragment extends Fragment implements View.OnClickListener {
 
         @Override
         public void LoadDate(ResultModel<HomeNumBean> numBean) {
+            mRefreshLayout.setRefreshing(false);
             if (numBean.getData() != null) {
                 mTv_topleft_visit.setText(String.valueOf(numBean.getData().getFollowDay()));
                 mTv_topleft_inquiry.setText(String.valueOf(numBean.getData().getConstructionCount()));
@@ -258,6 +264,7 @@ public class VisitFragment extends Fragment implements View.OnClickListener {
 
         @Override
         public void LoadDoctorTeamInfor(ResultModel<DoctorTeamBean> model) {
+            mRefreshLayout.setRefreshing(false);
             String teamName = model.getData().getTeam_name();
             mDoctorTeamList = model.getData().getDoctorTeamList();
             mQyjDoctorList = model.getData().getQyjDoctorList();
@@ -316,6 +323,7 @@ public class VisitFragment extends Fragment implements View.OnClickListener {
 
         @Override
         public void onViewFailure(ResultModel model) {
+            mRefreshLayout.setRefreshing(false);
             mErrorCode = model.getErrorCode();
             if (mErrorCode.equals("1001")) {
 //                Toast.makeText(getActivity(), "您还未加入任何随访,请扫描医生二维码", Toast.LENGTH_SHORT).show();
@@ -368,7 +376,7 @@ public class VisitFragment extends Fragment implements View.OnClickListener {
 
         @Override
         public void onServerFailure(String e) {
-
+            mRefreshLayout.setRefreshing(false);
         }
     });
 
@@ -451,7 +459,7 @@ public class VisitFragment extends Fragment implements View.OnClickListener {
             //写你每次进入这个fragment需要调用的代码
 //            homePresenter.getDoctorTeamInfo();
 //            homePresenter.HomeLoadNumData();
-            Log.i("=======123", "进入visit");
+//            Log.i("=======123", "进入visit");
         }
     }
 
@@ -556,6 +564,7 @@ public class VisitFragment extends Fragment implements View.OnClickListener {
 
         View diaolgView = View.inflate(getActivity(), R.layout.dialog_update_case, null);
         mDialog = new Dialog(getActivity(), R.style.selectorDialog);
+//        mDialog.setFeatureDrawableResource();
         mDialog.setContentView(diaolgView);
 
         //检查报告单
@@ -592,6 +601,22 @@ public class VisitFragment extends Fragment implements View.OnClickListener {
         super.onResume();
         homePresenter.HomeLoadNumData();
         homePresenter.getDoctorTeamInfo();
-        mMinePresenter.getPatientBasicInfor();
+//        mMinePresenter.getPatientBasicInfor();
+    }
+    public void getLoad() {
+
+/*加载的渐变动画*/
+        mRefreshLayout.setColorSchemeResources(R.color.colorAccent,
+                R.color.colorPrimary,
+                R.color.colorPrimaryDark);
+        mRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                homePresenter.HomeLoadNumData();
+                homePresenter.getDoctorTeamInfo();
+                mMinePresenter.getPatientBasicInfor();
+
+            }
+        });
     }
 }

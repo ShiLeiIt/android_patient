@@ -64,6 +64,9 @@ public class ListSymgraphyItemAdapter extends BaseAdapter {
         if (convertView == null) {
             holder = new ViewHolder();
             convertView = View.inflate(mContext, R.layout.list_discharge, null);
+            //创建时间
+            holder.tv_create_date = (TextView) convertView
+                    .findViewById(R.id.tv_create_date);
 
             //门诊时间
             holder.tv_date = (TextView) convertView
@@ -98,16 +101,17 @@ public class ListSymgraphyItemAdapter extends BaseAdapter {
 
 
         String createTime = itemEntity.getCreate_time();
-        String substringTime = createTime.substring(0, 10);
+        String substringTime = createTime.substring(0, 16);
 
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        Date now = new Date();
-        String date=dateFormat.format(now);
-        String nian = date.substring(0, 4) + "年";
-        String yue = date.substring(5, 7) + "月";
-        String ri = date.substring(8, 10) + "日";
+//        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+//        Date now = new Date();
+//        String date=dateFormat.format(now);
+//        String nian = date.substring(0, 4) + "年";
+//        String yue = date.substring(5, 7) + "月";
+//        String ri = date.substring(8, 10) + "日";
 
-        holder.tv_date.setText(nian+yue+ri+"  "+"身体症状记录");
+        holder.tv_create_date.setText(substringTime);
+        holder.tv_date.setVisibility(View.GONE);
         //报告单类型
         holder.tv_report_form.setText("症状名称：  "+itemEntity.getSymptom_code());
         holder.dosage.setVisibility(View.GONE);
@@ -152,6 +156,7 @@ public class ListSymgraphyItemAdapter extends BaseAdapter {
     static class  ViewHolder {
         private RecyclerView recyclerView;
         private TextView tv_date;
+        private TextView tv_create_date;
         private TextView tv_report_form;
         private TextView tv_context;
         private TextView dosage;

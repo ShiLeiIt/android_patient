@@ -1,8 +1,8 @@
 package cn.qiyu.magicalcrue_patient.activity;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -18,7 +18,6 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import cn.qiyu.magicalcrue_patient.MyApplication;
 import cn.qiyu.magicalcrue_patient.R;
 import cn.qiyu.magicalcrue_patient.base.BaseActivity;
 import cn.qiyu.magicalcrue_patient.home.PatientInfoRelationPresenter;
@@ -37,6 +36,8 @@ public class PatientRelationListActivity extends BaseActivity {
 
     @Bind(R.id.iv_patient_relation_back)
     ImageView mIvBack;
+    @Bind(R.id.swipeLayout)
+    SwipeRefreshLayout mSwipeLayout;
     private RecyclerView mRl_relation;
     private String mRelationName;
     private RecyclerAdpter mAdpter;
@@ -59,7 +60,7 @@ public class PatientRelationListActivity extends BaseActivity {
         if (mIsrelation.equals("0")) {
             //进去患者关系列表
             mPatientInfoRelationPresenter.LoadPatientRelation();
-        } else if(mIsrelation.equals("1")){
+        } else if (mIsrelation.equals("1")) {
             //进入疾病种类列表
             mTv_title.setText("疾病种类");
             mPatientInfoRelationPresenter.LoadDiseasesList();
@@ -69,6 +70,7 @@ public class PatientRelationListActivity extends BaseActivity {
     private void init() {
         mRl_relation.addItemDecoration(new RecycleViewDivider(PatientRelationListActivity.this, LinearLayoutManager.HORIZONTAL, R.drawable.relation_bg));
         mIsrelation = getIntent().getStringExtra("isreleation");
+        getLoad();
     }
 
     PatientInfoRelationPresenter mPatientInfoRelationPresenter = new PatientInfoRelationPresenter(new PatientRelationInfoView() {
@@ -85,6 +87,7 @@ public class PatientRelationListActivity extends BaseActivity {
 
         @Override
         public void LoadPatientRelation(ResultModel<List<PatientRelationBean>> model) {
+            mSwipeLayout.setRefreshing(false);
             mAdpter = new RecyclerAdpter(model.getData());
             mRl_relation.setAdapter(mAdpter);
             mRl_relation.setLayoutManager(new LinearLayoutManager(PatientRelationListActivity.this));
@@ -92,6 +95,7 @@ public class PatientRelationListActivity extends BaseActivity {
 
         @Override
         public void LoadDiseases(ResultModel<List<DiseasesBean>> model) {
+            mSwipeLayout.setRefreshing(false);
             mDiseaseAdpter = new RecyclerDiseaseAdpter(model.getData());
             mRl_relation.setAdapter(mDiseaseAdpter);
             mRl_relation.setLayoutManager(new LinearLayoutManager(PatientRelationListActivity.this));
@@ -109,10 +113,12 @@ public class PatientRelationListActivity extends BaseActivity {
 
         @Override
         public void onViewFailure(ResultModel model) {
+            mSwipeLayout.setRefreshing(false);
         }
 
         @Override
         public void onServerFailure(String e) {
+            mSwipeLayout.setRefreshing(false);
             Toast.makeText(PatientRelationListActivity.this, e, Toast.LENGTH_SHORT).show();
         }
     });
@@ -142,8 +148,8 @@ public class PatientRelationListActivity extends BaseActivity {
         }
 
 
-
     }
+
     //患者关系
     class ViewHolder extends RecyclerView.ViewHolder {
         PatientRelationBean mModel;
@@ -173,6 +179,7 @@ public class PatientRelationListActivity extends BaseActivity {
             }
         }
     }
+
     //患者关系适配器
     public class RecyclerAdpter extends RecyclerView.Adapter<ViewHolder> {
         private List<PatientRelationBean> mlist;
@@ -292,5 +299,24 @@ public class PatientRelationListActivity extends BaseActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
+    }
+    public void getLoad() {
+
+    /*加载的渐变动画*/
+        mSwipeLayout.setColorSchemeResources(R.color.colorAccent,
+                R.color.colorPrimary,
+                R.color.colorPrimaryDark);
+        mSwipeLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                if (mIsrelation.equals("0")) {
+                    //进去患者关系列表
+                    mPatientInfoRelationPresenter.LoadPatientRelation();
+                } else if (mIsrelation.equals("1")) {
+                    //进入疾病种类列表
+                    mPatientInfoRelationPresenter.LoadDiseasesList();
+                }
+            }
+        });
     }
 }

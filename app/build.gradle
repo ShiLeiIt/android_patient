@@ -70,5 +70,6 @@ dependencies {
 //    compile 'com.github.chrisbanes.photoview:library:+'
     compile 'io.reactivex:rxandroid:1.2.1'
     compile 'io.reactivex:rxjava:1.1.7'
+    compile 'com.wuxiaolong.pullloadmorerecyclerview:library:1.0.4'
 
 }

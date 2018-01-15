@@ -30,15 +30,22 @@
             android:textSize="18sp"/>
 
     </RelativeLayout>
+
     <View
         android:background="#f7f7f7"
         android:layout_width="match_parent"
         android:layout_height="20dp"/>
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:id="@+id/swipeLayout" >
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rlv_patient_relation"
         android:background="@color/app_white"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
+    </android.support.v4.widget.SwipeRefreshLayout>
 
 </LinearLayout>

@@ -1,6 +1,8 @@
 package cn.qiyu.magicalcrue_patient.activity;
 
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -20,6 +22,8 @@ public class BannerDetailActivity extends BaseActivity {
     WebView wvBannerDetail;
     @Bind(R.id.tv_title)
     TextView mTvTitle;
+
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,6 +32,10 @@ public class BannerDetailActivity extends BaseActivity {
         mTvTitle.setText("详情");
         String url = getIntent().getStringExtra("url");
         wvBannerDetail.loadUrl(url);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            wvBannerDetail.getSettings().setMixedContentMode(WebSettings.MIXED_CONTENT_ALWAYS_ALLOW);
+        }
         //设置自适应屏幕宽高
         wvBannerDetail.getSettings().setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
         wvBannerDetail.getSettings().setLoadWithOverviewMode(true);
@@ -40,5 +48,26 @@ public class BannerDetailActivity extends BaseActivity {
                 return true;
             }
         });
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        wvBannerDetail.onPause();
+        wvBannerDetail.pauseTimers();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        wvBannerDetail.resumeTimers();
+        wvBannerDetail.onResume();
+    }
+
+    @Override
+    protected void onDestroy() {
+        wvBannerDetail.destroy();
+        wvBannerDetail = null;
+        super.onDestroy();
     }
 }

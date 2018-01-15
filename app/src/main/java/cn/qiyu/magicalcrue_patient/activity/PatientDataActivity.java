@@ -262,8 +262,8 @@ public class PatientDataActivity extends BaseActivity {
                 finish();
             }
 
-            Log.i("Patientuuid------", rlBean.getData().getUuid());
-            Log.i("Useruuid------", mUuid);
+//            Log.i("Patientuuid------", rlBean.getData().getUuid());
+//            Log.i("Useruuid------", mUuid);
         }
 
         @Override
@@ -297,24 +297,11 @@ public class PatientDataActivity extends BaseActivity {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.iv_patient_back:
-                onBackPressed();
+                finish();
                 break;
             case R.id.tv_save_userinfor:
-//                if (TextUtils.isEmpty(mEtActionsName.getText().toString()) ||
-//                        TextUtils.isEmpty(mTvSelectDate.getText().toString()) ||
-//                        TextUtils.isEmpty(mTvEighteen.getText().toString()) ||
-//                        TextUtils.isEmpty(mTvFlowers.getText().toString()) ||
-//                        TextUtils.isEmpty(mTvSelectCitiy.getText().toString()) ||
-//                        TextUtils.isEmpty(mTvRelationName.getText().toString()) ||
-//                        TextUtils.isEmpty(mEtActionsName.getText().toString()) ||
-//                        TextUtils.isEmpty(mTvFirstVisitTime.getText().toString()) ||
-//                        TextUtils.isEmpty(mTvDiseases.getText().toString())) {
                 mPatientInforPresenter.getPatientInforCom();
-//                } else {
-//                    Toast.makeText(this, "信息填写不完整", Toast.LENGTH_SHORT).show();
-//                }
                 break;
-
             case R.id.tv_real_name:
                 break;
             case R.id.iv_girl:
@@ -447,8 +434,4 @@ public class PatientDataActivity extends BaseActivity {
         picker.show();
     }
 
-    @OnClick(R.id.tv_relation_name)
-    public void onViewClicked() {
-
-    }
 }
