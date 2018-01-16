@@ -2,64 +2,81 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
-                android:background="@color/app_white"
-    >
+                android:background="@color/app_white">
+    <LinearLayout
+        android:id="@+id/item_layout"
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:layout_height="60dp">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <TextView
+                android:id="@+id/tv_remind_detail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginTop="5dp"
+                android:ellipsize="end"
+                android:lines="1"
+                android:text=""
+                android:textColor="#000000"
+                android:textSize="14sp"/>
+            <TextView
+                android:id="@+id/tv_create_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tv_remind_detail"
+                android:layout_marginLeft="16dp"
+                android:layout_marginBottom="5dp"
+                android:ellipsize="end"
+                android:lines="1"
+                android:text=""
+                android:textColor="#BBBBBB"
+                android:textSize="12sp"/>
 
+            <TextView
+                android:id="@+id/tv_week"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tv_remind_detail"
+                android:layout_marginBottom="5dp"
+                android:layout_marginLeft="11dp"
+                android:layout_toRightOf="@id/tv_create_time"
+                android:text=""
+                android:textColor="#BBBBBB"
+                android:textSize="12dp"/>
 
-    <TextView
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
-        android:layout_marginTop="5dp"
-        android:id="@+id/tv_group_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text=""
-        android:lines="1"
-        android:ellipsize="end"
-        android:textColor="#000000"
-        android:textSize="14dp"/>
+            <ImageView
+                android:id="@+id/iv_work_group_into_group"
+                android:layout_width="26dp"
+                android:layout_height="match_parent"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="5dp"
+                android:src="@drawable/mine_arrows"/>
 
-    <TextView
-        android:layout_marginLeft="16dp"
-        android:id="@+id/tv_group_member"
-        android:layout_below="@id/tv_group_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text=""
-        android:textColor="#BBBBBB"
-        android:textSize="12dp"/>
-
-    <TextView
-        android:layout_marginLeft="11dp"
-        android:id="@+id/tv_week"
-        android:layout_below="@id/tv_group_name"
-        android:layout_toRightOf="@id/tv_group_member"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text=""
-        android:layout_marginBottom="5dp"
-        android:textColor="#BBBBBB"
-        android:textSize="12dp"/>
-
-
-    <ImageView
-        android:id="@+id/iv_work_group_into_group"
-        android:layout_width="28dp"
-        android:layout_height="match_parent"
-        android:layout_alignParentRight="true"
-        android:layout_centerVertical="true"
-        android:layout_marginRight="5dp"
-        android:src="@drawable/mine_arrows"/>
-
-    <TextView
-        android:id="@+id/tv_scale_satus"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginRight="10dp"
-        android:text=""
-        android:textColor="@color/app_gray"
-        android:layout_centerVertical="true"
-        android:layout_toStartOf="@+id/iv_work_group_into_group"/>
+            <TextView
+                android:id="@+id/tv_remind_satus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="10dp"
+                android:layout_toStartOf="@+id/iv_work_group_into_group"
+                android:text=""
+                android:textColor="@color/app_gray"/>
+        </RelativeLayout>
+        <TextView
+            android:id="@+id/item_delete"
+            android:layout_width="80dp"
+            android:layout_height="match_parent"
+            android:background="#FF0000"
+            android:gravity="center"
+            android:text="删除"
+            android:textColor="#ffffff"
+            android:textSize="16sp"/>
+    </LinearLayout>
 
     <View
         android:layout_width="match_parent"

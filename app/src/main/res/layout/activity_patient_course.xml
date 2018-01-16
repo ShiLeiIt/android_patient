@@ -9,8 +9,11 @@
     android:orientation="vertical"
     tools:context="cn.qiyu.magicalcrue_patient.activity.CourseActivity">
     <include layout="@layout/layout_titlebar"/>
-    <ListView
-        android:id="@+id/lv_patient_course"
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rcl_new_course"
+        android:gravity="center"
+        android:textColor="@color/app_black"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 

@@ -17,10 +17,12 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.qiyu.magicalcrue_patient.Api.ApiService;
 import cn.qiyu.magicalcrue_patient.R;
+import cn.qiyu.magicalcrue_patient.activity.AboutUsActivity;
 import cn.qiyu.magicalcrue_patient.activity.CaseHistoryActivity;
 import cn.qiyu.magicalcrue_patient.activity.LoginActivity;
 import cn.qiyu.magicalcrue_patient.activity.MinePatientDataActivity;
 import cn.qiyu.magicalcrue_patient.activity.MineUserInforActivity;
+import cn.qiyu.magicalcrue_patient.activity.UserAgreementActivity;
 import cn.qiyu.magicalcrue_patient.mine.LogoutPresenter;
 import cn.qiyu.magicalcrue_patient.mine.LogoutView;
 import cn.qiyu.magicalcrue_patient.mine.MineInforView;
@@ -131,10 +133,11 @@ public class MineFragment extends Fragment implements View.OnClickListener {
         ImageView iv_list_case_icon = (ImageView) view_case.findViewById(R.id.iv_list_item);
         tv_list_case.setText("病历");
         iv_list_case_icon.setImageResource(R.drawable.mine_case_history);
+
         TextView tv_list_order = (TextView) view_order.findViewById(R.id.tv_list_item);
         ImageView iv_list_order = (ImageView) view_order.findViewById(R.id.iv_list_item);
-        tv_list_order.setText("订单");
-        iv_list_order.setImageResource(R.drawable.mine_order);
+        tv_list_order.setText("用户协议");
+        iv_list_order.setImageResource(R.drawable.user_agreement);
         //收藏第一版不显示
 //        TextView tv_list_collect = (TextView) view_collect.findViewById(R.id.tv_list_item);
 //        ImageView iv_list_collect = (ImageView) view_collect.findViewById(R.id.iv_list_item);
@@ -143,8 +146,8 @@ public class MineFragment extends Fragment implements View.OnClickListener {
 
         TextView tv_list_service = (TextView) view_service.findViewById(R.id.tv_list_item);
         ImageView iv_list_service = (ImageView) view_service.findViewById(R.id.iv_list_item);
-        tv_list_service.setText("客服");
-        iv_list_service.setImageResource(R.drawable.mine_service);
+        tv_list_service.setText("关于我们");
+        iv_list_service.setImageResource(R.drawable.about_us);
 
 
         mIv_patient_back = (ImageView) view_patient.findViewById(R.id.iv_list_item_arrows);
@@ -343,11 +346,16 @@ public class MineFragment extends Fragment implements View.OnClickListener {
                 //病历
                 startActivity(new Intent(getActivity(), CaseHistoryActivity.class));
                 break;
+            //用户协议
             case R.id.il_order:
+            startActivity(new Intent(getActivity(), UserAgreementActivity.class));
                 break;
             case R.id.il_collect:
                 break;
+            //关于我们
             case R.id.il_service:
+                startActivity(new Intent(getActivity(), AboutUsActivity.class));
+
                 break;
 
         }

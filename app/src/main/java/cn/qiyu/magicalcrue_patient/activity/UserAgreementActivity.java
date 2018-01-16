@@ -3,14 +3,11 @@ package cn.qiyu.magicalcrue_patient.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.webkit.JavascriptInterface;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.TextView;
-import android.widget.Toast;
-
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
@@ -21,48 +18,50 @@ import cn.qiyu.magicalcrue_patient.R;
 import cn.qiyu.magicalcrue_patient.base.BaseActivity;
 
 /**
- * 患教课程
+ * 用户协议界面
  */
 
-public class CourseActivity extends BaseActivity {
+public class UserAgreementActivity extends BaseActivity {
 
 
     @Bind(R.id.tv_title)
     TextView mTvTitle;
-    @Bind(R.id.wb_course)
-    WebView wvEducation;
+    @Bind(R.id.wb_user_agreement)
+    WebView mWbUserAgreement;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_course);
+        setContentView(R.layout.activity_user_agreement);
         ButterKnife.bind(this);
         init();
 
     }
 
     private void init() {
-        mTvTitle.setText(R.string.course);
+        mTvTitle.setText(R.string.user_agreement);
 
-        wvEducation.loadUrl("file:///android_asset/case/common_html/teaching_materials.html");
+        mWbUserAgreement.loadUrl("file:///android_asset/case/patient_html/patient_user_protocol.html");
 
         //设置自适应屏幕宽高
-        wvEducation.getSettings().setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
-        wvEducation.getSettings().setLoadWithOverviewMode(true);
+        mWbUserAgreement.getSettings().setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
+        mWbUserAgreement.getSettings().setLoadWithOverviewMode(true);
         //可以和js交互
-        wvEducation.getSettings().setJavaScriptEnabled(true);
+        mWbUserAgreement.getSettings().setJavaScriptEnabled(true);
 
         //在js中调用本地java方法
-        wvEducation.addJavascriptInterface(new JsInterface(this), "AndroidWebView");
-        wvEducation.setWebViewClient(new WebViewClient() {
+        mWbUserAgreement.addJavascriptInterface(new JsInterface(this), "AndroidWebView");
+        mWbUserAgreement.setWebViewClient(new WebViewClient() {
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
-                wvEducation.loadUrl(url);
+                mWbUserAgreement.loadUrl(url);
                 return true;
             }
         });
 
     }
+
     private class JsInterface {
         private Context mContext;
 

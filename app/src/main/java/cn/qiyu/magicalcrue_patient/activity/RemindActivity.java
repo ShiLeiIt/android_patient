@@ -1,5 +1,6 @@
 package cn.qiyu.magicalcrue_patient.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -8,11 +9,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import java.text.ParsePosition;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 import butterknife.Bind;
@@ -21,7 +19,11 @@ import cn.qiyu.magicalcrue_patient.R;
 import cn.qiyu.magicalcrue_patient.base.BaseActivity;
 import cn.qiyu.magicalcrue_patient.model.RemindListBean;
 import cn.qiyu.magicalcrue_patient.model.ResultModel;
+import cn.qiyu.magicalcrue_patient.removeitemrecycleview.ItemRemoveRecyclerView;
+import cn.qiyu.magicalcrue_patient.removeitemrecycleview.MyRecyclerAdapter;
+import cn.qiyu.magicalcrue_patient.removeitemrecycleview.OnItemClickListener;
 import cn.qiyu.magicalcrue_patient.utils.TimeUtils;
+import cn.qiyu.magicalcrue_patient.visit.VisitDeleteRemindListView;
 import cn.qiyu.magicalcrue_patient.visit.VisitRemindListPresenter;
 import cn.qiyu.magicalcrue_patient.visit.VisitRemindListView;
 
@@ -29,15 +31,17 @@ import cn.qiyu.magicalcrue_patient.visit.VisitRemindListView;
  * 提醒界面
  */
 
-public class RemindActivity extends BaseActivity {
+public class RemindActivity extends BaseActivity implements View.OnClickListener {
 
 
     @Bind(R.id.tv_title)
     TextView mTvTitle;
     @Bind(R.id.rcl_remind)
-    RecyclerView mRclRemind;
+    ItemRemoveRecyclerView mRclRemind;
     @Bind(R.id.tv_commit)
     TextView mTvCommit;
+    List<RemindListBean> mList;
+    private String mRemindUuid;
 
 
     @Override
@@ -53,6 +57,8 @@ public class RemindActivity extends BaseActivity {
         mTvCommit.setVisibility(View.VISIBLE);
         mTvCommit.setText(R.string.add);
         mTvCommit.setTextColor(getResources().getColor(R.color.add_remind));
+        mTvCommit.setOnClickListener(this);
+
         mVisitRemindListPresenter.getVisitRemindList();
     }
 
@@ -74,9 +80,28 @@ public class RemindActivity extends BaseActivity {
         }
 
         @Override
-        public void LoadVisitRemindList(ResultModel<List<RemindListBean>> model) {
-            mRclRemind.setAdapter(new RemindActivity.RecyclerAdpter(model.getData()));
+        public void LoadVisitRemindList(final ResultModel<List<RemindListBean>> model) {
+            final MyRecyclerAdapter adapter = new MyRecyclerAdapter(RemindActivity.this, model.getData());
+
+
+            mRclRemind.setAdapter(adapter);
             mRclRemind.setLayoutManager(new LinearLayoutManager(RemindActivity.this));
+            mRclRemind.setOnItemClickListener(new OnItemClickListener() {
+                @Override
+                public void onItemClick(View view, int position) {
+                    //TODO
+                }
+
+                @Override
+                public void onDeleteClick(int position) {
+
+                    mRemindUuid = model.getData().get(position).getUuid();
+//                    Log.i("mRemindUuid====",mRemindUuid);
+                    adapter.removeItem(position);
+                    mVisitDeleteRemindListP.getVisitDeleteRemindList();
+                }
+            });
+
         }
 
         @Override
@@ -100,78 +125,60 @@ public class RemindActivity extends BaseActivity {
         }
     });
 
-    class ViewHolder extends RecyclerView.ViewHolder {
-        @Bind({R.id.tv_group_name, R.id.tv_group_member,R.id.tv_week, R.id.tv_scale_satus})
-        TextView[] mtextview;
-        RemindListBean mModel;
-
-        public ViewHolder(View itemView) {
-            super(itemView);
-            ButterKnife.bind(this, itemView);
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-//                    mQuestionUUid = mModel.getPaperID();
-//                    mPaperUserID = mModel.getPaperUserID();
-//                    Log.i("paperUserID", mPaperUserID + "");
-//                    mScalePresenter.VisitScaleDetailsData();
-
-                }
-            });
-
-        }
-
-        void setItem(RemindListBean item) {
-            this.mModel = item;
-        }
-
-        //刷新
-        void refreshView() {
-            String creatTime = mModel.getCreate_time();
-            String substring = creatTime.substring(0, 10);
-            String weekStr = TimeUtils.getWeekStr(creatTime);
-            int status = mModel.getStatus();
-            mtextview[0].setText(mModel.getEvent_detail());
-            mtextview[1].setText(substring);
-            mtextview[2].setText(weekStr);
-            mtextview[3].setVisibility(View.GONE);
-//            if (status == 0) {
-//                mtextview[2].setText("未填写");
-//                mtextview[2].setTextColor(getResources().getColor(R.color.app_gray));
-//            } else {
-//                mtextview[2].setText("已填写");
-//                mtextview[2].setTextColor(getResources().getColor(R.color.app_relation_tv));
-//            }
-
-        }
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mVisitRemindListPresenter.getVisitRemindList();
     }
 
-    class RecyclerAdpter extends RecyclerView.Adapter<RemindActivity.ViewHolder> {
-        private List<RemindListBean> mlist;
-
-        public RecyclerAdpter(List<RemindListBean> mlist) {
-            this.mlist = mlist;
+    VisitRemindListPresenter mVisitDeleteRemindListP = new VisitRemindListPresenter(new VisitDeleteRemindListView() {
+        @Override
+        public String getRemindUuid() {
+//            Log.i("mRemindUuid==",mRemindUuid);
+            return mRemindUuid;
         }
 
         @Override
-        public RemindActivity.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        public String getPatientUuid() {
+            return "df430ac16590449cba026e34704190f3";
 
-            return new RemindActivity.ViewHolder(LayoutInflater.from(RemindActivity.this).inflate(R.layout.recyclerview_remind_item, null));
         }
 
         @Override
-        public void onBindViewHolder(RemindActivity.ViewHolder holder, int position) {
-            holder.setItem(mlist.get(position));
-            holder.refreshView();
+        public void LoadVisitDeleteRemindList(ResultModel model) {
+            Toast.makeText(RemindActivity.this, "删除成功吗", Toast.LENGTH_SHORT).show();
         }
 
         @Override
-        public int getItemCount() {
-            return mlist.size();
+        public void showProgress() {
+
+        }
+
+        @Override
+        public void hideProgress() {
+
+        }
+
+        @Override
+        public void onViewFailure(ResultModel model) {
+            Toast.makeText(RemindActivity.this, "删"+model.getMessage(), Toast.LENGTH_SHORT).show();
+        }
+
+        @Override
+        public void onServerFailure(String e) {
+            Toast.makeText(RemindActivity.this, "除"+e, Toast.LENGTH_SHORT).show();
+
+        }
+    });
+
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.tv_commit:
+                Toast.makeText(this, "add", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(RemindActivity.this,AddRemindActivity.class));
+                break;
         }
     }
-
-
-
-
 }

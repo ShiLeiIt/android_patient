@@ -176,11 +176,18 @@
         <activity android:name=".activity.PatientDataRegisterActivity"/>
         <!--登录界面-->
         <activity android:name=".activity.LoginActivity"/>
-
+        <!--加入系统通知-->
         <activity android:name=".activity.NotificationDialogActivity"
                   android:theme="@style/AppDialogActivity"
             />
+        <!--提醒列表界面-->
         <activity android:name=".activity.RemindActivity"/>
+        <!--用户协议界面-->
+        <activity android:name=".activity.UserAgreementActivity"/>
+        <!--关于我们-->
+        <activity android:name=".activity.AboutUsActivity"/>
+        <!--自己添加提醒界面-->
+        <activity android:name=".activity.AddRemindActivity"/>
 
 
 

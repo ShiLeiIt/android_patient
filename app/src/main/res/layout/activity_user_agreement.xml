@@ -9,15 +9,9 @@
     android:orientation="vertical"
     tools:context="cn.qiyu.magicalcrue_patient.activity.CourseActivity">
     <include layout="@layout/layout_titlebar"/>
-    <View
-        android:background="@color/view_bg"
-        android:layout_width="match_parent"
-        android:layout_height="10dp"/>
-
-    <cn.qiyu.magicalcrue_patient.removeitemrecycleview.ItemRemoveRecyclerView
-        android:id="@+id/rcl_remind"
-        android:gravity="center"
-        android:textColor="@color/app_black"
+    <WebView
+        android:id="@+id/wb_user_agreement"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
+
 </LinearLayout>

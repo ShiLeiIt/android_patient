@@ -15,7 +15,8 @@ public interface VisitRemindListBiz {
                               String pageCount, OnLoginListener onLoginListener);
 
 
-
+    //删除自己创建的日程提醒
+    void getDeleteRemindList(String remindUuid,String patientUuid,OnLoginListener onLoginListener);
 
 
     interface OnLoginListener<T> {

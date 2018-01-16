@@ -406,7 +406,7 @@ public class PatientDataActivity extends BaseActivity {
         picker.setTopPadding(15);
         picker.setRangeStart(1950, 1, 1);
         picker.setRangeEnd(2050, 1, 11);
-        picker.setSelectedItem(2017, 10, 14);
+        picker.setSelectedItem(2018, 1, 1);
         picker.setWeightEnable(true);
         picker.setOnDatePickListener(new DatePicker.OnYearMonthDayPickListener() {
             @Override

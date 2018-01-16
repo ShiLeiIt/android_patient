@@ -158,11 +158,13 @@ ApiService {
     String API_SYSTEMMSG_READ = "message/getMessageDetail";
     //退出登录
     String API_LOGOUT = "patientInfo/userLogout";
-    //随访页面患教课堂列表 TODO
+    //随访页面患教课堂列表
     String API_PATIENT_COURSE_LIST = "course/patentCourseList";
 
     //获取提醒的列表
     String API_REMIND_LIST ="event/patientEventlist";
+    //删除自己创建的日程提醒
+    String API_DELETE_EVENT = "event/deleteEvent";
 
 
 
@@ -697,5 +699,13 @@ ApiService {
     @FormUrlEncoded
     Call<ResultModel<List<RemindListBean>>> getVisitRemindList(
             @Field("patientId") String patientUuid, @Field("page") String page,@Field("pagecount") String pagecount);
+
+    /**
+     * 删除自己创建的日程提醒
+     */
+    @POST(API_DELETE_EVENT)
+    @FormUrlEncoded
+    Call<ResultModel> deleteOneselfRemindEvent( @Field("uuid") String remindUuid, @Field("userId") String patientUuid);
+
 
 }

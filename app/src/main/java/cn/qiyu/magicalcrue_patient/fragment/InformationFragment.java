@@ -91,8 +91,6 @@ public class InformationFragment extends Fragment {
         //注册EventBus，在开始的位置
         EventBus.getDefault().register(this);
 
-
-
         return view;
     }
 

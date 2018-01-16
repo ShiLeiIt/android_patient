@@ -33,6 +33,7 @@ import cn.qiyu.magicalcrue_patient.Api.ApiService;
 import cn.qiyu.magicalcrue_patient.R;
 import cn.qiyu.magicalcrue_patient.activity.CaseHistoryActivity;
 import cn.qiyu.magicalcrue_patient.activity.DoctorListActivity;
+import cn.qiyu.magicalcrue_patient.activity.DoctorNoticeListActivity;
 import cn.qiyu.magicalcrue_patient.activity.FollowUpMessageDetailActivity;
 import cn.qiyu.magicalcrue_patient.activity.InspectionReportInfoListActivity;
 import cn.qiyu.magicalcrue_patient.activity.LeaveHospitalInfoListActivity;
@@ -75,13 +76,13 @@ public class VisitFragment extends Fragment implements View.OnClickListener {
 
     private static int ICON_HOME[] = {
             R.drawable.visit_dialogue, R.drawable.visit_case_history, R.drawable.visit_symptom, R.drawable.visit_pharmacy,
-            R.drawable.visit_scale, R.drawable.visit_teaching,   R.drawable.visit_remind
+            R.drawable.visit_scale, R.drawable.visit_teaching,   R.drawable.visit_remind,R.drawable.visit_notice
 
     };
 
     private static String TITLE_INFO[] =
             {
-                    "对话", "病历", "症状", "用药", "量表",  "患教",  "提醒",
+                    "对话", "病历", "症状", "用药", "量表",  "患教",  "提醒","公告"
             };
     private MyGridView mGridView;
     private TextView mTv_topleft_visit;
@@ -385,7 +386,7 @@ public class VisitFragment extends Fragment implements View.OnClickListener {
     private void setGridView() {
         ArrayList<HashMap<String, Object>> meumList = new ArrayList<HashMap<String, Object>>();
 
-        for (int i = 0; i < 7; i++) {
+        for (int i = 0; i < 8; i++) {
             HashMap<String, Object> map = new HashMap<String, Object>();
             map.put("ItemImage", ICON_HOME[i]);
             map.put("ItemText", TITLE_INFO[i]);
@@ -441,7 +442,9 @@ public class VisitFragment extends Fragment implements View.OnClickListener {
 //                                Toast.makeText(getActivity(), "提醒", Toast.LENGTH_SHORT).show();
                                 startActivity(new Intent(getActivity(), RemindActivity.class));
                                 break;
-
+                            case 7:
+                                startActivity(new Intent(getActivity(), DoctorNoticeListActivity.class));
+                                break;
                         }
                     }
                 });

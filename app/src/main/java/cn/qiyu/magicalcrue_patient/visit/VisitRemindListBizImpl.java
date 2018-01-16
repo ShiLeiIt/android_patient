@@ -38,6 +38,25 @@ public class VisitRemindListBizImpl extends BaseBiz implements VisitRemindListBi
             }
         });
     }
+    //删除自己创建的日程提醒
+    @Override
+    public void getDeleteRemindList(final String remindUuid, String patientUuid, final OnLoginListener onLoginListener) {
+    mApiService.deleteOneselfRemindEvent(remindUuid,patientUuid).enqueue(new Callback<ResultModel>() {
+        @Override
+        public void onResponse(Call<ResultModel> call, Response<ResultModel> response) {
+            if (response.isSuccessful()) {
+                onLoginListener.onResponse(response.body());
+            } else {
+                onLoginListener.onFailure(response.body().getMessage());
+            }
+        }
+
+        @Override
+        public void onFailure(Call<ResultModel> call, Throwable throwable) {
+        onLoginListener.onFailure(throwable.getMessage());
+        }
+    });
+    }
 }
 
 

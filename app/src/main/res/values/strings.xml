@@ -5,10 +5,14 @@
     <string name="caseHistory">病历</string>
     <string name="information_title">消息</string>
     <string name="birth_date">出生日期</string>
+    <string name="project">项目</string>
     <string name="please_select">请选择</string>
+
     <string name="gender">性别</string>
     <string name="location_citiy">所在城市</string>
     <string name="user_icon">用户信息</string>
+    <string name="user_agreement">用户协议</string>
+    <string name="about_us">关于我们</string>
     <string name="real_name">真实用户</string>
     <string name="girl">女士</string>
     <string name="boy">男士</string>
@@ -20,6 +24,7 @@
     <string name="register_deal">用户注册协议</string>
 
     <string name="course">患教课程</string>
+    <string name="newCourse">患教课堂</string>
     <string name="medical">医疗机构</string>
     <string name="loveAction">关爱行动</string>
     <string name="visitAction">随访行动</string>
@@ -84,6 +89,9 @@
     <string name="ruHospitalTime">入院时间</string>
     <string name="OutHospitalTime">出院时间</string>
     <string name="remind">提醒</string>
+    <string name="project_content">请输入</string>
+    <string name="finish">完成</string>
+    <string name="remindTime">提醒时间</string>
 
 
     <string name="quizHint">你可以向随访医生团队咨询问题，请尽可能简练、准确的描述症状、部位等信息，方便医生给的准确建议。你也可以拍照进行上传</string>

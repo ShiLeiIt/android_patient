@@ -254,6 +254,7 @@ public class HospitalListActivity extends BaseActivity {
                             mList.get(i).setSelect(true);
                         } else {
                             mList.get(i).setSelect(false);
+
                         }
                     }
                     mRecyclerAdpter.notifyDataSetChanged();

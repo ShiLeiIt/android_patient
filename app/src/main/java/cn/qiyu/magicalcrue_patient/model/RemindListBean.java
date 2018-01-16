@@ -5,7 +5,7 @@ package cn.qiyu.magicalcrue_patient.model;
  * 提醒列表
  */
 
-public class RemindListBean {
+public class  RemindListBean {
 
     /**
      * repeat_num : 2
