@@ -92,6 +92,8 @@
     <string name="project_content">请输入</string>
     <string name="finish">完成</string>
     <string name="remindTime">提醒时间</string>
+    <string name="repetition">重复提醒</string>
+    <string name="recurrenceInterval">每</string>
 
 
     <string name="quizHint">你可以向随访医生团队咨询问题，请尽可能简练、准确的描述症状、部位等信息，方便医生给的准确建议。你也可以拍照进行上传</string>

@@ -521,6 +521,7 @@ public class DateTimePicker extends WheelPicker {
                 hourView.setDividerType(LineConfig.DividerType.FILL);
                 hourView.setAdapter(new ArrayWheelAdapter<>(hours));
                 hourView.setCurrentItem(selectedHourIndex);
+
                 hourView.setLayoutParams(wheelViewParams);
                 hourView.setOnItemPickListener(new OnItemPickListener<String>() {
                     @Override

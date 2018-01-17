@@ -57,6 +57,16 @@ public class DischargeBean {
     private String doctor_name;
     private String health_file_id;
     private String hospital_name;
+    private long diagnosis_date;
+
+    public long getDiagnosis_date() {
+        return diagnosis_date;
+    }
+
+    public void setDiagnosis_date(long diagnosis_date) {
+        this.diagnosis_date = diagnosis_date;
+    }
+
     private int status;
     private List<EncloSure> imglist;
 

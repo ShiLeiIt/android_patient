@@ -12,6 +12,7 @@ import android.widget.BaseAdapter;
 import android.widget.EditText;
 import android.widget.TextView;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import cn.qiyu.magicalcrue_patient.R;
@@ -104,17 +105,20 @@ public class ListDischargeItemAdapter extends BaseAdapter {
 
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         String date=dateFormat.format(itemEntity.getBe_hospitalized_date());
+        String date1=dateFormat.format(itemEntity.getLeave_hospital_date());
 
         String createTime = itemEntity.getCreate_time();
         String substring = createTime.substring(0, 16);
 
         if (mIsOutPatient.equals("outPatient")) {
             holder.tv_create_date.setText(substring);
+            //门诊时间
+            holder.tv_date.setText("门诊时间："+getDateToString(itemEntity.getDiagnosis_date()));
         } else {
             holder.tv_create_date.setText(substring);
+            holder.tv_date.setText("住院时间:  "+date+" 至 "+date1);
         }
-        //门诊时间
-        holder.tv_date.setText("门诊时间：  "+date);
+
         //地址
         holder.tv_hospital.setText("医院：  "+itemEntity.getHospitalName());
         //科室
@@ -192,6 +196,12 @@ public class ListDischargeItemAdapter extends BaseAdapter {
         private TextView tv_context;
         private NoScrollGridView gridview;
     }
+    public static String getDateToString(long time) {
+        Date d = new Date(time);
+        SimpleDateFormat sd = new SimpleDateFormat("yyyy-MM-dd");
+        return sd.format(d);
+    }
+
     /**
      *
      *

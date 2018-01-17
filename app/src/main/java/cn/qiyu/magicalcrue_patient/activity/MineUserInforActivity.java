@@ -181,6 +181,7 @@ public class MineUserInforActivity extends BaseActivity implements View.OnClickL
         public RequestBody getImageUpLoadFileId() {
             if (mFileName != null) {
                 mRequestFile = RequestBody.create(MediaType.parse("multipart/form-data"), mFileName);
+                Log.i("mFileName======", mFileName + "");
 //                mRequestFile = RequestBody.create(MediaType.parse("image/png"), mFileName);
             }else {
                 //进行用户信息保存到服务器

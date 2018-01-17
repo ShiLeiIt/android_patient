@@ -221,11 +221,13 @@ public class AddOutpatientDataActivity extends BaseActivity {
 
         @Override
         public String getHospitalId() {
+            Log.i("hospitalId==", mHospitalId);
             return mHospitalId;
         }
 
         @Override
         public String getOfficeId() {
+            Log.i("officeId==",mOfficeId);
             return mOfficeId;
         }
 

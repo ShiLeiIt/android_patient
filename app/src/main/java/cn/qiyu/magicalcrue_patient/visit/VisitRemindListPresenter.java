@@ -13,16 +13,25 @@ import cn.qiyu.magicalcrue_patient.model.ResultModel;
 public class VisitRemindListPresenter {
     private VisitRemindListView mVisitRemindListView;
     private VisitDeleteRemindListView mVisitDeleteRemindListView;
-    private VisitRemindListBiz mVisitRemindListBiz;
+    private VisitCreateRemindView mVisitCreateRemindView;
 
+    private VisitRemindListBiz mVisitRemindListBiz;
+    //显示日程列表
     public VisitRemindListPresenter(VisitRemindListView visitRemindListView) {
         mVisitRemindListBiz = new VisitRemindListBizImpl();
         mVisitRemindListView = visitRemindListView;
     }
+    //删除日程
     public VisitRemindListPresenter(VisitDeleteRemindListView visitDeleteRemindListView) {
         mVisitRemindListBiz = new VisitRemindListBizImpl();
         mVisitDeleteRemindListView = visitDeleteRemindListView;
     }
+    //创建患者日程
+    public VisitRemindListPresenter(VisitCreateRemindView visitCreateRemindView) {
+        mVisitRemindListBiz = new VisitRemindListBizImpl();
+        mVisitCreateRemindView = visitCreateRemindView;
+    }
+
 
     //获取提醒列表
    public void getVisitRemindList(){
@@ -61,6 +70,35 @@ public class VisitRemindListPresenter {
             }
         });
     }
+    //创建患者的日程提醒
+    public void getVisitCreateRemind(){
+        mVisitRemindListBiz.getCreateRemind(mVisitCreateRemindView.getRemindUuid(),
+                                            mVisitCreateRemindView.getEventName(),
+                                            mVisitCreateRemindView.getEventRemark(),
+                                            mVisitCreateRemindView.getRemindTime(),
+                                            mVisitCreateRemindView.getRepeatNum(),
+                                            mVisitCreateRemindView.getRepeatType(),
+                                            mVisitCreateRemindView.getPatientUuid(),
+                                            mVisitCreateRemindView.getUserRoleType(),
+                                            mVisitCreateRemindView.getEventReception(),
+                                            mVisitCreateRemindView.getUserStatus(),
+                                            mVisitCreateRemindView.getReceptionUserStatus(), new VisitRemindListBiz.OnLoginListener() {
+                    @Override
+                    public void onResponse(ResultModel model) {
+                        if (model.getResult() == 0) {
+                            mVisitCreateRemindView.LoadVisiteCreateRemind(model);
+                        } else {
+                            mVisitCreateRemindView.onViewFailure(model);
+                        }
 
+                    }
+
+                    @Override
+                    public void onFailure(String e) {
+                        mVisitCreateRemindView.onServerFailure(e);
+                    }
+                }
+        );
+    }
 
 }

@@ -18,6 +18,20 @@ public interface VisitRemindListBiz {
     //删除自己创建的日程提醒
     void getDeleteRemindList(String remindUuid,String patientUuid,OnLoginListener onLoginListener);
 
+    //创建患者的日程提醒
+    void getCreateRemind(String remindUuid,
+                         String eventName,
+                         String eventRemark,
+                         String remindTime,
+                         String repeatNum,
+                         String repeatType,
+                         String patientUuid,
+                         String userRoleType,
+                         String eventReception,
+                         String userStatus,
+                         String receptionUserStatus,
+                         OnLoginListener onLoginListener);
+
 
     interface OnLoginListener<T> {
 

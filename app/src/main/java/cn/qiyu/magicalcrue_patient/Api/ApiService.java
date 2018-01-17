@@ -6,6 +6,7 @@ import cn.qiyu.magicalcrue_patient.model.AddOutPatientDataSaveBean;
 import cn.qiyu.magicalcrue_patient.model.CaseHistoryNumBean;
 import cn.qiyu.magicalcrue_patient.model.CityBean;
 import cn.qiyu.magicalcrue_patient.model.Comment;
+import cn.qiyu.magicalcrue_patient.model.CreateRemindBean;
 import cn.qiyu.magicalcrue_patient.model.DischargeBean;
 import cn.qiyu.magicalcrue_patient.model.DiseasesBean;
 import cn.qiyu.magicalcrue_patient.model.DoctorTeamBean;
@@ -165,6 +166,10 @@ ApiService {
     String API_REMIND_LIST ="event/patientEventlist";
     //删除自己创建的日程提醒
     String API_DELETE_EVENT = "event/deleteEvent";
+    //创建日程提醒
+    String API_CREATE_EVENT_REMIND = "event/createEvent";
+
+
 
 
 
@@ -707,5 +712,21 @@ ApiService {
     @FormUrlEncoded
     Call<ResultModel> deleteOneselfRemindEvent( @Field("uuid") String remindUuid, @Field("userId") String patientUuid);
 
-
+    /**
+     * 患者创建的日程提醒
+     */
+    @POST(API_CREATE_EVENT_REMIND)
+    @FormUrlEncoded
+    Call<ResultModel<CreateRemindBean>> CreatRemindEvent(@Field("uuid") String remindUuid,
+                                                         @Field("event_name") String eventName,
+                                                         @Field("event_detail") String eventRemark,
+                                                         @Field("event_time") String remindTime,
+                                                         @Field("repeat_num") String repeatNum,
+                                                         @Field("repeat_type") String repeatType,
+                                                         @Field("event_create_user") String patientUuid,
+                                                         @Field("event_create_user_role") String userRoleType,
+                                                         @Field("event_implement_user") String eventReception,
+                                                         @Field("enent_create_user_status") String userStatus,
+                                                         @Field("event_implement_user_status") String receptionUserStatus
+                                                            );
 }
