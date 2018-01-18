@@ -168,6 +168,8 @@ ApiService {
     String API_DELETE_EVENT = "event/deleteEvent";
     //创建日程提醒
     String API_CREATE_EVENT_REMIND = "event/createEvent";
+    //日程提醒详情页面
+    String API_EVENT_REMIND_DETAILS = "event/getEventDetail";
 
 
 
@@ -729,4 +731,15 @@ ApiService {
                                                          @Field("enent_create_user_status") String userStatus,
                                                          @Field("event_implement_user_status") String receptionUserStatus
                                                             );
+
+
+
+    /**
+     * 日程提醒详情
+     */
+    @POST(API_EVENT_REMIND_DETAILS)
+    @FormUrlEncoded
+    Call<ResultModel<CreateRemindBean>> getEventRemindDetails( @Field("uuid") String remindUuid);
+
+
 }

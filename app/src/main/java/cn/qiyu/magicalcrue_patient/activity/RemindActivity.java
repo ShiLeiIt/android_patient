@@ -90,6 +90,12 @@ public class RemindActivity extends BaseActivity implements View.OnClickListener
                 @Override
                 public void onItemClick(View view, int position) {
                     //TODO
+                    Intent intent = new Intent(RemindActivity.this,RemindDetailsActivity.class);
+                    intent.putExtra("remindUuid", model.getData().get(position).getUuid());
+                    startActivity(intent);
+
+                    Toast.makeText(RemindActivity.this, ""+model.getData().get(position).getUuid(), Toast.LENGTH_SHORT).show();
+                    Log.i("mRemindUuid====",model.getData().get(position).getUuid());
                 }
 
                 @Override
@@ -146,7 +152,7 @@ public class RemindActivity extends BaseActivity implements View.OnClickListener
 
         @Override
         public void LoadVisitDeleteRemindList(ResultModel model) {
-            Toast.makeText(RemindActivity.this, "删除成功吗", Toast.LENGTH_SHORT).show();
+//            Toast.makeText(RemindActivity.this, "删除成功吗", Toast.LENGTH_SHORT).show();
         }
 
         @Override
@@ -161,12 +167,12 @@ public class RemindActivity extends BaseActivity implements View.OnClickListener
 
         @Override
         public void onViewFailure(ResultModel model) {
-            Toast.makeText(RemindActivity.this, "删"+model.getMessage(), Toast.LENGTH_SHORT).show();
+//            Toast.makeText(RemindActivity.this, "删"+model.getMessage(), Toast.LENGTH_SHORT).show();
         }
 
         @Override
         public void onServerFailure(String e) {
-            Toast.makeText(RemindActivity.this, "除"+e, Toast.LENGTH_SHORT).show();
+//            Toast.makeText(RemindActivity.this, "除"+e, Toast.LENGTH_SHORT).show();
 
         }
     });
@@ -176,7 +182,7 @@ public class RemindActivity extends BaseActivity implements View.OnClickListener
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.tv_commit:
-                Toast.makeText(this, "add", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(this, "add", Toast.LENGTH_SHORT).show();
                 startActivity(new Intent(RemindActivity.this,AddRemindActivity.class));
                 break;
         }

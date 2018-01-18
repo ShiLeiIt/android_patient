@@ -32,6 +32,8 @@ public interface VisitRemindListBiz {
                          String receptionUserStatus,
                          OnLoginListener onLoginListener);
 
+    //日程提醒详情
+    void getRemindDetails(String remindUuid,OnLoginListener onLoginListener);
 
     interface OnLoginListener<T> {
 

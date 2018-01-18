@@ -1,5 +1,6 @@
 package cn.qiyu.magicalcrue_patient.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -24,14 +25,15 @@ import cn.qiyu.magicalcrue_patient.picker.DoublePicker;
 import cn.qiyu.magicalcrue_patient.utils.TimeUtils;
 import cn.qiyu.magicalcrue_patient.view.SwitchButton;
 import cn.qiyu.magicalcrue_patient.visit.VisitCreateRemindView;
+import cn.qiyu.magicalcrue_patient.visit.VisitRemindDetailsView;
 import cn.qiyu.magicalcrue_patient.visit.VisitRemindListPresenter;
 
 /**
- * Created by ShiLei on 2018/1/16.
- * 创建日程提醒
+ * Created by ShiLei on 2018/1/18.
+ * 日程提醒详情
  */
 
-public class AddRemindActivity extends BaseActivity {
+public class RemindDetailsActivity extends BaseActivity {
     @Bind(R.id.tv_title)
     TextView mTvTitle;
     @Bind(R.id.tv_commit)
@@ -57,6 +59,7 @@ public class AddRemindActivity extends BaseActivity {
     private String mRemindTime;
     private String mRepeatNum;
     private String mRepeat;
+    private String mRemindUuid;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -68,9 +71,9 @@ public class AddRemindActivity extends BaseActivity {
 
     private void init() {
         mTvCommit.setVisibility(View.VISIBLE);
-        mTvCommit.setText(R.string.finish);
+        mTvCommit.setText(R.string.modification);
         mTvCommit.setTextColor(getResources().getColor(R.color.app_userInfor));
-        mTvTitle.setText(R.string.add);
+        mTvTitle.setText(R.string.details);
         mSwitchButton.setChecked(true);
         mSwitchButton.isChecked();
         mSwitchButton.toggle();     //switch state
@@ -79,9 +82,13 @@ public class AddRemindActivity extends BaseActivity {
         mSwitchButton.setShadowEffect(true);//disable shadow effect
         mSwitchButton.setEnabled(true);//disable button
         mSwitchButton.setEnableEffect(true);//disable the switch animation
-        if (mSwitchButton.isChecked()) {
-            mRlRecurrenceInterval.setVisibility(View.VISIBLE);
-        }
+        mRemindUuid = getIntent().getStringExtra("remindUuid");
+
+//
+//        if (mSwitchButton.isChecked()) {
+//            mRlRecurrenceInterval.setVisibility(View.VISIBLE);
+//        }
+
         mSwitchButton.setOnCheckedChangeListener(new SwitchButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(SwitchButton view, boolean isChecked) {
@@ -93,13 +100,67 @@ public class AddRemindActivity extends BaseActivity {
 
             }
         });
+        mDetailsPresenter.getVisitRemindDetails();
     }
 
-    //创建日程提醒
+    VisitRemindListPresenter mDetailsPresenter = new VisitRemindListPresenter(new VisitRemindDetailsView() {
+        @Override
+        public String getRemindUuid() {
+            return mRemindUuid;
+        }
+
+        @Override
+        public void LoadVisiteRemindDetails(ResultModel<CreateRemindBean> model) {
+
+            mTvProjectDetail.setText(model.getData().getEvent_name());
+            mIdEditorDetail.setText(model.getData().getEvent_detail());
+            mTvRemindTime.setText(model.getData().getEvent_time() );
+            String repeat_type = model.getData().getRepeat_type();
+            String repeat_num = model.getData().getRepeat_num();
+            if (repeat_num.equals("0") && repeat_type.equals("0")) {
+                mSwitchButton.setChecked(false);
+                mRlRecurrenceInterval.setVisibility(View.INVISIBLE);
+            } else {
+                mSwitchButton.setChecked(true);
+                mRlRecurrenceInterval.setVisibility(View.VISIBLE);
+                mTvRecurrenceIntervalNum.setText(model.getData().getRepeat_num());
+                if (model.getData().getRepeat_type().equals("1")) {
+                    mTvRecurrenceInterval.setText("月");
+                } else {
+                    mTvRecurrenceInterval.setText("周");
+                }
+
+            }
+
+        }
+
+        @Override
+        public void showProgress() {
+
+        }
+
+        @Override
+        public void hideProgress() {
+
+        }
+
+        @Override
+        public void onViewFailure(ResultModel model) {
+
+        }
+
+        @Override
+        public void onServerFailure(String e) {
+
+        }
+    });
+
+
+    //修改日程提醒
     VisitRemindListPresenter mPresenter = new VisitRemindListPresenter(new VisitCreateRemindView() {
         @Override
         public String getRemindUuid() {
-            return "";
+            return mRemindUuid;
         }
 
         @Override
@@ -165,7 +226,7 @@ public class AddRemindActivity extends BaseActivity {
 
         @Override
         public void LoadVisiteCreateRemind(ResultModel<CreateRemindBean> model) {
-            Toast.makeText(AddRemindActivity.this, "添加成功", Toast.LENGTH_SHORT).show();
+            Toast.makeText(RemindDetailsActivity.this, "修改成功", Toast.LENGTH_SHORT).show();
             finish();
         }
 
@@ -286,25 +347,25 @@ public class AddRemindActivity extends BaseActivity {
             case R.id.rl_recurrence_interval:
                 tvSelectRemindDate(mTvRecurrenceInterval);
                 break;
-            //添加提醒完成
+            //修改提醒完成
             case R.id.tv_commit:
-                if (TextUtils.isEmpty(mTvProjectDetail.getText().toString()) ||
-                        TextUtils.isEmpty(mIdEditorDetail.getText().toString()) ||
-                        mTvRemindTime.getText().toString().equals("2018-1-1")) {
-                    Toast.makeText(this, "信息填写不完整", Toast.LENGTH_SHORT).show();
-                } else {
-                    if (mSwitchButton.isChecked()) {
+//                if (TextUtils.isEmpty(mTvProjectDetail.getText().toString()) ||
+//                        TextUtils.isEmpty(mIdEditorDetail.getText().toString()) ||
+//                        mTvRemindTime.getText().toString().equals("2018-1-1")) {
+//                    Toast.makeText(this, "信息填写不完整", Toast.LENGTH_SHORT).show();
+//                } else {
+//                    if (mSwitchButton.isChecked()) {
+//                        if (mTvRecurrenceInterval.getText().toString().equals("")&&mTvRecurrenceIntervalNum.getText().toString().equals("")) {
+//                            Toast.makeText(this, "信息填写不完整", Toast.LENGTH_SHORT).show();
+//                        } else {
+//                            mPresenter.getVisitCreateRemind();
+//                        }
+//                    } else {
 //                        mPresenter.getVisitCreateRemind();
-                        if (mTvRecurrenceInterval.getText().toString().equals("")&&mTvRecurrenceIntervalNum.getText().toString().equals("")) {
-                            Toast.makeText(this, "信息填写不完整", Toast.LENGTH_SHORT).show();
-                        } else {
-                            mPresenter.getVisitCreateRemind();
-                        }
-                    } else {
-                        mPresenter.getVisitCreateRemind();
-                    }
-
-                }
+//                    }
+//
+//                }
+                mPresenter.getVisitCreateRemind();
                 break;
         }
     }

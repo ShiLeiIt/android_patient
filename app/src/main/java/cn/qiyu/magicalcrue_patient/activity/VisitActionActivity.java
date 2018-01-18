@@ -9,6 +9,9 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.TextView;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import cn.qiyu.magicalcrue_patient.R;
@@ -64,7 +67,10 @@ public class VisitActionActivity extends BaseActivity {
         @JavascriptInterface
         public void showInfoFromJs(String name) {
             Intent intent = new Intent(mContext, BannerDetailActivity.class);
-            intent.putExtra("url", name);
+            JSONObject object = JSON.parseObject(name);
+            JSONObject jsonObject = new JSONObject(object);
+            String url = jsonObject.getString("url");
+            intent.putExtra("url", url);
             mContext.startActivity(intent);
         }
 

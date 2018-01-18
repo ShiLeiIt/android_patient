@@ -80,6 +80,27 @@ public class VisitRemindListBizImpl extends BaseBiz implements VisitRemindListBi
             }
         });
     }
+
+    //提醒日程详情
+    @Override
+    public void getRemindDetails(final String remindUuid, final OnLoginListener onLoginListener) {
+        mApiService.getEventRemindDetails(remindUuid).enqueue(new Callback<ResultModel<CreateRemindBean>>() {
+            @Override
+            public void onResponse(Call<ResultModel<CreateRemindBean>> call, Response<ResultModel<CreateRemindBean>> response) {
+                if (response.isSuccessful()) {
+                    onLoginListener.onResponse(response.body());
+                } else {
+                    onLoginListener.onFailure(response.body().getMessage());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResultModel<CreateRemindBean>> call, Throwable throwable) {
+                onLoginListener.onFailure(throwable.getMessage());
+            }
+        });
+
+    }
 }
 
 

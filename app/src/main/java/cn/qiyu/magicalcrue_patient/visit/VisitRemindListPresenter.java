@@ -14,6 +14,7 @@ public class VisitRemindListPresenter {
     private VisitRemindListView mVisitRemindListView;
     private VisitDeleteRemindListView mVisitDeleteRemindListView;
     private VisitCreateRemindView mVisitCreateRemindView;
+    private VisitRemindDetailsView mVisitRemindDetailsView;
 
     private VisitRemindListBiz mVisitRemindListBiz;
     //显示日程列表
@@ -30,6 +31,11 @@ public class VisitRemindListPresenter {
     public VisitRemindListPresenter(VisitCreateRemindView visitCreateRemindView) {
         mVisitRemindListBiz = new VisitRemindListBizImpl();
         mVisitCreateRemindView = visitCreateRemindView;
+    }
+    //日程提醒详情
+    public VisitRemindListPresenter(VisitRemindDetailsView visitRemindDetailsView){
+        mVisitRemindListBiz = new VisitRemindListBizImpl();
+        mVisitRemindDetailsView = visitRemindDetailsView;
     }
 
 
@@ -99,6 +105,23 @@ public class VisitRemindListPresenter {
                     }
                 }
         );
+    }
+    //日程提醒详情
+    public  void getVisitRemindDetails(){
+        mVisitRemindListBiz.getRemindDetails(mVisitRemindDetailsView.getRemindUuid(), new VisitRemindListBiz.OnLoginListener() {
+            @Override
+            public void onResponse(ResultModel model) {
+                if (model.getResult() == 0) {
+                    mVisitRemindDetailsView.LoadVisiteRemindDetails(model);
+                } else {
+                    mVisitRemindDetailsView.onViewFailure(model);
+                }
+            }
+            @Override
+            public void onFailure(String e) {
+                mVisitRemindDetailsView.onServerFailure(e);
+            }
+        });
     }
 
 }
