@@ -223,6 +223,8 @@ public class LoginActivity extends BaseActivity {
                 }
                 break;
             case R.id.tv_deal:
+                //用户协议
+                startActivity(new Intent(LoginActivity.this, UserAgreementActivity.class));
                 break;
             case R.id.iv_login:
                 if (TextUtils.isEmpty(mEditPhone.getText())) {

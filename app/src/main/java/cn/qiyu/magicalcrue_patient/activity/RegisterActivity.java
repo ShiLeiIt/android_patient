@@ -231,6 +231,8 @@ public class RegisterActivity extends BaseActivity {
                 }
                 break;
             case R.id.tv_deal:
+                //用户协议
+                startActivity(new Intent(RegisterActivity.this, UserAgreementActivity.class));
                 break;
             case R.id.iv_register:
                 if (TextUtils.isEmpty(mEditPhone.getText())) {

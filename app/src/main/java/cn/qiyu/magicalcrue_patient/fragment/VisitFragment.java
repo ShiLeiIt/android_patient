@@ -84,7 +84,7 @@ public class VisitFragment extends BaseFragment implements View.OnClickListener 
 
     private static String TITLE_INFO[] =
             {
-                    "对话", "病历", "症状", "用药", "量表",  "患教",  "提醒","公告"
+                    "对话", "病历", "症状", "用药", "量表",  "患教","公告"
             };
     private MyGridView mGridView;
     private TextView mTv_topleft_visit;
