@@ -1,12 +1,13 @@
 package cn.qiyu.magicalcrue_patient.fragment;
 
 import android.app.Dialog;
-import android.app.Fragment;
+
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -72,7 +73,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
  * 随访界面
  */
 
-public class VisitFragment extends Fragment implements View.OnClickListener {
+public class VisitFragment extends BaseFragment implements View.OnClickListener {
 
     private static int ICON_HOME[] = {
             R.drawable.visit_dialogue, R.drawable.visit_case_history, R.drawable.visit_symptom, R.drawable.visit_pharmacy,
@@ -104,6 +105,8 @@ public class VisitFragment extends Fragment implements View.OnClickListener {
     private LinearLayout mLlBindDoctor;
     private ImageView mIvUnbindDoctor;
     private SwipeRefreshLayout mRefreshLayout;
+    // 标志位，标志已经初始化完成。
+    private boolean isPrepared;
 
     @Nullable
     @Override
@@ -171,6 +174,12 @@ public class VisitFragment extends Fragment implements View.OnClickListener {
         return view;
     }
 
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        isPrepared = true;
+        lazyLoad();
+    }
 
     MinePresenter mMinePresenter = new MinePresenter(new MineInforView() {
         @Override
@@ -302,6 +311,9 @@ public class VisitFragment extends Fragment implements View.OnClickListener {
                     path =  model.getData().getDoctorTeamList().get(i).getPhotoPathImg();
                 DisplayHelper.loadGlide(getActivity(), path, civ[i]);
             }
+            mLlUnbindDoctor.setVisibility(View.GONE);
+            mLlBindDoctor.setVisibility(View.VISIBLE);
+            mTv_mere_updata.setVisibility(View.VISIBLE);
         }
         //首页Banner
         @Override
@@ -460,6 +472,14 @@ public class VisitFragment extends Fragment implements View.OnClickListener {
 //            homePresenter.HomeLoadNumData();
 //            Log.i("=======123", "进入visit");
         }
+    }
+
+    @Override
+    protected void lazyLoad() {
+        if(!isPrepared || !isVisible) {
+            return;
+        }
+       homePresenter.getDoctorTeamInfo();
     }
 
     /**

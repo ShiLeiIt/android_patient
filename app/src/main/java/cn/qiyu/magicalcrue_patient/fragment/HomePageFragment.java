@@ -1,10 +1,10 @@
 package cn.qiyu.magicalcrue_patient.fragment;
 
-import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.CardView;
 import android.util.Log;
@@ -18,6 +18,8 @@ import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.startsmake.mainnavigatetabbar.widget.MainNavigateTabBar;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -64,7 +66,7 @@ import pub.devrel.easypermissions.EasyPermissions;
  * 首页界面
  */
 
-public class HomePageFragment extends Fragment implements View.OnClickListener, EasyPermissions.PermissionCallbacks {
+public class HomePageFragment extends BaseFragment implements View.OnClickListener, EasyPermissions.PermissionCallbacks {
     @Bind(R.id.tv_mydocter)
     TextView mTvMydocter;
     @Bind(R.id.tv_mydocter_team)
@@ -107,6 +109,9 @@ public class HomePageFragment extends Fragment implements View.OnClickListener, 
     private TextView mTvLoveAction;
     private TextView mTvVisitAction;
     private TextView mTvMore;
+    // 标志位，标志已经初始化完成。
+    private boolean isPrepared;
+
 
     @Nullable
     @Override
@@ -191,6 +196,8 @@ public class HomePageFragment extends Fragment implements View.OnClickListener, 
         getLoad();
 
 
+
+
 //        Intent intent = getActivity().getIntent();
 //        int type = intent.getIntExtra("type", 0);
 //        if (type==4) {
@@ -209,6 +216,7 @@ public class HomePageFragment extends Fragment implements View.OnClickListener, 
             }
 
         }
+
         return view;
     }
 
@@ -230,6 +238,9 @@ public class HomePageFragment extends Fragment implements View.OnClickListener, 
 
 //        mIv_richsan.setFocusableInTouchMode(true);
 //        mIv_richsan.requestFocus();
+        isPrepared = true;
+        lazyLoad();
+
     }
 
     @Override
@@ -243,9 +254,11 @@ public class HomePageFragment extends Fragment implements View.OnClickListener, 
     @Override
     public void onResume() {
         super.onResume();
-        mHomePresenter.getDoctorTeamInfo();
-        mHomePresenter.getHomeBanner();
-        mHomePresenter.HomeLoadNumData();
+//        mHomePresenter.getDoctorTeamInfo();
+//        mHomePresenter.getHomeBanner();
+//        mHomePresenter.HomeLoadNumData();
+        Toast.makeText(getActivity(), "显示11", Toast.LENGTH_SHORT).show();
+
     }
 
 
@@ -494,6 +507,10 @@ public class HomePageFragment extends Fragment implements View.OnClickListener, 
                 else path = model.getData().getDoctorTeamList().get(i).getPhotoPathImg();
                 DisplayHelper.loadGlide(getActivity(), path, civ[i]);
             }
+//            Toast.makeText(getActivity(), "doctor=======", Toast.LENGTH_SHORT).show();
+            mLlBindDoctor.setVisibility(View.VISIBLE);
+            mLlUnbindDoctor.setVisibility(View.GONE);
+            mIv_richsan.setVisibility(View.INVISIBLE);
         }
 
         //获取Banner
@@ -586,19 +603,25 @@ public class HomePageFragment extends Fragment implements View.OnClickListener, 
     }
 
 
-    /**
-     *
-     * @param isVisibleToUser
-     * 切换fragment时，状态
-     */
+
+
 //    @Override
 //    public void setUserVisibleHint(boolean isVisibleToUser) {
 //        super.setUserVisibleHint(isVisibleToUser);
-//        if (isVisibleToUser) {
-//            if (homePresenter!=null) {
-//                homePresenter.HomeLoadNumData();
-//                homePresenter.getDoctorTeamInfo();
-//            }
+//        if (getUserVisibleHint()) {
+//
+//            showData();
 //        }
 //    }
+
+    @Override
+    protected void lazyLoad() {
+        if(!isPrepared || !isVisible) {
+            return;
+        }
+        mHomePresenter.getDoctorTeamInfo();
+    }
+
+
+
 }

@@ -1,13 +1,14 @@
 package com.startsmake.mainnavigatetabbar.widget;
 
 
-import android.app.Fragment;
-import android.app.FragmentTransaction;
+
 import android.content.Context;
 import android.content.res.ColorStateList;
 import android.content.res.TypedArray;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentTransaction;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.util.TypedValue;
@@ -17,7 +18,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.startsmake.mainnavigatetabbar.R;
 import com.startsmake.mainnavigatetabbar.ThemeUtils;
@@ -192,13 +192,13 @@ public class MainNavigateTabBar extends LinearLayout implements View.OnClickList
      * @param holder
      */
     private void showFragment(ViewHolder holder) {
-        FragmentTransaction transaction = mFragmentActivity.getFragmentManager().beginTransaction();
+        FragmentTransaction transaction = mFragmentActivity.getSupportFragmentManager().beginTransaction();
         if (isFragmentShown(transaction, holder.tag)) {
             return;
         }
         setCurrSelectedTabByTag(holder.tag);
 
-        Fragment fragment = mFragmentActivity.getFragmentManager().findFragmentByTag(holder.tag);
+        Fragment fragment = mFragmentActivity.getSupportFragmentManager().findFragmentByTag(holder.tag);
         if (fragment == null) {
             fragment = getFragmentInstance(holder.tag);
             transaction.add(mMainContentLayoutId, fragment, holder.tag);
@@ -212,19 +212,21 @@ public class MainNavigateTabBar extends LinearLayout implements View.OnClickList
         mCurrentSelectedTab = holder.tabIndex;
     }
 
+
+
     /**
      * 显示 holder 对应的 fragment
      *
      * @param holder
      */
     public void showFragment(String holder,int tabIndex) {
-        FragmentTransaction transaction = mFragmentActivity.getFragmentManager().beginTransaction();
+        FragmentTransaction transaction = mFragmentActivity.getSupportFragmentManager().beginTransaction();
         if (isFragmentShown(transaction, holder)) {
             return;
         }
         setCurrSelectedTabByTag(holder);
 
-        Fragment fragment = mFragmentActivity.getFragmentManager().findFragmentByTag(holder);
+        Fragment fragment = mFragmentActivity.getSupportFragmentManager().findFragmentByTag(holder);
         if (fragment == null) {
             fragment = getFragmentInstance(holder);
             transaction.add(mMainContentLayoutId, fragment, holder);
@@ -244,7 +246,7 @@ public class MainNavigateTabBar extends LinearLayout implements View.OnClickList
             return false;
         }
 
-        Fragment fragment = mFragmentActivity.getFragmentManager().findFragmentByTag(mCurrentTag);
+        Fragment fragment = mFragmentActivity.getSupportFragmentManager().findFragmentByTag(mCurrentTag);
         if (fragment != null && !fragment.isHidden()) {
             transaction.hide(fragment);
         }
@@ -293,10 +295,10 @@ public class MainNavigateTabBar extends LinearLayout implements View.OnClickList
         if (mViewHolderList == null || mViewHolderList.size() == 0) {
             return;
         }
-        FragmentTransaction transaction = mFragmentActivity.getFragmentManager().beginTransaction();
+        FragmentTransaction transaction = mFragmentActivity.getSupportFragmentManager().beginTransaction();
 
         for (ViewHolder holder : mViewHolderList) {
-            Fragment fragment = mFragmentActivity.getFragmentManager().findFragmentByTag(holder.tag);
+            Fragment fragment = mFragmentActivity.getSupportFragmentManager().findFragmentByTag(holder.tag);
             if (fragment != null && !fragment.isHidden()) {
                 transaction.hide(fragment);
             }

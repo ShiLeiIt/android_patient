@@ -71,7 +71,7 @@ public class FollowUpMessageDetailActivity extends BaseActivity {
         mInformationPresenter.getFollowUpMsgRead();
 
     }
-
+    //获取mErrorCode值
     HomePresenter mHomePresenter = new HomePresenter(new HomeNumView() {
         @Override
         public String getUserId() {
