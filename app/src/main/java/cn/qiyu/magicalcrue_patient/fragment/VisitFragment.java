@@ -77,9 +77,10 @@ public class VisitFragment extends BaseFragment implements View.OnClickListener 
 
     private static int ICON_HOME[] = {
             R.drawable.visit_dialogue, R.drawable.visit_case_history, R.drawable.visit_symptom, R.drawable.visit_pharmacy,
-            R.drawable.visit_scale, R.drawable.visit_teaching,   R.drawable.visit_remind,R.drawable.visit_notice
+            R.drawable.visit_scale, R.drawable.visit_teaching,  R.drawable.visit_notice
 
     };
+//    R.drawable.visit_remind,(提醒)
 
     private static String TITLE_INFO[] =
             {
@@ -398,7 +399,7 @@ public class VisitFragment extends BaseFragment implements View.OnClickListener 
     private void setGridView() {
         ArrayList<HashMap<String, Object>> meumList = new ArrayList<HashMap<String, Object>>();
 
-        for (int i = 0; i < 8; i++) {
+        for (int i = 0; i < 7; i++) {
             HashMap<String, Object> map = new HashMap<String, Object>();
             map.put("ItemImage", ICON_HOME[i]);
             map.put("ItemText", TITLE_INFO[i]);
@@ -452,11 +453,12 @@ public class VisitFragment extends BaseFragment implements View.OnClickListener 
                                 break;
                             case 6:
 //                                Toast.makeText(getActivity(), "提醒", Toast.LENGTH_SHORT).show();
-                                startActivity(new Intent(getActivity(), RemindActivity.class));
-                                break;
-                            case 7:
+//                                startActivity(new Intent(getActivity(), RemindActivity.class));
                                 startActivity(new Intent(getActivity(), DoctorNoticeListActivity.class));
                                 break;
+//                            case 7:
+//                                startActivity(new Intent(getActivity(), DoctorNoticeListActivity.class));
+//                                break;
                         }
                     }
                 });

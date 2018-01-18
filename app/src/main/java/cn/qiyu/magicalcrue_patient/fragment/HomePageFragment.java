@@ -254,10 +254,9 @@ public class HomePageFragment extends BaseFragment implements View.OnClickListen
     @Override
     public void onResume() {
         super.onResume();
-//        mHomePresenter.getDoctorTeamInfo();
-//        mHomePresenter.getHomeBanner();
-//        mHomePresenter.HomeLoadNumData();
-        Toast.makeText(getActivity(), "显示11", Toast.LENGTH_SHORT).show();
+        mHomePresenter.getDoctorTeamInfo();
+        mHomePresenter.getHomeBanner();
+        mHomePresenter.HomeLoadNumData();
 
     }
 
