@@ -37,9 +37,9 @@ public class CommentViewHolder extends RecyclerView.ViewHolder {
     //刷新
     void refreshView() {
         if(comment.getUser_role()==1)
-                textView[0].setTextColor(Color.parseColor("#f78826"));
+                textView[0].setTextColor(Color.parseColor("#58BECB"));
         else
-            textView[0].setTextColor(Color.parseColor("#58BECB"));
+            textView[0].setTextColor(Color.parseColor("#f78826"));
 
             textView[0].setText(comment.getUserName()+":");
         textView[1].setText(comment.getContent());
