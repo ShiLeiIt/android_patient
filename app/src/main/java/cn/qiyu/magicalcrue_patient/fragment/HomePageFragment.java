@@ -426,6 +426,7 @@ public class HomePageFragment extends BaseFragment implements View.OnClickListen
 
         @Override
         public void LoadDate(ResultModel<HomeNumBean> numBean) {
+            Toast.makeText(getActivity(), "测试一下", Toast.LENGTH_SHORT).show();
             //下拉刷新
             mSwipeRefreshLayout.setRefreshing(false);
             if (numBean.getData() != null) {
