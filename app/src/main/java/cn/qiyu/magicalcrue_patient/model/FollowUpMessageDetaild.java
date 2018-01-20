@@ -52,6 +52,24 @@ public class FollowUpMessageDetaild {
     private int status;
     private List<Comment> commentList;
     private List<EncloSure> enclosureList;
+    private EventInfoBean mEventInfoBean;
+    private CourseInfoBean mCourseInfoBean;
+
+    public EventInfoBean getEventInfoBean() {
+        return mEventInfoBean;
+    }
+
+    public void setEventInfoBean(EventInfoBean eventInfoBean) {
+        mEventInfoBean = eventInfoBean;
+    }
+
+    public CourseInfoBean getCourseInfoBean() {
+        return mCourseInfoBean;
+    }
+
+    public void setCourseInfoBean(CourseInfoBean courseInfoBean) {
+        mCourseInfoBean = courseInfoBean;
+    }
 
     public String getOrder_no() {
         return order_no;

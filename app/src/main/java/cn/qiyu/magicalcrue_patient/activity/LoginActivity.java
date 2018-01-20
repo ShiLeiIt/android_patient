@@ -134,7 +134,7 @@ public class LoginActivity extends BaseActivity {
                     PreUtils.setParam(LoginActivity.this, "userid", String.valueOf(model.getData().getId()));
                     PreUtils.setParam(LoginActivity.this, "token", model.getData().getToken());
 //                        Toast.makeText(RegisterActivity.this, "用户信息界面", Toast.LENGTH_SHORT).show();
-                    Toast.makeText(LoginActivity.this, "注册成功", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(LoginActivity.this, "注册成功", Toast.LENGTH_SHORT).show();
                     Intent intentUser = new Intent(LoginActivity.this, UserInforActivity.class);
                     startActivity(intentUser);
 
@@ -144,7 +144,7 @@ public class LoginActivity extends BaseActivity {
                     PreUtils.setParam(LoginActivity.this, "token", model.getData().getToken());
                     PreUtils.setParam(LoginActivity.this, "userid", String.valueOf(model.getData().getId()));
 //                        Toast.makeText(RegisterActivity.this, "患者信息界面", Toast.LENGTH_SHORT).show();
-                    Toast.makeText(LoginActivity.this, "注册成功", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(LoginActivity.this, "注册成功", Toast.LENGTH_SHORT).show();
                     Intent intentPatient = new Intent(LoginActivity.this, PatientDataRegisterActivity.class);
                     startActivity(intentPatient);
 
@@ -157,7 +157,7 @@ public class LoginActivity extends BaseActivity {
 
 //                    PreUtils.setParam(RegisterActivity.this, "userid", String.valueOf(model.getData().getId()));
 
-                    Toast.makeText(LoginActivity.this, "注册成功", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(LoginActivity.this, "注册成功", Toast.LENGTH_SHORT).show();
 //                    mJpushId = JPushInterface.getRegistrationID(RegisterActivity.this);
                     Intent intentPatient = new Intent(LoginActivity.this, MainActivity.class);
                     startActivity(intentPatient);

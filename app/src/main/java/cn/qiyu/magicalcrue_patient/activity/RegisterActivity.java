@@ -93,7 +93,7 @@ public class RegisterActivity extends BaseActivity {
                 default:
                     mJpushId = JPushInterface.getRegistrationID(RegisterActivity.this);
                     Log.i("jpushId-=-=-=----", mJpushId);
-                    Intent intentMain = new Intent(RegisterActivity.this, MainActivity.class);
+                    Intent intentMain = new Intent(RegisterActivity.this, SplashActivity.class);
                     startActivity(intentMain);
                     finish();
                     break;
@@ -142,7 +142,7 @@ public class RegisterActivity extends BaseActivity {
                     PreUtils.setParam(RegisterActivity.this, "userid", String.valueOf(model.getData().getId()));
                     PreUtils.setParam(RegisterActivity.this, "token", model.getData().getToken());
 //                        Toast.makeText(RegisterActivity.this, "用户信息界面", Toast.LENGTH_SHORT).show();
-                    Toast.makeText(RegisterActivity.this, "注册成功", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(RegisterActivity.this, "注册成功", Toast.LENGTH_SHORT).show();
                     Intent intentUser = new Intent(RegisterActivity.this, UserInforActivity.class);
                     startActivity(intentUser);
 
@@ -152,7 +152,7 @@ public class RegisterActivity extends BaseActivity {
                     PreUtils.setParam(RegisterActivity.this, "token", model.getData().getToken());
                     PreUtils.setParam(RegisterActivity.this, "userid", String.valueOf(model.getData().getId()));
 //                        Toast.makeText(RegisterActivity.this, "患者信息界面", Toast.LENGTH_SHORT).show();
-                    Toast.makeText(RegisterActivity.this, "注册成功", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(RegisterActivity.this, "注册成功", Toast.LENGTH_SHORT).show();
                     Intent intentPatient = new Intent(RegisterActivity.this, PatientDataRegisterActivity.class);
                     startActivity(intentPatient);
 
@@ -165,7 +165,7 @@ public class RegisterActivity extends BaseActivity {
 
 //                    PreUtils.setParam(RegisterActivity.this, "userid", String.valueOf(model.getData().getId()));
 
-                    Toast.makeText(RegisterActivity.this, "注册成功", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(RegisterActivity.this, "注册成功", Toast.LENGTH_SHORT).show();
 //                    mJpushId = JPushInterface.getRegistrationID(RegisterActivity.this);
                     Intent intentPatient = new Intent(RegisterActivity.this, MainActivity.class);
                     startActivity(intentPatient);

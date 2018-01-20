@@ -112,6 +112,15 @@ public class ListItemAdapter extends BaseAdapter {
         holder.tv_title.setText("  "+itemEntity.getUser_name());
         //回复内容
         holder.tv_content.setText(itemEntity.getComplaint());
+        if (itemEntity.getConsultation_type()==1) {
+//            holder.gridview.setVisibility(View.GONE);
+        } else if (itemEntity.getConsultation_type() == 2) {
+            //医生发送提醒过到随访界面隐藏
+            convertView.setVisibility(View.GONE);
+        } else {
+            convertView.setVisibility(View.GONE);
+//            holder.tv_content.setText("333");
+        }
         //回复时间
         holder.tv_create_time.setText(itemEntity.getCreate_time());
         //回复者姓名

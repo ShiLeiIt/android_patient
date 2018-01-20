@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 /**
  * Created by Administrator on 2017/12/5.
- * 图片
+ * 图片（随访）
  */
 
 public class EncloSure implements Serializable {

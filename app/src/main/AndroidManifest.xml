@@ -190,6 +190,8 @@
         <activity android:name=".activity.AddRemindActivity"/>
         <!--日程提醒详情界面-->
         <activity android:name=".activity.RemindDetailsActivity"/>
+        <!--启动页面-->
+        <activity android:name=".activity.SplashActivity"/>
 
 
 
