@@ -1,5 +1,6 @@
 package cn.qiyu.magicalcrue_patient.activity;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -89,6 +90,7 @@ public class AddInspectionReportDataActivity extends BaseActivity {
     private TextView mTvReportFrom;
     private String mReportName;
     private String mReportBianMa;
+    private Dialog mLoadingDialog;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -106,6 +108,13 @@ public class AddInspectionReportDataActivity extends BaseActivity {
         mTvTitle.setText(R.string.addInspectionReport);
         //选择报告单类型
         mTvReportFrom = (TextView) mLavReport.findViewById(R.id.tv_first_visit_time);
+        //添加Dialog
+        mLoadingDialog = new Dialog(AddInspectionReportDataActivity.this, R.style.progress_dialog);
+        mLoadingDialog.setContentView(R.layout.progress_dialog);
+        mLoadingDialog.setCancelable(true);
+        mLoadingDialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+        TextView msg = (TextView) mLoadingDialog.findViewById(R.id.id_tv_loadingmsg);
+        msg.setText("上传中...");
 
         //图片
         imgConfig = new ImageConfig();
@@ -167,12 +176,13 @@ public class AddInspectionReportDataActivity extends BaseActivity {
 
         @Override
         public void showProgress() {
+            mLoadingDialog.show();
 
         }
 
         @Override
         public void hideProgress() {
-
+            mLoadingDialog.hide();
         }
 
         @Override
@@ -239,12 +249,10 @@ public class AddInspectionReportDataActivity extends BaseActivity {
 
         @Override
         public void onViewFailure(ResultModel model) {
-            Toast.makeText(AddInspectionReportDataActivity.this, "丢失", Toast.LENGTH_SHORT).show();
         }
 
         @Override
         public void onServerFailure(String e) {
-            Toast.makeText(AddInspectionReportDataActivity.this, "失败", Toast.LENGTH_SHORT).show();
         }
     });
 
@@ -257,7 +265,6 @@ public class AddInspectionReportDataActivity extends BaseActivity {
             return;
         }
         if (mList != null && mList.size() > 0) {
-            Toast.makeText(this, "图片上传中...,请稍后", Toast.LENGTH_SHORT).show();
             for (int i = 0; i < mList.size() - 1; i++) {
                 mFileName = new File(mList.get(i));
                 mImageUpLoadPresenter.getImage();

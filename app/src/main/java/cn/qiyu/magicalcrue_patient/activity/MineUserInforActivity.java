@@ -1,5 +1,6 @@
 package cn.qiyu.magicalcrue_patient.activity;
 
+import android.app.Dialog;
 import android.content.ContentResolver;
 import android.content.Intent;
 import android.database.Cursor;
@@ -124,7 +125,7 @@ public class MineUserInforActivity extends BaseActivity implements View.OnClickL
 
     private UserInfor mUserInfor;
     private Intent mIntent;
-    private LoadingDialog mLoadingDialog;
+    private Dialog mLoadingDialog;
 
 
 
@@ -134,8 +135,12 @@ public class MineUserInforActivity extends BaseActivity implements View.OnClickL
         setContentView(R.layout.activity_user_infor);
         ButterKnife.bind(this);
 
-        mLoadingDialog = new LoadingDialog(MineUserInforActivity.this);
-        mLoadingDialog.setCanceledOnTouchOutside(false);
+        mLoadingDialog = new Dialog(MineUserInforActivity.this, R.style.progress_dialog);
+        mLoadingDialog.setContentView(R.layout.progress_dialog);
+        mLoadingDialog.setCancelable(true);
+        mLoadingDialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+        TextView msg = (TextView) mLoadingDialog.findViewById(R.id.id_tv_loadingmsg);
+        msg.setText("上传中");
         init();
 
     }
@@ -207,7 +212,6 @@ public class MineUserInforActivity extends BaseActivity implements View.OnClickL
 
         @Override
         public void showProgress() {
-            mLoadingDialog.setCanceledOnTouchOutside(false);
             mLoadingDialog.show();
         }
 

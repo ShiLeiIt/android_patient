@@ -87,7 +87,8 @@ public class InformationFragment extends Fragment {
         ButterKnife.bind(this, view);
         mUuid = (String) PreUtils.getParam(getActivity(), "uuid", "0");
         mPatientuuid = (String) PreUtils.getParam(getActivity(), "patientuuid", "0");
-//        Log.i("userUuid===", mUuid);
+        Log.i("userUuid===", mUuid);
+        Log.i("mPatientuuid======", mPatientuuid);
         //注册EventBus，在开始的位置
         EventBus.getDefault().register(this);
 

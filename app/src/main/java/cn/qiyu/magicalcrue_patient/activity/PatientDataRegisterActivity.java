@@ -1,5 +1,6 @@
 package cn.qiyu.magicalcrue_patient.activity;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -102,15 +103,19 @@ public class PatientDataRegisterActivity extends BaseActivity {
     private String mDiseaseId;
 
 
-    private LoadingDialog mLoadingDialog;
+    private Dialog mLoadingDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_patient_da);
         ButterKnife.bind(this);
-        mLoadingDialog = new LoadingDialog(PatientDataRegisterActivity.this);
-        mLoadingDialog.setCanceledOnTouchOutside(false);
+        mLoadingDialog = new Dialog(PatientDataRegisterActivity.this, R.style.progress_dialog);
+        mLoadingDialog.setContentView(R.layout.progress_dialog);
+        mLoadingDialog.setCancelable(true);
+        mLoadingDialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+        TextView msg = (TextView) mLoadingDialog.findViewById(R.id.id_tv_loadingmsg);
+        msg.setText("正在保存...");
         init();
     }
 
@@ -212,7 +217,6 @@ public class PatientDataRegisterActivity extends BaseActivity {
 
         @Override
         public void showProgress() {
-            mLoadingDialog.setCanceledOnTouchOutside(false);
             mLoadingDialog.show();
         }
 

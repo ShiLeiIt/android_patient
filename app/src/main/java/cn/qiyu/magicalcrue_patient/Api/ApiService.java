@@ -114,8 +114,6 @@ ApiService {
     //随访对话详情
     String GET_FOLLOW_UP_DIALOGUELIST = "patientInfo/getFollowUpDialogueList";
     //评论随访对话
-
-
     String API_COMMENT_VISIT_DIALOGUE = "patientInfo/setConsultationComment";
     //评论列表
     String API_COMMENT_LIST = "patientInfo/getCommentList";

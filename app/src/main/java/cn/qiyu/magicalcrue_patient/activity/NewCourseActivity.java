@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +20,7 @@ import cn.qiyu.magicalcrue_patient.base.BaseActivity;
 import cn.qiyu.magicalcrue_patient.model.PatientCourseListBean;
 import cn.qiyu.magicalcrue_patient.model.RemindListBean;
 import cn.qiyu.magicalcrue_patient.model.ResultModel;
+import cn.qiyu.magicalcrue_patient.utils.PreUtils;
 import cn.qiyu.magicalcrue_patient.utils.TimeUtils;
 import cn.qiyu.magicalcrue_patient.visit.PatientCourseListPresenter;
 import cn.qiyu.magicalcrue_patient.visit.PatientCourseListView;
@@ -57,8 +59,9 @@ public class NewCourseActivity extends BaseActivity {
     PatientCourseListPresenter mPatientCourseListPresenter = new PatientCourseListPresenter(new PatientCourseListView() {
         @Override
         public String getPatientUuid() {
-            //             return (String) PreUtils.getParam(RemindActivity.this, "patientuuid", "");
-            return "df430ac16590449cba026e34704190f3";
+            Log.i("patientUuid-=-=-",(String) PreUtils.getParam(NewCourseActivity.this, "patientuuid", ""));
+                         return (String) PreUtils.getParam(NewCourseActivity.this, "patientuuid", "");
+//            return "df430ac16590449cba026e34704190f3";
         }
 
         @Override

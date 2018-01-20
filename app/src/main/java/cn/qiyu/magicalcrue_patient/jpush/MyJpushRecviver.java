@@ -24,6 +24,7 @@ import cn.qiyu.magicalcrue_patient.activity.InspectionReportInfoListActivity;
 import cn.qiyu.magicalcrue_patient.activity.LeaveHospitalInfoListActivity;
 import cn.qiyu.magicalcrue_patient.activity.MainActivity;
 import cn.qiyu.magicalcrue_patient.activity.MyScaleActivity;
+import cn.qiyu.magicalcrue_patient.activity.NewCourseActivity;
 import cn.qiyu.magicalcrue_patient.activity.OutpatientInformationListActivity;
 import cn.qiyu.magicalcrue_patient.activity.PharmacyPlanRecordInfoListActivity;
 import cn.qiyu.magicalcrue_patient.activity.ScaleDetailActivity;
@@ -252,6 +253,10 @@ public class MyJpushRecviver extends BroadcastReceiver {
 
                         break;
                     case 8:
+                        Intent intentN = new Intent(context, NewCourseActivity.class);
+                        intentN.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        intentN.putExtras(bundle);
+                        context.startActivity(intentN);
                         break;
                     case 9:
                         break;

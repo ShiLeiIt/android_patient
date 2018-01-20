@@ -1,5 +1,6 @@
 package cn.qiyu.magicalcrue_patient.activity;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -98,6 +99,7 @@ public class AddPharmacyRecordDataActivity extends BaseActivity {
     private int requestImageIndex = 0;
     private String mWayName;
     private TextView mTvWayName;
+    private Dialog mLoadingDialog;
 
 
     @Override
@@ -116,6 +118,13 @@ public class AddPharmacyRecordDataActivity extends BaseActivity {
         mTvCommit.setTextColor(getResources().getColor(R.color.app_userInfor));
         mTvTitle.setText(R.string.addPharmacyRecord);
         mTvWayName = (TextView) mLavPharmacyWay.findViewById(R.id.tv_first_visit_time);
+        //添加Dialog
+        mLoadingDialog = new Dialog(AddPharmacyRecordDataActivity.this, R.style.progress_dialog);
+        mLoadingDialog.setContentView(R.layout.progress_dialog);
+        mLoadingDialog.setCancelable(true);
+        mLoadingDialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+        TextView msg = (TextView) mLoadingDialog.findViewById(R.id.id_tv_loadingmsg);
+        msg.setText("上传中...");
 
         //图片
         imgConfig = new ImageConfig();
@@ -174,12 +183,12 @@ public class AddPharmacyRecordDataActivity extends BaseActivity {
 
         @Override
         public void showProgress() {
-
+            mLoadingDialog.show();
         }
 
         @Override
         public void hideProgress() {
-
+            mLoadingDialog.hide();
         }
 
         @Override
@@ -269,7 +278,6 @@ public class AddPharmacyRecordDataActivity extends BaseActivity {
             return;
         }
         if (mList != null && mList.size() > 0) {
-            Toast.makeText(this, "图片上传中...,请稍后", Toast.LENGTH_SHORT).show();
             for (int i = 0; i < mList.size() - 1; i++) {
                 mFileName = new File(mList.get(i));
                 mImageUpLoadPresenter.getImage();

@@ -1,5 +1,6 @@
 package cn.qiyu.magicalcrue_patient.activity;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -94,6 +95,7 @@ public class AddSymgraphyDataActivity extends BaseActivity {
     private int requestImageIndex = 0;
     private TextView mTv_symptom;
     private String mSymptomName;
+    private Dialog mLoadingDialog;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -111,6 +113,13 @@ public class AddSymgraphyDataActivity extends BaseActivity {
         mTvTitle.setText(R.string.addSymptomatography);
         //症状
         mTv_symptom = (TextView) mLavSymptom.findViewById(R.id.tv_first_visit_time);
+        //添加Dialog
+        mLoadingDialog = new Dialog(AddSymgraphyDataActivity.this, R.style.progress_dialog);
+        mLoadingDialog.setContentView(R.layout.progress_dialog);
+        mLoadingDialog.setCancelable(true);
+        mLoadingDialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+        TextView msg = (TextView) mLoadingDialog.findViewById(R.id.id_tv_loadingmsg);
+        msg.setText("上传中...");
 
         //图片
         imgConfig = new ImageConfig();
@@ -170,12 +179,13 @@ public class AddSymgraphyDataActivity extends BaseActivity {
 
         @Override
         public void showProgress() {
+            mLoadingDialog.show();
 
         }
 
         @Override
         public void hideProgress() {
-
+            mLoadingDialog.hide();
         }
 
         @Override
@@ -258,7 +268,6 @@ public class AddSymgraphyDataActivity extends BaseActivity {
             return;
         }
         if (mList != null && mList.size() > 0) {
-            Toast.makeText(this, "图片上传中...,请稍后", Toast.LENGTH_SHORT).show();
             for (int i = 0; i < mList.size() - 1; i++) {
                 mFileName = new File(mList.get(i));
                 mImageUpLoadPresenter.getImage();

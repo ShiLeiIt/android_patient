@@ -1,5 +1,6 @@
 package cn.qiyu.magicalcrue_patient.activity;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -102,6 +103,7 @@ public class QuizActivity extends BaseActivity {
     private StringBuffer mStringBuffer = new StringBuffer();
 
     private int requestImageIndex=0;
+    private Dialog mLoadingDialog;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -111,6 +113,12 @@ public class QuizActivity extends BaseActivity {
     }
 
     private void init() {
+        mLoadingDialog = new Dialog(QuizActivity.this, R.style.progress_dialog);
+        mLoadingDialog.setContentView(R.layout.progress_dialog);
+        mLoadingDialog.setCancelable(true);
+        mLoadingDialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+        TextView msg = (TextView) mLoadingDialog.findViewById(R.id.id_tv_loadingmsg);
+        msg.setText("上传中...");
 
         mUserUuid = (String) PreUtils.getParam(QuizActivity.this, "uuid", "0");
         Log.i("mUserUuid======", mUserUuid);
@@ -193,7 +201,7 @@ public class QuizActivity extends BaseActivity {
                     return;
                 }
                 if (mList != null && mList.size() > 0) {
-                    Toast.makeText(this, "图片上传中...,请稍后", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(this, "图片上传中...,请稍后", Toast.LENGTH_SHORT).show();
                     for (int i = 0; i < mList.size() - 1; i++) {
                         mFileName = new File(mList.get(i));
                         mImageUpLoadPresenter.getImage();
@@ -351,12 +359,12 @@ public class QuizActivity extends BaseActivity {
 
         @Override
         public void showProgress() {
-
+            mLoadingDialog.show();
         }
 
         @Override
         public void hideProgress() {
-
+            mLoadingDialog.hide();
         }
 
         @Override
