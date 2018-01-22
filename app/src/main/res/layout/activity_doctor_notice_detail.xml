@@ -41,32 +41,28 @@
             android:layout_height="440dp"
             android:background="@color/app_white"
             android:orientation="vertical">
-            <View
-                android:id="@+id/vv_rule"
-                android:layout_width="match_parent"
-                android:layout_height="16dp"/>
+
 
             <TextView
                 android:id="@+id/tv_notice_detail_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/vv_rule"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="13dp"
                 android:textColor="@color/app_black"
                 android:textSize="16sp"/>
 
             <TextView
-                android:textColor="@color/app_userInfor"
+                android:textColor="@color/app_gray"
                 android:id="@+id/tv_notice_detail_context"
                 android:layout_width="match_parent"
+                android:layout_below="@id/tv_notice_detail_title"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="46dp"
+                android:layout_marginTop="10dp"
                 android:paddingLeft="15dp"
                 android:paddingRight="15dp"
                 android:textSize="14sp"/>
-
         </RelativeLayout>
     </ScrollView>
 </LinearLayout>

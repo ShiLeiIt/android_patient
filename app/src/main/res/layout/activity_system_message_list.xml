@@ -13,18 +13,11 @@
         android:background="@color/view_bg"
         android:layout_width="match_parent"
         android:layout_height="10dp"/>
-    <android.support.v4.widget.SwipeRefreshLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:id="@+id/swipeLayout" >
-        <android.support.v7.widget.RecyclerView
+
+        <com.wuxiaolong.pullloadmorerecyclerview.PullLoadMoreRecyclerView
             android:id="@+id/rcl_system_message"
-            android:background="@color/view_bg"
-            android:gravity="center"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
-    </android.support.v4.widget.SwipeRefreshLayout>
+
 
 </LinearLayout>

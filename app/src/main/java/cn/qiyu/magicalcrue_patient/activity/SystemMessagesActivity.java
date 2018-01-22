@@ -2,6 +2,7 @@ package cn.qiyu.magicalcrue_patient.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -12,6 +13,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.wuxiaolong.pullloadmorerecyclerview.PullLoadMoreRecyclerView;
 
 import java.util.List;
 
@@ -43,12 +46,16 @@ public class SystemMessagesActivity extends BaseActivity {
     @Bind(R.id.tv_title)
     TextView mTvTitle;
     @Bind(R.id.rcl_system_message)
-    RecyclerView mRclSystemMessage;
-    @Bind(R.id.swipeLayout)
-    SwipeRefreshLayout mSwipeLayout;
+    PullLoadMoreRecyclerView mRclSystemMessage;
+//    @Bind(R.id.swipeLayout)
+//    SwipeRefreshLayout mSwipeLayout;
     private String mMessageUuid;
     private String mPaperId;
     private String mPaperUserID;
+    private boolean ispull = false;
+    private int page = 1;
+    private Handler mHandler = new Handler();
+    private RecyclerAdpter mRecyclerAdpter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,19 +68,30 @@ public class SystemMessagesActivity extends BaseActivity {
     InformationPresenter mInformationPresenter = new InformationPresenter(new InformationSysMsgView() {
         @Override
         public String getPage() {
-            return "1";
+            return page + "";
         }
 
         @Override
         public String getPagecount() {
-            return "100";
+            return "10";
         }
 
         @Override
         public void getSystemMessageList(ResultModel<List<InfoUserSystemMsgListBean>> model) {
-            mSwipeLayout.setRefreshing(false);
-            mRclSystemMessage.setAdapter(new SystemMessagesActivity.RecyclerAdpter(model.getData()));
-            mRclSystemMessage.setLayoutManager(new LinearLayoutManager(SystemMessagesActivity.this));
+//            mSwipeLayout.setRefreshing(false);
+            mRecyclerAdpter = new RecyclerAdpter(model.getData());
+//            mRclSystemMessage.setAdapter(new SystemMessagesActivity.RecyclerAdpter(model.getData()));
+//            mRclSystemMessage.setLayoutManager(new LinearLayoutManager(SystemMessagesActivity.this));
+            if (ispull) {
+                mRecyclerAdpter.setPullAddList(model.getData());
+            } else {
+                mRclSystemMessage.setAdapter(mRecyclerAdpter);
+                mRclSystemMessage.setLinearLayout();
+            }
+            //取消转圈
+            mRclSystemMessage.setPullLoadMoreCompleted();
+
+
         }
 
         @Override
@@ -93,12 +111,12 @@ public class SystemMessagesActivity extends BaseActivity {
 
         @Override
         public void onViewFailure(ResultModel model) {
-
+            mRclSystemMessage.setPullLoadMoreCompleted();
         }
 
         @Override
         public void onServerFailure(String e) {
-
+            mRclSystemMessage.setPullLoadMoreCompleted();
         }
     });
 
@@ -110,9 +128,31 @@ public class SystemMessagesActivity extends BaseActivity {
 
     private void init() {
         mTvTitle.setText(R.string.systemMessages);
-        mRclSystemMessage.addItemDecoration(new RecycleViewDivider(SystemMessagesActivity.this, LinearLayoutManager.HORIZONTAL, R.drawable.recycleview_tieku));
-        getLoad();
+        mRclSystemMessage.setRefreshing(true);
+        mRclSystemMessage.setOnPullLoadMoreListener(new PullLoadMoreRecyclerView.PullLoadMoreListener() {
+            @Override
+            public void onRefresh() {
+                ispull = false;
+                page = 1;
+                mInformationPresenter.getSystemMessageList();
+            }
+
+            @Override
+            public void onLoadMore() {
+                mHandler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        ispull = true;
+                        page = page + 1;
+                        mInformationPresenter.getSystemMessageList();
+                    }
+                }, 3000);
+            }
+        });
+//        mRclSystemMessage.addItemDecoration(new RecycleViewDivider(SystemMessagesActivity.this, LinearLayoutManager.HORIZONTAL, R.drawable.recycleview_tieku));
+//        getLoad();
     }
+
     MyScalePresenter mScalePresenter = new MyScalePresenter(new MyScaleView() {
         @Override
         public String getPatientUuid() {
@@ -231,7 +271,7 @@ public class SystemMessagesActivity extends BaseActivity {
 
 
     class ViewHolder extends RecyclerView.ViewHolder {
-        @Bind({R.id.tv_doctor_notice_num, R.id.tv_doctor_notic_title, R.id.tv_doctor_notice_date,R.id.tv_doctor_notice_content})
+        @Bind({R.id.tv_doctor_notice_num, R.id.tv_doctor_notic_title, R.id.tv_doctor_notice_date, R.id.tv_doctor_notice_content})
         TextView[] mtextview;
         InfoUserSystemMsgListBean mModel;
         @Bind(R.id.iv_doctor_notice)
@@ -263,13 +303,13 @@ public class SystemMessagesActivity extends BaseActivity {
                             //跳转病历门诊信息界面
                             Intent intentO = new Intent(SystemMessagesActivity.this, OutpatientInformationListActivity.class);
                             intentO.putExtra("outPatient", "outPatient");
-                           startActivity(intentO);
+                            startActivity(intentO);
                             break;
                         case 1002:
                             //跳转到出院小结信息界面
                             Intent intentL = new Intent(SystemMessagesActivity.this, LeaveHospitalInfoListActivity.class);
                             intentL.putExtra("leaveHospital", "leaveHospital");
-                           startActivity(intentL);
+                            startActivity(intentL);
                             break;
                         case 1022:
                             //跳转到检查报告单界面
@@ -315,7 +355,7 @@ public class SystemMessagesActivity extends BaseActivity {
             mIvSysMSg.setImageResource(R.drawable.system_notice);
 //            Toast.makeText(getActivity(), "shijina=="+mModel.getCreate_time(), Toast.LENGTH_SHORT).show();
             int status = mModel.getStatus();
-            Log.i("status====", status +"");
+            Log.i("status====", status + "");
             switch (status) {
                 case 0:
                     mtextview[0].setVisibility(View.VISIBLE);
@@ -327,17 +367,29 @@ public class SystemMessagesActivity extends BaseActivity {
             }
         }
     }
+
+
     class RecyclerAdpter extends RecyclerView.Adapter<SystemMessagesActivity.ViewHolder> {
         private List<InfoUserSystemMsgListBean> mlist;
+        private LayoutInflater mLayoutInflater;
 
         public RecyclerAdpter(List<InfoUserSystemMsgListBean> mlist) {
             this.mlist = mlist;
+            mLayoutInflater = LayoutInflater.from(SystemMessagesActivity.this);
         }
+
+        public void setPullAddList(List<InfoUserSystemMsgListBean> model) {
+            mlist.addAll(model);
+            notifyDataSetChanged();
+        }
+
 
         @Override
         public SystemMessagesActivity.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
             return new SystemMessagesActivity.ViewHolder(LayoutInflater.from(SystemMessagesActivity.this).inflate(R.layout.recyclerview_doctor_notice_item, null));
+
+
         }
 
         @Override
@@ -348,22 +400,23 @@ public class SystemMessagesActivity extends BaseActivity {
 
         @Override
         public int getItemCount() {
-            return mlist.size();
+            return mlist.size() == 0 ? 0 : mlist.size();
         }
     }
+
 
     public void getLoad() {
 
 /*加载的渐变动画*/
-        mSwipeLayout.setColorSchemeResources(R.color.colorAccent,
-                R.color.colorPrimary,
-                R.color.colorPrimaryDark);
-        mSwipeLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                mInformationPresenter.getSystemMessageList();
-            }
-        });
+//        mSwipeLayout.setColorSchemeResources(R.color.colorAccent,
+//                R.color.colorPrimary,
+//                R.color.colorPrimaryDark);
+//        mSwipeLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+//            @Override
+//            public void onRefresh() {
+//                mInformationPresenter.getSystemMessageList();
+//            }
+//        });
     }
 
 }
