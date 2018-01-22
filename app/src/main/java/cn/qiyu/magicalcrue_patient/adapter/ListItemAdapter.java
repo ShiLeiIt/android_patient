@@ -114,6 +114,7 @@ public class ListItemAdapter extends BaseAdapter {
         holder.tv_content.setText(itemEntity.getComplaint());
         if (itemEntity.getConsultation_type()==1) {
 //            holder.gridview.setVisibility(View.GONE);
+
         } else if (itemEntity.getConsultation_type() == 2) {
             //医生发送提醒过到随访界面隐藏
             convertView.setVisibility(View.GONE);

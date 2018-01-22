@@ -146,7 +146,7 @@ public class SystemMessagesActivity extends BaseActivity {
                         page = page + 1;
                         mInformationPresenter.getSystemMessageList();
                     }
-                }, 3000);
+                }, 300);
             }
         });
 //        mRclSystemMessage.addItemDecoration(new RecycleViewDivider(SystemMessagesActivity.this, LinearLayoutManager.HORIZONTAL, R.drawable.recycleview_tieku));

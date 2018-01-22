@@ -14,6 +14,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
@@ -201,8 +202,24 @@ public class FollowUpMessageDetailActivity extends BaseActivity {
 
         @Override
         public void LoadFollowUpDialogue(ResultModel<List<FollowUpMessageDetaild>> model) {
+            List<FollowUpMessageDetaild>  list2=new ArrayList<>();
+            for(int i=0;i<model.getData().size();i++){
+
+                switch (model.getData().get(i).getConsultation_type()){
+                    case 1:
+                        list2.add(model.getData().get(i));
+                        break;
+                    case 2:
+                        break;
+                    case 3:
+                        break;
+                }
+
+            }
+
+
 //            Toast.makeText(FollowUpMessageDetailActivity.this, ""+model.getData().size(), Toast.LENGTH_SHORT).show();
-            ListItemAdapter listItemAdapter = new ListItemAdapter(FollowUpMessageDetailActivity.this, FollowUpMessageDetailActivity.this, model.getData());
+            ListItemAdapter listItemAdapter = new ListItemAdapter(FollowUpMessageDetailActivity.this, FollowUpMessageDetailActivity.this, list2);
             lvFollowUpDetail.setAdapter(listItemAdapter);
             //监听listview的滑动事件，隐藏软键盘和发送框
             lvFollowUpDetail.setOnScrollListener(new AbsListView.OnScrollListener() {
