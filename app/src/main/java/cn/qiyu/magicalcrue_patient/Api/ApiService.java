@@ -34,6 +34,7 @@ import cn.qiyu.magicalcrue_patient.model.ResultModel;
 import cn.qiyu.magicalcrue_patient.model.ScaleDetailBean;
 import cn.qiyu.magicalcrue_patient.model.SymptomatographyBean;
 import cn.qiyu.magicalcrue_patient.model.UserInfor;
+import cn.qiyu.magicalcrue_patient.model.VersionUpdateBean;
 import cn.qiyu.magicalcrue_patient.model.VisitDialogueQuizBean;
 import okhttp3.RequestBody;
 import retrofit2.Call;
@@ -168,6 +169,8 @@ ApiService {
     String API_CREATE_EVENT_REMIND = "event/createEvent";
     //日程提醒详情页面
     String API_EVENT_REMIND_DETAILS = "event/getEventDetail";
+    //版本号更新
+    String API_VERSION_UPDATE = "common/getAppLatestVersion";
 
 
 
@@ -739,5 +742,13 @@ ApiService {
     @FormUrlEncoded
     Call<ResultModel<CreateRemindBean>> getEventRemindDetails( @Field("uuid") String remindUuid);
 
+
+    /**
+     * 版本对应升级
+     */
+    @POST(API_VERSION_UPDATE)
+    @FormUrlEncoded
+    Call<ResultModel<VersionUpdateBean>> getAppVersionIsUpdate(@Field("code") String patient,@Field("platform")String platform,
+                                                               @Field("channel")String channel,@Field("current_version")String current_version);
 
 }

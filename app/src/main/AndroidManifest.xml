@@ -192,6 +192,9 @@
         <activity android:name=".activity.RemindDetailsActivity"/>
         <!--启动页面-->
         <activity android:name=".activity.SplashActivity"/>
+        <!--App是否升级Dialog-->
+        <activity android:name=".activity.AppLatestVersionActivity"
+                  android:theme="@style/AppDialogActivity"/>
 
 
 

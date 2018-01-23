@@ -17,7 +17,10 @@
         <item name="android:windowBackground">@android:color/transparent</item>
         <!-- 设置contentview的背景图-->
         <item name="android:background">@drawable/shape_send_scale</item>
+        <item name="android:windowCloseOnTouchOutside">false</item>
     </style>
+
+
     <style
         name="selectorDialog"
         parent="@android:style/Theme.Dialog">

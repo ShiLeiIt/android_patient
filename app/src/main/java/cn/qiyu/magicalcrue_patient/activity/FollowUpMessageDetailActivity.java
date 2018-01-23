@@ -202,10 +202,12 @@ public class FollowUpMessageDetailActivity extends BaseActivity {
 
         @Override
         public void LoadFollowUpDialogue(ResultModel<List<FollowUpMessageDetaild>> model) {
+
             List<FollowUpMessageDetaild>  list2=new ArrayList<>();
             for(int i=0;i<model.getData().size();i++){
 
                 switch (model.getData().get(i).getConsultation_type()){
+                    //是1的话的就加载随访对话数据,2是提醒，3是患教
                     case 1:
                         list2.add(model.getData().get(i));
                         break;

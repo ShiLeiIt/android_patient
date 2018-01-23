@@ -22,6 +22,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import cn.qiyu.magicalcrue_patient.R;
 import cn.qiyu.magicalcrue_patient.base.BaseActivity;
+import cn.qiyu.magicalcrue_patient.fragment.FiScaleFragment;
 import cn.qiyu.magicalcrue_patient.information.InformationPresenter;
 import cn.qiyu.magicalcrue_patient.information.InformationSysMsgRdView;
 import cn.qiyu.magicalcrue_patient.information.InformationSysMsgView;
@@ -56,6 +57,8 @@ public class SystemMessagesActivity extends BaseActivity {
     private int page = 1;
     private Handler mHandler = new Handler();
     private RecyclerAdpter mRecyclerAdpter;
+    private String mQuestionUUid;
+    private int mStatus;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -176,7 +179,6 @@ public class SystemMessagesActivity extends BaseActivity {
 
         @Override
         public void LoadDate(ResultModel<List<MyScaleBean>> model) {
-
         }
 
         @Override
@@ -199,11 +201,9 @@ public class SystemMessagesActivity extends BaseActivity {
             //跳转到医生量表页面
             Intent intentScale = new Intent(SystemMessagesActivity.this, ScaleDetailActivity.class);
             intentScale.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            intentScale.putExtra("doctorScale", "doctorScale");
             intentScale.putExtra("scaleDetail", model.getData());
             intentScale.putExtra("paperUserID", mPaperUserID);
             startActivity(intentScale);
-
         }
 
         @Override
@@ -228,12 +228,10 @@ public class SystemMessagesActivity extends BaseActivity {
 
         @Override
         public void onViewFailure(ResultModel model) {
-
         }
 
         @Override
         public void onServerFailure(String e) {
-
         }
     });
     //系统消息已读
@@ -270,6 +268,8 @@ public class SystemMessagesActivity extends BaseActivity {
     });
 
 
+
+
     class ViewHolder extends RecyclerView.ViewHolder {
         @Bind({R.id.tv_doctor_notice_num, R.id.tv_doctor_notic_title, R.id.tv_doctor_notice_date, R.id.tv_doctor_notice_content})
         TextView[] mtextview;
@@ -295,9 +295,10 @@ public class SystemMessagesActivity extends BaseActivity {
                         //量表详情
                         case 1018:
                             Toast.makeText(SystemMessagesActivity.this, "请转至随访页面查看量表", Toast.LENGTH_SHORT).show();
-                         /*   mPaperId = service_uuid.substring(0, service_uuid.indexOf("&"));
-                            mPaperUserID = service_uuid.substring(service_uuid.indexOf("&"));
-                            mScalePresenter.VisitScaleDetailsData();*/
+//                             mPaperId = service_uuid.substring(0, service_uuid.indexOf("&"));
+//                            mPaperUserID = service_uuid.substring(service_uuid.indexOf("&"));
+//                            mScalePresenter.VisitScaleDetailsData();
+
                             break;
                         case 1001:
                             //跳转病历门诊信息界面
