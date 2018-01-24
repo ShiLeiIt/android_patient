@@ -4,6 +4,7 @@ package cn.qiyu.magicalcrue_patient.utils;
 import android.Manifest;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -188,6 +189,13 @@ public class Utils {
             }
         }
         return false;
+    }
+
+    //判断是否是Debug包
+    public static boolean isDebug(Context context){
+        boolean isDebug = context.getApplicationInfo()!=null&&
+                (context.getApplicationInfo().flags & ApplicationInfo.FLAG_DEBUGGABLE)!=0;
+        return isDebug;
     }
 
 

@@ -15,6 +15,7 @@ import cn.qiyu.magicalcrue_patient.model.VersionUpdateBean;
 import cn.qiyu.magicalcrue_patient.register_login.AppVersionPresenter;
 import cn.qiyu.magicalcrue_patient.register_login.AppVersionView;
 import cn.qiyu.magicalcrue_patient.utils.PreUtils;
+import cn.qiyu.magicalcrue_patient.utils.Utils;
 
 /**
  * Created by ShiLei on 2018/1/20.
@@ -61,13 +62,16 @@ public class SplashActivity extends BaseActivity {
 
         @Override
         public String getChannel() {
-            return "0";
+            if (Utils.isDebug(SplashActivity.this)) {
+                return "0";
+            }
+            return "1";
         }
 
         @Override
         public String getCurrentVersion() {
-            return "2.0-2018011120";
-//            return mVersionName;
+//            return "2.0-2018011120";
+            return mVersionName;
         }
 
         @Override
