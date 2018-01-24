@@ -62,11 +62,11 @@ public class SplashActivity extends BaseActivity {
 
         @Override
         public String getChannel() {
-            if (Utils.isDebug(SplashActivity.this)) {
-                Toast.makeText(SplashActivity.this, "Debug", Toast.LENGTH_SHORT).show();
-                return "0";
-            }
-            Toast.makeText(SplashActivity.this, "release", Toast.LENGTH_SHORT).show();
+//            if (Utils.isDebug(SplashActivity.this)) {
+//                Toast.makeText(SplashActivity.this, "Debug", Toast.LENGTH_SHORT).show();
+//                return "0";
+//            }
+//            Toast.makeText(SplashActivity.this, "release", Toast.LENGTH_SHORT).show();
             return "1";
         }
 
