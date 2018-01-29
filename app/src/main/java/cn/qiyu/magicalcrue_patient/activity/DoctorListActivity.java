@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -99,6 +100,7 @@ public class DoctorListActivity extends BaseActivity {
                 public void onClick(View v) {
                     Intent intent = new Intent(DoctorListActivity.this, DoctorInformationActivity.class);
                     intent.putExtra("doctorUuid", mModel.getUuid());
+                    Log.i("doctorUuid==========", mModel.getUuid());
                     startActivity(intent);
                 }
             });

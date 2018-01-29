@@ -203,25 +203,17 @@ public class FollowUpMessageDetailActivity extends BaseActivity {
         @Override
         public void LoadFollowUpDialogue(ResultModel<List<FollowUpMessageDetaild>> model) {
 
-            List<FollowUpMessageDetaild>  list2=new ArrayList<>();
-            for(int i=0;i<model.getData().size();i++){
-
-                switch (model.getData().get(i).getConsultation_type()){
-                    //是1的话的就加载随访对话数据,2是提醒，3是患教
-                    case 1:
-                        list2.add(model.getData().get(i));
-                        break;
-                    case 2:
-                        break;
-                    case 3:
-                        break;
-                }
-
-            }
-
 
 //            Toast.makeText(FollowUpMessageDetailActivity.this, ""+model.getData().size(), Toast.LENGTH_SHORT).show();
-            ListItemAdapter listItemAdapter = new ListItemAdapter(FollowUpMessageDetailActivity.this, FollowUpMessageDetailActivity.this, list2);
+            ListItemAdapter listItemAdapter = new ListItemAdapter(FollowUpMessageDetailActivity.this, FollowUpMessageDetailActivity.this,model.getData());
+            listItemAdapter.setonSurplusDeleteListenerListener(new ListItemAdapter.onSurplusDeleteListener() {
+                @Override
+                public void OnItemImportanceListener(String id) {
+                    Intent intent = new Intent(FollowUpMessageDetailActivity.this, BannerDetailActivity.class);
+                    intent.putExtra("url", id);
+                    startActivity(intent);
+                }
+            });
             lvFollowUpDetail.setAdapter(listItemAdapter);
             //监听listview的滑动事件，隐藏软键盘和发送框
             lvFollowUpDetail.setOnScrollListener(new AbsListView.OnScrollListener() {

@@ -147,7 +147,6 @@ public class RemindActivity extends BaseActivity implements View.OnClickListener
         @Override
         public String getPatientUuid() {
             return "df430ac16590449cba026e34704190f3";
-
         }
 
         @Override

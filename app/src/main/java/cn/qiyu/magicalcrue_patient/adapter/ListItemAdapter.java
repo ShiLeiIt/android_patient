@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.BaseAdapter;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -80,7 +81,6 @@ public class ListItemAdapter extends BaseAdapter {
         if (convertView == null) {
             holder = new ViewHolder();
             convertView = View.inflate(mContext, R.layout.item_list, null);
-
             //头像
             holder.iv_avatar = (CircleImageView) convertView
                     .findViewById(R.id.iv_avatar);
@@ -98,9 +98,19 @@ public class ListItemAdapter extends BaseAdapter {
                     .findViewById(R.id.tv_message_establish_time);
             holder.gridview = (NoScrollGridView) convertView
                     .findViewById(R.id.grid_view_item);
+
+            //提醒和患教资料
+            holder.iv_surplus=(ImageView)convertView.findViewById(R.id.iv_surplus);
+            holder.surplus_centext=(TextView)convertView.findViewById(R.id.tv_context_surplus);
+            holder.surplus_title=(TextView)convertView.findViewById(R.id.tv_title_surplus);
+            //提醒
+            holder.ll_surplus=(LinearLayout)convertView.findViewById(R.id.ll_surplus);
+
+
             //回复展示
             holder.recyclerView = (RecyclerView) convertView.findViewById(R.id.rv_comment);
             convertView.setTag(holder);
+
 
 
         } else {
@@ -112,16 +122,16 @@ public class ListItemAdapter extends BaseAdapter {
         holder.tv_title.setText("  "+itemEntity.getUser_name());
         //回复内容
         holder.tv_content.setText(itemEntity.getComplaint());
-        if (itemEntity.getConsultation_type()==1) {
-//            holder.gridview.setVisibility(View.GONE);
-
-        } else if (itemEntity.getConsultation_type() == 2) {
-            //医生发送提醒过到随访界面隐藏
-            convertView.setVisibility(View.GONE);
-        } else {
-            convertView.setVisibility(View.GONE);
-//            holder.tv_content.setText("333");
-        }
+//        if (itemEntity.getConsultation_type()==1) {
+////            holder.gridview.setVisibility(View.GONE);
+//
+//        } else if (itemEntity.getConsultation_type() == 2) {
+//            //医生发送提醒过到随访界面隐藏
+//            convertView.setVisibility(View.GONE);
+//        } else {
+//            convertView.setVisibility(View.GONE);
+////            holder.tv_content.setText("333");
+//        }
         //回复时间
         holder.tv_create_time.setText(itemEntity.getCreate_time());
         //回复者姓名
@@ -173,7 +183,62 @@ public class ListItemAdapter extends BaseAdapter {
             holder.gridview.setVisibility(View.VISIBLE);
             holder.gridview.setAdapter(new GridItemAdapter(mContext, itemEntity.getEnclosureList()));
         }
+
+        switch (itemEntity.getConsultation_type()){
+            case 1:
+                holder.ll_surplus.setVisibility(View.GONE);
+                if(itemEntity.getEnclosureList().size()==0){
+                    //隐藏装载容器
+                    holder.gridview.setVisibility(View.GONE);
+                }else {
+                    //显示加载容器
+
+                    holder.gridview.setVisibility(View.VISIBLE);
+                    holder.gridview.setAdapter(new GridItemAdapter(mContext, itemEntity.getEnclosureList()));
+                }
+
+                break;
+            //提醒
+            case 2:
+                holder.iv_surplus.setImageResource(R.drawable.surplus2);
+                holder.ll_surplus.setVisibility(View.VISIBLE);
+                holder.surplus_title.setText(itemEntity.getEventInfoBean().getEvent_name());
+                holder.surplus_centext.setText(itemEntity.getEventInfoBean().getEvent_time()+itemEntity.getEventInfoBean().getEvent_detail());
+                holder.gridview.setVisibility(View.GONE);
+
+
+                break;
+            //患教
+            case 3:
+                holder.iv_surplus.setImageResource(R.drawable.surplus3);
+                holder.ll_surplus.setVisibility(View.VISIBLE);
+                holder.surplus_title.setText(itemEntity.getCourseInfoBean().getTitle());
+                holder.surplus_centext.setText(itemEntity.getCourseInfoBean().getContent());
+                holder.gridview.setVisibility(View.GONE);
+
+                holder.ll_surplus.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        mOnSurplusListener.OnItemImportanceListener(items.get(position).getCourseInfoBean().getUrl());
+                    }
+                });
+                break;
+        }
+
+
         return convertView;
+    }
+    /**
+     * 进入查看患教详情
+     */
+    public interface onSurplusDeleteListener {
+        void OnItemImportanceListener(String id);
+    }
+
+    private onSurplusDeleteListener mOnSurplusListener;
+
+    public void setonSurplusDeleteListenerListener(onSurplusDeleteListener mOnItemDeleteListener) {
+        this.mOnSurplusListener = mOnItemDeleteListener;
     }
 
     //局部刷新评论区
@@ -205,6 +270,10 @@ public class ListItemAdapter extends BaseAdapter {
         private TextView tv_relation;
         private TextView tv_create_time;
         private NoScrollGridView gridview;
+        private LinearLayout ll_surplus;
+        private TextView surplus_title;
+        private TextView surplus_centext;
+        private ImageView iv_surplus;
     }
 
 

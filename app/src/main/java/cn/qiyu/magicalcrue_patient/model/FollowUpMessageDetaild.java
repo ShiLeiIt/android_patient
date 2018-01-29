@@ -52,23 +52,23 @@ public class FollowUpMessageDetaild {
     private int status;
     private List<Comment> commentList;
     private List<EncloSure> enclosureList;
-    private EventInfoBean mEventInfoBean;
-    private CourseInfoBean mCourseInfoBean;
+    private EventInfoBean eventInfo;
+    private CourseInfoBean courseInfo;
 
     public EventInfoBean getEventInfoBean() {
-        return mEventInfoBean;
+        return eventInfo;
     }
 
     public void setEventInfoBean(EventInfoBean eventInfoBean) {
-        mEventInfoBean = eventInfoBean;
+        eventInfo = eventInfoBean;
     }
 
     public CourseInfoBean getCourseInfoBean() {
-        return mCourseInfoBean;
+        return courseInfo;
     }
 
     public void setCourseInfoBean(CourseInfoBean courseInfoBean) {
-        mCourseInfoBean = courseInfoBean;
+        courseInfo = courseInfoBean;
     }
 
     public String getOrder_no() {
