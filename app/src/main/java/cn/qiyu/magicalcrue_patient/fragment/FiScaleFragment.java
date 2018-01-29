@@ -111,6 +111,8 @@ public class FiScaleFragment extends Fragment {
             intent.putExtra("paperUserID", String.valueOf(mPaperUserID));
             intent.putExtra("mStatus", String.valueOf(mStatus));
 //            Log.i("paperUserID---------=", model.getData().getUserID());
+//            Log.i("mStatus---------=", mStatus+"");
+//            Log.i("scaleDetail---------=", model.getData()+"");
             startActivity(intent);
         }
 
@@ -166,7 +168,6 @@ public class FiScaleFragment extends Fragment {
                     mQuestionUUid = mModel.getPaperID();
                     mPaperUserID = mModel.getPaperUserID();
                     mStatus = mModel.getStatus();
-                    Log.i("paperUserID", mPaperUserID + "");
                     mScalePresenter.VisitScaleDetailsData();
 
                 }

@@ -21,6 +21,7 @@ import cn.qiyu.magicalcrue_patient.base.BaseActivity;
 import cn.qiyu.magicalcrue_patient.model.CreateRemindBean;
 import cn.qiyu.magicalcrue_patient.model.ResultModel;
 import cn.qiyu.magicalcrue_patient.picker.DoublePicker;
+import cn.qiyu.magicalcrue_patient.utils.PreUtils;
 import cn.qiyu.magicalcrue_patient.utils.TimeUtils;
 import cn.qiyu.magicalcrue_patient.view.SwitchButton;
 import cn.qiyu.magicalcrue_patient.visit.VisitCreateRemindView;
@@ -139,8 +140,8 @@ public class AddRemindActivity extends BaseActivity {
 
         @Override
         public String getPatientUuid() {
-//            return (String) PreUtils.getParam(AddRemindActivity.this, "patientuuid", "");
-            return "df430ac16590449cba026e34704190f3";
+            return (String) PreUtils.getParam(AddRemindActivity.this, "patientuuid", "");
+//            return "df430ac16590449cba026e34704190f3";
         }
 
         @Override
@@ -289,9 +290,9 @@ public class AddRemindActivity extends BaseActivity {
             //添加提醒完成
             case R.id.tv_commit:
                 if (TextUtils.isEmpty(mTvProjectDetail.getText().toString()) ||
-                        TextUtils.isEmpty(mIdEditorDetail.getText().toString()) ||
-                        mTvRemindTime.getText().toString().equals("2018-1-1")) {
+                        TextUtils.isEmpty(mIdEditorDetail.getText().toString())|| mTvRemindTime.getText().toString().equals("")){
                     Toast.makeText(this, "信息填写不完整", Toast.LENGTH_SHORT).show();
+
                 } else {
                     if (mSwitchButton.isChecked()) {
 //                        mPresenter.getVisitCreateRemind();

@@ -100,7 +100,7 @@
 
         <TextView
             android:id="@+id/tv_remind_week_time"
-            android:text="星期一"
+            android:text=""
             android:gravity="right|center_vertical"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -118,7 +118,7 @@
 
         <TextView
             android:id="@+id/tv_remind_time"
-            android:text="2018-1-1"
+            android:text=""
             android:gravity="right|center_vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

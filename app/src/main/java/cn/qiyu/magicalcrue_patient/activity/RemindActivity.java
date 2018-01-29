@@ -22,6 +22,7 @@ import cn.qiyu.magicalcrue_patient.model.ResultModel;
 import cn.qiyu.magicalcrue_patient.removeitemrecycleview.ItemRemoveRecyclerView;
 import cn.qiyu.magicalcrue_patient.removeitemrecycleview.MyRecyclerAdapter;
 import cn.qiyu.magicalcrue_patient.removeitemrecycleview.OnItemClickListener;
+import cn.qiyu.magicalcrue_patient.utils.PreUtils;
 import cn.qiyu.magicalcrue_patient.utils.TimeUtils;
 import cn.qiyu.magicalcrue_patient.visit.VisitDeleteRemindListView;
 import cn.qiyu.magicalcrue_patient.visit.VisitRemindListPresenter;
@@ -65,8 +66,8 @@ public class RemindActivity extends BaseActivity implements View.OnClickListener
     VisitRemindListPresenter mVisitRemindListPresenter = new VisitRemindListPresenter(new VisitRemindListView() {
         @Override
         public String getPatientUuid() {
-//             return (String) PreUtils.getParam(RemindActivity.this, "patientuuid", "");
-             return "df430ac16590449cba026e34704190f3";
+             return (String) PreUtils.getParam(RemindActivity.this, "patientuuid", "");
+//             return "df430ac16590449cba026e34704190f3";
         }
 
         @Override
@@ -83,30 +84,33 @@ public class RemindActivity extends BaseActivity implements View.OnClickListener
         public void LoadVisitRemindList(final ResultModel<List<RemindListBean>> model) {
             final MyRecyclerAdapter adapter = new MyRecyclerAdapter(RemindActivity.this, model.getData());
 
+            if (null != model) {
+                mRclRemind.setAdapter(adapter);
+                mRclRemind.setLayoutManager(new LinearLayoutManager(RemindActivity.this));
+                mRclRemind.setOnItemClickListener(new OnItemClickListener() {
+                    @Override
+                    public void onItemClick(View view, int position) {
+                        //TODO
+                        Intent intent = new Intent(RemindActivity.this,RemindDetailsActivity.class);
+                        intent.putExtra("remindUuid", model.getData().get(position).getUuid());
+                        intent.putExtra("remindTimeWeek",TimeUtils.getWeekStr(model.getData().get(position).getCreate_time()));
+                        startActivity(intent);
 
-            mRclRemind.setAdapter(adapter);
-            mRclRemind.setLayoutManager(new LinearLayoutManager(RemindActivity.this));
-            mRclRemind.setOnItemClickListener(new OnItemClickListener() {
-                @Override
-                public void onItemClick(View view, int position) {
-                    //TODO
-                    Intent intent = new Intent(RemindActivity.this,RemindDetailsActivity.class);
-                    intent.putExtra("remindUuid", model.getData().get(position).getUuid());
-                    startActivity(intent);
+//                    Toast.makeText(RemindActivity.this, ""+model.getData().get(position).getUuid(), Toast.LENGTH_SHORT).show();
+//                    Log.i("mRemindUuid====",model.getData().get(position).getUuid());
+                    }
 
-                    Toast.makeText(RemindActivity.this, ""+model.getData().get(position).getUuid(), Toast.LENGTH_SHORT).show();
-                    Log.i("mRemindUuid====",model.getData().get(position).getUuid());
-                }
+                    @Override
+                    public void onDeleteClick(int position) {
 
-                @Override
-                public void onDeleteClick(int position) {
-
-                    mRemindUuid = model.getData().get(position).getUuid();
+                        mRemindUuid = model.getData().get(position).getUuid();
 //                    Log.i("mRemindUuid====",mRemindUuid);
-                    adapter.removeItem(position);
-                    mVisitDeleteRemindListP.getVisitDeleteRemindList();
-                }
-            });
+                        adapter.removeItem(position);
+                        mVisitDeleteRemindListP.getVisitDeleteRemindList();
+                    }
+                });
+            }
+
 
         }
 
@@ -146,7 +150,7 @@ public class RemindActivity extends BaseActivity implements View.OnClickListener
 
         @Override
         public String getPatientUuid() {
-            return "df430ac16590449cba026e34704190f3";
+            return (String)PreUtils.getParam(RemindActivity.this,"patientuuid","");
         }
 
         @Override

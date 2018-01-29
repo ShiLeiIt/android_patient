@@ -22,6 +22,7 @@ import cn.qiyu.magicalcrue_patient.base.BaseActivity;
 import cn.qiyu.magicalcrue_patient.model.CreateRemindBean;
 import cn.qiyu.magicalcrue_patient.model.ResultModel;
 import cn.qiyu.magicalcrue_patient.picker.DoublePicker;
+import cn.qiyu.magicalcrue_patient.utils.PreUtils;
 import cn.qiyu.magicalcrue_patient.utils.TimeUtils;
 import cn.qiyu.magicalcrue_patient.view.SwitchButton;
 import cn.qiyu.magicalcrue_patient.visit.VisitCreateRemindView;
@@ -60,6 +61,7 @@ public class RemindDetailsActivity extends BaseActivity {
     private String mRepeatNum;
     private String mRepeat;
     private String mRemindUuid;
+    private String mRemindTimeWeek;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -83,6 +85,8 @@ public class RemindDetailsActivity extends BaseActivity {
         mSwitchButton.setEnabled(true);//disable button
         mSwitchButton.setEnableEffect(true);//disable the switch animation
         mRemindUuid = getIntent().getStringExtra("remindUuid");
+        mRemindTimeWeek = getIntent().getStringExtra("remindTimeWeek");
+        mTvRemindWeekTime.setText(mRemindTimeWeek);
 
 //
 //        if (mSwitchButton.isChecked()) {
@@ -126,8 +130,10 @@ public class RemindDetailsActivity extends BaseActivity {
                 mTvRecurrenceIntervalNum.setText(model.getData().getRepeat_num());
                 if (model.getData().getRepeat_type().equals("1")) {
                     mTvRecurrenceInterval.setText("月");
+                    mRepeat = "月";
                 } else {
                     mTvRecurrenceInterval.setText("周");
+                    mRepeat = "周";
                 }
 
             }
@@ -189,10 +195,12 @@ public class RemindDetailsActivity extends BaseActivity {
         @Override
         public String getRepeatType() {
             if (mSwitchButton.isChecked()) {
-                if (mRepeat.equals("月")) {
-                    return "1";
+                if (!mRepeat.equals("")) {
+                    if (mRepeat.equals("月")) {
+                        return "1";
+                    }
+                    return "2";
                 }
-                return "2";
             }
             return "0";
 
@@ -200,8 +208,8 @@ public class RemindDetailsActivity extends BaseActivity {
 
         @Override
         public String getPatientUuid() {
-//            return (String) PreUtils.getParam(AddRemindActivity.this, "patientuuid", "");
-            return "df430ac16590449cba026e34704190f3";
+            return (String) PreUtils.getParam(RemindDetailsActivity.this, "patientuuid", "");
+//            return "df430ac16590449cba026e34704190f3";
         }
 
         @Override

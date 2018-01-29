@@ -159,7 +159,7 @@ public class SystemMessagesActivity extends BaseActivity {
     MyScalePresenter mScalePresenter = new MyScalePresenter(new MyScaleView() {
         @Override
         public String getPatientUuid() {
-            return null;
+            return (String) PreUtils.getParam(SystemMessagesActivity.this, "patientuuid", "");
         }
 
         @Override
@@ -193,17 +193,28 @@ public class SystemMessagesActivity extends BaseActivity {
 
         @Override
         public String userId() {
-            return (String) PreUtils.getParam(SystemMessagesActivity.this, "patientuuid", "0");
+             return (String) PreUtils.getParam(SystemMessagesActivity.this, "patientuuid", "");
         }
 
         @Override
         public void LoadScaleDetailsData(ResultModel<ScaleDetailBean> model) {
             //跳转到医生量表页面
-            Intent intentScale = new Intent(SystemMessagesActivity.this, ScaleDetailActivity.class);
-            intentScale.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            intentScale.putExtra("scaleDetail", model.getData());
-            intentScale.putExtra("paperUserID", mPaperUserID);
-            startActivity(intentScale);
+            if (model.getData().getPaperData().getStatus() == 0) {
+                Intent intentScale = new Intent(SystemMessagesActivity.this, ScaleDetailActivity.class);
+                intentScale.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                intentScale.putExtra("scaleDetail", model.getData());
+                intentScale.putExtra("paperUserID", mPaperUserID);
+                startActivity(intentScale);
+            } else {
+                Intent intentScale = new Intent(SystemMessagesActivity.this, ScaleDetailShowActivity.class);
+                intentScale.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                intentScale.putExtra("scaleDetail", model.getData());
+                intentScale.putExtra("paperUserID", mPaperUserID);
+                intentScale.putExtra("mStatus", model.getData().getPaperData().getStatus()+"");
+                startActivity(intentScale);
+            }
+
+
         }
 
         @Override
@@ -286,6 +297,7 @@ public class SystemMessagesActivity extends BaseActivity {
                     //条目点击
                     int service_type = mModel.getService_type();
                     String service_uuid = mModel.getService_uuid();
+
                     //设置系统消息为已读
                     mMessageUuid = mModel.getUuid();
                     mPresenter.getSystemMsgRead();
@@ -295,9 +307,12 @@ public class SystemMessagesActivity extends BaseActivity {
                         //量表详情
                         case 1018:
                             Toast.makeText(SystemMessagesActivity.this, "请转至随访页面查看量表", Toast.LENGTH_SHORT).show();
-//                             mPaperId = service_uuid.substring(0, service_uuid.indexOf("&"));
-//                            mPaperUserID = service_uuid.substring(service_uuid.indexOf("&"));
-//                            mScalePresenter.VisitScaleDetailsData();
+                             mPaperId = service_uuid.substring(0, service_uuid.indexOf("&"));
+                            mPaperUserID = service_uuid.substring(service_uuid.length()-3);
+                            Log.i("mPaperId===",service_uuid.substring(0, service_uuid.indexOf("&")));
+                            Log.i("mPaperUserID===",service_uuid.substring(service_uuid.length()-3));
+
+                            mScalePresenter.VisitScaleDetailsData();
 
                             break;
                         case 1001:
