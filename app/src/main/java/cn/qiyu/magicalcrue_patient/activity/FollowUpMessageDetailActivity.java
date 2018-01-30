@@ -27,14 +27,18 @@ import cn.qiyu.magicalcrue_patient.home.HomeNumView;
 import cn.qiyu.magicalcrue_patient.home.HomePresenter;
 import cn.qiyu.magicalcrue_patient.information.InformationFollowUpRdView;
 import cn.qiyu.magicalcrue_patient.information.InformationPresenter;
+import cn.qiyu.magicalcrue_patient.model.CreateRemindBean;
 import cn.qiyu.magicalcrue_patient.model.DoctorTeamBean;
 import cn.qiyu.magicalcrue_patient.model.FollowUpMessageDetaild;
 import cn.qiyu.magicalcrue_patient.model.HomeBannerBean;
 import cn.qiyu.magicalcrue_patient.model.HomeNumBean;
 import cn.qiyu.magicalcrue_patient.model.ResultModel;
 import cn.qiyu.magicalcrue_patient.utils.PreUtils;
+import cn.qiyu.magicalcrue_patient.utils.TimeUtils;
 import cn.qiyu.magicalcrue_patient.visit.FollowUpDialoguePresenter;
 import cn.qiyu.magicalcrue_patient.visit.FollowUpDialogueView;
+import cn.qiyu.magicalcrue_patient.visit.VisitRemindDetailsView;
+import cn.qiyu.magicalcrue_patient.visit.VisitRemindListPresenter;
 
 
 /**
@@ -57,6 +61,7 @@ public class FollowUpMessageDetailActivity extends BaseActivity {
     //软件盘弹起后所占高度阀值
     private int keyHeight = 0;
     private String mErrorCode;
+    private String mRemindUuid;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -214,6 +219,15 @@ public class FollowUpMessageDetailActivity extends BaseActivity {
                     startActivity(intent);
                 }
             });
+
+            listItemAdapter.setonSurplusRemindListenerListener(new ListItemAdapter.onRemindListener() {
+                @Override
+                public void OnItemRemindListener(String id) {
+                    mRemindUuid=id;
+                    mDetailsPresenter.getVisitRemindDetails();
+                }
+            });
+
             lvFollowUpDetail.setAdapter(listItemAdapter);
             //监听listview的滑动事件，隐藏软键盘和发送框
             lvFollowUpDetail.setOnScrollListener(new AbsListView.OnScrollListener() {
@@ -300,5 +314,41 @@ public class FollowUpMessageDetailActivity extends BaseActivity {
     public void onViewClicked() {
         startActivity(new Intent(FollowUpMessageDetailActivity.this,QuizActivity.class));
     }
+    VisitRemindListPresenter mDetailsPresenter = new VisitRemindListPresenter(new VisitRemindDetailsView() {
+        @Override
+        public String getRemindUuid() {
+            return mRemindUuid;
+        }
+
+        @Override
+        public void LoadVisiteRemindDetails(ResultModel<CreateRemindBean> model) {
+            Intent intent = new Intent(FollowUpMessageDetailActivity.this, RemindDetailsActivity.class);
+            intent.putExtra("remindUuid", model.getData().getUuid());
+            intent.putExtra("remindTimeWeek", TimeUtils.getWeekStr(model.getData().getCreate_time()));
+            intent.putExtra("fromFollowUp", "0");
+            startActivity(intent);
+
+        }
+
+        @Override
+        public void showProgress() {
+
+        }
+
+        @Override
+        public void hideProgress() {
+
+        }
+
+        @Override
+        public void onViewFailure(ResultModel model) {
+
+        }
+
+        @Override
+        public void onServerFailure(String e) {
+
+        }
+    });
 
 }

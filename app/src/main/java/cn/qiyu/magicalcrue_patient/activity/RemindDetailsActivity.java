@@ -72,10 +72,7 @@ public class RemindDetailsActivity extends BaseActivity {
     }
 
     private void init() {
-        mTvCommit.setVisibility(View.VISIBLE);
-        mTvCommit.setText(R.string.modification);
-        mTvCommit.setTextColor(getResources().getColor(R.color.app_userInfor));
-        mTvTitle.setText(R.string.details);
+
         mSwitchButton.setChecked(true);
         mSwitchButton.isChecked();
         mSwitchButton.toggle();     //switch state
@@ -84,8 +81,23 @@ public class RemindDetailsActivity extends BaseActivity {
         mSwitchButton.setShadowEffect(true);//disable shadow effect
         mSwitchButton.setEnabled(true);//disable button
         mSwitchButton.setEnableEffect(true);//disable the switch animation
-        mRemindUuid = getIntent().getStringExtra("remindUuid");
-        mRemindTimeWeek = getIntent().getStringExtra("remindTimeWeek");
+        Intent intent = getIntent();
+        mRemindUuid = intent.getStringExtra("remindUuid");
+        mRemindTimeWeek = intent.getStringExtra("remindTimeWeek");
+        //判断如果是从哪个进入详情页面
+
+        String mFromFollowUp = intent.getStringExtra("fromFollowUp");
+        if (mFromFollowUp.equals("0")) {
+            //mFromFollowUp为0的时候是从随访对话进入
+            mTvCommit.setVisibility(View.GONE);
+        } else {
+            //mFromFollowUp为1的时候从提醒界面进入
+            mTvCommit.setVisibility(View.VISIBLE);
+            mTvCommit.setText(R.string.modification);
+            mTvCommit.setTextColor(getResources().getColor(R.color.app_userInfor));
+        }
+
+        mTvTitle.setText(R.string.details);
         mTvRemindWeekTime.setText(mRemindTimeWeek);
 
 //

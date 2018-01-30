@@ -205,6 +205,12 @@ public class ListItemAdapter extends BaseAdapter {
                 holder.surplus_title.setText(itemEntity.getEventInfoBean().getEvent_name());
                 holder.surplus_centext.setText(itemEntity.getEventInfoBean().getEvent_time()+itemEntity.getEventInfoBean().getEvent_detail());
                 holder.gridview.setVisibility(View.GONE);
+                holder.ll_surplus.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        onRemindListener.OnItemRemindListener(items.get(position).getEventInfoBean().getUuid());
+                    }
+                });
 
 
                 break;
@@ -239,6 +245,21 @@ public class ListItemAdapter extends BaseAdapter {
 
     public void setonSurplusDeleteListenerListener(onSurplusDeleteListener mOnItemDeleteListener) {
         this.mOnSurplusListener = mOnItemDeleteListener;
+    }
+
+
+
+    /**
+     * 进入查看提醒详情
+     */
+    public interface onRemindListener {
+        void OnItemRemindListener(String id);
+    }
+
+    private onRemindListener onRemindListener;
+
+    public void setonSurplusRemindListenerListener(onRemindListener onRemindDeleteListener) {
+        this.onRemindListener = onRemindDeleteListener;
     }
 
     //局部刷新评论区

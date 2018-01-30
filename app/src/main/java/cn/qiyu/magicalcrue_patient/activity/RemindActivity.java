@@ -93,6 +93,7 @@ public class RemindActivity extends BaseActivity implements View.OnClickListener
                         //TODO
                         Intent intent = new Intent(RemindActivity.this,RemindDetailsActivity.class);
                         intent.putExtra("remindUuid", model.getData().get(position).getUuid());
+                        intent.putExtra("fromFollowUp", "1");
                         intent.putExtra("remindTimeWeek",TimeUtils.getWeekStr(model.getData().get(position).getCreate_time()));
                         startActivity(intent);
 
