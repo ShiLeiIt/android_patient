@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.CardView;
 import android.util.Log;
@@ -18,8 +17,6 @@ import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.startsmake.mainnavigatetabbar.widget.MainNavigateTabBar;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -75,6 +72,12 @@ public class HomePageFragment extends BaseFragment implements View.OnClickListen
     CircleImageView[] civ;
     @Bind(R.id.cv_home)
     CardView mCvHome;
+    @Bind(R.id.tv_unbind_doctor)
+    TextView mTvUnbindDoctor;
+    @Bind(R.id.tv_unbind_doctor1)
+    TextView mTvUnbindDoctor1;
+    @Bind(R.id.tv_unbind_doctor2)
+    TextView mTvUnbindDoctor2;
 
     //打开扫描界面请求码
     private int REQUEST_CODE = 0x01;
@@ -194,8 +197,6 @@ public class HomePageFragment extends BaseFragment implements View.OnClickListen
         mHomePresenter.getHomeBanner();
         mHomePresenter.HomeLoadNumData();
         getLoad();
-
-
 
 
 //        Intent intent = getActivity().getIntent();
@@ -384,6 +385,9 @@ public class HomePageFragment extends BaseFragment implements View.OnClickListen
                 mLlUnbindDoctor.setVisibility(View.VISIBLE);
                 mLlBindDoctor.setVisibility(View.GONE);
                 mIv_richsan.setVisibility(View.VISIBLE);
+                mTvUnbindDoctor.setText("您已经加入随访");
+                mTvUnbindDoctor1.setText("请等待你的主诊医生审核");
+                mTvUnbindDoctor2.setText("审核通过后正常使用");
 
                 mIvUnbindDoctor.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -602,8 +606,6 @@ public class HomePageFragment extends BaseFragment implements View.OnClickListen
     }
 
 
-
-
 //    @Override
 //    public void setUserVisibleHint(boolean isVisibleToUser) {
 //        super.setUserVisibleHint(isVisibleToUser);
@@ -615,12 +617,11 @@ public class HomePageFragment extends BaseFragment implements View.OnClickListen
 
     @Override
     protected void lazyLoad() {
-        if(!isPrepared || !isVisible) {
+        if (!isPrepared || !isVisible) {
             return;
         }
         mHomePresenter.getDoctorTeamInfo();
     }
-
 
 
 }

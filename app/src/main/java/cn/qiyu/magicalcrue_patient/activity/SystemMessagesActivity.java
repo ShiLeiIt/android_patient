@@ -306,11 +306,11 @@ public class SystemMessagesActivity extends BaseActivity {
                     switch (service_type) {
                         //量表详情
                         case 1018:
-                            Toast.makeText(SystemMessagesActivity.this, "请转至随访页面查看量表", Toast.LENGTH_SHORT).show();
+//                            Toast.makeText(SystemMessagesActivity.this, "请转至随访页面查看量表", Toast.LENGTH_SHORT).show();
                              mPaperId = service_uuid.substring(0, service_uuid.indexOf("&"));
                             mPaperUserID = service_uuid.substring(service_uuid.length()-3);
-                            Log.i("mPaperId===",service_uuid.substring(0, service_uuid.indexOf("&")));
-                            Log.i("mPaperUserID===",service_uuid.substring(service_uuid.length()-3));
+//                            Log.i("mPaperId===",service_uuid.substring(0, service_uuid.indexOf("&")));
+//                            Log.i("mPaperUserID===",service_uuid.substring(service_uuid.length()-3));
 
                             mScalePresenter.VisitScaleDetailsData();
 

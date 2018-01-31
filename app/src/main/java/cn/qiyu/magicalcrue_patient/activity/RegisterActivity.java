@@ -79,28 +79,28 @@ public class RegisterActivity extends BaseActivity {
 //        Log.i("userperfect-=", (String) PreUtils.getParam(RegisterActivity.this, "userperfect", "0"));
 
 
-    if(null!=uuid){
-        if (!TextUtils.isEmpty(uuid) && !uuid.equals("0")) {
-            switch (String.valueOf(PreUtils.getParam(RegisterActivity.this, "userperfect", 0))) {
-                case "1":
-                    Intent intentUser = new Intent(RegisterActivity.this, UserInforActivity.class);
-                    startActivity(intentUser);
-                    break;
-                case "2":
-                    Intent intentPatient = new Intent(RegisterActivity.this, PatientDataRegisterActivity.class);
-                    startActivity(intentPatient);
-                    break;
-                default:
-                    mJpushId = JPushInterface.getRegistrationID(RegisterActivity.this);
-                    Log.i("jpushId-=-=-=----", mJpushId);
-                    Intent intentMain = new Intent(RegisterActivity.this, SplashActivity.class);
-                    startActivity(intentMain);
-                    finish();
-                    break;
-            }
-        }
-
-    }
+//    if(null!=uuid){
+//        if (!TextUtils.isEmpty(uuid) && !uuid.equals("0")) {
+//            switch (String.valueOf(PreUtils.getParam(RegisterActivity.this, "userperfect", 0))) {
+//                case "1":
+//                    Intent intentUser = new Intent(RegisterActivity.this, UserInforActivity.class);
+//                    startActivity(intentUser);
+//                    break;
+//                case "2":
+//                    Intent intentPatient = new Intent(RegisterActivity.this, PatientDataRegisterActivity.class);
+//                    startActivity(intentPatient);
+//                    break;
+//                default:
+//                    mJpushId = JPushInterface.getRegistrationID(RegisterActivity.this);
+//                    Log.i("jpushId-=-=-=----", mJpushId);
+//                    Intent intentMain = new Intent(RegisterActivity.this, SplashActivity.class);
+//                    startActivity(intentMain);
+//                    finish();
+//                    break;
+//            }
+//        }
+//
+//    }
 
         //构造CountDownTimer对象
         mTimeCount = new TimeCount(60000, 1000);

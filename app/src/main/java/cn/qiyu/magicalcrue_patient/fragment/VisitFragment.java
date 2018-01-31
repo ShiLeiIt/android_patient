@@ -1,13 +1,10 @@
 package cn.qiyu.magicalcrue_patient.fragment;
 
 import android.app.Dialog;
-
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -29,8 +26,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import butterknife.Bind;
 import butterknife.ButterKnife;
-import cn.qiyu.magicalcrue_patient.Api.ApiService;
 import cn.qiyu.magicalcrue_patient.R;
 import cn.qiyu.magicalcrue_patient.activity.CaseHistoryActivity;
 import cn.qiyu.magicalcrue_patient.activity.DoctorListActivity;
@@ -38,10 +35,8 @@ import cn.qiyu.magicalcrue_patient.activity.DoctorNoticeListActivity;
 import cn.qiyu.magicalcrue_patient.activity.FollowUpMessageDetailActivity;
 import cn.qiyu.magicalcrue_patient.activity.InspectionReportInfoListActivity;
 import cn.qiyu.magicalcrue_patient.activity.LeaveHospitalInfoListActivity;
-import cn.qiyu.magicalcrue_patient.activity.MainActivity;
 import cn.qiyu.magicalcrue_patient.activity.MyScaleActivity;
 import cn.qiyu.magicalcrue_patient.activity.NewCourseActivity;
-import cn.qiyu.magicalcrue_patient.activity.NewFollowupReportActivity;
 import cn.qiyu.magicalcrue_patient.activity.OutpatientInformationListActivity;
 import cn.qiyu.magicalcrue_patient.activity.PatientDataActivity;
 import cn.qiyu.magicalcrue_patient.activity.PatientDataRegisterActivity;
@@ -84,8 +79,14 @@ public class VisitFragment extends BaseFragment implements View.OnClickListener 
 
     private static String TITLE_INFO[] =
             {
-                    "对话", "病历", "症状", "用药", "量表",  "患教","提醒","公告"
+                    "对话", "病历", "症状", "用药", "量表", "患教", "提醒", "公告"
             };
+    @Bind(R.id.tv_unbind_doctor)
+    TextView mTvUnbindDoctor;
+    @Bind(R.id.tv_unbind_doctor1)
+    TextView mTvUnbindDoctor1;
+    @Bind(R.id.tv_unbind_doctor2)
+    TextView mTvUnbindDoctor2;
     private MyGridView mGridView;
     private TextView mTv_topleft_visit;
     private TextView mTv_topleft_inquiry;
@@ -124,8 +125,6 @@ public class VisitFragment extends BaseFragment implements View.OnClickListener 
         //绑定显示医生
         mLlBindDoctor = (LinearLayout) view.findViewById(R.id.ll_bind_doctor);
         mIvUnbindDoctor = (ImageView) view.findViewById(R.id.iv_unbind_doctor);
-
-
 
 
         mGridView = (MyGridView) view.findViewById(R.id.gridview);
@@ -172,6 +171,7 @@ public class VisitFragment extends BaseFragment implements View.OnClickListener 
         getLoad();
 
 
+        ButterKnife.bind(this, view);
         return view;
     }
 
@@ -185,13 +185,13 @@ public class VisitFragment extends BaseFragment implements View.OnClickListener 
     MinePresenter mMinePresenter = new MinePresenter(new MineInforView() {
         @Override
         public String getUserUuid() {
-            Log.i("小白", "getUserUuid: "+(String) PreUtils.getParam(getActivity(), "uuid", "0"));
+            Log.i("小白", "getUserUuid: " + (String) PreUtils.getParam(getActivity(), "uuid", "0"));
             return (String) PreUtils.getParam(getActivity(), "uuid", "0");
         }
 
         @Override
         public String getPatientBasicUuid() {
-            Log.i("小白", "getUserUuid: "+(String) PreUtils.getParam(getActivity(), "patientuuid", "0"));
+            Log.i("小白", "getUserUuid: " + (String) PreUtils.getParam(getActivity(), "patientuuid", "0"));
             return (String) PreUtils.getParam(getActivity(), "patientuuid", "0");
         }
 
@@ -239,7 +239,7 @@ public class VisitFragment extends BaseFragment implements View.OnClickListener 
     HomePresenter homePresenter = new HomePresenter(new HomeNumView() {
         @Override
         public String getUserId() {
-            Log.i("小白", "getUserId: "+(String) PreUtils.getParam(getActivity(), "uuid", "0"));
+            Log.i("小白", "getUserId: " + (String) PreUtils.getParam(getActivity(), "uuid", "0"));
 
 
             return (String) PreUtils.getParam(getActivity(), "uuid", "0");
@@ -260,7 +260,7 @@ public class VisitFragment extends BaseFragment implements View.OnClickListener 
 
         @Override
         public String patientUuid() {
-            Log.i("小白", "getPatientUuid:"+(String) PreUtils.getParam(getActivity(), "patientuuid", "0"));
+            Log.i("小白", "getPatientUuid:" + (String) PreUtils.getParam(getActivity(), "patientuuid", "0"));
             return (String) PreUtils.getParam(getActivity(), "patientuuid", "0");
         }
 
@@ -285,7 +285,7 @@ public class VisitFragment extends BaseFragment implements View.OnClickListener 
 //            mDoctorTeamList.addAll(model.getData().getQyjDoctorList());
             mTv_doc_tem_name.setText(teamName);
             int DoctorIcon = 0;
-            Log.i("size====", model.getData().getDoctorTeamList().size()+"");
+            Log.i("size====", model.getData().getDoctorTeamList().size() + "");
             switch (model.getData().getDoctorTeamList().size()) {
                 case 1:
                     DoctorIcon = 1;
@@ -309,13 +309,14 @@ public class VisitFragment extends BaseFragment implements View.OnClickListener 
                 if (null == model.getData().getDoctorTeamList().get(i).getPhotoPathImg())
                     path = "";
                 else
-                    path =  model.getData().getDoctorTeamList().get(i).getPhotoPathImg();
+                    path = model.getData().getDoctorTeamList().get(i).getPhotoPathImg();
                 DisplayHelper.loadGlide(getActivity(), path, civ[i]);
             }
             mLlUnbindDoctor.setVisibility(View.GONE);
             mLlBindDoctor.setVisibility(View.VISIBLE);
             mTv_mere_updata.setVisibility(View.VISIBLE);
         }
+
         //首页Banner
         @Override
         public String getType() {
@@ -368,6 +369,9 @@ public class VisitFragment extends BaseFragment implements View.OnClickListener 
                 mLlUnbindDoctor.setVisibility(View.VISIBLE);
                 mLlBindDoctor.setVisibility(View.GONE);
                 mTv_mere_updata.setVisibility(View.INVISIBLE);
+                mTvUnbindDoctor.setText("您已经加入随访");
+                mTvUnbindDoctor1.setText("请等待你的主诊医生审核");
+                mTvUnbindDoctor2.setText("审核通过后正常使用");
                 mIvUnbindDoctor.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -386,7 +390,6 @@ public class VisitFragment extends BaseFragment implements View.OnClickListener 
                     startActivity(new Intent(getActivity(), PatientDataRegisterActivity.class));
                 }
             }
-//            Toast.makeText(getActivity(), "code======" + mErrorCode, Toast.LENGTH_SHORT).show();
 
         }
 
@@ -478,10 +481,10 @@ public class VisitFragment extends BaseFragment implements View.OnClickListener 
 
     @Override
     protected void lazyLoad() {
-        if(!isPrepared || !isVisible) {
+        if (!isPrepared || !isVisible) {
             return;
         }
-       homePresenter.getDoctorTeamInfo();
+        homePresenter.getDoctorTeamInfo();
     }
 
     /**
@@ -624,6 +627,7 @@ public class VisitFragment extends BaseFragment implements View.OnClickListener 
         homePresenter.getDoctorTeamInfo();
 //        mMinePresenter.getPatientBasicInfor();
     }
+
     public void getLoad() {
 
 /*加载的渐变动画*/
