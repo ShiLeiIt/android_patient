@@ -97,6 +97,9 @@
     <string name="details">详情</string>
     <string name="modification">修改</string>
     <string name="loading">加载中…</string>
+    <string name="pref_key_translate">translate</string>
+    <string name="pref_key_iat_show">iat_show</string>
+    <string name="text_begin">请开始说话…</string>
 
 
 

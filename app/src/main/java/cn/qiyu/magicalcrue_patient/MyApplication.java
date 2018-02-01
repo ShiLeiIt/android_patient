@@ -3,6 +3,9 @@ package cn.qiyu.magicalcrue_patient;
 import android.app.Application;
 import android.util.Log;
 
+import com.iflytek.cloud.SpeechConstant;
+import com.iflytek.cloud.SpeechUtility;
+
 import cn.jpush.android.api.JPushInterface;
 import cn.qiyu.magicalcrue_patient.utils.PreUtils;
 
@@ -19,5 +22,6 @@ public class MyApplication extends Application{
         String jpushId = JPushInterface.getRegistrationID(this);
         Log.i("jpushId=-applicatio-------=", jpushId);
         PreUtils.setParam(this,"jpushId",jpushId);
+
 
     }}

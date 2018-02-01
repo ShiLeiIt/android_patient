@@ -3,6 +3,7 @@ package cn.qiyu.magicalcrue_patient.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -14,7 +15,21 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.util.ArrayList;
+import com.iflytek.cloud.ErrorCode;
+import com.iflytek.cloud.InitListener;
+import com.iflytek.cloud.RecognizerResult;
+import com.iflytek.cloud.SpeechConstant;
+import com.iflytek.cloud.SpeechError;
+import com.iflytek.cloud.SpeechRecognizer;
+import com.iflytek.cloud.SpeechUtility;
+import com.iflytek.cloud.ui.RecognizerDialog;
+import com.iflytek.cloud.ui.RecognizerDialogListener;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 import butterknife.Bind;
@@ -33,6 +48,7 @@ import cn.qiyu.magicalcrue_patient.model.FollowUpMessageDetaild;
 import cn.qiyu.magicalcrue_patient.model.HomeBannerBean;
 import cn.qiyu.magicalcrue_patient.model.HomeNumBean;
 import cn.qiyu.magicalcrue_patient.model.ResultModel;
+import cn.qiyu.magicalcrue_patient.utils.JsonParser;
 import cn.qiyu.magicalcrue_patient.utils.PreUtils;
 import cn.qiyu.magicalcrue_patient.utils.TimeUtils;
 import cn.qiyu.magicalcrue_patient.visit.FollowUpDialoguePresenter;
@@ -56,19 +72,28 @@ public class FollowUpMessageDetailActivity extends BaseActivity {
     TextView mTvConditionQuiz;
     @Bind(R.id.btn_send_message)
     Button mBtnSendMessage;
+    @Bind(R.id.btn_voice_text)
+    Button mBtnVoiceText;
     //屏幕高度
     private int screenHeight = 0;
     //软件盘弹起后所占高度阀值
     private int keyHeight = 0;
     private String mErrorCode;
     private String mRemindUuid;
+    private Toast mToast;
+    // 语音听写UI
+    private RecognizerDialog mIatDialog;
+    private boolean mTranslateEnable = false;
+    // 用HashMap存储听写结果
+    private HashMap<String, String> mIatResults = new LinkedHashMap<String, String>();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_follow_up_message_detail);
         ButterKnife.bind(this);
-
+        init();
 
         //获取屏幕高度
         screenHeight = this.getWindowManager().getDefaultDisplay().getHeight();
@@ -77,6 +102,28 @@ public class FollowUpMessageDetailActivity extends BaseActivity {
         mInformationPresenter.getFollowUpMsgRead();
 
     }
+
+    private void init() {
+        //初始化语音转文字
+        SpeechUtility.createUtility(this, SpeechConstant.APPID+"=5a716a76");
+    }
+    /**
+     * 初始化监听器。
+     */
+    private InitListener mInitListener = new InitListener() {
+
+        @Override
+        public void onInit(int code) {
+            if (code != ErrorCode.SUCCESS) {
+                showTip("初始化失败，错误码：" + code);
+            }
+        }
+    };
+    private void showTip(final String str) {
+        mToast.setText(str);
+        mToast.show();
+    }
+
     //获取mErrorCode值
     HomePresenter mHomePresenter = new HomePresenter(new HomeNumView() {
         @Override
@@ -91,7 +138,7 @@ public class FollowUpMessageDetailActivity extends BaseActivity {
 
         @Override
         public String patientUuid() {
-            return (String)PreUtils.getParam(FollowUpMessageDetailActivity.this,"patientuuid","0");
+            return (String) PreUtils.getParam(FollowUpMessageDetailActivity.this, "patientuuid", "0");
         }
 
         @Override
@@ -140,7 +187,6 @@ public class FollowUpMessageDetailActivity extends BaseActivity {
             } else {
                 mTvConditionQuiz.setVisibility(View.VISIBLE);
             }
-            Log.i("errorId==============", mErrorCode);
 
         }
 
@@ -155,7 +201,7 @@ public class FollowUpMessageDetailActivity extends BaseActivity {
     InformationPresenter mInformationPresenter = new InformationPresenter(new InformationFollowUpRdView() {
         @Override
         public String getUserUuid() {
-            return (String)PreUtils.getParam(FollowUpMessageDetailActivity.this,"uuid","0");
+            return (String) PreUtils.getParam(FollowUpMessageDetailActivity.this, "uuid", "0");
         }
 
         @Override
@@ -210,7 +256,7 @@ public class FollowUpMessageDetailActivity extends BaseActivity {
 
 
 //            Toast.makeText(FollowUpMessageDetailActivity.this, ""+model.getData().size(), Toast.LENGTH_SHORT).show();
-            ListItemAdapter listItemAdapter = new ListItemAdapter(FollowUpMessageDetailActivity.this, FollowUpMessageDetailActivity.this,model.getData());
+            ListItemAdapter listItemAdapter = new ListItemAdapter(FollowUpMessageDetailActivity.this, FollowUpMessageDetailActivity.this, model.getData());
             listItemAdapter.setonSurplusDeleteListenerListener(new ListItemAdapter.onSurplusDeleteListener() {
                 @Override
                 public void OnItemImportanceListener(String id) {
@@ -223,7 +269,7 @@ public class FollowUpMessageDetailActivity extends BaseActivity {
             listItemAdapter.setonSurplusRemindListenerListener(new ListItemAdapter.onRemindListener() {
                 @Override
                 public void OnItemRemindListener(String id) {
-                    mRemindUuid=id;
+                    mRemindUuid = id;
                     mDetailsPresenter.getVisitRemindDetails();
                 }
             });
@@ -299,7 +345,6 @@ public class FollowUpMessageDetailActivity extends BaseActivity {
                         etReplyPatient.requestFocus();
                     }
                 }
-
             }
         });
     }
@@ -310,10 +355,24 @@ public class FollowUpMessageDetailActivity extends BaseActivity {
         finish();
     }
 
-    @OnClick(R.id.tv_condition_quiz)
-    public void onViewClicked() {
-        startActivity(new Intent(FollowUpMessageDetailActivity.this,QuizActivity.class));
+    @OnClick({R.id.tv_condition_quiz,R.id.btn_voice_text})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.tv_condition_quiz:
+                startActivity(new Intent(FollowUpMessageDetailActivity.this, QuizActivity.class));
+                break;
+            case R.id.btn_voice_text:
+                mIatDialog = new RecognizerDialog(FollowUpMessageDetailActivity.this, mInitListener);
+                mIatDialog.setListener(mRecognizerDialogListener);
+                mIatDialog.show();
+                //获取字体所在的控件，设置为"",隐藏字体，
+                TextView txt = (TextView)mIatDialog.getWindow().getDecorView().findViewWithTag("textlink");
+                txt.setText("");
+                break;
+        }
+
     }
+
     VisitRemindListPresenter mDetailsPresenter = new VisitRemindListPresenter(new VisitRemindDetailsView() {
         @Override
         public String getRemindUuid() {
@@ -350,5 +409,66 @@ public class FollowUpMessageDetailActivity extends BaseActivity {
 
         }
     });
+    /**
+     * 听写UI监听器
+     */
+    private RecognizerDialogListener mRecognizerDialogListener = new RecognizerDialogListener() {
+        public void onResult(RecognizerResult results, boolean isLast) {
+            if( mTranslateEnable ){
+                printTransResult( results );
+            }
+            else{
+                printResult(results);
+            }
+
+        }
+
+        /**
+         * 识别回调错误.
+         */
+        public void onError(SpeechError error) {
+//            if(mTranslateEnable && error.getErrorCode() == 14002) {
+//                showTip( error.getPlainDescription(true)+"\n请确认是否已开通翻译功能" );
+//            } else {
+//                showTip(error.getPlainDescription(true));
+//            }
+        }
+
+    };
+    private void printResult(RecognizerResult results) {
+        String text = JsonParser.parseIatResult(results.getResultString());
+
+        String sn = null;
+        // 读取json结果中的sn字段
+        try {
+            JSONObject resultJson = new JSONObject(results.getResultString());
+            sn = resultJson.optString("sn");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        mIatResults.put(sn, text);
+
+        StringBuffer resultBuffer = new StringBuffer();
+        for (String key : mIatResults.keySet()) {
+            resultBuffer.append(mIatResults.get(key));
+        }
+
+        etReplyPatient.setText(resultBuffer.toString());
+        Toast.makeText(this, ""+resultBuffer.toString(), Toast.LENGTH_SHORT).show();
+        etReplyPatient.setSelection(etReplyPatient.length());
+    }
+    private void printTransResult (RecognizerResult results) {
+        String trans  = JsonParser.parseTransResult(results.getResultString(),"dst");
+        String oris = JsonParser.parseTransResult(results.getResultString(),"src");
+
+        if( TextUtils.isEmpty(trans)||TextUtils.isEmpty(oris) ){
+            showTip( "解析结果失败，请确认是否已开通翻译功能。" );
+        }else{
+            etReplyPatient.setText( "原始语言:\n"+oris+"\n目标语言:\n"+trans );
+        }
+
+    }
+
 
 }

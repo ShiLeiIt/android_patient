@@ -20,6 +20,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+
 import java.util.List;
 
 import cn.qiyu.magicalcrue_patient.Api.ApiService;
@@ -49,6 +50,7 @@ public class ListItemAdapter extends BaseAdapter {
     private EditText reply_patient;
     private ViewHolder holder;
     private List<Comment> comments1;
+
     //对话UUID
     private String commentUUid;
     private int indexrefresh;
@@ -138,7 +140,6 @@ public class ListItemAdapter extends BaseAdapter {
         holder.tv_relation.setText(itemEntity.getRelationshipName());
         // 回复列表
 
-
         //回复按钮单击事件
         convertView.findViewById(R.id.ll_message_reply_in).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -151,6 +152,7 @@ public class ListItemAdapter extends BaseAdapter {
 //                //将包含输入框的布局显示出来
                 LinearLayout   llSend = (LinearLayout)activity.findViewById(R.id.ll_message_send);
                 llSend.setVisibility(View.VISIBLE);
+
 //                //发送按钮的点击事件，处理
                 activity.findViewById(R.id.btn_send_message).setOnClickListener(new View.OnClickListener() {
                     @Override
