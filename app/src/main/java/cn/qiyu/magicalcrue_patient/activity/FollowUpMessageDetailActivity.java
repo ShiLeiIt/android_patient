@@ -10,6 +10,8 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.AbsListView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -73,7 +75,7 @@ public class FollowUpMessageDetailActivity extends BaseActivity {
     @Bind(R.id.btn_send_message)
     Button mBtnSendMessage;
     @Bind(R.id.btn_voice_text)
-    Button mBtnVoiceText;
+    ImageView mBtnVoiceText;
     //屏幕高度
     private int screenHeight = 0;
     //软件盘弹起后所占高度阀值

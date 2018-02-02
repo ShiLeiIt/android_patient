@@ -36,7 +36,6 @@ public class ImageUpLoadPresenter {
                    mImageUpLoadView.hideProgress();
                }
            }
-
            @Override
            public void onFailure(String e) {
                 mImageUpLoadView.onServerFailure(e);
@@ -44,6 +43,7 @@ public class ImageUpLoadPresenter {
                mImageUpLoadView.hideProgress();
            }
        });
+
    }
 
 }

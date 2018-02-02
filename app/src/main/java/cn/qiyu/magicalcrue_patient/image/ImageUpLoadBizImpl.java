@@ -1,9 +1,11 @@
 package cn.qiyu.magicalcrue_patient.image;
 
+import cn.qiyu.magicalcrue_patient.base.BaseBiz;
 import cn.qiyu.magicalcrue_patient.base.ImageBaseBiz;
 import cn.qiyu.magicalcrue_patient.model.ImageUpLoadBean;
 
 
+import cn.qiyu.magicalcrue_patient.model.ResultModel;
 import okhttp3.RequestBody;
 
 import retrofit2.Call;
@@ -27,7 +29,6 @@ public class ImageUpLoadBizImpl extends ImageBaseBiz implements ImageUpLoadBiz {
                    onLoginListener.onFailure(response.body().getMessage());
                }
            }
-
            @Override
            public void onFailure(Call<ImageUpLoadBean> call, Throwable throwable) {
                 onLoginListener.onFailure(throwable.getMessage());
