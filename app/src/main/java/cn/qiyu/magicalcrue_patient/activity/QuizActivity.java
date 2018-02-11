@@ -159,6 +159,55 @@ public class QuizActivity extends BaseActivity {
             }
         });
     }
+    ImageUpLoadPresenter mImageUpLoadPresenter = new ImageUpLoadPresenter(new ImageUpLoadView() {
+        @Override
+        public RequestBody getImageUpLoadFileId() {
+
+            mRequestFile = RequestBody.create(MediaType.parse("image/png"), mFileName);
+            Log.i("mRequestFile===",mRequestFile+"");
+            return mRequestFile;
+        }
+
+
+
+        @Override
+        public void getImageUpLoad(ImageUpLoadBean imageUpLoadBean) {
+            requestImageIndex=requestImageIndex+1;
+//            Log.i("getImageUpLoad==", ""+requestImageIndex+"");
+            String fileName = imageUpLoadBean.getData().getFileName();
+//            Toast.makeText(QuizActivity.this, "成功", Toast.LENGTH_SHORT).show();
+            mStringBuffer.append(fileName + ",");
+//            Log.i("mStringBuffer=======", mStringBuffer.toString());
+//            mFileId = imageUpLoadBean.getFileId();
+            //上传
+//            Log.i("mList==", mList.size()+"");
+
+            if(requestImageIndex==mList.size()-1){
+                mVisitDialogueQuizPresenter.getVisitDialogueQuiz();
+            }
+        }
+
+        @Override
+        public void showProgress() {
+            mLoadingDialog.show();
+        }
+
+        @Override
+        public void hideProgress() {
+            mLoadingDialog.hide();
+        }
+
+        @Override
+        public void onViewFailure(ImageUpLoadBean model) {
+            Toast.makeText(QuizActivity.this, "" + model.getMessage(), Toast.LENGTH_SHORT).show();
+        }
+
+        @Override
+        public void onServerFailure(String e) {
+            Toast.makeText(QuizActivity.this, "提问" + e, Toast.LENGTH_SHORT).show();
+
+        }
+    });
 
 
     @OnClick({R.id.iv_quiz_pic, R.id.tv_quiz, R.id.tv_quiz_commit})
@@ -202,9 +251,16 @@ public class QuizActivity extends BaseActivity {
                 }
                 if (mList != null && mList.size() > 0) {
 //                    Toast.makeText(this, "图片上传中...,请稍后", Toast.LENGTH_SHORT).show();
+
+                    Log.i("mList====",mList.size()+"");
+                    Log.i("mStringBuffer====",mStringBuffer+"");
                     for (int i = 0; i < mList.size() - 1; i++) {
                         mFileName = new File(mList.get(i));
-                        mImageUpLoadPresenter.getImage();
+                        Log.i("mFileName====",mFileName+"");
+
+                                mImageUpLoadPresenter.getImage();
+
+
                     }
                 } else {
                     mVisitDialogueQuizPresenter.getVisitDialogQuizText();
@@ -329,55 +385,7 @@ public class QuizActivity extends BaseActivity {
         }
     }
 
-    ImageUpLoadPresenter mImageUpLoadPresenter = new ImageUpLoadPresenter(new ImageUpLoadView() {
-        @Override
-        public RequestBody getImageUpLoadFileId() {
 
-            mRequestFile = RequestBody.create(MediaType.parse("image/png"), mFileName);
-            return mRequestFile;
-        }
-
-        @Override
-        public void getImageUpLoad(ImageUpLoadBean imageUpLoadBean) {
-            requestImageIndex=requestImageIndex+1;
-//            Log.i("getImageUpLoad==", "requestImageIndex="+requestImageIndex+"");
-
-//            Toast.makeText(QuizActivity.this, "成功", Toast.LENGTH_SHORT).show();
-            mStringBuffer.append(imageUpLoadBean.getFileId() + ",");
-//            Log.i("mStringBuffer=======", mStringBuffer.toString());
-//            mFileId = imageUpLoadBean.getFileId();
-            //上传
-//            Log.i("mList==", mList.size()+"");
-
-
-            if(requestImageIndex==mList.size()-1){
-                mVisitDialogueQuizPresenter.getVisitDialogueQuiz();
-
-            }
-//
-        }
-
-        @Override
-        public void showProgress() {
-            mLoadingDialog.show();
-        }
-
-        @Override
-        public void hideProgress() {
-            mLoadingDialog.hide();
-        }
-
-        @Override
-        public void onViewFailure(ImageUpLoadBean model) {
-            Toast.makeText(QuizActivity.this, "" + model.getMessage(), Toast.LENGTH_SHORT).show();
-        }
-
-        @Override
-        public void onServerFailure(String e) {
-            Toast.makeText(QuizActivity.this, "" + e, Toast.LENGTH_SHORT).show();
-
-        }
-    });
     //随访对话提问上传
     VisitDialogueQuizPresenter mVisitDialogueQuizPresenter = new VisitDialogueQuizPresenter(new VisitDialogueQuizView() {
         @Override

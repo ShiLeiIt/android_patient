@@ -211,13 +211,10 @@ public class HomePageFragment extends BaseFragment implements View.OnClickListen
 
             if (!NotificationsUtils.isNotificationEnabled(getActivity())
                     ) {
-
                 PreUtils.setParam(getActivity(), "user_first", false);
                 startActivity(new Intent(getActivity(), NotificationDialogActivity.class));
             }
-
         }
-
         return view;
     }
 
@@ -290,7 +287,6 @@ public class HomePageFragment extends BaseFragment implements View.OnClickListen
                 mHomePresenter.HomeLoadNumData();
             }
         }
-
     }
 
     @Override

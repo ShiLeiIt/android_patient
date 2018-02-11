@@ -191,10 +191,12 @@ public class AddLeaveHospitalDataActivity extends BaseActivity {
             return mRequestFile;
         }
 
+
+
         @Override
         public void getImageUpLoad(ImageUpLoadBean imageUpLoadBean) {
             requestImageIndex = requestImageIndex + 1;
-            mStringBuffer.append(imageUpLoadBean.getFileId() + ",");
+            mStringBuffer.append(imageUpLoadBean.getData().getFileName() + ",");
 
             if (requestImageIndex == mList.size() - 1) {
                 mLeaveHospitalAddPresenter.getLeaveHospitalSave();

@@ -197,12 +197,13 @@ public class MineUserInforActivity extends BaseActivity implements View.OnClickL
         }
 
 
+
         @Override
         public void getImageUpLoad(ImageUpLoadBean imageUpLoadBean) {
 //            Toast.makeText(MineUserInforActivity.this, ""+imageUpLoadBean.getMessage(), Toast.LENGTH_SHORT).show();
 //            Log.i("fileId==", imageUpLoadBean.getFileId());
 
-            mFileId = imageUpLoadBean.getFileId();
+            mFileId = imageUpLoadBean.getData().getFileName();
             PreUtils.setParam(MineUserInforActivity.this,"mFileId",mFileId);
 
             //进行用户信息保存到服务器

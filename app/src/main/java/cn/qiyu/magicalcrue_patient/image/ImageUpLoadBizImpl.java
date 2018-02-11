@@ -1,7 +1,6 @@
 package cn.qiyu.magicalcrue_patient.image;
 
 import cn.qiyu.magicalcrue_patient.base.BaseBiz;
-import cn.qiyu.magicalcrue_patient.base.ImageBaseBiz;
 import cn.qiyu.magicalcrue_patient.model.ImageUpLoadBean;
 
 
@@ -16,10 +15,10 @@ import retrofit2.Response;
  * Created by ShiLei on 2017/11/22.
  */
 
-public class ImageUpLoadBizImpl extends ImageBaseBiz implements ImageUpLoadBiz {
+public class ImageUpLoadBizImpl extends BaseBiz implements ImageUpLoadBiz {
 
     @Override
-    public void getImageUpLoad(RequestBody imgs, final OnLoginListener onLoginListener) {
+    public void getImageUpLoad(RequestBody imgs,final OnLoginListener onLoginListener) {
        mApiService.getUpSingleImage(imgs).enqueue(new Callback<ImageUpLoadBean>() {
            @Override
            public void onResponse(Call<ImageUpLoadBean> call, Response<ImageUpLoadBean> response) {
@@ -29,6 +28,7 @@ public class ImageUpLoadBizImpl extends ImageBaseBiz implements ImageUpLoadBiz {
                    onLoginListener.onFailure(response.body().getMessage());
                }
            }
+
            @Override
            public void onFailure(Call<ImageUpLoadBean> call, Throwable throwable) {
                 onLoginListener.onFailure(throwable.getMessage());

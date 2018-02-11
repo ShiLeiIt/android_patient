@@ -96,7 +96,7 @@ public class LeaveHospitalInfoListActivity extends BaseActivity {
 
         @Override
         public void onViewFailure(ResultModel model) {
-            Toast.makeText(LeaveHospitalInfoListActivity.this, "111"+model.getMessage(), Toast.LENGTH_SHORT).show();
+            Toast.makeText(LeaveHospitalInfoListActivity.this, ""+model.getMessage(), Toast.LENGTH_SHORT).show();
         }
 
         @Override

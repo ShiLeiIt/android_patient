@@ -171,10 +171,11 @@ public class AddPharmacyRecordDataActivity extends BaseActivity {
             return mRequestFile;
         }
 
+
         @Override
         public void getImageUpLoad(ImageUpLoadBean imageUpLoadBean) {
             requestImageIndex = requestImageIndex + 1;
-            mStringBuffer.append(imageUpLoadBean.getFileId() + ",");
+            mStringBuffer.append(imageUpLoadBean.getData().getFileName() + ",");
 
             if (requestImageIndex == mList.size() - 1) {
                 mPharmacyRecordPresenter.getPharmacyRecodeSave();
@@ -193,13 +194,13 @@ public class AddPharmacyRecordDataActivity extends BaseActivity {
 
         @Override
         public void onViewFailure(ImageUpLoadBean model) {
-
+            Toast.makeText(AddPharmacyRecordDataActivity.this, "错其", Toast.LENGTH_SHORT).show();
 
         }
 
         @Override
         public void onServerFailure(String e) {
-
+            Toast.makeText(AddPharmacyRecordDataActivity.this, "无语", Toast.LENGTH_SHORT).show();
 
         }
     });

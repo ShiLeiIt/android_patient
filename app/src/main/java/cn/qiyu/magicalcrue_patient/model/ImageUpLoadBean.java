@@ -1,7 +1,5 @@
 package cn.qiyu.magicalcrue_patient.model;
 
-import java.util.List;
-
 /**
  * Created by ShiLei on 2017/11/22.
  */
@@ -11,29 +9,15 @@ public class ImageUpLoadBean {
 
     /**
      * result : 0
-     * message : 上传成功！
-     * filePath : 20171128/6138e57b36ab453ca75a351df9c1594c.svg
-     * fileNewName : null
-     * fileId : 6138e57b36ab453ca75a351df9c1594c
-     * fileIds : null
-     * fileList : []
-     * varList : []
-     * filePath1 : null
-     * filePath2 : null
-     * filePath3 : null
+     * message : null
+     * data : {"FileName":"20180205-142311-89792fc7a9804183985aa51de91f146e.png","Success":true}
+     * errorCode : null
      */
 
     private int result;
     private String message;
-    private String filePath;
-    private String fileNewName;
-    private String fileId;
-    private String fileIds;
-    private String filePath1;
-    private String filePath2;
-    private String filePath3;
-    private List<String> fileList;
-    private List<String> varList;
+    private DataBean data;
+    private String errorCode;
 
     public int getResult() {
         return result;
@@ -51,75 +35,45 @@ public class ImageUpLoadBean {
         this.message = message;
     }
 
-    public String getFilePath() {
-        return filePath;
+    public DataBean getData() {
+        return data;
     }
 
-    public void setFilePath(String filePath) {
-        this.filePath = filePath;
+    public void setData(DataBean data) {
+        this.data = data;
     }
 
-    public String getFileNewName() {
-        return fileNewName;
+    public String getErrorCode() {
+        return errorCode;
     }
 
-    public void setFileNewName(String fileNewName) {
-        this.fileNewName = fileNewName;
+    public void setErrorCode(String errorCode) {
+        this.errorCode = errorCode;
     }
 
-    public String getFileId() {
-        return fileId;
-    }
+    public static class DataBean {
+        /**
+         * FileName : 20180205-142311-89792fc7a9804183985aa51de91f146e.png
+         * Success : true
+         */
 
-    public void setFileId(String fileId) {
-        this.fileId = fileId;
-    }
+        private String FileName;
+        private boolean Success;
 
-    public String getFileIds() {
-        return fileIds;
-    }
+        public String getFileName() {
+            return FileName;
+        }
 
-    public void setFileIds(String fileIds) {
-        this.fileIds = fileIds;
-    }
+        public void setFileName(String FileName) {
+            this.FileName = FileName;
+        }
 
-    public String getFilePath1() {
-        return filePath1;
-    }
+        public boolean isSuccess() {
+            return Success;
+        }
 
-    public void setFilePath1(String filePath1) {
-        this.filePath1 = filePath1;
-    }
-
-    public String getFilePath2() {
-        return filePath2;
-    }
-
-    public void setFilePath2(String filePath2) {
-        this.filePath2 = filePath2;
-    }
-
-    public String getFilePath3() {
-        return filePath3;
-    }
-
-    public void setFilePath3(String filePath3) {
-        this.filePath3 = filePath3;
-    }
-
-    public List<String> getFileList() {
-        return fileList;
-    }
-
-    public void setFileList(List<String> fileList) {
-        this.fileList = fileList;
-    }
-
-    public List<String> getVarList() {
-        return varList;
-    }
-
-    public void setVarList(List<String> varList) {
-        this.varList = varList;
+        public void setSuccess(boolean Success) {
+            this.Success = Success;
+        }
     }
 }

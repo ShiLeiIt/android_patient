@@ -175,15 +175,16 @@ public class AddOutpatientDataActivity extends BaseActivity {
     ImageUpLoadPresenter mImageUpLoadPresenter = new ImageUpLoadPresenter(new ImageUpLoadView() {
         @Override
         public RequestBody getImageUpLoadFileId() {
-
             mRequestFile = RequestBody.create(MediaType.parse("image/png"), mFileName);
             return mRequestFile;
         }
 
+
+
         @Override
         public void getImageUpLoad(ImageUpLoadBean imageUpLoadBean) {
             requestImageIndex=requestImageIndex+1;
-            mStringBuffer.append(imageUpLoadBean.getFileId() + ",");
+            mStringBuffer.append(imageUpLoadBean.getData().getFileName() + ",");
 
             if(requestImageIndex==mList.size()-1){
                 mOutPatientAddPresenter.getOutPatientSave();
@@ -203,13 +204,13 @@ public class AddOutpatientDataActivity extends BaseActivity {
 
         @Override
         public void onViewFailure(ImageUpLoadBean model) {
-
+            Toast.makeText(AddOutpatientDataActivity.this, "SHANG", Toast.LENGTH_SHORT).show();
 
         }
 
         @Override
         public void onServerFailure(String e) {
-
+            Toast.makeText(AddOutpatientDataActivity.this, ""+e, Toast.LENGTH_SHORT).show();
 
         }
     });
@@ -282,12 +283,13 @@ public class AddOutpatientDataActivity extends BaseActivity {
 
         @Override
         public void onViewFailure(ResultModel model) {
+            Toast.makeText(AddOutpatientDataActivity.this, "门诊错误", Toast.LENGTH_SHORT).show();
 
         }
 
         @Override
         public void onServerFailure(String e) {
-
+            Toast.makeText(AddOutpatientDataActivity.this, "门诊获取失败", Toast.LENGTH_SHORT).show();
         }
     });
 

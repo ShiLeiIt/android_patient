@@ -186,7 +186,7 @@ public class UserInforActivity extends BaseActivity implements View.OnClickListe
 
 //            Log.i("picid==", imageUpLoadBean.getFileId());
 
-            mFileId = imageUpLoadBean.getFileId();
+            mFileId = imageUpLoadBean.getData().getFileName();
             PreUtils.setParam(UserInforActivity.this,"mFileId",mFileId);
             //进行用户信息保存到服务器
             mUserInforEdtPresenter.getUserInforEdt();

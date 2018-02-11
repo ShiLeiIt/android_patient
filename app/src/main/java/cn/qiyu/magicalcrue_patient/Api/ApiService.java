@@ -43,6 +43,7 @@ import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
+import retrofit2.http.Query;
 
 /**
  * Created by Administrator on 2017/11/13.
@@ -81,7 +82,7 @@ ApiService {
     String API_CITIY = "common/getNativeList";
 
     //单张图片
-    String API_SINGLE_IMAGE_UP_LOAD = "sysfile/singleUpload";
+    String API_SINGLE_IMAGE_UP_LOAD = "media/singleUploadPic";
 
 
     //患者基本信息修改
@@ -93,7 +94,8 @@ ApiService {
     //医生团队的成员
     String API_DOCTOR_TEAM = "doctorinfoTeam/getDoctorTeamUserListByPatientId";
     //头像加载
-    String GET_IMAGE_ICON = "http://upload2.mircalcure.com/tumourfile/sysfile/getImage/2/";
+//    String GET_IMAGE_ICON = "http://upload2.mircalcure.com/tumourfile/sysfile/getImage/2/";
+    String GET_IMAGE_ICON = "http://qiyuji-pic.oss-cn-hangzhou.aliyuncs.com/";
 
     //获取用户基本信息
     String API_USERINFOR = "patientInfo/getUserInfo";
@@ -237,7 +239,6 @@ ApiService {
     @POST(API_SINGLE_IMAGE_UP_LOAD)
     @Multipart
     Call<ImageUpLoadBean> getUpSingleImage(@Part("myfile\"; filename=\"image.png") RequestBody imgs);
-
 
     /**
      * 患者信息修改
