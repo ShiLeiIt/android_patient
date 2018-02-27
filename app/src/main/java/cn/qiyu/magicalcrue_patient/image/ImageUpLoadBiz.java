@@ -2,6 +2,7 @@ package cn.qiyu.magicalcrue_patient.image;
 
 
 import cn.qiyu.magicalcrue_patient.model.ImageUpLoadBean;
+import cn.qiyu.magicalcrue_patient.model.ResultModel;
 import okhttp3.RequestBody;
 /**
  * Created by ShiLei on 2017/11/22.

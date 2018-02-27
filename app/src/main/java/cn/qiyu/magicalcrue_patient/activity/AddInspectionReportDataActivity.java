@@ -40,6 +40,7 @@ import butterknife.OnClick;
 import cn.addapp.pickers.picker.DatePicker;
 import cn.qiyu.magicalcrue_patient.R;
 import cn.qiyu.magicalcrue_patient.base.BaseActivity;
+import cn.qiyu.magicalcrue_patient.base.BaseView;
 import cn.qiyu.magicalcrue_patient.image.ImageUpLoadPresenter;
 import cn.qiyu.magicalcrue_patient.image.ImageUpLoadView;
 import cn.qiyu.magicalcrue_patient.model.AddOutPatientDataSaveBean;
@@ -85,7 +86,6 @@ public class AddInspectionReportDataActivity extends BaseActivity {
     private File mFileName;
     private StringBuffer mStringBuffer = new StringBuffer();
     private int requestImageIndex = 0;
-
     private String mSymptomName;
     private TextView mTvReportFrom;
     private String mReportName;
@@ -98,7 +98,6 @@ public class AddInspectionReportDataActivity extends BaseActivity {
         setContentView(R.layout.activity_add_inspectionreport_data);
         ButterKnife.bind(this);
         init();
-
     }
 
     private void init() {
@@ -126,7 +125,6 @@ public class AddInspectionReportDataActivity extends BaseActivity {
         cols = cols < 4 ? 4 : cols;
         mGridView.setNumColumns(cols);
 
-
         mIdEditorDetail.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -149,7 +147,6 @@ public class AddInspectionReportDataActivity extends BaseActivity {
                     Toast.makeText(AddInspectionReportDataActivity.this, "最多输入500字", Toast.LENGTH_SHORT).show();
                     islMaxCount = false;
 
-
                 }
             }
         });
@@ -159,11 +156,9 @@ public class AddInspectionReportDataActivity extends BaseActivity {
     ImageUpLoadPresenter mImageUpLoadPresenter = new ImageUpLoadPresenter(new ImageUpLoadView() {
         @Override
         public RequestBody getImageUpLoadFileId() {
-
             mRequestFile = RequestBody.create(MediaType.parse("image/png"), mFileName);
             return mRequestFile;
         }
-
 
 
         @Override
@@ -179,7 +174,6 @@ public class AddInspectionReportDataActivity extends BaseActivity {
         @Override
         public void showProgress() {
             mLoadingDialog.show();
-
         }
 
         @Override
@@ -187,15 +181,15 @@ public class AddInspectionReportDataActivity extends BaseActivity {
             mLoadingDialog.hide();
         }
 
+
+
         @Override
         public void onViewFailure(ImageUpLoadBean model) {
-
 
         }
 
         @Override
         public void onServerFailure(String e) {
-
 
         }
     });

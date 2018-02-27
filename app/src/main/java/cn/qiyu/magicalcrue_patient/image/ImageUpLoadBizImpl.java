@@ -1,6 +1,7 @@
 package cn.qiyu.magicalcrue_patient.image;
 
 import cn.qiyu.magicalcrue_patient.base.BaseBiz;
+import cn.qiyu.magicalcrue_patient.base.ImageBaseBiz;
 import cn.qiyu.magicalcrue_patient.model.ImageUpLoadBean;
 
 
@@ -15,7 +16,7 @@ import retrofit2.Response;
  * Created by ShiLei on 2017/11/22.
  */
 
-public class ImageUpLoadBizImpl extends BaseBiz implements ImageUpLoadBiz {
+public class ImageUpLoadBizImpl extends ImageBaseBiz implements ImageUpLoadBiz {
 
     @Override
     public void getImageUpLoad(RequestBody imgs,final OnLoginListener onLoginListener) {

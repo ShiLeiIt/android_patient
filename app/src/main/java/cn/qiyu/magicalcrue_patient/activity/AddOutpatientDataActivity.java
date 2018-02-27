@@ -300,7 +300,7 @@ public class AddOutpatientDataActivity extends BaseActivity {
             return;
         }
         if (mList != null && mList.size() > 0) {
-            for (int i = 0; i < mList.size() - 1; i++) {
+            for (int i = 0; i < mList.size()-1; i++) {
                 mFileName = new File(mList.get(i));
                 mImageUpLoadPresenter.getImage();
             }

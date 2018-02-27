@@ -34,13 +34,11 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import cn.qiyu.magicalcrue_patient.Api.ApiService;
 import cn.qiyu.magicalcrue_patient.R;
 import cn.qiyu.magicalcrue_patient.base.BaseActivity;
 import cn.qiyu.magicalcrue_patient.image.ImageUpLoadPresenter;
@@ -48,24 +46,12 @@ import cn.qiyu.magicalcrue_patient.image.ImageUpLoadView;
 import cn.qiyu.magicalcrue_patient.model.ImageUpLoadBean;
 import cn.qiyu.magicalcrue_patient.model.ResultModel;
 import cn.qiyu.magicalcrue_patient.model.VisitDialogueQuizBean;
-import cn.qiyu.magicalcrue_patient.utils.LGImgCompressor;
 import cn.qiyu.magicalcrue_patient.utils.PreUtils;
 import cn.qiyu.magicalcrue_patient.visit.VisitDialogueQuizPresenter;
 import cn.qiyu.magicalcrue_patient.visit.VisitDialogueQuizView;
-import okhttp3.Call;
-import okhttp3.Callback;
 import okhttp3.MediaType;
-import okhttp3.MultipartBody;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
 import okhttp3.RequestBody;
-import okhttp3.Response;
-import rx.functions.Func1;
-import rx.Observer;
-import rx.Observable;
-import rx.android.schedulers.AndroidSchedulers;
 
-import rx.schedulers.Schedulers;
 
 /**
  * Created by ShiLei on 2017/12/11.
@@ -205,7 +191,6 @@ public class QuizActivity extends BaseActivity {
         @Override
         public void onServerFailure(String e) {
             Toast.makeText(QuizActivity.this, "提问" + e, Toast.LENGTH_SHORT).show();
-
         }
     });
 
@@ -250,23 +235,15 @@ public class QuizActivity extends BaseActivity {
                     return;
                 }
                 if (mList != null && mList.size() > 0) {
-//                    Toast.makeText(this, "图片上传中...,请稍后", Toast.LENGTH_SHORT).show();
-
-                    Log.i("mList====",mList.size()+"");
-                    Log.i("mStringBuffer====",mStringBuffer+"");
                     for (int i = 0; i < mList.size() - 1; i++) {
                         mFileName = new File(mList.get(i));
-                        Log.i("mFileName====",mFileName+"");
-
-                                mImageUpLoadPresenter.getImage();
+                        mImageUpLoadPresenter.getImage();
 
 
                     }
                 } else {
                     mVisitDialogueQuizPresenter.getVisitDialogQuizText();
                 }
-
-//                mVisitDialogueQuizPresenter.getVisitDialogueQuiz();
         }
     }
 
@@ -285,17 +262,6 @@ public class QuizActivity extends BaseActivity {
                 // 选择照片
                 case REQUEST_CAMERA_CODE:
                     mList = data.getStringArrayListExtra(PhotoPickerActivity.EXTRA_RESULT);
-                    Log.d(TAG, "list: " + "list = [" + mList.size());
-//                    for (int i = 0; i < mList.size(); i++) {
-//                        mFileName = new File(mList.get(i));
-//                        Log.i("mFileName---===",mList.get(i));
-//
-//                    }
-//                    for (int i = 0; i < mList.size(); i++) {
-//                        mFileName = new File(mList.get(i));
-////                        mImageUpLoadPresenter.getImage();
-//                    }
-
                     loadAdpater(mList);
                     break;
                 // 预览

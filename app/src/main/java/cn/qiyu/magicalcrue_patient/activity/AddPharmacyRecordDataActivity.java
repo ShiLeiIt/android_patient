@@ -194,13 +194,11 @@ public class AddPharmacyRecordDataActivity extends BaseActivity {
 
         @Override
         public void onViewFailure(ImageUpLoadBean model) {
-            Toast.makeText(AddPharmacyRecordDataActivity.this, "错其", Toast.LENGTH_SHORT).show();
 
         }
 
         @Override
         public void onServerFailure(String e) {
-            Toast.makeText(AddPharmacyRecordDataActivity.this, "无语", Toast.LENGTH_SHORT).show();
 
         }
     });
