@@ -59,9 +59,9 @@ ApiService {
     //正式服务器
     String BASE_URL = "http://api2.mircalcure.com/zlapi/";
     //测试服务器
-    //String BASE_URL = "http://118.178.135.207:9008/zlapi/";
-//    String IMAGE_BASE_URL = "http://upload2.mircalcure.com/tumourfile/";
-    String IMAGE_BASE_URL = "http://10.0.0.29:8080/zlapi/";
+    String IMAGE_BASE_URL = "http://118.178.135.207:9008/zlapi/";
+//    String IMAGE_BASE_URL = "http://api2.mircalcure.com/zlapi/";
+//    String IMAGE_BASE_URL = "http://10.0.0.29:8080/zlapi/";
 
     String API_INDEX = "api/index/";
     String API_LOGIN = "api/login/";
