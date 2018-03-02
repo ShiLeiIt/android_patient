@@ -17,5 +17,15 @@
         android:textSize="14sp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
+    <RelativeLayout
+        android:id="@+id/ll_player"
+        android:layout_width="match_parent"
+        android:layout_height="20dp">
+        <ImageView
+            android:layout_centerInParent="true"
+            android:src="@drawable/audio_icon"
+            android:layout_width="20dp"
+            android:layout_height="20dp" />
+    </RelativeLayout>
 </LinearLayout>
 </LinearLayout>

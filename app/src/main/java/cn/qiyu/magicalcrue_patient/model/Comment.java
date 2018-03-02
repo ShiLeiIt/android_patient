@@ -25,11 +25,20 @@ public class Comment {
     private long create_time;
     private String user_id;
     private int id;
+    private int type;
     private String userName;
     private String uuid;
     private String content;
     private int status;
     private int is_delete;
+
+    public int getType() {
+        return type;
+    }
+
+    public void setType(int type) {
+        this.type = type;
+    }
 
     public int getUser_role() {
         return user_role;

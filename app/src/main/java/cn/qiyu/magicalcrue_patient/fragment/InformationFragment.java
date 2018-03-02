@@ -176,6 +176,7 @@ public class InformationFragment extends Fragment {
                 }
             //随访对话
             mTvDialogueTitle.setText(model.getData().getFollowData().getTitle());
+
             mTvDialogueContent.setText(model.getData().getFollowData().getContent());
             mTvDialogueNum.setText(String.valueOf(model.getData().getFollowData().getNum()));
                 if (model.getData().getFollowData().getNum() == 0) {
