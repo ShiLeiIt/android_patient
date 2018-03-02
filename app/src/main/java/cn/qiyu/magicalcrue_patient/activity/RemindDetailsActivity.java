@@ -369,23 +369,23 @@ public class RemindDetailsActivity extends BaseActivity {
                 break;
             //修改提醒完成
             case R.id.tv_commit:
-//                if (TextUtils.isEmpty(mTvProjectDetail.getText().toString()) ||
-//                        TextUtils.isEmpty(mIdEditorDetail.getText().toString()) ||
-//                        mTvRemindTime.getText().toString().equals("2018-1-1")) {
-//                    Toast.makeText(this, "信息填写不完整", Toast.LENGTH_SHORT).show();
-//                } else {
-//                    if (mSwitchButton.isChecked()) {
-//                        if (mTvRecurrenceInterval.getText().toString().equals("")&&mTvRecurrenceIntervalNum.getText().toString().equals("")) {
-//                            Toast.makeText(this, "信息填写不完整", Toast.LENGTH_SHORT).show();
-//                        } else {
-//                            mPresenter.getVisitCreateRemind();
-//                        }
-//                    } else {
-//                        mPresenter.getVisitCreateRemind();
-//                    }
-//
-//                }
-                mPresenter.getVisitCreateRemind();
+                if (TextUtils.isEmpty(mTvProjectDetail.getText().toString()) ||
+                        TextUtils.isEmpty(mIdEditorDetail.getText().toString()) ||
+                        mTvRemindTime.getText().toString().equals("2018-1-1")) {
+                    Toast.makeText(this, "信息填写不完整", Toast.LENGTH_SHORT).show();
+                } else {
+                    if (mSwitchButton.isChecked()) {
+                        if (mTvRecurrenceInterval.getText().toString().equals("")&&mTvRecurrenceIntervalNum.getText().toString().equals("")) {
+                            Toast.makeText(this, "信息填写不完整", Toast.LENGTH_SHORT).show();
+                        } else {
+                            mPresenter.getVisitCreateRemind();
+                        }
+                    } else {
+                        mPresenter.getVisitCreateRemind();
+                    }
+
+                }
+//                mPresenter.getVisitCreateRemind();
                 break;
         }
     }

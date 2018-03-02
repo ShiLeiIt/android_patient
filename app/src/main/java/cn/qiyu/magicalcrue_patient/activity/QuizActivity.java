@@ -190,7 +190,7 @@ public class QuizActivity extends BaseActivity {
 
         @Override
         public void onServerFailure(String e) {
-            Toast.makeText(QuizActivity.this, "提问" + e, Toast.LENGTH_SHORT).show();
+            Toast.makeText(QuizActivity.this, "" + e, Toast.LENGTH_SHORT).show();
         }
     });
 
@@ -206,7 +206,6 @@ public class QuizActivity extends BaseActivity {
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                         String imgs = (String) parent.getItemAtPosition(position);
                         if ("000000".equals(imgs)) {
-
                             PhotoPickerIntent intent = new PhotoPickerIntent(QuizActivity.this);
                             intent.setSelectModel(SelectModel.MULTI);
                             intent.setShowCarema(true); // 是否显示拍照
@@ -246,6 +245,9 @@ public class QuizActivity extends BaseActivity {
                 }
         }
     }
+
+
+
 
 
     @Override
