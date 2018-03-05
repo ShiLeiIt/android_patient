@@ -255,8 +255,6 @@ public class FollowUpMessageDetailActivity extends BaseActivity {
 
         @Override
         public void LoadFollowUpDialogue(ResultModel<List<FollowUpMessageDetaild>> model) {
-
-
 //            Toast.makeText(FollowUpMessageDetailActivity.this, ""+model.getData().size(), Toast.LENGTH_SHORT).show();
             ListItemAdapter listItemAdapter = new ListItemAdapter(FollowUpMessageDetailActivity.this, FollowUpMessageDetailActivity.this, model.getData());
             listItemAdapter.setonSurplusDeleteListenerListener(new ListItemAdapter.onSurplusDeleteListener() {

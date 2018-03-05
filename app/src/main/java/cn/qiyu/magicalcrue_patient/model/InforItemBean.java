@@ -12,11 +12,13 @@ public class InforItemBean {
      * title : 系统消息
      * type : 2
      * content : 医生团队给您发了一份量表，请尽快填写。
+     * content_type: 1
      */
 
     private int num;
     private String title;
     private int type;
+    private int content_type;
     private String content;
 
     public int getNum() {
@@ -25,6 +27,14 @@ public class InforItemBean {
 
     public void setNum(int num) {
         this.num = num;
+    }
+
+    public int getContent_type() {
+        return content_type;
+    }
+
+    public void setContent_type(int content_type) {
+        this.content_type = content_type;
     }
 
     public String getTitle() {

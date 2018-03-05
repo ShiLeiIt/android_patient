@@ -177,7 +177,15 @@ public class InformationFragment extends Fragment {
             //随访对话
             mTvDialogueTitle.setText(model.getData().getFollowData().getTitle());
 
-            mTvDialogueContent.setText(model.getData().getFollowData().getContent());
+                if (model.getData().getFollowData().getContent_type() == 2) {
+                    //content_type==2 为语音信息
+                    mTvDialogueContent.setText("[语音]");
+
+                } else {
+                    //content_type==1 为文本信息
+                    mTvDialogueContent.setText(model.getData().getFollowData().getContent());
+                }
+
             mTvDialogueNum.setText(String.valueOf(model.getData().getFollowData().getNum()));
                 if (model.getData().getFollowData().getNum() == 0) {
                     mTvDialogueNum.setVisibility(View.INVISIBLE);
