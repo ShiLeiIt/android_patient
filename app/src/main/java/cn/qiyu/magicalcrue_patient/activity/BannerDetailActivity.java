@@ -14,6 +14,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import cn.qiyu.magicalcrue_patient.R;
 import cn.qiyu.magicalcrue_patient.base.BaseActivity;
+import cn.qiyu.magicalcrue_patient.constant.GlobalConstants;
 
 /**
  * WebView详情页面
@@ -32,7 +33,7 @@ public class BannerDetailActivity extends BaseActivity {
         setContentView(R.layout.activity_banner_detail);
         ButterKnife.bind(this);
         mTvTitle.setText("详情");
-        String url = getIntent().getStringExtra("url");
+        String url = getIntent().getStringExtra(GlobalConstants.URL);
         Log.i("url====",url);
         wvBannerDetail.loadUrl(url);
 

@@ -19,6 +19,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import cn.qiyu.magicalcrue_patient.R;
 import cn.qiyu.magicalcrue_patient.base.BaseActivity;
+import cn.qiyu.magicalcrue_patient.constant.GlobalConstants;
 import cn.qiyu.magicalcrue_patient.utils.Utils;
 
 /**
@@ -92,8 +93,8 @@ public class CourseActivity extends BaseActivity {
             Intent intent = new Intent(mContext, BannerDetailActivity.class);
             JSONObject object = JSON.parseObject(name);
             JSONObject jsonObject = new JSONObject(object);
-            String url = jsonObject.getString("url");
-            intent.putExtra("url", url);
+            String url = jsonObject.getString(GlobalConstants.URL);
+            intent.putExtra(GlobalConstants.URL, url);
             mContext.startActivity(intent);
         }
 

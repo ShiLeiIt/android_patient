@@ -13,6 +13,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import cn.qiyu.magicalcrue_patient.Api.ApiService;
 import cn.qiyu.magicalcrue_patient.R;
+import cn.qiyu.magicalcrue_patient.constant.GlobalConstants;
 import cn.qiyu.magicalcrue_patient.model.WebViewBean;
 import cn.qiyu.magicalcrue_patient.utils.PreUtils;
 
@@ -40,7 +41,7 @@ public class DoctorInformationActivity extends AppCompatActivity {
         wvUserInformation.getSettings().setJavaScriptEnabled(true);
         //wu 为对象
         wu.setBaseUrl(ApiService.BASE_URL);
-        wu.setTempDoctorUUID(getIntent().getStringExtra("doctorUuid"));
+        wu.setTempDoctorUUID(getIntent().getStringExtra(GlobalConstants.DOCTOR_UUID));
         //将对象序列化成json字符串
         jsonUrl = JSONArray.toJSONString(wu);
 

@@ -17,6 +17,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import cn.qiyu.magicalcrue_patient.R;
 import cn.qiyu.magicalcrue_patient.base.BaseActivity;
+import cn.qiyu.magicalcrue_patient.constant.GlobalConstants;
 import cn.qiyu.magicalcrue_patient.model.RemindListBean;
 import cn.qiyu.magicalcrue_patient.model.ResultModel;
 import cn.qiyu.magicalcrue_patient.removeitemrecycleview.ItemRemoveRecyclerView;
@@ -66,7 +67,7 @@ public class RemindActivity extends BaseActivity implements View.OnClickListener
     VisitRemindListPresenter mVisitRemindListPresenter = new VisitRemindListPresenter(new VisitRemindListView() {
         @Override
         public String getPatientUuid() {
-             return (String) PreUtils.getParam(RemindActivity.this, "patientuuid", "");
+             return (String) PreUtils.getParam(RemindActivity.this, GlobalConstants.PATIENT_UUID, "");
 //             return "df430ac16590449cba026e34704190f3";
         }
 
@@ -151,7 +152,7 @@ public class RemindActivity extends BaseActivity implements View.OnClickListener
 
         @Override
         public String getPatientUuid() {
-            return (String)PreUtils.getParam(RemindActivity.this,"patientuuid","");
+            return (String)PreUtils.getParam(RemindActivity.this,GlobalConstants.PATIENT_UUID,"");
         }
 
         @Override

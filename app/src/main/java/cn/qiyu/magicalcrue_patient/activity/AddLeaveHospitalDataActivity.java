@@ -39,6 +39,7 @@ import butterknife.OnClick;
 import cn.addapp.pickers.picker.DatePicker;
 import cn.qiyu.magicalcrue_patient.R;
 import cn.qiyu.magicalcrue_patient.base.BaseActivity;
+import cn.qiyu.magicalcrue_patient.constant.GlobalConstants;
 import cn.qiyu.magicalcrue_patient.image.ImageUpLoadPresenter;
 import cn.qiyu.magicalcrue_patient.image.ImageUpLoadView;
 import cn.qiyu.magicalcrue_patient.model.AddOutPatientDataSaveBean;
@@ -229,7 +230,7 @@ public class AddLeaveHospitalDataActivity extends BaseActivity {
     LeaveHospitalAddPresenter mLeaveHospitalAddPresenter = new LeaveHospitalAddPresenter(new LeaveHospitalAddView() {
         @Override
         public String getParentUuid() {
-            return (String) PreUtils.getParam(AddLeaveHospitalDataActivity.this, "patientuuid", "0");
+            return (String) PreUtils.getParam(AddLeaveHospitalDataActivity.this, GlobalConstants.PATIENT_UUID, "0");
         }
 
         @Override

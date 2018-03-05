@@ -18,6 +18,7 @@ import butterknife.OnClick;
 import cn.addapp.pickers.picker.DatePicker;
 import cn.qiyu.magicalcrue_patient.R;
 import cn.qiyu.magicalcrue_patient.base.BaseActivity;
+import cn.qiyu.magicalcrue_patient.constant.GlobalConstants;
 import cn.qiyu.magicalcrue_patient.model.CreateRemindBean;
 import cn.qiyu.magicalcrue_patient.model.ResultModel;
 import cn.qiyu.magicalcrue_patient.picker.DoublePicker;
@@ -140,7 +141,7 @@ public class AddRemindActivity extends BaseActivity {
 
         @Override
         public String getPatientUuid() {
-            return (String) PreUtils.getParam(AddRemindActivity.this, "patientuuid", "");
+            return (String) PreUtils.getParam(AddRemindActivity.this, GlobalConstants.PATIENT_UUID, "");
 //            return "df430ac16590449cba026e34704190f3";
         }
 

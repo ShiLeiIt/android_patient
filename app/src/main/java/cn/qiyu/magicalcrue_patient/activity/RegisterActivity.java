@@ -31,6 +31,7 @@ import cn.jpush.android.api.TagAliasCallback;
 import cn.qiyu.magicalcrue_patient.MyApplication;
 import cn.qiyu.magicalcrue_patient.R;
 import cn.qiyu.magicalcrue_patient.base.BaseActivity;
+import cn.qiyu.magicalcrue_patient.constant.GlobalConstants;
 import cn.qiyu.magicalcrue_patient.model.RegisterLoginBean;
 import cn.qiyu.magicalcrue_patient.model.ResultModel;
 import cn.qiyu.magicalcrue_patient.register_login.RegisterPresenter;
@@ -73,7 +74,7 @@ public class RegisterActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
         ButterKnife.bind(this);
-        String uuid = (String) PreUtils.getParam(RegisterActivity.this, "uuid", "0");
+        String uuid = (String) PreUtils.getParam(RegisterActivity.this, GlobalConstants.USER_UUID, "0");
 
 
 //        Log.i("userperfect-=", (String) PreUtils.getParam(RegisterActivity.this, "userperfect", "0"));
@@ -81,7 +82,7 @@ public class RegisterActivity extends BaseActivity {
 
     if(null!=uuid){
         if (!TextUtils.isEmpty(uuid) && !uuid.equals("0")) {
-            switch (String.valueOf(PreUtils.getParam(RegisterActivity.this, "userperfect", 0))) {
+            switch (String.valueOf(PreUtils.getParam(RegisterActivity.this, GlobalConstants.USER_PERFECT, 0))) {
                 case "1":
 //                    Intent intentUser = new Intent(RegisterActivity.this, UserInforActivity.class);
 //                    startActivity(intentUser);
@@ -137,31 +138,31 @@ public class RegisterActivity extends BaseActivity {
             public void getRegisterLogin(ResultModel<RegisterLoginBean> model) {
                 int userPerfect = model.getData().getUserPerfect();
                 if (userPerfect == 1) {
-                    PreUtils.setParam(RegisterActivity.this, "uuid", model.getData().getUuid());
-                    PreUtils.setParam(RegisterActivity.this, "userperfect", model.getData().getUserPerfect());
-                    PreUtils.setParam(RegisterActivity.this, "userid", String.valueOf(model.getData().getId()));
-                    PreUtils.setParam(RegisterActivity.this, "token", model.getData().getToken());
+                    PreUtils.setParam(RegisterActivity.this, GlobalConstants.USER_UUID, model.getData().getUuid());
+                    PreUtils.setParam(RegisterActivity.this,  GlobalConstants.USER_PERFECT, model.getData().getUserPerfect());
+                    PreUtils.setParam(RegisterActivity.this, GlobalConstants.USER_ID, String.valueOf(model.getData().getId()));
+                    PreUtils.setParam(RegisterActivity.this, GlobalConstants.TOKEN, model.getData().getToken());
 //                        Toast.makeText(RegisterActivity.this, "用户信息界面", Toast.LENGTH_SHORT).show();
 //                    Toast.makeText(RegisterActivity.this, "注册成功", Toast.LENGTH_SHORT).show();
                     Intent intentUser = new Intent(RegisterActivity.this, UserInforActivity.class);
                     startActivity(intentUser);
 
                 } else if (userPerfect == 2) {
-                    PreUtils.setParam(RegisterActivity.this, "uuid", model.getData().getUuid());
-                    PreUtils.setParam(RegisterActivity.this, "userperfect", model.getData().getUserPerfect());
-                    PreUtils.setParam(RegisterActivity.this, "token", model.getData().getToken());
-                    PreUtils.setParam(RegisterActivity.this, "userid", String.valueOf(model.getData().getId()));
+                    PreUtils.setParam(RegisterActivity.this, GlobalConstants.USER_UUID, model.getData().getUuid());
+                    PreUtils.setParam(RegisterActivity.this,  GlobalConstants.USER_PERFECT, model.getData().getUserPerfect());
+                    PreUtils.setParam(RegisterActivity.this, GlobalConstants.TOKEN, model.getData().getToken());
+                    PreUtils.setParam(RegisterActivity.this, GlobalConstants.USER_ID, String.valueOf(model.getData().getId()));
 //                        Toast.makeText(RegisterActivity.this, "患者信息界面", Toast.LENGTH_SHORT).show();
 //                    Toast.makeText(RegisterActivity.this, "注册成功", Toast.LENGTH_SHORT).show();
                     Intent intentPatient = new Intent(RegisterActivity.this, PatientDataRegisterActivity.class);
                     startActivity(intentPatient);
 
                 } else {
-                    PreUtils.setParam(RegisterActivity.this, "userid", String.valueOf(model.getData().getId()));
-                    PreUtils.setParam(RegisterActivity.this, "userperfect", 0);
-                    PreUtils.setParam(RegisterActivity.this, "uuid", model.getData().getUuid());
-                    PreUtils.setParam(RegisterActivity.this, "patientuuid", model.getData().getMedical_record_uuid());
-                    PreUtils.setParam(RegisterActivity.this, "token", model.getData().getToken());
+                    PreUtils.setParam(RegisterActivity.this, GlobalConstants.USER_ID, String.valueOf(model.getData().getId()));
+                    PreUtils.setParam(RegisterActivity.this, GlobalConstants.USER_PERFECT, 0);
+                    PreUtils.setParam(RegisterActivity.this, GlobalConstants.USER_UUID, model.getData().getUuid());
+                    PreUtils.setParam(RegisterActivity.this, GlobalConstants.PATIENT_UUID, model.getData().getMedical_record_uuid());
+                    PreUtils.setParam(RegisterActivity.this, GlobalConstants.TOKEN, model.getData().getToken());
 
 //                    PreUtils.setParam(RegisterActivity.this, "userid", String.valueOf(model.getData().getId()));
 

@@ -296,6 +296,7 @@ public class UserInforActivity extends BaseActivity implements View.OnClickListe
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.iv_userinfor_back:
+                finish();
                 break;
             case R.id.tv_save_userinfor:
 
@@ -309,7 +310,6 @@ public class UserInforActivity extends BaseActivity implements View.OnClickListe
                     Toast.makeText(this, "信息填写不完整", Toast.LENGTH_SHORT).show();
 
                 } else {
-//                    Toast.makeText(this, "6666666666666666", Toast.LENGTH_SHORT).show();
                     mImageUpLoadPresenter.getImage();
                 }
 
@@ -478,10 +478,15 @@ public class UserInforActivity extends BaseActivity implements View.OnClickListe
                     mFileName = new File(img_path);
                 }
                 try {
-                    //TODO:此处会造成内存溢出，目前未做处理
+                    //:此处会造成内存溢出，
                     Bitmap bitmap = MediaStore.Images.Media.getBitmap(resolver, originalUri);
-                    mCivHead.setImageBitmap(bitmap);
-                    mPicPopupWindow.dismiss();
+                    if (bitmap != null) {
+                        Bitmap smallBitmap = Utils.zoomBitmap(bitmap, bitmap.getWidth() / SCALE, bitmap.getHeight() / SCALE);
+                        //释放原始图片占用的内存，防止out of memory异常发生
+                        bitmap.recycle();
+                        mCivHead.setImageBitmap(smallBitmap);
+                        mPicPopupWindow.dismiss();
+                    }
                 } catch (IOException e) {
                     e.printStackTrace();
                 }

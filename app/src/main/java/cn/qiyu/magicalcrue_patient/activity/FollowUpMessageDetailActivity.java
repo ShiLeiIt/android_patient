@@ -40,6 +40,7 @@ import butterknife.OnClick;
 import cn.qiyu.magicalcrue_patient.R;
 import cn.qiyu.magicalcrue_patient.adapter.ListItemAdapter;
 import cn.qiyu.magicalcrue_patient.base.BaseActivity;
+import cn.qiyu.magicalcrue_patient.constant.GlobalConstants;
 import cn.qiyu.magicalcrue_patient.home.HomeNumView;
 import cn.qiyu.magicalcrue_patient.home.HomePresenter;
 import cn.qiyu.magicalcrue_patient.information.InformationFollowUpRdView;
@@ -89,7 +90,6 @@ public class FollowUpMessageDetailActivity extends BaseActivity {
     // 用HashMap存储听写结果
     private HashMap<String, String> mIatResults = new LinkedHashMap<String, String>();
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -102,7 +102,6 @@ public class FollowUpMessageDetailActivity extends BaseActivity {
         //阀值设置为屏幕高度的1/3
         keyHeight = screenHeight / 3;
         mInformationPresenter.getFollowUpMsgRead();
-
     }
 
     private void init() {
@@ -140,7 +139,7 @@ public class FollowUpMessageDetailActivity extends BaseActivity {
 
         @Override
         public String patientUuid() {
-            return (String) PreUtils.getParam(FollowUpMessageDetailActivity.this, "patientuuid", "0");
+            return (String) PreUtils.getParam(FollowUpMessageDetailActivity.this, GlobalConstants.PATIENT_UUID, "0");
         }
 
         @Override
@@ -189,7 +188,6 @@ public class FollowUpMessageDetailActivity extends BaseActivity {
             } else {
                 mTvConditionQuiz.setVisibility(View.VISIBLE);
             }
-
         }
 
         @Override
@@ -203,7 +201,7 @@ public class FollowUpMessageDetailActivity extends BaseActivity {
     InformationPresenter mInformationPresenter = new InformationPresenter(new InformationFollowUpRdView() {
         @Override
         public String getUserUuid() {
-            return (String) PreUtils.getParam(FollowUpMessageDetailActivity.this, "uuid", "0");
+            return (String) PreUtils.getParam(FollowUpMessageDetailActivity.this, GlobalConstants.USER_UUID, "0");
         }
 
         @Override
@@ -245,7 +243,7 @@ public class FollowUpMessageDetailActivity extends BaseActivity {
 
         @Override
         public String getUserUuid() {
-            return (String) PreUtils.getParam(FollowUpMessageDetailActivity.this, "uuid", "");
+            return (String) PreUtils.getParam(FollowUpMessageDetailActivity.this, GlobalConstants.USER_UUID, "");
         }
 
         @Override
@@ -261,7 +259,7 @@ public class FollowUpMessageDetailActivity extends BaseActivity {
                 @Override
                 public void OnItemImportanceListener(String id) {
                     Intent intent = new Intent(FollowUpMessageDetailActivity.this, BannerDetailActivity.class);
-                    intent.putExtra("url", id);
+                    intent.putExtra(GlobalConstants.URL, id);
                     startActivity(intent);
                 }
             });
@@ -273,42 +271,34 @@ public class FollowUpMessageDetailActivity extends BaseActivity {
                     mDetailsPresenter.getVisitRemindDetails();
                 }
             });
-
             lvFollowUpDetail.setAdapter(listItemAdapter);
             //监听listview的滑动事件，隐藏软键盘和发送框
             lvFollowUpDetail.setOnScrollListener(new AbsListView.OnScrollListener() {
                 @Override
                 public void onScrollStateChanged(AbsListView view, int scrollState) {
-
                     llMessageSend.setVisibility(View.INVISIBLE);
                     InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                     if (imm != null) {
                         imm.hideSoftInputFromWindow(getWindow().getDecorView().getWindowToken(), 0);
                     }
-
                 }
-
                 @Override
                 public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-
                 }
             });
         }
 
         @Override
         public void showProgress() {
-
         }
 
         @Override
         public void hideProgress() {
-
         }
 
         @Override
         public void onViewFailure(ResultModel model) {
             Toast.makeText(FollowUpMessageDetailActivity.this, "" + model.getMessage(), Toast.LENGTH_SHORT).show();
-
         }
 
         @Override
@@ -467,8 +457,6 @@ public class FollowUpMessageDetailActivity extends BaseActivity {
         }else{
             etReplyPatient.setText( "原始语言:\n"+oris+"\n目标语言:\n"+trans );
         }
-
     }
-
 
 }

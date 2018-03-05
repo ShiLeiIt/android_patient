@@ -9,6 +9,7 @@ import android.widget.Toast;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import cn.qiyu.magicalcrue_patient.R;
+import cn.qiyu.magicalcrue_patient.constant.GlobalConstants;
 import cn.qiyu.magicalcrue_patient.information.InformationDoNoRdView;
 import cn.qiyu.magicalcrue_patient.information.InformationPresenter;
 import cn.qiyu.magicalcrue_patient.information.InformationSysMsgRdView;
@@ -93,7 +94,7 @@ public class DoctorNoticeDetailActivity extends AppCompatActivity {
         @Override
         public String getUserUuid() {
 
-            return (String) PreUtils.getParam(DoctorNoticeDetailActivity.this, "uuid", "0");
+            return (String) PreUtils.getParam(DoctorNoticeDetailActivity.this, GlobalConstants.USER_UUID, "0");
         }
 
         @Override

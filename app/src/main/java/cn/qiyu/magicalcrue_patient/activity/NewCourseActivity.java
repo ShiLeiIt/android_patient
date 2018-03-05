@@ -17,6 +17,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import cn.qiyu.magicalcrue_patient.R;
 import cn.qiyu.magicalcrue_patient.base.BaseActivity;
+import cn.qiyu.magicalcrue_patient.constant.GlobalConstants;
 import cn.qiyu.magicalcrue_patient.model.PatientCourseListBean;
 import cn.qiyu.magicalcrue_patient.model.RemindListBean;
 import cn.qiyu.magicalcrue_patient.model.ResultModel;
@@ -60,7 +61,7 @@ public class NewCourseActivity extends BaseActivity {
         @Override
         public String getPatientUuid() {
             Log.i("patientUuid-=-=-",(String) PreUtils.getParam(NewCourseActivity.this, "patientuuid", ""));
-                         return (String) PreUtils.getParam(NewCourseActivity.this, "patientuuid", "");
+                         return (String) PreUtils.getParam(NewCourseActivity.this, GlobalConstants.PATIENT_UUID, "");
 //            return "df430ac16590449cba026e34704190f3";
         }
 

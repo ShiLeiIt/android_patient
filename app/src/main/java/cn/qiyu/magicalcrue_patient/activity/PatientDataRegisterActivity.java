@@ -19,6 +19,7 @@ import butterknife.OnClick;
 import cn.addapp.pickers.picker.DatePicker;
 import cn.qiyu.magicalcrue_patient.R;
 import cn.qiyu.magicalcrue_patient.base.BaseActivity;
+import cn.qiyu.magicalcrue_patient.constant.GlobalConstants;
 import cn.qiyu.magicalcrue_patient.model.PatientInfor;
 import cn.qiyu.magicalcrue_patient.model.PatientInforSaveBean;
 import cn.qiyu.magicalcrue_patient.model.ResultModel;
@@ -121,9 +122,9 @@ public class PatientDataRegisterActivity extends BaseActivity {
 
     private void init() {
         //mUserId 用户id
-        mUserId = (String) PreUtils.getParam(PatientDataRegisterActivity.this, "userid", "0");
+        mUserId = (String) PreUtils.getParam(PatientDataRegisterActivity.this, GlobalConstants.USER_ID, "0");
         //mUuid 是用户 uuid
-        mUuid = (String) PreUtils.getParam(PatientDataRegisterActivity.this, "uuid", "0");
+        mUuid = (String) PreUtils.getParam(PatientDataRegisterActivity.this, GlobalConstants.USER_UUID, "0");
 
     }
 
@@ -131,7 +132,7 @@ public class PatientDataRegisterActivity extends BaseActivity {
     PatientInforPresenter mPatientInforPresenter = new PatientInforPresenter(new PatientInforView() {
         @Override
         public String getPatientUuid() {
-            return (String) PreUtils.getParam(PatientDataRegisterActivity.this, "patientuuid", "");
+            return (String) PreUtils.getParam(PatientDataRegisterActivity.this, GlobalConstants.PATIENT_UUID, "");
         }
 
         @Override
@@ -204,10 +205,10 @@ public class PatientDataRegisterActivity extends BaseActivity {
 
         @Override
         public void getPatientInfor(ResultModel<PatientInforSaveBean> rlBean) {
-            PreUtils.setParam(PatientDataRegisterActivity.this, "patientuuid", rlBean.getData().getUuid());
-            PreUtils.setParam(PatientDataRegisterActivity.this, "patientName", rlBean.getData().getName());
-            PreUtils.setParam(PatientDataRegisterActivity.this, "patientMobile", rlBean.getData().getMobile());
-            PreUtils.setParam(PatientDataRegisterActivity.this, "userperfect", 3);
+            PreUtils.setParam(PatientDataRegisterActivity.this, GlobalConstants.PATIENT_UUID, rlBean.getData().getUuid());
+            PreUtils.setParam(PatientDataRegisterActivity.this, GlobalConstants.PATIENT_NAME, rlBean.getData().getName());
+            PreUtils.setParam(PatientDataRegisterActivity.this, GlobalConstants.PATIENT_MOBILE, rlBean.getData().getMobile());
+            PreUtils.setParam(PatientDataRegisterActivity.this, GlobalConstants.USER_PERFECT, 3);
 
             ActivityManagerTool.getActivityManager().finish(PatientDataRegisterActivity.this);
             Intent intent = new Intent(PatientDataRegisterActivity.this, MainActivity.class);

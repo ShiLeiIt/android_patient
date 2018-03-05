@@ -17,6 +17,7 @@ import butterknife.OnClick;
 import cn.jpush.android.api.JPushInterface;
 import cn.qiyu.magicalcrue_patient.R;
 import cn.qiyu.magicalcrue_patient.base.BaseActivity;
+import cn.qiyu.magicalcrue_patient.constant.GlobalConstants;
 import cn.qiyu.magicalcrue_patient.model.RegisterLoginBean;
 import cn.qiyu.magicalcrue_patient.model.ResultModel;
 import cn.qiyu.magicalcrue_patient.register_login.RegisterPresenter;
@@ -59,7 +60,7 @@ public class LoginActivity extends BaseActivity {
         setContentView(R.layout.activity_register);
         ButterKnife.bind(this);
        // Toast.makeText(this, "1111111", Toast.LENGTH_SHORT).show();
-        String uuid = (String) PreUtils.getParam(LoginActivity.this, "uuid", "0");
+        String uuid = (String) PreUtils.getParam(LoginActivity.this, GlobalConstants.USER_UUID, "0");
 
 
         String login = getIntent().getStringExtra("login");
@@ -71,7 +72,7 @@ public class LoginActivity extends BaseActivity {
 
         if(null!=uuid){
         if (!TextUtils.isEmpty(uuid) && !uuid.equals("0")) {
-            switch (String.valueOf(PreUtils.getParam(LoginActivity.this, "userperfect", 0))) {
+            switch (String.valueOf(PreUtils.getParam(LoginActivity.this, GlobalConstants.USER_PERFECT, 0))) {
                 case "1":
                     Intent intentUser = new Intent(LoginActivity.this, UserInforActivity.class);
                     startActivity(intentUser);
@@ -129,31 +130,31 @@ public class LoginActivity extends BaseActivity {
             public void getRegisterLogin(ResultModel<RegisterLoginBean> model) {
                 int userPerfect = model.getData().getUserPerfect();
                 if (userPerfect == 1) {
-                    PreUtils.setParam(LoginActivity.this, "uuid", model.getData().getUuid());
-                    PreUtils.setParam(LoginActivity.this, "userperfect", model.getData().getUserPerfect());
-                    PreUtils.setParam(LoginActivity.this, "userid", String.valueOf(model.getData().getId()));
-                    PreUtils.setParam(LoginActivity.this, "token", model.getData().getToken());
+                    PreUtils.setParam(LoginActivity.this, GlobalConstants.USER_UUID, model.getData().getUuid());
+                    PreUtils.setParam(LoginActivity.this, GlobalConstants.USER_PERFECT, model.getData().getUserPerfect());
+                    PreUtils.setParam(LoginActivity.this, GlobalConstants.USER_ID, String.valueOf(model.getData().getId()));
+                    PreUtils.setParam(LoginActivity.this, GlobalConstants.TOKEN, model.getData().getToken());
 //                        Toast.makeText(RegisterActivity.this, "用户信息界面", Toast.LENGTH_SHORT).show();
 //                    Toast.makeText(LoginActivity.this, "注册成功", Toast.LENGTH_SHORT).show();
                     Intent intentUser = new Intent(LoginActivity.this, UserInforActivity.class);
                     startActivity(intentUser);
 
                 } else if (userPerfect == 2) {
-                    PreUtils.setParam(LoginActivity.this, "uuid", model.getData().getUuid());
-                    PreUtils.setParam(LoginActivity.this, "userperfect", model.getData().getUserPerfect());
-                    PreUtils.setParam(LoginActivity.this, "token", model.getData().getToken());
-                    PreUtils.setParam(LoginActivity.this, "userid", String.valueOf(model.getData().getId()));
+                    PreUtils.setParam(LoginActivity.this, GlobalConstants.USER_UUID, model.getData().getUuid());
+                    PreUtils.setParam(LoginActivity.this, GlobalConstants.USER_PERFECT, model.getData().getUserPerfect());
+                    PreUtils.setParam(LoginActivity.this, GlobalConstants.TOKEN, model.getData().getToken());
+                    PreUtils.setParam(LoginActivity.this, GlobalConstants.USER_ID, String.valueOf(model.getData().getId()));
 //                        Toast.makeText(RegisterActivity.this, "患者信息界面", Toast.LENGTH_SHORT).show();
 //                    Toast.makeText(LoginActivity.this, "注册成功", Toast.LENGTH_SHORT).show();
                     Intent intentPatient = new Intent(LoginActivity.this, PatientDataRegisterActivity.class);
                     startActivity(intentPatient);
 
                 } else {
-                    PreUtils.setParam(LoginActivity.this, "userid", String.valueOf(model.getData().getId()));
-                    PreUtils.setParam(LoginActivity.this, "userperfect", 0);
-                    PreUtils.setParam(LoginActivity.this, "uuid", model.getData().getUuid());
-                    PreUtils.setParam(LoginActivity.this, "patientuuid", model.getData().getMedical_record_uuid());
-                    PreUtils.setParam(LoginActivity.this, "token", model.getData().getToken());
+                    PreUtils.setParam(LoginActivity.this, GlobalConstants.USER_ID, String.valueOf(model.getData().getId()));
+                    PreUtils.setParam(LoginActivity.this, GlobalConstants.USER_PERFECT, 0);
+                    PreUtils.setParam(LoginActivity.this, GlobalConstants.USER_UUID, model.getData().getUuid());
+                    PreUtils.setParam(LoginActivity.this, GlobalConstants.PATIENT_UUID, model.getData().getMedical_record_uuid());
+                    PreUtils.setParam(LoginActivity.this, GlobalConstants.TOKEN, model.getData().getToken());
 
 //                    PreUtils.setParam(RegisterActivity.this, "userid", String.valueOf(model.getData().getId()));
 

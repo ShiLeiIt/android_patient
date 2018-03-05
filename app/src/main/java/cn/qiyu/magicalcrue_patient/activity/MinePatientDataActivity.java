@@ -17,6 +17,7 @@ import butterknife.OnClick;
 import cn.addapp.pickers.picker.DatePicker;
 import cn.qiyu.magicalcrue_patient.R;
 import cn.qiyu.magicalcrue_patient.base.BaseActivity;
+import cn.qiyu.magicalcrue_patient.constant.GlobalConstants;
 import cn.qiyu.magicalcrue_patient.model.PatientInfor;
 import cn.qiyu.magicalcrue_patient.model.PatientInforSaveBean;
 import cn.qiyu.magicalcrue_patient.model.ResultModel;
@@ -124,9 +125,9 @@ public class MinePatientDataActivity extends BaseActivity {
         mIntent = getIntent();
         //从随访页面进来
         mPatientInfor = (PatientInfor) mIntent.getSerializableExtra("patientInfor");
-        mUserId = (String) PreUtils.getParam(MinePatientDataActivity.this, "userid", "0");
+        mUserId = (String) PreUtils.getParam(MinePatientDataActivity.this, GlobalConstants.USER_ID, "0");
         //mUuid 是用户 uuid
-        mUuid = (String) PreUtils.getParam(MinePatientDataActivity.this, "uuid", "0");
+        mUuid = (String) PreUtils.getParam(MinePatientDataActivity.this, GlobalConstants.USER_UUID, "0");
         //患者名字
         mTvRealName.setText(mPatientInfor.getName());
         //性别
@@ -155,8 +156,8 @@ public class MinePatientDataActivity extends BaseActivity {
     PatientInforPresenter mPatientInforPresenter = new PatientInforPresenter(new PatientInforView() {
         @Override
         public String getPatientUuid() {
-            Log.i("patientuuid=+++++====", (String) PreUtils.getParam(MinePatientDataActivity.this, "patientuuid", ""));
-            return (String) PreUtils.getParam(MinePatientDataActivity.this, "patientuuid", "");
+            Log.i("patientuuid=+++++====", (String) PreUtils.getParam(MinePatientDataActivity.this, GlobalConstants.PATIENT_UUID, ""));
+            return (String) PreUtils.getParam(MinePatientDataActivity.this, GlobalConstants.PATIENT_UUID, "");
         }
 
         @Override
@@ -231,10 +232,10 @@ public class MinePatientDataActivity extends BaseActivity {
 
         @Override
         public void getPatientInfor(ResultModel<PatientInforSaveBean> rlBean) {
-            PreUtils.setParam(MinePatientDataActivity.this, "patientuuid", rlBean.getData().getUuid());
-            PreUtils.setParam(MinePatientDataActivity.this, "patientName", rlBean.getData().getName());
-            PreUtils.setParam(MinePatientDataActivity.this, "patientMobile", rlBean.getData().getMobile());
-            PreUtils.setParam(MinePatientDataActivity.this, "userperfect", 3);
+            PreUtils.setParam(MinePatientDataActivity.this, GlobalConstants.PATIENT_UUID, rlBean.getData().getUuid());
+            PreUtils.setParam(MinePatientDataActivity.this, GlobalConstants.PATIENT_NAME, rlBean.getData().getName());
+            PreUtils.setParam(MinePatientDataActivity.this, GlobalConstants.PATIENT_MOBILE, rlBean.getData().getMobile());
+            PreUtils.setParam(MinePatientDataActivity.this, GlobalConstants.USER_PERFECT, 3);
             finish();
 
             Log.i("Patientuuid------", rlBean.getData().getUuid());

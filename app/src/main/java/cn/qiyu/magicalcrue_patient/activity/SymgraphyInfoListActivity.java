@@ -18,6 +18,7 @@ import cn.qiyu.magicalcrue_patient.R;
 import cn.qiyu.magicalcrue_patient.adapter.ListDischargeItemAdapter;
 import cn.qiyu.magicalcrue_patient.adapter.ListSymgraphyItemAdapter;
 import cn.qiyu.magicalcrue_patient.base.BaseActivity;
+import cn.qiyu.magicalcrue_patient.constant.GlobalConstants;
 import cn.qiyu.magicalcrue_patient.model.DischargeBean;
 import cn.qiyu.magicalcrue_patient.model.PharmacyBean;
 import cn.qiyu.magicalcrue_patient.model.ResultModel;
@@ -61,7 +62,7 @@ public class SymgraphyInfoListActivity extends BaseActivity {
 
         @Override
         public String getPatientUuid() {
-            return (String) PreUtils.getParam(SymgraphyInfoListActivity.this,"patientuuid","0");
+            return (String) PreUtils.getParam(SymgraphyInfoListActivity.this, GlobalConstants.PATIENT_UUID,"0");
         }
 
         @Override

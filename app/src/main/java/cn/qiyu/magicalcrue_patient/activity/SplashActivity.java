@@ -10,6 +10,7 @@ import android.widget.Toast;
 
 import cn.qiyu.magicalcrue_patient.R;
 import cn.qiyu.magicalcrue_patient.base.BaseActivity;
+import cn.qiyu.magicalcrue_patient.constant.GlobalConstants;
 import cn.qiyu.magicalcrue_patient.model.ResultModel;
 import cn.qiyu.magicalcrue_patient.model.VersionUpdateBean;
 import cn.qiyu.magicalcrue_patient.register_login.AppVersionPresenter;
@@ -85,7 +86,7 @@ public class SplashActivity extends BaseActivity {
                 intent.putExtra("versionModel", model.getData());
                 startActivityForResult(intent,INTO_VERSION_ENSURE);
             } else {
-                String token = (String) PreUtils.getParam(SplashActivity.this, "token", "0");
+                String token = (String) PreUtils.getParam(SplashActivity.this, GlobalConstants.TOKEN, "0");
                 if (token.equals("") || token.equals("0")) {
                     startActivity(new Intent(SplashActivity.this, LoginActivity.class));
                     finish();
@@ -133,7 +134,7 @@ public class SplashActivity extends BaseActivity {
                             finish();
                             break;
                         case  "no":
-                            String token = (String) PreUtils.getParam(SplashActivity.this, "token", "0");
+                            String token = (String) PreUtils.getParam(SplashActivity.this, GlobalConstants.TOKEN, "0");
                             if (token.equals("") || token.equals("0")) {
                                 startActivity(new Intent(SplashActivity.this, LoginActivity.class));
                                 finish();

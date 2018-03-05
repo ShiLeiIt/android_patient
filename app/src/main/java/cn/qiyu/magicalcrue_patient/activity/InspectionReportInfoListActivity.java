@@ -16,6 +16,7 @@ import cn.qiyu.magicalcrue_patient.R;
 import cn.qiyu.magicalcrue_patient.adapter.ListInspectionReportItemAdapter;
 import cn.qiyu.magicalcrue_patient.adapter.ListSymgraphyItemAdapter;
 import cn.qiyu.magicalcrue_patient.base.BaseActivity;
+import cn.qiyu.magicalcrue_patient.constant.GlobalConstants;
 import cn.qiyu.magicalcrue_patient.model.InspectionReportBean;
 import cn.qiyu.magicalcrue_patient.model.ResultModel;
 import cn.qiyu.magicalcrue_patient.model.SymptomatographyBean;
@@ -53,7 +54,7 @@ public class InspectionReportInfoListActivity extends BaseActivity {
     CaseHistoryPresenter mCaseHistoryPresenter = new CaseHistoryPresenter(new CaseHistoryInspectionRtListView() {
         @Override
         public String getPatientUuid() {
-            return (String) PreUtils.getParam(InspectionReportInfoListActivity.this,"patientuuid","0");
+            return (String) PreUtils.getParam(InspectionReportInfoListActivity.this, GlobalConstants.PATIENT_UUID,"0");
         }
 
         @Override

@@ -41,6 +41,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.qiyu.magicalcrue_patient.R;
 import cn.qiyu.magicalcrue_patient.base.BaseActivity;
+import cn.qiyu.magicalcrue_patient.constant.GlobalConstants;
 import cn.qiyu.magicalcrue_patient.image.ImageUpLoadPresenter;
 import cn.qiyu.magicalcrue_patient.image.ImageUpLoadView;
 import cn.qiyu.magicalcrue_patient.model.ImageUpLoadBean;
@@ -106,7 +107,7 @@ public class QuizActivity extends BaseActivity {
         TextView msg = (TextView) mLoadingDialog.findViewById(R.id.id_tv_loadingmsg);
         msg.setText("上传中...");
 
-        mUserUuid = (String) PreUtils.getParam(QuizActivity.this, "uuid", "0");
+        mUserUuid = (String) PreUtils.getParam(QuizActivity.this, GlobalConstants.USER_UUID, "0");
         Log.i("mUserUuid======", mUserUuid);
 
 
@@ -359,7 +360,7 @@ public class QuizActivity extends BaseActivity {
         @Override
         public String getDoctorUuid() {
 //            return "95bbb5cb43ec43b58b464e89be63a585";
-            return (String) PreUtils.getParam(QuizActivity.this, "doctorUuid", "0");
+            return (String) PreUtils.getParam(QuizActivity.this, GlobalConstants.DOCTOR_UUID, "0");
         }
 
         @Override

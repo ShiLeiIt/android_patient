@@ -39,6 +39,7 @@ import butterknife.OnClick;
 import cn.addapp.pickers.picker.DatePicker;
 import cn.qiyu.magicalcrue_patient.R;
 import cn.qiyu.magicalcrue_patient.base.BaseActivity;
+import cn.qiyu.magicalcrue_patient.constant.GlobalConstants;
 import cn.qiyu.magicalcrue_patient.image.ImageUpLoadPresenter;
 import cn.qiyu.magicalcrue_patient.image.ImageUpLoadView;
 import cn.qiyu.magicalcrue_patient.model.AddOutPatientDataSaveBean;
@@ -205,7 +206,7 @@ public class AddSymgraphyDataActivity extends BaseActivity {
     SymptomatographyAddPresenter mSymptomatographyAddPresenter = new SymptomatographyAddPresenter(new SymptomatographyAddView() {
         @Override
         public String getParentUuid() {
-            return (String) PreUtils.getParam(AddSymgraphyDataActivity.this, "patientuuid", "0");
+            return (String) PreUtils.getParam(AddSymgraphyDataActivity.this, GlobalConstants.PATIENT_UUID, "0");
         }
 
         @Override

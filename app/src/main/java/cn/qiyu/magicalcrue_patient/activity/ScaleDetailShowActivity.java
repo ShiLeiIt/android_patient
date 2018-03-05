@@ -29,6 +29,7 @@ import butterknife.OnClick;
 import cn.qiyu.magicalcrue_patient.R;
 import cn.qiyu.magicalcrue_patient.adapter.ScaleDetailsAdapter;
 import cn.qiyu.magicalcrue_patient.base.BaseActivity;
+import cn.qiyu.magicalcrue_patient.constant.GlobalConstants;
 import cn.qiyu.magicalcrue_patient.model.MyScaleBean;
 import cn.qiyu.magicalcrue_patient.model.ResultModel;
 import cn.qiyu.magicalcrue_patient.model.ScaleDetailBean;
@@ -89,7 +90,7 @@ public class ScaleDetailShowActivity extends BaseActivity {
         @Override
         public String getPatientUuid() {
 //            Log.i("patientuuid===----==", (String) PreUtils.getParam(ScaleDetailActivity.this, "patientuuid", "0"));
-            return (String) PreUtils.getParam(ScaleDetailShowActivity.this, "patientuuid", "0");
+            return (String) PreUtils.getParam(ScaleDetailShowActivity.this, GlobalConstants.PATIENT_UUID, "0");
         }
 
         @Override

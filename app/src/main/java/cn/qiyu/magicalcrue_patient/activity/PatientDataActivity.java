@@ -18,6 +18,7 @@ import butterknife.OnClick;
 import cn.addapp.pickers.picker.DatePicker;
 import cn.qiyu.magicalcrue_patient.R;
 import cn.qiyu.magicalcrue_patient.base.BaseActivity;
+import cn.qiyu.magicalcrue_patient.constant.GlobalConstants;
 import cn.qiyu.magicalcrue_patient.model.PatientInfor;
 import cn.qiyu.magicalcrue_patient.model.PatientInforSaveBean;
 import cn.qiyu.magicalcrue_patient.model.ResultModel;
@@ -131,17 +132,17 @@ public class PatientDataActivity extends BaseActivity {
     private void initTo() {
         mIvGirl.setTag(0);
         //mUserId 用户id
-        mUserId = (String) PreUtils.getParam(PatientDataActivity.this, "userid", "0");
+        mUserId = (String) PreUtils.getParam(PatientDataActivity.this, GlobalConstants.USER_ID, "0");
         //mUuid 是用户 uuid
-        mUuid = (String) PreUtils.getParam(PatientDataActivity.this, "uuid", "0");
+        mUuid = (String) PreUtils.getParam(PatientDataActivity.this, GlobalConstants.USER_UUID, "0");
 
     }
 
     private void init() {
         mIvGirl.setTag(0);
-        mUserId = (String) PreUtils.getParam(PatientDataActivity.this, "userid", "0");
+        mUserId = (String) PreUtils.getParam(PatientDataActivity.this, GlobalConstants.USER_ID, "0");
         //mUuid 是用户 uuid
-        mUuid = (String) PreUtils.getParam(PatientDataActivity.this, "uuid", "0");
+        mUuid = (String) PreUtils.getParam(PatientDataActivity.this, GlobalConstants.USER_UUID, "0");
         //患者名字
         mTvRealName.setText(mPatientInfor.getName());
         //性别
@@ -176,7 +177,7 @@ public class PatientDataActivity extends BaseActivity {
         public String getPatientUuid() {
             if (null != mIntent.getStringExtra("visitFragment")) {
                 Log.i("patientuuid==", (String) PreUtils.getParam(PatientDataActivity.this, "patientuuid", ""));
-                return (String) PreUtils.getParam(PatientDataActivity.this, "patientuuid", "");
+                return (String) PreUtils.getParam(PatientDataActivity.this, GlobalConstants.PATIENT_UUID, "");
 
             }
             return "";
@@ -254,10 +255,10 @@ public class PatientDataActivity extends BaseActivity {
 
         @Override
         public void getPatientInfor(ResultModel<PatientInforSaveBean> rlBean) {
-            PreUtils.setParam(PatientDataActivity.this, "patientuuid", rlBean.getData().getUuid());
-            PreUtils.setParam(PatientDataActivity.this, "patientName", rlBean.getData().getName());
-            PreUtils.setParam(PatientDataActivity.this, "patientMobile", rlBean.getData().getMobile());
-            PreUtils.setParam(PatientDataActivity.this, "userperfect", 3);
+            PreUtils.setParam(PatientDataActivity.this, GlobalConstants.PATIENT_UUID, rlBean.getData().getUuid());
+            PreUtils.setParam(PatientDataActivity.this, GlobalConstants.PATIENT_NAME, rlBean.getData().getName());
+            PreUtils.setParam(PatientDataActivity.this, GlobalConstants.PATIENT_MOBILE, rlBean.getData().getMobile());
+            PreUtils.setParam(PatientDataActivity.this, GlobalConstants.USER_PERFECT, 3);
             if (null != mIntent.getStringExtra("visitFragment")) {
                 finish();
             } else {

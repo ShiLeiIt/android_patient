@@ -17,6 +17,7 @@ import butterknife.OnClick;
 import cn.qiyu.magicalcrue_patient.R;
 import cn.qiyu.magicalcrue_patient.adapter.ListDischargeItemAdapter;
 import cn.qiyu.magicalcrue_patient.base.BaseActivity;
+import cn.qiyu.magicalcrue_patient.constant.GlobalConstants;
 import cn.qiyu.magicalcrue_patient.model.DischargeBean;
 import cn.qiyu.magicalcrue_patient.model.ResultModel;
 import cn.qiyu.magicalcrue_patient.utils.PreUtils;
@@ -57,8 +58,8 @@ public class LeaveHospitalInfoListActivity extends BaseActivity {
     CaseHistoryPresenter mCaseHistoryPresenter = new CaseHistoryPresenter(new CaseHistoryView() {
         @Override
         public String getPatientUuid() {
-            Log.i("patientUuid=-------=", (String) PreUtils.getParam(LeaveHospitalInfoListActivity.this, "patientuuid", "0"));
-            return (String) PreUtils.getParam(LeaveHospitalInfoListActivity.this,"patientuuid","0");
+            Log.i("patientUuid=-------=", (String) PreUtils.getParam(LeaveHospitalInfoListActivity.this, GlobalConstants.PATIENT_UUID, "0"));
+            return (String) PreUtils.getParam(LeaveHospitalInfoListActivity.this, GlobalConstants.PATIENT_UUID,"0");
 
         }
 

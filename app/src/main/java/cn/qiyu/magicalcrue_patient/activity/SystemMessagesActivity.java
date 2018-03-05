@@ -22,6 +22,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import cn.qiyu.magicalcrue_patient.R;
 import cn.qiyu.magicalcrue_patient.base.BaseActivity;
+import cn.qiyu.magicalcrue_patient.constant.GlobalConstants;
 import cn.qiyu.magicalcrue_patient.fragment.FiScaleFragment;
 import cn.qiyu.magicalcrue_patient.information.InformationPresenter;
 import cn.qiyu.magicalcrue_patient.information.InformationSysMsgRdView;
@@ -99,7 +100,7 @@ public class SystemMessagesActivity extends BaseActivity {
 
         @Override
         public String getUserUuid() {
-            return (String) PreUtils.getParam(SystemMessagesActivity.this, "uuid", "0");
+            return (String) PreUtils.getParam(SystemMessagesActivity.this, GlobalConstants.USER_UUID, "0");
         }
 
         @Override
@@ -159,7 +160,7 @@ public class SystemMessagesActivity extends BaseActivity {
     MyScalePresenter mScalePresenter = new MyScalePresenter(new MyScaleView() {
         @Override
         public String getPatientUuid() {
-            return (String) PreUtils.getParam(SystemMessagesActivity.this, "patientuuid", "");
+            return (String) PreUtils.getParam(SystemMessagesActivity.this, GlobalConstants.PATIENT_UUID, "");
         }
 
         @Override
@@ -193,7 +194,7 @@ public class SystemMessagesActivity extends BaseActivity {
 
         @Override
         public String userId() {
-             return (String) PreUtils.getParam(SystemMessagesActivity.this, "patientuuid", "");
+             return (String) PreUtils.getParam(SystemMessagesActivity.this, GlobalConstants.PATIENT_UUID, "");
         }
 
         @Override

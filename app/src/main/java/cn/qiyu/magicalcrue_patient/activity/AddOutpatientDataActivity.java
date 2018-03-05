@@ -40,6 +40,7 @@ import butterknife.OnClick;
 import cn.addapp.pickers.picker.DatePicker;
 import cn.qiyu.magicalcrue_patient.R;
 import cn.qiyu.magicalcrue_patient.base.BaseActivity;
+import cn.qiyu.magicalcrue_patient.constant.GlobalConstants;
 import cn.qiyu.magicalcrue_patient.image.ImageUpLoadPresenter;
 import cn.qiyu.magicalcrue_patient.image.ImageUpLoadView;
 import cn.qiyu.magicalcrue_patient.model.AddOutPatientDataSaveBean;
@@ -204,13 +205,13 @@ public class AddOutpatientDataActivity extends BaseActivity {
 
         @Override
         public void onViewFailure(ImageUpLoadBean model) {
-            Toast.makeText(AddOutpatientDataActivity.this, "SHANG", Toast.LENGTH_SHORT).show();
+//            Toast.makeText(AddOutpatientDataActivity.this, "SHANG", Toast.LENGTH_SHORT).show();
 
         }
 
         @Override
         public void onServerFailure(String e) {
-            Toast.makeText(AddOutpatientDataActivity.this, ""+e, Toast.LENGTH_SHORT).show();
+//            Toast.makeText(AddOutpatientDataActivity.this, ""+e, Toast.LENGTH_SHORT).show();
 
         }
     });
@@ -221,7 +222,7 @@ public class AddOutpatientDataActivity extends BaseActivity {
     OutPatientAddPresenter mOutPatientAddPresenter = new OutPatientAddPresenter(new OutPatientAddView() {
         @Override
         public String getParentUuid() {
-            return (String) PreUtils.getParam(AddOutpatientDataActivity.this,"patientuuid","0");
+            return (String) PreUtils.getParam(AddOutpatientDataActivity.this, GlobalConstants.PATIENT_UUID,"0");
         }
 
         @Override

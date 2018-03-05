@@ -66,11 +66,9 @@ public class CommentViewHolder extends RecyclerView.ViewHolder {
             }
         });
     }
-
     void setItem(Comment item) {
         this.comment = item;
     }
-
     //刷新
     void refreshView() {
         if(comment.getUser_role()==1)

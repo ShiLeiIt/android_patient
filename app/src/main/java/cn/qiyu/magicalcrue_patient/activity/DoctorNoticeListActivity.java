@@ -21,6 +21,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.qiyu.magicalcrue_patient.R;
 import cn.qiyu.magicalcrue_patient.base.BaseActivity;
+import cn.qiyu.magicalcrue_patient.constant.GlobalConstants;
 import cn.qiyu.magicalcrue_patient.fragment.InformationFragment;
 import cn.qiyu.magicalcrue_patient.information.InformationPresenter;
 import cn.qiyu.magicalcrue_patient.information.InformationView;
@@ -55,7 +56,7 @@ public class DoctorNoticeListActivity extends BaseActivity {
     InformationPresenter mInformationPresenter = new InformationPresenter(new InformationView() {
         @Override
         public String getUserUuid() {
-            return (String) PreUtils.getParam(DoctorNoticeListActivity.this, "uuid", "0");
+            return (String) PreUtils.getParam(DoctorNoticeListActivity.this, GlobalConstants.USER_UUID, "0");
         }
 
         @Override
