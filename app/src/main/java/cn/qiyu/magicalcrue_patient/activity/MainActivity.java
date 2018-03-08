@@ -106,13 +106,11 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
     public void onClickPublish(View v) {
         updateCase();
-
 //        Toast.makeText(this, "Add", Toast.LENGTH_LONG).show();
     }
 
     //弹出dialog
     public void updateCase() {
-
         View diaolgView = View.inflate(MainActivity.this, R.layout.dialog_update_case, null);
         mDialog = new Dialog(MainActivity.this, R.style.selectorDialog);
         mDialog.setContentView(diaolgView);

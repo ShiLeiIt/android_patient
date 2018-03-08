@@ -120,8 +120,25 @@ public class ListItemAdapter extends BaseAdapter {
         }
         //实体类
         itemEntity = items.get(position);
-        //回复title
-        holder.tv_title.setText("  "+itemEntity.getUser_name());
+        //判断发起对话的人的角色
+        if(itemEntity.getUserType()==1){
+            //患者属性
+            DisplayHelper.loadGlide(mContext, ApiService.GET_IMAGE_ICON+ itemEntity.getPhotoPath(), holder.iv_avatar);
+
+            //回复者姓名
+            holder.tv_title.setText(itemEntity.getUser_name());
+            //回复者角色
+            holder.tv_relation.setText(itemEntity.getRelationshipName());
+        }else {
+            //加载医生头像
+            DisplayHelper.loadGlide(mContext, ApiService.GET_IMAGE_ICON+ itemEntity.getDoctor_photo_path(), holder.iv_avatar);
+            //回复者角色
+            holder.tv_relation.setText("医生");
+            //回复者姓名
+            holder.tv_title.setText(itemEntity.getDoctor_name());
+        }
+//        //回复title
+//        holder.tv_title.setText("  "+itemEntity.getUser_name());
         //回复内容
         holder.tv_content.setText(itemEntity.getComplaint());
 //        if (itemEntity.getConsultation_type()==1) {
@@ -136,8 +153,8 @@ public class ListItemAdapter extends BaseAdapter {
 //        }
         //回复时间
         holder.tv_create_time.setText(itemEntity.getCreate_time());
-        //回复者姓名
-        holder.tv_relation.setText(itemEntity.getRelationshipName());
+//        //回复者姓名
+//        holder.tv_relation.setText(itemEntity.getRelationshipName());
         // 回复列表
 
         //回复按钮单击事件
@@ -174,7 +191,6 @@ public class ListItemAdapter extends BaseAdapter {
         //设置评论区不可滑动
         holder.recyclerView.setNestedScrollingEnabled(false);
         //显示加载容器
-        DisplayHelper.loadGlide(mContext, ApiService.GET_IMAGE_ICON + itemEntity.getPhotoPath(), holder.iv_avatar);
 
         //判断图片集合是否为空
         if (itemEntity.getEnclosureList().size()==0) {

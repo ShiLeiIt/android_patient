@@ -13,6 +13,7 @@
         android:background="#fde7d4"
         android:orientation="vertical">
        <LinearLayout
+           android:id="@+id/ll_doctor"
            android:layout_width="wrap_content"
            android:layout_height="wrap_content"
            android:orientation="horizontal">
@@ -42,6 +43,18 @@
                android:layout_marginTop="8dp"
                android:textColor="@color/replyText"
                android:textSize="14dp" />
+           <RelativeLayout
+               android:id="@+id/ll_player"
+               android:layout_marginLeft="5dp"
+               android:layout_width="match_parent"
+               android:layout_marginTop="8dp"
+               android:layout_height="20dp">
+               <ImageView
+                   android:layout_centerInParent="true"
+                   android:src="@drawable/audio_icon"
+                   android:layout_width="20dp"
+                   android:layout_height="20dp" />
+           </RelativeLayout>
        </LinearLayout>
         <TextView
             android:layout_marginLeft="10dp"
@@ -52,5 +65,6 @@
             android:layout_marginTop="5dp"
             android:textColor="#666666"
             android:textSize="12dp" />
+
     </LinearLayout>
 </LinearLayout>

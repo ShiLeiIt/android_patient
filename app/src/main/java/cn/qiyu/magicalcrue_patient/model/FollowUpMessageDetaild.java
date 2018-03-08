@@ -46,6 +46,16 @@ public class FollowUpMessageDetaild {
     private String user_id;
     private String patient_id;
     private String patient_name;
+
+    public String getDoctor_photo_path() {
+        return doctor_photo_path;
+    }
+
+    public void setDoctor_photo_path(String doctor_photo_path) {
+        this.doctor_photo_path = doctor_photo_path;
+    }
+
+    private String doctor_photo_path;
     private int id;
     private int userType;
     private String doctor_name;

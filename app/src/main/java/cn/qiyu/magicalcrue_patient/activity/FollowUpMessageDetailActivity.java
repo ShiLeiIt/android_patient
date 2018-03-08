@@ -192,7 +192,6 @@ public class FollowUpMessageDetailActivity extends BaseActivity {
 
         @Override
         public void onServerFailure(String e) {
-
         }
     });
 
@@ -376,7 +375,6 @@ public class FollowUpMessageDetailActivity extends BaseActivity {
             intent.putExtra("remindTimeWeek", TimeUtils.getWeekStr(model.getData().getCreate_time()));
             intent.putExtra("fromFollowUp", "0");
             startActivity(intent);
-
         }
 
         @Override
