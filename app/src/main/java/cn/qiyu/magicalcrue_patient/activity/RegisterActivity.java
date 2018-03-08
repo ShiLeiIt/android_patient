@@ -204,7 +204,7 @@ public class RegisterActivity extends BaseActivity {
         super.onDestroy();
     }
 
-    @OnClick({R.id.iv_register_del, R.id.edit_phone, R.id.tv_send_auth_code, R.id.iv_register_auth, R.id.tv_deal, R.id.iv_register})
+    @OnClick({R.id.iv_register_del, R.id.edit_phone, R.id.tv_send_auth_code, R.id.iv_register_auth, R.id.tv_deal, R.id.iv_login})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.iv_register_del:
@@ -235,14 +235,14 @@ public class RegisterActivity extends BaseActivity {
                 //用户协议
                 startActivity(new Intent(RegisterActivity.this, UserAgreementActivity.class));
                 break;
-            case R.id.iv_register:
+            case R.id.iv_login:
                 if (TextUtils.isEmpty(mEditPhone.getText())) {
                     Toast.makeText(this, "请输入手机号", Toast.LENGTH_SHORT).show();
                 } else if (TextUtils.isEmpty(mEditAuthCode.getText())) {
                     Toast.makeText(this, "请输入验证码", Toast.LENGTH_SHORT).show();
-                } else if (tag) {
-                    Toast.makeText(this, "请同意注册协议", Toast.LENGTH_SHORT).show();
-                } else {
+                }
+//                    Toast.makeText(this, "请同意注册协议", Toast.LENGTH_SHORT).show();
+                 else {
                         mRegisterPresenter.RegisterLogin();
                 }
                 break;
