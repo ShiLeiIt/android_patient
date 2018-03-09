@@ -223,12 +223,12 @@ public class RegisterActivity extends BaseActivity {
                 }
                 break;
             case R.id.iv_register_auth:
-                if (tag) {
+                if (!tag) {
                     mIvRegisterAuth.setImageResource(R.drawable.register_pitch_on);
-                    tag = false;
+                    tag = true;
                 } else {
                     mIvRegisterAuth.setImageResource(R.drawable.register_jzmm);
-                    tag = true;
+                    tag = false;
                 }
                 break;
             case R.id.tv_deal:
@@ -240,10 +240,11 @@ public class RegisterActivity extends BaseActivity {
                     Toast.makeText(this, "请输入手机号", Toast.LENGTH_SHORT).show();
                 } else if (TextUtils.isEmpty(mEditAuthCode.getText())) {
                     Toast.makeText(this, "请输入验证码", Toast.LENGTH_SHORT).show();
+                } else if (tag) {
+                    mRegisterPresenter.RegisterLogin();
                 }
-//                    Toast.makeText(this, "请同意注册协议", Toast.LENGTH_SHORT).show();
-                 else {
-                        mRegisterPresenter.RegisterLogin();
+                else {
+                    Toast.makeText(this, "请同意注册协议", Toast.LENGTH_SHORT).show();
                 }
                 break;
         }
