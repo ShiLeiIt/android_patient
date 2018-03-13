@@ -105,12 +105,15 @@
             android:focusable="true"
             android:gravity="right|center_vertical"
             android:hint="请输入"
+            android:imeOptions="actionNext"
             android:maxLines="1"
+            android:singleLine="true"
             android:textColor="@color/app_gray"
             android:textColorHint="@color/app_gray"
             android:textCursorDrawable="@null"
             android:textSize="12sp"/>
     </RelativeLayout>
+
     <RelativeLayout
         android:layout_marginTop="16dp"
         android:layout_width="match_parent"

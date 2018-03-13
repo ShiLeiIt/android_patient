@@ -117,6 +117,8 @@
                 android:focusable="true"
                 android:gravity="right|center_vertical"
                 android:maxLines="1"
+                android:singleLine="true"
+                android:imeOptions="actionNext"
                 android:textCursorDrawable="@drawable/edit_backg"
                 android:hint=""
                 android:textColor="@color/app_gray"
@@ -443,7 +445,10 @@
                 android:textCursorDrawable="@null"
                 android:gravity="right|center_vertical"
                 android:hint=""
+                android:singleLine="true"
+                android:imeOptions="actionNext"
                 android:maxLines="1"
+
                 android:textColor="@color/app_gray"
                 android:textColorHint="@color/app_gray"
                 android:textSize="12sp"/>
